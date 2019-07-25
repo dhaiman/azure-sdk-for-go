@@ -729,8 +729,8 @@ type NameAvailability struct {
 	Message *string `json:"message,omitempty"`
 	// NameAvailable - Indicates whether the resource name is available.
 	NameAvailable *bool `json:"nameAvailable,omitempty"`
-	// Reason - Reason for name being unavailable.
-	Reason *string `json:"reason,omitempty"`
+	// ReasonAPPLES - Reason for name being unavailable.
+	ReasonAPPLES *string `json:"reasonAPPLES,omitempty"`
 }
 
 // NameAvailabilityRequest request from client to check resource name availability.
