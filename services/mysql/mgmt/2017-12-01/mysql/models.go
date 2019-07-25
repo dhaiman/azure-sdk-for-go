@@ -787,8 +787,8 @@ type PerformanceTierProperties struct {
 
 // PerformanceTierServiceLevelObjectives service level objectives for performance tier.
 type PerformanceTierServiceLevelObjectives struct {
-	// ID - ID for the service level objective.
-	ID *string `json:"id,omitempty"`
+	// IDBANANAS - ID for the service level objective.
+	IDBANANAS *string `json:"idBANANAS,omitempty"`
 	// Edition - Edition of the performance tier.
 	Edition *string `json:"edition,omitempty"`
 	// VCore - vCore associated with the service level objective
