@@ -1146,14 +1146,12 @@ type AzureBlobFileSystemConfiguration struct {
 
 // AzureFileShareConfiguration ...
 type AzureFileShareConfiguration struct {
-	AccountName *string `json:"accountName,omitempty"`
-	// AzureFileURL - This is of the form 'https://{account}.file.core.windows.net/'.
+	AccountName  *string `json:"accountName,omitempty"`
 	AzureFileURL *string `json:"azureFileUrl,omitempty"`
 	AccountKey   *string `json:"accountKey,omitempty"`
 	// RelativeMountPath - All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable.
 	RelativeMountPath *string `json:"relativeMountPath,omitempty"`
-	// MountOptions - These are 'net use' options in Windows and 'mount' options in Linux.
-	MountOptions *string `json:"mountOptions,omitempty"`
+	MountOptions      *string `json:"mountOptions,omitempty"`
 }
 
 // Certificate contains information about a certificate.
@@ -1456,9 +1454,8 @@ type CIFSMountConfiguration struct {
 	Source   *string `json:"source,omitempty"`
 	// RelativeMountPath - All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable.
 	RelativeMountPath *string `json:"relativeMountPath,omitempty"`
-	// MountOptions - These are 'net use' options in Windows and 'mount' options in Linux.
-	MountOptions *string `json:"mountOptions,omitempty"`
-	Password     *string `json:"password,omitempty"`
+	MountOptions      *string `json:"mountOptions,omitempty"`
+	Password          *string `json:"password,omitempty"`
 }
 
 // CloudError an error response from the Batch service.
@@ -2206,7 +2203,7 @@ type MetadataItem struct {
 	Value *string `json:"value,omitempty"`
 }
 
-// MountConfiguration ...
+// MountConfiguration each property is mutually exclusive.
 type MountConfiguration struct {
 	// AzureBlobFileSystemConfiguration - This property is mutually exclusive with all other properties.
 	AzureBlobFileSystemConfiguration *AzureBlobFileSystemConfiguration `json:"azureBlobFileSystemConfiguration,omitempty"`
@@ -2214,7 +2211,7 @@ type MountConfiguration struct {
 	NfsMountConfiguration *NFSMountConfiguration `json:"nfsMountConfiguration,omitempty"`
 	// CifsMountConfiguration - This property is mutually exclusive with all other properties.
 	CifsMountConfiguration *CIFSMountConfiguration `json:"cifsMountConfiguration,omitempty"`
-	// AzureFileShareConfiguration - This property is mutually exclusive with all other properties.
+	// AzureFileShareConfiguration - This is CIFS based for linux and net use for for windows, and this property is mutually exclusive with all other properties.
 	AzureFileShareConfiguration *AzureFileShareConfiguration `json:"azureFileShareConfiguration,omitempty"`
 }
 
@@ -2224,7 +2221,7 @@ type NetworkConfiguration struct {
 	SubnetID *string `json:"subnetId,omitempty"`
 	// EndpointConfiguration - Pool endpoint configuration is only supported on pools with the virtualMachineConfiguration property.
 	EndpointConfiguration *PoolEndpointConfiguration `json:"endpointConfiguration,omitempty"`
-	// PublicIPs - The number of IPs specified here limits the maximum size of the Pool - 50 dedicated nodes or 20 low-priority nodes can be allocated for each public IP. For example, a pool needing 150 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
+	// PublicIPs - The number of IPs specified here limits the maximum size of the Pool - 50 dedicated nodes or 20 low-priority nodes can be allocated for each public IP. For example, a pool needing 150 dedicated VMs would need at least 3 public IPs specified. This is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
 	PublicIPs *[]string `json:"publicIPs,omitempty"`
 }
 
@@ -2245,8 +2242,7 @@ type NFSMountConfiguration struct {
 	Source *string `json:"source,omitempty"`
 	// RelativeMountPath - All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable.
 	RelativeMountPath *string `json:"relativeMountPath,omitempty"`
-	// MountOptions - These are 'net use' options in Windows and 'mount' options in Linux.
-	MountOptions *string `json:"mountOptions,omitempty"`
+	MountOptions      *string `json:"mountOptions,omitempty"`
 }
 
 // Operation ...
