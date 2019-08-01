@@ -1,7 +1,4 @@
-// Package qnamaker implements the Azure ARM Qnamaker service API version 4.0.
-//
-// An API for QnAMaker runtime
-package qnamaker
+package qnamakerapi
 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 //
@@ -21,24 +18,15 @@ package qnamaker
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/cognitiveservices/v4.0/qnamakerruntime"
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// BaseClient is the base client for Qnamaker.
-type BaseClient struct {
-	autorest.Client
-	RuntimeEndpoint string
+// RuntimeClientAPI contains the set of methods on the RuntimeClient type.
+type RuntimeClientAPI interface {
+	GenerateAnswer(ctx context.Context, kbID string, generateAnswerPayload qnamaker.QueryDTO) (result qnamaker.QnASearchResultList, err error)
+	Train(ctx context.Context, kbID string, trainPayload qnamaker.FeedbackRecordsDTO) (result autorest.Response, err error)
 }
 
-// New creates an instance of the BaseClient client.
-func New(runtimeEndpoint string) BaseClient {
-	return NewWithoutDefaults(runtimeEndpoint)
-}
-
-// NewWithoutDefaults creates an instance of the BaseClient client.
-func NewWithoutDefaults(runtimeEndpoint string) BaseClient {
-	return BaseClient{
-		Client:          autorest.NewClientWithUserAgent(UserAgent()),
-		RuntimeEndpoint: runtimeEndpoint,
-	}
-}
+var _ RuntimeClientAPI = (*qnamaker.RuntimeClient)(nil)
