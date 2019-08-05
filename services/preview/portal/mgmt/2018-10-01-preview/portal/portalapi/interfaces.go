@@ -18,25 +18,26 @@ package portalapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/preview/portal/mgmt/2018-10-01-preview/portal"
-    "github.com/Azure/go-autorest/autorest"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/preview/portal/mgmt/2018-10-01-preview/portal"
+	"github.com/Azure/go-autorest/autorest"
 )
 
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result portal.ResourceProviderOperationListPage, err error)
-        }
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result portal.ResourceProviderOperationListPage, err error)
+}
 
-        var _ OperationsClientAPI = (*portal.OperationsClient)(nil)
-        // DashboardsClientAPI contains the set of methods on the DashboardsClient type.
-        type DashboardsClientAPI interface {
-            CreateOrUpdate(ctx context.Context, resourceGroupName string, dashboardName string, dashboard portal.Dashboard) (result portal.Dashboard, err error)
-            Delete(ctx context.Context, resourceGroupName string, dashboardName string) (result autorest.Response, err error)
-            Get(ctx context.Context, resourceGroupName string, dashboardName string) (result portal.Dashboard, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result portal.DashboardListResultPage, err error)
-            ListBySubscription(ctx context.Context) (result portal.DashboardListResultPage, err error)
-            Update(ctx context.Context, resourceGroupName string, dashboardName string, dashboard portal.PatchableDashboard) (result portal.Dashboard, err error)
-        }
+var _ OperationsClientAPI = (*portal.OperationsClient)(nil)
 
-        var _ DashboardsClientAPI = (*portal.DashboardsClient)(nil)
+// DashboardsClientAPI contains the set of methods on the DashboardsClient type.
+type DashboardsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, dashboardName string, dashboard portal.Dashboard) (result portal.Dashboard, err error)
+	Delete(ctx context.Context, resourceGroupName string, dashboardName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, dashboardName string) (result portal.Dashboard, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result portal.DashboardListResultPage, err error)
+	ListBySubscription(ctx context.Context) (result portal.DashboardListResultPage, err error)
+	Update(ctx context.Context, resourceGroupName string, dashboardName string, dashboard portal.PatchableDashboard) (result portal.Dashboard, err error)
+}
+
+var _ DashboardsClientAPI = (*portal.DashboardsClient)(nil)
