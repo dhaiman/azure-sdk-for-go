@@ -18,19 +18,20 @@ package consumptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/preview/consumption/mgmt/2017-04-24-preview/consumption"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/preview/consumption/mgmt/2017-04-24-preview/consumption"
 )
 
-        // UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
-        type UsageDetailsClientAPI interface {
-            List(ctx context.Context, scope string, expand string, filter string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-        }
+// UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
+type UsageDetailsClientAPI interface {
+	List(ctx context.Context, scope string, expand string, filter string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+}
 
-        var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result consumption.OperationListResultPage, err error)
-        }
+var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
 
-        var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result consumption.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
