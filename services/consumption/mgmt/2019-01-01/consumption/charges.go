@@ -18,112 +18,112 @@ package consumption
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "context"
-    "github.com/Azure/go-autorest/tracing"
+	"context"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // ChargesClient is the consumption management client provides access to consumption resources for Azure Enterprise
 // Subscriptions.
 type ChargesClient struct {
-    BaseClient
+	BaseClient
 }
+
 // NewChargesClient creates an instance of the ChargesClient client.
 func NewChargesClient(subscriptionID string) ChargesClient {
-    return NewChargesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+	return NewChargesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewChargesClientWithBaseURI creates an instance of the ChargesClient client.
-    func NewChargesClientWithBaseURI(baseURI string, subscriptionID string) ChargesClient {
-        return ChargesClient{ NewWithBaseURI(baseURI, subscriptionID)}
-    }
+func NewChargesClientWithBaseURI(baseURI string, subscriptionID string) ChargesClient {
+	return ChargesClient{NewWithBaseURI(baseURI, subscriptionID)}
+}
 
 // ListByScope lists the charges based for the defined scope.
-    // Parameters:
-        // scope - the scope associated with usage details operations. This includes
-        // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department
-        // scope and
-        // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
-        // for EnrollmentAccount scope. For department and enrollment accounts, you can also add billing period to the
-        // scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing
-        // period at department scope use
-        // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
-        // filter - may be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time).
-        // The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-        // 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
+// Parameters:
+// scope - the scope associated with usage details operations. This includes
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department
+// scope and
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+// for EnrollmentAccount scope. For department and enrollment accounts, you can also add billing period to the
+// scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing
+// period at department scope use
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+// filter - may be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time).
+// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
+// 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
 func (client ChargesClient) ListByScope(ctx context.Context, scope string, filter string) (result ChargeSummary, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ChargesClient.ListByScope")
-        defer func() {
-            sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-        req, err := client.ListByScopePreparer(ctx, scope, filter)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", nil , "Failure preparing request")
-    return
-    }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ChargesClient.ListByScope")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.ListByScopePreparer(ctx, scope, filter)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.ListByScopeSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.ListByScopeSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", resp, "Failure sending request")
+		return
+	}
 
-            result, err = client.ListByScopeResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", resp, "Failure responding to request")
-            }
+	result, err = client.ListByScopeResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "consumption.ChargesClient", "ListByScope", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // ListByScopePreparer prepares the ListByScope request.
-    func (client ChargesClient) ListByScopePreparer(ctx context.Context, scope string, filter string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "scope": scope,
-            }
+// ListByScopePreparer prepares the ListByScope request.
+func (client ChargesClient) ListByScopePreparer(ctx context.Context, scope string, filter string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"scope": scope,
+	}
 
-                        const APIVersion = "2019-01-01"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-            if len(filter) > 0 {
-            queryParameters["$filter"] = autorest.Encode("query",filter)
-            }
+	const APIVersion = "2019-01-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+	if len(filter) > 0 {
+		queryParameters["$filter"] = autorest.Encode("query", filter)
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/{scope}/providers/Microsoft.Consumption/charges",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/{scope}/providers/Microsoft.Consumption/charges", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // ListByScopeSender sends the ListByScope request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ChargesClient) ListByScopeSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// ListByScopeSender sends the ListByScope request. The method will close the
+// http.Response Body if it receives an error.
+func (client ChargesClient) ListByScopeSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // ListByScopeResponder handles the response to the ListByScope request. The method always
 // closes the http.Response Body.
 func (client ChargesClient) ListByScopeResponder(resp *http.Response) (result ChargeSummary, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
-
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
