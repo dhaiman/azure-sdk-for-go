@@ -26,31 +26,33 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// CasesAggregationsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
-type CasesAggregationsClient struct {
+// CaseCommentsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
+type CaseCommentsClient struct {
     BaseClient
 }
-// NewCasesAggregationsClient creates an instance of the CasesAggregationsClient client.
-func NewCasesAggregationsClient(subscriptionID string) CasesAggregationsClient {
-    return NewCasesAggregationsClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewCaseCommentsClient creates an instance of the CaseCommentsClient client.
+func NewCaseCommentsClient(subscriptionID string) CaseCommentsClient {
+    return NewCaseCommentsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewCasesAggregationsClientWithBaseURI creates an instance of the CasesAggregationsClient client.
-    func NewCasesAggregationsClientWithBaseURI(baseURI string, subscriptionID string) CasesAggregationsClient {
-        return CasesAggregationsClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewCaseCommentsClientWithBaseURI creates an instance of the CaseCommentsClient client.
+    func NewCaseCommentsClientWithBaseURI(baseURI string, subscriptionID string) CaseCommentsClient {
+        return CaseCommentsClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// Get get aggregative result for the given resources under the defined workspace
+// CreateComment creates the case comment.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
         // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
         // Microsoft.OperationalInsights.
         // workspaceName - the name of the workspace.
-        // aggregationsName - the aggregation name. Supports - Cases
-func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, aggregationsName string) (result AggregationsModel, err error) {
+        // caseID - case ID
+        // caseCommentID - case comment ID
+        // caseComment - the case comment
+func (client CaseCommentsClient) CreateComment(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, caseID string, caseCommentID string, caseComment CaseComment) (result CaseComment, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/CasesAggregationsClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/CaseCommentsClient.CreateComment")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -68,35 +70,43 @@ func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName
             	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
             { TargetValue: workspaceName,
              Constraints: []validation.Constraint{	{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil },
-            	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("securityinsight.CasesAggregationsClient", "Get", err.Error())
+            	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}},
+            { TargetValue: caseComment,
+             Constraints: []validation.Constraint{	{Target: "caseComment.CaseCommentProperties", Name: validation.Null, Rule: false ,
+            Chain: []validation.Constraint{	{Target: "caseComment.CaseCommentProperties.Message", Name: validation.Null, Rule: true, Chain: nil },
+            	{Target: "caseComment.CaseCommentProperties.UserInfo", Name: validation.Null, Rule: false ,
+            Chain: []validation.Constraint{	{Target: "caseComment.CaseCommentProperties.UserInfo.ObjectID", Name: validation.Null, Rule: true, Chain: nil },
+            }},
+            }}}}}); err != nil {
+            return result, validation.NewError("securityinsight.CaseCommentsClient", "CreateComment", err.Error())
             }
 
-                req, err := client.GetPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, aggregationsName)
+                req, err := client.CreateCommentPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, caseID, caseCommentID, caseComment)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "securityinsight.CaseCommentsClient", "CreateComment", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.GetSender(req)
+            resp, err := client.CreateCommentSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "securityinsight.CaseCommentsClient", "CreateComment", resp, "Failure sending request")
             return
             }
 
-            result, err = client.GetResponder(resp)
+            result, err = client.CreateCommentResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "securityinsight.CaseCommentsClient", "CreateComment", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // GetPreparer prepares the Get request.
-    func (client CasesAggregationsClient) GetPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, aggregationsName string) (*http.Request, error) {
+    // CreateCommentPreparer prepares the CreateComment request.
+    func (client CaseCommentsClient) CreateCommentPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, caseID string, caseCommentID string, caseComment CaseComment) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "aggregationsName": autorest.Encode("path",aggregationsName),
+            "caseCommentId": autorest.Encode("path",caseCommentID),
+            "caseId": autorest.Encode("path",caseID),
             "operationalInsightsResourceProvider": autorest.Encode("path",operationalInsightsResourceProvider),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
@@ -109,27 +119,29 @@ func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName
         }
 
         preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
+    autorest.AsContentType("application/json; charset=utf-8"),
+    autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/aggregations/{aggregationsName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/cases/{caseId}/comments/{caseCommentId}",pathParameters),
+    autorest.WithJSON(caseComment),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // GetSender sends the Get request. The method will close the
+    // CreateCommentSender sends the CreateComment request. The method will close the
     // http.Response Body if it receives an error.
-    func (client CasesAggregationsClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client CaseCommentsClient) CreateCommentSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// GetResponder handles the response to the Get request. The method always
+// CreateCommentResponder handles the response to the CreateComment request. The method always
 // closes the http.Response Body.
-func (client CasesAggregationsClient) GetResponder(resp *http.Response) (result AggregationsModel, err error) {
+func (client CaseCommentsClient) CreateCommentResponder(resp *http.Response) (result CaseComment, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusCreated),
     autorest.ByUnmarshallingJSON(&result),
     autorest.ByClosing())
     result.Response = autorest.Response{Response: resp}
