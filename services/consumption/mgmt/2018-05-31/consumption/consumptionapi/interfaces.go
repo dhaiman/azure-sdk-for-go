@@ -18,39 +18,42 @@ package consumptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/consumption/mgmt/2018-05-31/consumption"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/consumption/mgmt/2018-05-31/consumption"
 )
 
-        // PriceSheetClientAPI contains the set of methods on the PriceSheetClient type.
-        type PriceSheetClientAPI interface {
-            Get(ctx context.Context, expand string, skiptoken string, top *int32) (result consumption.PriceSheetResult, err error)
-            GetByBillingPeriod(ctx context.Context, billingPeriodName string, expand string, skiptoken string, top *int32) (result consumption.PriceSheetResult, err error)
-        }
+// PriceSheetClientAPI contains the set of methods on the PriceSheetClient type.
+type PriceSheetClientAPI interface {
+	Get(ctx context.Context, expand string, skiptoken string, top *int32) (result consumption.PriceSheetResult, err error)
+	GetByBillingPeriod(ctx context.Context, billingPeriodName string, expand string, skiptoken string, top *int32) (result consumption.PriceSheetResult, err error)
+}
 
-        var _ PriceSheetClientAPI = (*consumption.PriceSheetClient)(nil)
-        // UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
-        type UsageDetailsClientAPI interface {
-            List(ctx context.Context, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
-            ListByBillingAccount(ctx context.Context, billingAccountID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
-            ListByBillingPeriod(ctx context.Context, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-            ListByDepartment(ctx context.Context, departmentID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
-            ListByEnrollmentAccount(ctx context.Context, enrollmentAccountID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
-            ListForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-            ListForBillingPeriodByDepartment(ctx context.Context, departmentID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-            ListForBillingPeriodByEnrollmentAccount(ctx context.Context, enrollmentAccountID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-        }
+var _ PriceSheetClientAPI = (*consumption.PriceSheetClient)(nil)
 
-        var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
-        // ForecastsClientAPI contains the set of methods on the ForecastsClient type.
-        type ForecastsClientAPI interface {
-            List(ctx context.Context, filter string) (result consumption.ForecastsListResult, err error)
-        }
+// UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
+type UsageDetailsClientAPI interface {
+	List(ctx context.Context, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
+	ListByBillingAccount(ctx context.Context, billingAccountID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
+	ListByBillingPeriod(ctx context.Context, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+	ListByDepartment(ctx context.Context, departmentID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
+	ListByEnrollmentAccount(ctx context.Context, enrollmentAccountID string, expand string, filter string, skiptoken string, top *int32, apply string) (result consumption.UsageDetailsListResultPage, err error)
+	ListForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+	ListForBillingPeriodByDepartment(ctx context.Context, departmentID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+	ListForBillingPeriodByEnrollmentAccount(ctx context.Context, enrollmentAccountID string, billingPeriodName string, expand string, filter string, apply string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+}
 
-        var _ ForecastsClientAPI = (*consumption.ForecastsClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result consumption.OperationListResultPage, err error)
-        }
+var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
 
-        var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
+// ForecastsClientAPI contains the set of methods on the ForecastsClient type.
+type ForecastsClientAPI interface {
+	List(ctx context.Context, filter string) (result consumption.ForecastsListResult, err error)
+}
+
+var _ ForecastsClientAPI = (*consumption.ForecastsClient)(nil)
+
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result consumption.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
