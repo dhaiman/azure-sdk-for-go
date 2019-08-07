@@ -259,9 +259,9 @@ func (client RecommendationsClient) DisableRecommendationForHostingEnvironment(c
 func (client RecommendationsClient) DisableRecommendationForHostingEnvironmentPreparer(ctx context.Context, resourceGroupName string, environmentName string, name string, hostingEnvironmentName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"hostingEnvironmentName": autorest.Encode("path", hostingEnvironmentName),
-		"name":                   autorest.Encode("path", name),
-		"resourceGroupName":      autorest.Encode("path", resourceGroupName),
-		"subscriptionId":         autorest.Encode("path", client.SubscriptionID),
+		"name":              autorest.Encode("path", name),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
 	const APIVersion = "2018-02-01"
@@ -510,9 +510,9 @@ func (client RecommendationsClient) GetRuleDetailsByHostingEnvironment(ctx conte
 func (client RecommendationsClient) GetRuleDetailsByHostingEnvironmentPreparer(ctx context.Context, resourceGroupName string, hostingEnvironmentName string, name string, updateSeen *bool, recommendationID string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"hostingEnvironmentName": autorest.Encode("path", hostingEnvironmentName),
-		"name":                   autorest.Encode("path", name),
-		"resourceGroupName":      autorest.Encode("path", resourceGroupName),
-		"subscriptionId":         autorest.Encode("path", client.SubscriptionID),
+		"name":              autorest.Encode("path", name),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
 	const APIVersion = "2018-02-01"
