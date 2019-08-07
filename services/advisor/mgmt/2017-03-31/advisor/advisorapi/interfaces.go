@@ -18,33 +18,35 @@ package advisorapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/advisor/mgmt/2017-03-31/advisor"
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/satori/go.uuid"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/advisor/mgmt/2017-03-31/advisor"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/satori/go.uuid"
 )
 
-        // RecommendationsClientAPI contains the set of methods on the RecommendationsClient type.
-        type RecommendationsClientAPI interface {
-            Generate(ctx context.Context) (result autorest.Response, err error)
-            Get(ctx context.Context, resourceURI string, recommendationID string) (result advisor.ResourceRecommendationBase, err error)
-            GetGenerateStatus(ctx context.Context, operationID uuid.UUID) (result autorest.Response, err error)
-            List(ctx context.Context, filter string, top *int32, skipToken string) (result advisor.ResourceRecommendationBaseListResultPage, err error)
-        }
+// RecommendationsClientAPI contains the set of methods on the RecommendationsClient type.
+type RecommendationsClientAPI interface {
+	Generate(ctx context.Context) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceURI string, recommendationID string) (result advisor.ResourceRecommendationBase, err error)
+	GetGenerateStatus(ctx context.Context, operationID uuid.UUID) (result autorest.Response, err error)
+	List(ctx context.Context, filter string, top *int32, skipToken string) (result advisor.ResourceRecommendationBaseListResultPage, err error)
+}
 
-        var _ RecommendationsClientAPI = (*advisor.RecommendationsClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result advisor.OperationEntityListResultPage, err error)
-        }
+var _ RecommendationsClientAPI = (*advisor.RecommendationsClient)(nil)
 
-        var _ OperationsClientAPI = (*advisor.OperationsClient)(nil)
-        // SuppressionsClientAPI contains the set of methods on the SuppressionsClient type.
-        type SuppressionsClientAPI interface {
-            Create(ctx context.Context, resourceURI string, recommendationID string, name string, suppressionContract advisor.SuppressionContract) (result advisor.SuppressionContract, err error)
-            Delete(ctx context.Context, resourceURI string, recommendationID string, name string) (result autorest.Response, err error)
-            Get(ctx context.Context, resourceURI string, recommendationID string, name string) (result advisor.SuppressionContract, err error)
-            List(ctx context.Context) (result advisor.ListSuppressionContract, err error)
-        }
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result advisor.OperationEntityListResultPage, err error)
+}
 
-        var _ SuppressionsClientAPI = (*advisor.SuppressionsClient)(nil)
+var _ OperationsClientAPI = (*advisor.OperationsClient)(nil)
+
+// SuppressionsClientAPI contains the set of methods on the SuppressionsClient type.
+type SuppressionsClientAPI interface {
+	Create(ctx context.Context, resourceURI string, recommendationID string, name string, suppressionContract advisor.SuppressionContract) (result advisor.SuppressionContract, err error)
+	Delete(ctx context.Context, resourceURI string, recommendationID string, name string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceURI string, recommendationID string, name string) (result advisor.SuppressionContract, err error)
+	List(ctx context.Context) (result advisor.ListSuppressionContract, err error)
+}
+
+var _ SuppressionsClientAPI = (*advisor.SuppressionsClient)(nil)
