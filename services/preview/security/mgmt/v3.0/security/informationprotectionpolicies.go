@@ -82,7 +82,7 @@ func (client InformationProtectionPoliciesClient) CreateOrUpdate(ctx context.Con
 func (client InformationProtectionPoliciesClient) CreateOrUpdatePreparer(ctx context.Context, scope string, informationProtectionPolicyName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"informationProtectionPolicyName": autorest.Encode("path", informationProtectionPolicyName),
-		"scope":                           autorest.Encode("path", scope),
+		"scope": autorest.Encode("path", scope),
 	}
 
 	const APIVersion = "2017-08-01-preview"
@@ -159,7 +159,7 @@ func (client InformationProtectionPoliciesClient) Get(ctx context.Context, scope
 func (client InformationProtectionPoliciesClient) GetPreparer(ctx context.Context, scope string, informationProtectionPolicyName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"informationProtectionPolicyName": autorest.Encode("path", informationProtectionPolicyName),
-		"scope":                           autorest.Encode("path", scope),
+		"scope": autorest.Encode("path", scope),
 	}
 
 	const APIVersion = "2017-08-01-preview"
