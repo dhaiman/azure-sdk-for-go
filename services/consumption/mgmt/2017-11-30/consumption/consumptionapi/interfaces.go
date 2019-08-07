@@ -18,31 +18,34 @@ package consumptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/consumption/mgmt/2017-11-30/consumption"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/consumption/mgmt/2017-11-30/consumption"
 )
 
-        // UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
-        type UsageDetailsClientAPI interface {
-            List(ctx context.Context, scope string, expand string, filter string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
-        }
+// UsageDetailsClientAPI contains the set of methods on the UsageDetailsClient type.
+type UsageDetailsClientAPI interface {
+	List(ctx context.Context, scope string, expand string, filter string, skiptoken string, top *int32) (result consumption.UsageDetailsListResultPage, err error)
+}
 
-        var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
-        // ReservationsSummariesClientAPI contains the set of methods on the ReservationsSummariesClient type.
-        type ReservationsSummariesClientAPI interface {
-            List(ctx context.Context, scope string, grain consumption.Datagrain, filter string) (result consumption.ReservationSummariesListResult, err error)
-        }
+var _ UsageDetailsClientAPI = (*consumption.UsageDetailsClient)(nil)
 
-        var _ ReservationsSummariesClientAPI = (*consumption.ReservationsSummariesClient)(nil)
-        // ReservationsDetailsClientAPI contains the set of methods on the ReservationsDetailsClient type.
-        type ReservationsDetailsClientAPI interface {
-            List(ctx context.Context, scope string, filter string) (result consumption.ReservationDetailsListResult, err error)
-        }
+// ReservationsSummariesClientAPI contains the set of methods on the ReservationsSummariesClient type.
+type ReservationsSummariesClientAPI interface {
+	List(ctx context.Context, scope string, grain consumption.Datagrain, filter string) (result consumption.ReservationSummariesListResult, err error)
+}
 
-        var _ ReservationsDetailsClientAPI = (*consumption.ReservationsDetailsClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result consumption.OperationListResultPage, err error)
-        }
+var _ ReservationsSummariesClientAPI = (*consumption.ReservationsSummariesClient)(nil)
 
-        var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
+// ReservationsDetailsClientAPI contains the set of methods on the ReservationsDetailsClient type.
+type ReservationsDetailsClientAPI interface {
+	List(ctx context.Context, scope string, filter string) (result consumption.ReservationDetailsListResult, err error)
+}
+
+var _ ReservationsDetailsClientAPI = (*consumption.ReservationsDetailsClient)(nil)
+
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result consumption.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
