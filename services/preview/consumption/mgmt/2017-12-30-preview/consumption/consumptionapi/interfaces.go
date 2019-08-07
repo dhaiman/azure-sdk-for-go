@@ -18,24 +18,23 @@ package consumptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/consumption/mgmt/2017-12-30-preview/consumption"
-	"github.com/Azure/go-autorest/autorest"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/consumption/mgmt/2017-12-30-preview/consumption"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// BudgetsClientAPI contains the set of methods on the BudgetsClient type.
-type BudgetsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, parameters consumption.Budget) (result consumption.Budget, err error)
-	Delete(ctx context.Context) (result autorest.Response, err error)
-	Get(ctx context.Context) (result consumption.Budget, err error)
-	List(ctx context.Context) (result consumption.BudgetsListResult, err error)
-}
+        // BudgetsClientAPI contains the set of methods on the BudgetsClient type.
+        type BudgetsClientAPI interface {
+            CreateOrUpdate(ctx context.Context, parameters consumption.Budget) (result consumption.Budget, err error)
+            Delete(ctx context.Context) (result autorest.Response, err error)
+            Get(ctx context.Context) (result consumption.Budget, err error)
+            List(ctx context.Context) (result consumption.BudgetsListResult, err error)
+        }
 
-var _ BudgetsClientAPI = (*consumption.BudgetsClient)(nil)
+        var _ BudgetsClientAPI = (*consumption.BudgetsClient)(nil)
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result consumption.OperationListResultPage, err error)
+        }
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result consumption.OperationListResultPage, err error)
-}
-
-var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*consumption.OperationsClient)(nil)
