@@ -302,13 +302,11 @@ const (
 	RequestMethod MatchVariable = "RequestMethod"
 	// RequestURI ...
 	RequestURI MatchVariable = "RequestUri"
-	// SocketAddr ...
-	SocketAddr MatchVariable = "SocketAddr"
 )
 
 // PossibleMatchVariableValues returns an array of possible values for the MatchVariable const type.
 func PossibleMatchVariableValues() []MatchVariable {
-	return []MatchVariable{Cookies, PostArgs, QueryString, RemoteAddr, RequestBody, RequestHeader, RequestMethod, RequestURI, SocketAddr}
+	return []MatchVariable{Cookies, PostArgs, QueryString, RemoteAddr, RequestBody, RequestHeader, RequestMethod, RequestURI}
 }
 
 // MinimumTLSVersion enumerates the values for minimum tls version.
@@ -2829,7 +2827,7 @@ type ManagedRuleSetList struct {
 
 // MatchCondition define a match condition.
 type MatchCondition struct {
-	// MatchVariable - Request variable to compare with. Possible values include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs', 'RequestURI', 'RequestHeader', 'RequestBody', 'Cookies', 'SocketAddr'
+	// MatchVariable - Request variable to compare with. Possible values include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs', 'RequestURI', 'RequestHeader', 'RequestBody', 'Cookies'
 	MatchVariable MatchVariable `json:"matchVariable,omitempty"`
 	// Selector - Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null.
 	Selector *string `json:"selector,omitempty"`

@@ -168,6 +168,13 @@ const (
 	OneFullStopZero MinimumTLSVersion = original.OneFullStopZero
 )
 
+type MinimumTLSVersion = original.MinimumTLSVersion
+
+const (
+	OneFullStopTwo  MinimumTLSVersion = original.OneFullStopTwo
+	OneFullStopZero MinimumTLSVersion = original.OneFullStopZero
+)
+
 type NetworkOperationStatus = original.NetworkOperationStatus
 
 const (
