@@ -43,6 +43,23 @@ func PossibleKindValues() []Kind {
 	return []Kind{Connectivity}
 }
 
+// PeeringPolicyType enumerates the values for peering policy type.
+type PeeringPolicyType string
+
+const (
+	// PeeringPolicyTypeHubAndSpokeTopology ...
+	PeeringPolicyTypeHubAndSpokeTopology PeeringPolicyType = "HubAndSpokeTopology"
+	// PeeringPolicyTypeManagedNetworkPeeringPolicyProperties ...
+	PeeringPolicyTypeManagedNetworkPeeringPolicyProperties PeeringPolicyType = "ManagedNetworkPeeringPolicyProperties"
+	// PeeringPolicyTypeMeshTopology ...
+	PeeringPolicyTypeMeshTopology PeeringPolicyType = "MeshTopology"
+)
+
+// PossiblePeeringPolicyTypeValues returns an array of possible values for the PeeringPolicyType const type.
+func PossiblePeeringPolicyTypeValues() []PeeringPolicyType {
+	return []PeeringPolicyType{PeeringPolicyTypeHubAndSpokeTopology, PeeringPolicyTypeManagedNetworkPeeringPolicyProperties, PeeringPolicyTypeMeshTopology}
+}
+
 // ProvisioningState enumerates the values for provisioning state.
 type ProvisioningState string
 
@@ -60,21 +77,6 @@ const (
 // PossibleProvisioningStateValues returns an array of possible values for the ProvisioningState const type.
 func PossibleProvisioningStateValues() []ProvisioningState {
 	return []ProvisioningState{Deleting, Failed, Succeeded, Updating}
-}
-
-// Type enumerates the values for type.
-type Type string
-
-const (
-	// HubAndSpokeTopology ...
-	HubAndSpokeTopology Type = "HubAndSpokeTopology"
-	// MeshTopology ...
-	MeshTopology Type = "MeshTopology"
-)
-
-// PossibleTypeValues returns an array of possible values for the Type const type.
-func PossibleTypeValues() []Type {
-	return []Type{HubAndSpokeTopology, MeshTopology}
 }
 
 // ConnectivityCollection the collection of Connectivity related groups and policies within the Managed
@@ -107,8 +109,6 @@ type Group struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Group.
@@ -119,9 +119,6 @@ func (g Group) MarshalJSON() ([]byte, error) {
 	}
 	if g.Kind != "" {
 		objectMap["kind"] = g.Kind
-	}
-	if g.Location != nil {
-		objectMap["location"] = g.Location
 	}
 	return json.Marshal(objectMap)
 }
@@ -179,15 +176,6 @@ func (g *Group) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				g.Type = &typeVar
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				g.Location = &location
 			}
 		}
 	}
@@ -411,8 +399,6 @@ func (future *GroupsDeleteFuture) Result(client GroupsClient) (ar autorest.Respo
 
 // HubAndSpokePeeringPolicyProperties properties of a Hub and Spoke Peering Policy
 type HubAndSpokePeeringPolicyProperties struct {
-	// Type - Gets or sets the connectivity type of a network structure policy. Possible values include: 'HubAndSpokeTopology', 'MeshTopology'
-	Type Type `json:"type,omitempty"`
 	// Hub - Gets or sets the hub virtual network ID
 	Hub *ResourceID `json:"hub,omitempty"`
 	// Spokes - Gets or sets the spokes group IDs
@@ -423,6 +409,47 @@ type HubAndSpokePeeringPolicyProperties struct {
 	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty"`
+	// PeeringPolicyType - Possible values include: 'PeeringPolicyTypeManagedNetworkPeeringPolicyProperties', 'PeeringPolicyTypeHubAndSpokeTopology', 'PeeringPolicyTypeMeshTopology'
+	PeeringPolicyType PeeringPolicyType `json:"peeringPolicyType,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for HubAndSpokePeeringPolicyProperties.
+func (hasppp HubAndSpokePeeringPolicyProperties) MarshalJSON() ([]byte, error) {
+	hasppp.PeeringPolicyType = PeeringPolicyTypeHubAndSpokeTopology
+	objectMap := make(map[string]interface{})
+	if hasppp.Hub != nil {
+		objectMap["hub"] = hasppp.Hub
+	}
+	if hasppp.Spokes != nil {
+		objectMap["spokes"] = hasppp.Spokes
+	}
+	if hasppp.Mesh != nil {
+		objectMap["mesh"] = hasppp.Mesh
+	}
+	if hasppp.PeeringPolicyType != "" {
+		objectMap["peeringPolicyType"] = hasppp.PeeringPolicyType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsHubAndSpokePeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for HubAndSpokePeeringPolicyProperties.
+func (hasppp HubAndSpokePeeringPolicyProperties) AsHubAndSpokePeeringPolicyProperties() (*HubAndSpokePeeringPolicyProperties, bool) {
+	return &hasppp, true
+}
+
+// AsMeshPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for HubAndSpokePeeringPolicyProperties.
+func (hasppp HubAndSpokePeeringPolicyProperties) AsMeshPeeringPolicyProperties() (*MeshPeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for HubAndSpokePeeringPolicyProperties.
+func (hasppp HubAndSpokePeeringPolicyProperties) AsPeeringPolicyProperties() (*PeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsBasicPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for HubAndSpokePeeringPolicyProperties.
+func (hasppp HubAndSpokePeeringPolicyProperties) AsBasicPeeringPolicyProperties() (BasicPeeringPolicyProperties, bool) {
+	return &hasppp, true
 }
 
 // ListResult result of the request to list Managed Network. It contains a list of Managed Networks and a
@@ -577,16 +604,16 @@ type ManagedNetwork struct {
 	autorest.Response `json:"-"`
 	// Properties - The MNC properties
 	*Properties `json:"properties,omitempty"`
-	// Tags - Resource tags
+	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
+	// Location - The geo-location where the resource lives
+	Location *string `json:"location,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for ManagedNetwork.
@@ -631,6 +658,15 @@ func (mn *ManagedNetwork) UnmarshalJSON(body []byte) error {
 				}
 				mn.Tags = tags
 			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				mn.Location = &location
+			}
 		case "id":
 			if v != nil {
 				var ID string
@@ -657,15 +693,6 @@ func (mn *ManagedNetwork) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				mn.Type = &typeVar
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				mn.Location = &location
 			}
 		}
 	}
@@ -727,18 +754,57 @@ func (future *ManagedNetworksUpdateFutureType) Result(client ManagedNetworksClie
 
 // MeshPeeringPolicyProperties properties of a Mesh Peering Policy
 type MeshPeeringPolicyProperties struct {
-	// Type - Gets or sets the connectivity type of a network structure policy. Possible values include: 'HubAndSpokeTopology', 'MeshTopology'
-	Type Type `json:"type,omitempty"`
 	// Hub - Gets or sets the hub virtual network ID
 	Hub *ResourceID `json:"hub,omitempty"`
 	// Spokes - Gets or sets the spokes group IDs
 	Spokes *[]ResourceID `json:"spokes,omitempty"`
 	// Mesh - Gets or sets the mesh group IDs
 	Mesh *[]ResourceID `json:"mesh,omitempty"`
+	// PeeringPolicyType - Possible values include: 'PeeringPolicyTypeManagedNetworkPeeringPolicyProperties', 'PeeringPolicyTypeHubAndSpokeTopology', 'PeeringPolicyTypeMeshTopology'
+	PeeringPolicyType PeeringPolicyType `json:"peeringPolicyType,omitempty"`
 	// ProvisioningState - READ-ONLY; Provisioning state of the ManagedNetwork resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. Possible values include: 'Updating', 'Deleting', 'Failed', 'Succeeded'
 	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for MeshPeeringPolicyProperties.
+func (mppp MeshPeeringPolicyProperties) MarshalJSON() ([]byte, error) {
+	mppp.PeeringPolicyType = PeeringPolicyTypeMeshTopology
+	objectMap := make(map[string]interface{})
+	if mppp.Hub != nil {
+		objectMap["hub"] = mppp.Hub
+	}
+	if mppp.Spokes != nil {
+		objectMap["spokes"] = mppp.Spokes
+	}
+	if mppp.Mesh != nil {
+		objectMap["mesh"] = mppp.Mesh
+	}
+	if mppp.PeeringPolicyType != "" {
+		objectMap["peeringPolicyType"] = mppp.PeeringPolicyType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsHubAndSpokePeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for MeshPeeringPolicyProperties.
+func (mppp MeshPeeringPolicyProperties) AsHubAndSpokePeeringPolicyProperties() (*HubAndSpokePeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsMeshPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for MeshPeeringPolicyProperties.
+func (mppp MeshPeeringPolicyProperties) AsMeshPeeringPolicyProperties() (*MeshPeeringPolicyProperties, bool) {
+	return &mppp, true
+}
+
+// AsPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for MeshPeeringPolicyProperties.
+func (mppp MeshPeeringPolicyProperties) AsPeeringPolicyProperties() (*PeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsBasicPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for MeshPeeringPolicyProperties.
+func (mppp MeshPeeringPolicyProperties) AsBasicPeeringPolicyProperties() (BasicPeeringPolicyProperties, bool) {
+	return &mppp, true
 }
 
 // Operation REST API operation
@@ -962,15 +1028,63 @@ func (future *PeeringPoliciesDeleteFuture) Result(client PeeringPoliciesClient) 
 type PeeringPolicy struct {
 	autorest.Response `json:"-"`
 	// Properties - Gets or sets the properties of a Managed Network Policy
-	Properties *PeeringPolicyProperties `json:"properties,omitempty"`
+	Properties BasicPeeringPolicyProperties `json:"properties,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for PeeringPolicy struct.
+func (pp *PeeringPolicy) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				properties, err := unmarshalBasicPeeringPolicyProperties(*v)
+				if err != nil {
+					return err
+				}
+				pp.Properties = properties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				pp.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				pp.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				pp.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // PeeringPolicyListResult result of the request to list Managed Network Peering Policies. It contains a
@@ -1120,25 +1234,112 @@ func NewPeeringPolicyListResultPage(getNextPage func(context.Context, PeeringPol
 	return PeeringPolicyListResultPage{fn: getNextPage}
 }
 
+// BasicPeeringPolicyProperties properties of a Managed Network Peering Policy
+type BasicPeeringPolicyProperties interface {
+	AsHubAndSpokePeeringPolicyProperties() (*HubAndSpokePeeringPolicyProperties, bool)
+	AsMeshPeeringPolicyProperties() (*MeshPeeringPolicyProperties, bool)
+	AsPeeringPolicyProperties() (*PeeringPolicyProperties, bool)
+}
+
 // PeeringPolicyProperties properties of a Managed Network Peering Policy
 type PeeringPolicyProperties struct {
-	// Type - Gets or sets the connectivity type of a network structure policy. Possible values include: 'HubAndSpokeTopology', 'MeshTopology'
-	Type Type `json:"type,omitempty"`
 	// Hub - Gets or sets the hub virtual network ID
 	Hub *ResourceID `json:"hub,omitempty"`
 	// Spokes - Gets or sets the spokes group IDs
 	Spokes *[]ResourceID `json:"spokes,omitempty"`
 	// Mesh - Gets or sets the mesh group IDs
 	Mesh *[]ResourceID `json:"mesh,omitempty"`
+	// PeeringPolicyType - Possible values include: 'PeeringPolicyTypeManagedNetworkPeeringPolicyProperties', 'PeeringPolicyTypeHubAndSpokeTopology', 'PeeringPolicyTypeMeshTopology'
+	PeeringPolicyType PeeringPolicyType `json:"peeringPolicyType,omitempty"`
 	// ProvisioningState - READ-ONLY; Provisioning state of the ManagedNetwork resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. Possible values include: 'Updating', 'Deleting', 'Failed', 'Succeeded'
 	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty"`
 }
 
+func unmarshalBasicPeeringPolicyProperties(body []byte) (BasicPeeringPolicyProperties, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["peeringPolicyType"] {
+	case string(PeeringPolicyTypeHubAndSpokeTopology):
+		var hasppp HubAndSpokePeeringPolicyProperties
+		err := json.Unmarshal(body, &hasppp)
+		return hasppp, err
+	case string(PeeringPolicyTypeMeshTopology):
+		var mppp MeshPeeringPolicyProperties
+		err := json.Unmarshal(body, &mppp)
+		return mppp, err
+	default:
+		var ppp PeeringPolicyProperties
+		err := json.Unmarshal(body, &ppp)
+		return ppp, err
+	}
+}
+func unmarshalBasicPeeringPolicyPropertiesArray(body []byte) ([]BasicPeeringPolicyProperties, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	pppArray := make([]BasicPeeringPolicyProperties, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		ppp, err := unmarshalBasicPeeringPolicyProperties(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		pppArray[index] = ppp
+	}
+	return pppArray, nil
+}
+
+// MarshalJSON is the custom marshaler for PeeringPolicyProperties.
+func (ppp PeeringPolicyProperties) MarshalJSON() ([]byte, error) {
+	ppp.PeeringPolicyType = PeeringPolicyTypeManagedNetworkPeeringPolicyProperties
+	objectMap := make(map[string]interface{})
+	if ppp.Hub != nil {
+		objectMap["hub"] = ppp.Hub
+	}
+	if ppp.Spokes != nil {
+		objectMap["spokes"] = ppp.Spokes
+	}
+	if ppp.Mesh != nil {
+		objectMap["mesh"] = ppp.Mesh
+	}
+	if ppp.PeeringPolicyType != "" {
+		objectMap["peeringPolicyType"] = ppp.PeeringPolicyType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsHubAndSpokePeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for PeeringPolicyProperties.
+func (ppp PeeringPolicyProperties) AsHubAndSpokePeeringPolicyProperties() (*HubAndSpokePeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsMeshPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for PeeringPolicyProperties.
+func (ppp PeeringPolicyProperties) AsMeshPeeringPolicyProperties() (*MeshPeeringPolicyProperties, bool) {
+	return nil, false
+}
+
+// AsPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for PeeringPolicyProperties.
+func (ppp PeeringPolicyProperties) AsPeeringPolicyProperties() (*PeeringPolicyProperties, bool) {
+	return &ppp, true
+}
+
+// AsBasicPeeringPolicyProperties is the BasicPeeringPolicyProperties implementation for PeeringPolicyProperties.
+func (ppp PeeringPolicyProperties) AsBasicPeeringPolicyProperties() (BasicPeeringPolicyProperties, bool) {
+	return &ppp, true
+}
+
 // Properties properties of Managed Network
 type Properties struct {
-	// Scope - The collection of management groups, subscriptions, virtual networks, and subnets by the Managed Network. This is a read-only property that is reflective of all ScopeAssignments for this Managed Network
+	// Scope - READ-ONLY; The collection of management groups, subscriptions, virtual networks, and subnets by the Managed Network. This is a read-only property that is reflective of all ScopeAssignments for this Managed Network
 	Scope *Scope `json:"scope,omitempty"`
 	// Connectivity - READ-ONLY; The collection of groups and policies concerned with connectivity
 	Connectivity *ConnectivityCollection `json:"connectivity,omitempty"`
@@ -1157,8 +1358,6 @@ type ProxyResource struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // Resource the general resource model definition
@@ -1169,8 +1368,6 @@ type Resource struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // ResourceID generic pointer to a resource
@@ -1210,8 +1407,6 @@ type ScopeAssignment struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for ScopeAssignment.
@@ -1219,9 +1414,6 @@ func (sa ScopeAssignment) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if sa.ScopeAssignmentProperties != nil {
 		objectMap["properties"] = sa.ScopeAssignmentProperties
-	}
-	if sa.Location != nil {
-		objectMap["location"] = sa.Location
 	}
 	return json.Marshal(objectMap)
 }
@@ -1270,15 +1462,6 @@ func (sa *ScopeAssignment) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				sa.Type = &typeVar
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				sa.Location = &location
 			}
 		}
 	}
@@ -1445,16 +1628,16 @@ type ScopeAssignmentProperties struct {
 
 // TrackedResource the resource model definition for a ARM tracked top level resource
 type TrackedResource struct {
-	// Tags - Resource tags
+	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
+	// Location - The geo-location where the resource lives
+	Location *string `json:"location,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
-	// Location - The geo-location where the resource lives
-	Location *string `json:"location,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for TrackedResource.
@@ -1471,7 +1654,7 @@ func (tr TrackedResource) MarshalJSON() ([]byte, error) {
 
 // Update update Tags of Managed Network
 type Update struct {
-	// Tags - Resource tags
+	// Tags - Updates the tags property of the Managed Network
 	Tags map[string]*string `json:"tags"`
 }
 
