@@ -18,14 +18,15 @@ package anomalydetectorapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/anomalydetector"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/anomalydetector"
 )
 
-// BaseClientAPI contains the set of methods on the BaseClient type.
-type BaseClientAPI interface {
-	EntireDetect(ctx context.Context, body anomalydetector.Request) (result anomalydetector.EntireDetectResponse, err error)
-	LastDetect(ctx context.Context, body anomalydetector.Request) (result anomalydetector.LastDetectResponse, err error)
-}
+        // BaseClientAPI contains the set of methods on the BaseClient type.
+        type BaseClientAPI interface {
+            ChangePointDetect(ctx context.Context, body anomalydetector.ChangePointDetectRequest) (result anomalydetector.ChangePointDetectResponse, err error)
+            EntireDetect(ctx context.Context, body anomalydetector.Request) (result anomalydetector.EntireDetectResponse, err error)
+            LastDetect(ctx context.Context, body anomalydetector.Request) (result anomalydetector.LastDetectResponse, err error)
+        }
 
-var _ BaseClientAPI = (*anomalydetector.BaseClient)(nil)
+        var _ BaseClientAPI = (*anomalydetector.BaseClient)(nil)
