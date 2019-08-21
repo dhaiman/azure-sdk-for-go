@@ -313,6 +313,19 @@ type Encryption = original.Encryption
 type EncryptionService = original.EncryptionService
 type EncryptionServices = original.EncryptionServices
 type Endpoints = original.Endpoints
+type ErrorResponse = original.ErrorResponse
+type ErrorResponseBody = original.ErrorResponseBody
+type FileServiceItems = original.FileServiceItems
+type FileServiceProperties = original.FileServiceProperties
+type FileServicePropertiesProperties = original.FileServicePropertiesProperties
+type FileServicesClient = original.FileServicesClient
+type FileShare = original.FileShare
+type FileShareItem = original.FileShareItem
+type FileShareItems = original.FileShareItems
+type FileShareItemsIterator = original.FileShareItemsIterator
+type FileShareItemsPage = original.FileShareItemsPage
+type FileShareProperties = original.FileShareProperties
+type FileSharesClient = original.FileSharesClient
 type GeoReplicationStats = original.GeoReplicationStats
 type IPRule = original.IPRule
 type Identity = original.Identity
@@ -385,6 +398,24 @@ func NewBlobServicesClient(subscriptionID string) BlobServicesClient {
 }
 func NewBlobServicesClientWithBaseURI(baseURI string, subscriptionID string) BlobServicesClient {
 	return original.NewBlobServicesClientWithBaseURI(baseURI, subscriptionID)
+}
+func NewFileServicesClient(subscriptionID string) FileServicesClient {
+	return original.NewFileServicesClient(subscriptionID)
+}
+func NewFileServicesClientWithBaseURI(baseURI string, subscriptionID string) FileServicesClient {
+	return original.NewFileServicesClientWithBaseURI(baseURI, subscriptionID)
+}
+func NewFileShareItemsIterator(page FileShareItemsPage) FileShareItemsIterator {
+	return original.NewFileShareItemsIterator(page)
+}
+func NewFileShareItemsPage(getNextPage func(context.Context, FileShareItems) (FileShareItems, error)) FileShareItemsPage {
+	return original.NewFileShareItemsPage(getNextPage)
+}
+func NewFileSharesClient(subscriptionID string) FileSharesClient {
+	return original.NewFileSharesClient(subscriptionID)
+}
+func NewFileSharesClientWithBaseURI(baseURI string, subscriptionID string) FileSharesClient {
+	return original.NewFileSharesClientWithBaseURI(baseURI, subscriptionID)
 }
 func NewListContainerItemsIterator(page ListContainerItemsPage) ListContainerItemsIterator {
 	return original.NewListContainerItemsIterator(page)
