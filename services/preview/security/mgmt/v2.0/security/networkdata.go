@@ -18,244 +18,244 @@ package security
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "context"
-    "github.com/Azure/go-autorest/tracing"
-    "github.com/Azure/go-autorest/autorest/validation"
+	"context"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // NetworkDataClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
 type NetworkDataClient struct {
-    BaseClient
+	BaseClient
 }
+
 // NewNetworkDataClient creates an instance of the NetworkDataClient client.
 func NewNetworkDataClient(subscriptionID string, ascLocation string) NetworkDataClient {
-    return NewNetworkDataClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
+	return NewNetworkDataClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
 }
 
 // NewNetworkDataClientWithBaseURI creates an instance of the NetworkDataClient client.
-    func NewNetworkDataClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) NetworkDataClient {
-        return NetworkDataClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
-    }
+func NewNetworkDataClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) NetworkDataClient {
+	return NetworkDataClient{NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
+}
 
 // Get get the network data on your scanned resource
-    // Parameters:
-        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
-        // insensitive.
-        // resourceNamespace - the Namespace of the resource.
-        // resourceType - the type of the resource.
-        // resourceName - name of the resource.
-        // expand - expand whether you want to get more information about the network data (ports and connections
-        // details)
+// Parameters:
+// resourceGroupName - the name of the resource group within the user's subscription. The name is case
+// insensitive.
+// resourceNamespace - the Namespace of the resource.
+// resourceType - the type of the resource.
+// resourceName - name of the resource.
+// expand - expand whether you want to get more information about the network data (ports and connections
+// details)
 func (client NetworkDataClient) Get(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string, expand ExpandValues) (result NetworkData, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/NetworkDataClient.Get")
-        defer func() {
-            sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}},
-            { TargetValue: resourceGroupName,
-             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.NetworkDataClient", "Get", err.Error())
-            }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/NetworkDataClient.Get")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}},
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("security.NetworkDataClient", "Get", err.Error())
+	}
 
-                req, err := client.GetPreparer(ctx, resourceGroupName, resourceNamespace, resourceType, resourceName, expand)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", nil , "Failure preparing request")
-    return
-    }
+	req, err := client.GetPreparer(ctx, resourceGroupName, resourceNamespace, resourceType, resourceName, expand)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.GetSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.GetSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", resp, "Failure sending request")
+		return
+	}
 
-            result, err = client.GetResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", resp, "Failure responding to request")
-            }
+	result, err = client.GetResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "Get", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // GetPreparer prepares the Get request.
-    func (client NetworkDataClient) GetPreparer(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string, expand ExpandValues) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "resourceName": autorest.Encode("path",resourceName),
-            "resourceNamespace": autorest.Encode("path",resourceNamespace),
-            "resourceType": autorest.Encode("path",resourceType),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
+// GetPreparer prepares the Get request.
+func (client NetworkDataClient) GetPreparer(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string, expand ExpandValues) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"resourceName":      autorest.Encode("path", resourceName),
+		"resourceNamespace": autorest.Encode("path", resourceNamespace),
+		"resourceType":      autorest.Encode("path", resourceType),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
 
-                        const APIVersion = "2019-01-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-            if len(string(expand)) > 0 {
-            queryParameters["$expand"] = autorest.Encode("query",expand)
-            }
+	const APIVersion = "2019-01-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+	if len(string(expand)) > 0 {
+		queryParameters["$expand"] = autorest.Encode("query", expand)
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/NetworkData/default",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/NetworkData/default", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // GetSender sends the Get request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client NetworkDataClient) GetSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// GetSender sends the Get request. The method will close the
+// http.Response Body if it receives an error.
+func (client NetworkDataClient) GetSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
 func (client NetworkDataClient) GetResponder(resp *http.Response) (result NetworkData, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
 // List get the network data on all your scanned resources inside a scope
-    // Parameters:
-        // expand - expand whether you want to get more information about the network data (ports and connections
-        // details)
+// Parameters:
+// expand - expand whether you want to get more information about the network data (ports and connections
+// details)
 func (client NetworkDataClient) List(ctx context.Context, expand ExpandValues) (result NetworkDataListPage, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/NetworkDataClient.List")
-        defer func() {
-            sc := -1
-            if result.ndl.Response.Response != nil {
-                sc = result.ndl.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.NetworkDataClient", "List", err.Error())
-            }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/NetworkDataClient.List")
+		defer func() {
+			sc := -1
+			if result.ndl.Response.Response != nil {
+				sc = result.ndl.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("security.NetworkDataClient", "List", err.Error())
+	}
 
-                        result.fn = client.listNextResults
-    req, err := client.ListPreparer(ctx, expand)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", nil , "Failure preparing request")
-    return
-    }
+	result.fn = client.listNextResults
+	req, err := client.ListPreparer(ctx, expand)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.ListSender(req)
-            if err != nil {
-            result.ndl.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.ListSender(req)
+	if err != nil {
+		result.ndl.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", resp, "Failure sending request")
+		return
+	}
 
-            result.ndl, err = client.ListResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", resp, "Failure responding to request")
-            }
+	result.ndl, err = client.ListResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "List", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // ListPreparer prepares the List request.
-    func (client NetworkDataClient) ListPreparer(ctx context.Context, expand ExpandValues) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
+// ListPreparer prepares the List request.
+func (client NetworkDataClient) ListPreparer(ctx context.Context, expand ExpandValues) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
+	}
 
-                        const APIVersion = "2019-01-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-            if len(string(expand)) > 0 {
-            queryParameters["$expand"] = autorest.Encode("query",expand)
-            }
+	const APIVersion = "2019-01-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+	if len(string(expand)) > 0 {
+		queryParameters["$expand"] = autorest.Encode("query", expand)
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/networkData",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/networkData", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // ListSender sends the List request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client NetworkDataClient) ListSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// ListSender sends the List request. The method will close the
+// http.Response Body if it receives an error.
+func (client NetworkDataClient) ListSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
 func (client NetworkDataClient) ListResponder(resp *http.Response) (result NetworkDataList, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
-            // listNextResults retrieves the next set of results, if any.
-            func (client NetworkDataClient) listNextResults(ctx context.Context, lastResults NetworkDataList) (result NetworkDataList, err error) {
-            req, err := lastResults.networkDataListPreparer(ctx)
-            if err != nil {
-            return result, autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", nil , "Failure preparing next results request")
-            }
-            if req == nil {
-            return
-            }
-            resp, err := client.ListSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", resp, "Failure sending next results request")
-            }
-            result, err = client.ListResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", resp, "Failure responding to next results request")
-            }
-            return
-                    }
+// listNextResults retrieves the next set of results, if any.
+func (client NetworkDataClient) listNextResults(ctx context.Context, lastResults NetworkDataList) (result NetworkDataList, err error) {
+	req, err := lastResults.networkDataListPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.NetworkDataClient", "listNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
 
-    // ListComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client NetworkDataClient) ListComplete(ctx context.Context, expand ExpandValues) (result NetworkDataListIterator, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/NetworkDataClient.List")
-            defer func() {
-                sc := -1
-                if result.Response().Response.Response != nil {
-                    sc = result.page.Response().Response.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-     }
-        result.page, err = client.List(ctx, expand)
-                return
-        }
-
+// ListComplete enumerates all values, automatically crossing page boundaries as required.
+func (client NetworkDataClient) ListComplete(ctx context.Context, expand ExpandValues) (result NetworkDataListIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/NetworkDataClient.List")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.List(ctx, expand)
+	return
+}
