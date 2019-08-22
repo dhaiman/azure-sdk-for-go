@@ -26,30 +26,30 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// ManagementPoliciesClient is the the Azure Storage Management API.
-type ManagementPoliciesClient struct {
+// FileServicesClient is the the Azure Storage Management API.
+type FileServicesClient struct {
     BaseClient
 }
-// NewManagementPoliciesClient creates an instance of the ManagementPoliciesClient client.
-func NewManagementPoliciesClient(subscriptionID string) ManagementPoliciesClient {
-    return NewManagementPoliciesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewFileServicesClient creates an instance of the FileServicesClient client.
+func NewFileServicesClient(subscriptionID string) FileServicesClient {
+    return NewFileServicesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewManagementPoliciesClientWithBaseURI creates an instance of the ManagementPoliciesClient client.
-    func NewManagementPoliciesClientWithBaseURI(baseURI string, subscriptionID string) ManagementPoliciesClient {
-        return ManagementPoliciesClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewFileServicesClientWithBaseURI creates an instance of the FileServicesClient client.
+    func NewFileServicesClientWithBaseURI(baseURI string, subscriptionID string) FileServicesClient {
+        return FileServicesClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// CreateOrUpdate sets the managementpolicy to the specified storage account.
+// GetServiceProperties gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource
+// Sharing) rules.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
         // accountName - the name of the storage account within the specified resource group. Storage account names
         // must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-        // properties - the ManagementPolicy set to a storage account.
-func (client ManagementPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, accountName string, properties ManagementPolicy) (result ManagementPolicy, err error) {
+func (client FileServicesClient) GetServiceProperties(ctx context.Context, resourceGroupName string, accountName string) (result FileServiceProperties, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ManagementPoliciesClient.CreateOrUpdate")
+        ctx = tracing.StartSpan(ctx, fqdn + "/FileServicesClient.GetServiceProperties")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -67,42 +67,224 @@ func (client ManagementPoliciesClient) CreateOrUpdate(ctx context.Context, resou
              Constraints: []validation.Constraint{	{Target: "accountName", Name: validation.MaxLength, Rule: 24, Chain: nil },
             	{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil }}},
             { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}},
-            { TargetValue: properties,
-             Constraints: []validation.Constraint{	{Target: "properties.ManagementPolicyProperties", Name: validation.Null, Rule: false ,
-            Chain: []validation.Constraint{	{Target: "properties.ManagementPolicyProperties.Policy", Name: validation.Null, Rule: true ,
-            Chain: []validation.Constraint{	{Target: "properties.ManagementPolicyProperties.Policy.Rules", Name: validation.Null, Rule: true, Chain: nil },
-            }},
-            }}}}}); err != nil {
-            return result, validation.NewError("storage.ManagementPoliciesClient", "CreateOrUpdate", err.Error())
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("storage.FileServicesClient", "GetServiceProperties", err.Error())
             }
 
-                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, accountName, properties)
+                req, err := client.GetServicePropertiesPreparer(ctx, resourceGroupName, accountName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "CreateOrUpdate", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "GetServiceProperties", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.CreateOrUpdateSender(req)
+            resp, err := client.GetServicePropertiesSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "CreateOrUpdate", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "GetServiceProperties", resp, "Failure sending request")
             return
             }
 
-            result, err = client.CreateOrUpdateResponder(resp)
+            result, err = client.GetServicePropertiesResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "CreateOrUpdate", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "GetServiceProperties", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-    func (client ManagementPoliciesClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, accountName string, properties ManagementPolicy) (*http.Request, error) {
+    // GetServicePropertiesPreparer prepares the GetServiceProperties request.
+    func (client FileServicesClient) GetServicePropertiesPreparer(ctx context.Context, resourceGroupName string, accountName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "accountName": autorest.Encode("path",accountName),
-            "managementPolicyName": autorest.Encode("path", "default"),
+            "FileServicesName": autorest.Encode("path", "default"),
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
+            }
+
+                        const APIVersion = "2019-04-01"
+        queryParameters := map[string]interface{} {
+        "api-version": APIVersion,
+        }
+
+        preparer := autorest.CreatePreparer(
+    autorest.AsGet(),
+    autorest.WithBaseURL(client.BaseURI),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}",pathParameters),
+    autorest.WithQueryParameters(queryParameters))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
+
+    // GetServicePropertiesSender sends the GetServiceProperties request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client FileServicesClient) GetServicePropertiesSender(req *http.Request) (*http.Response, error) {
+        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+            return autorest.SendWithSender(client, req, sd...)
+            }
+
+// GetServicePropertiesResponder handles the response to the GetServiceProperties request. The method always
+// closes the http.Response Body.
+func (client FileServicesClient) GetServicePropertiesResponder(resp *http.Response) (result FileServiceProperties, err error) {
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK),
+    autorest.ByUnmarshallingJSON(&result),
+    autorest.ByClosing())
+    result.Response = autorest.Response{Response: resp}
+        return
+    }
+
+// List list all file services in storage accounts
+    // Parameters:
+        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
+        // insensitive.
+        // accountName - the name of the storage account within the specified resource group. Storage account names
+        // must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+func (client FileServicesClient) List(ctx context.Context, resourceGroupName string, accountName string) (result FileServiceItems, err error) {
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/FileServicesClient.List")
+        defer func() {
+            sc := -1
+            if result.Response.Response != nil {
+                sc = result.Response.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: resourceGroupName,
+             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
+            { TargetValue: accountName,
+             Constraints: []validation.Constraint{	{Target: "accountName", Name: validation.MaxLength, Rule: 24, Chain: nil },
+            	{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil }}},
+            { TargetValue: client.SubscriptionID,
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("storage.FileServicesClient", "List", err.Error())
+            }
+
+                req, err := client.ListPreparer(ctx, resourceGroupName, accountName)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "List", nil , "Failure preparing request")
+    return
+    }
+
+            resp, err := client.ListSender(req)
+            if err != nil {
+            result.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "List", resp, "Failure sending request")
+            return
+            }
+
+            result, err = client.ListResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "List", resp, "Failure responding to request")
+            }
+
+    return
+    }
+
+    // ListPreparer prepares the List request.
+    func (client FileServicesClient) ListPreparer(ctx context.Context, resourceGroupName string, accountName string) (*http.Request, error) {
+            pathParameters := map[string]interface{} {
+            "accountName": autorest.Encode("path",accountName),
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
+            }
+
+                        const APIVersion = "2019-04-01"
+        queryParameters := map[string]interface{} {
+        "api-version": APIVersion,
+        }
+
+        preparer := autorest.CreatePreparer(
+    autorest.AsGet(),
+    autorest.WithBaseURL(client.BaseURI),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices",pathParameters),
+    autorest.WithQueryParameters(queryParameters))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
+
+    // ListSender sends the List request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client FileServicesClient) ListSender(req *http.Request) (*http.Response, error) {
+        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+            return autorest.SendWithSender(client, req, sd...)
+            }
+
+// ListResponder handles the response to the List request. The method always
+// closes the http.Response Body.
+func (client FileServicesClient) ListResponder(resp *http.Response) (result FileServiceItems, err error) {
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK),
+    autorest.ByUnmarshallingJSON(&result),
+    autorest.ByClosing())
+    result.Response = autorest.Response{Response: resp}
+        return
+    }
+
+// PutServiceProperties sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource
+// Sharing) rules.
+    // Parameters:
+        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
+        // insensitive.
+        // accountName - the name of the storage account within the specified resource group. Storage account names
+        // must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+        // parameters - the properties of file services in storage accounts, including CORS (Cross-Origin Resource
+        // Sharing) rules.
+func (client FileServicesClient) PutServiceProperties(ctx context.Context, resourceGroupName string, accountName string, parameters FileServiceProperties) (result FileServiceProperties, err error) {
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/FileServicesClient.PutServiceProperties")
+        defer func() {
+            sc := -1
+            if result.Response.Response != nil {
+                sc = result.Response.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: resourceGroupName,
+             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
+            { TargetValue: accountName,
+             Constraints: []validation.Constraint{	{Target: "accountName", Name: validation.MaxLength, Rule: 24, Chain: nil },
+            	{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil }}},
+            { TargetValue: client.SubscriptionID,
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("storage.FileServicesClient", "PutServiceProperties", err.Error())
+            }
+
+                req, err := client.PutServicePropertiesPreparer(ctx, resourceGroupName, accountName, parameters)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "PutServiceProperties", nil , "Failure preparing request")
+    return
+    }
+
+            resp, err := client.PutServicePropertiesSender(req)
+            if err != nil {
+            result.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "PutServiceProperties", resp, "Failure sending request")
+            return
+            }
+
+            result, err = client.PutServicePropertiesResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "storage.FileServicesClient", "PutServiceProperties", resp, "Failure responding to request")
+            }
+
+    return
+    }
+
+    // PutServicePropertiesPreparer prepares the PutServiceProperties request.
+    func (client FileServicesClient) PutServicePropertiesPreparer(ctx context.Context, resourceGroupName string, accountName string, parameters FileServiceProperties) (*http.Request, error) {
+            pathParameters := map[string]interface{} {
+            "accountName": autorest.Encode("path",accountName),
+            "FileServicesName": autorest.Encode("path", "default"),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
@@ -116,207 +298,22 @@ func (client ManagementPoliciesClient) CreateOrUpdate(ctx context.Context, resou
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}",pathParameters),
-    autorest.WithJSON(properties),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}",pathParameters),
+    autorest.WithJSON(parameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
+    // PutServicePropertiesSender sends the PutServiceProperties request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ManagementPoliciesClient) CreateOrUpdateSender(req *http.Request) (*http.Response, error) {
+    func (client FileServicesClient) PutServicePropertiesSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
+// PutServicePropertiesResponder handles the response to the PutServiceProperties request. The method always
 // closes the http.Response Body.
-func (client ManagementPoliciesClient) CreateOrUpdateResponder(resp *http.Response) (result ManagementPolicy, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
-
-// Delete deletes the managementpolicy associated with the specified storage account.
-    // Parameters:
-        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
-        // insensitive.
-        // accountName - the name of the storage account within the specified resource group. Storage account names
-        // must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-func (client ManagementPoliciesClient) Delete(ctx context.Context, resourceGroupName string, accountName string) (result autorest.Response, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ManagementPoliciesClient.Delete")
-        defer func() {
-            sc := -1
-            if result.Response != nil {
-                sc = result.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: resourceGroupName,
-             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
-            { TargetValue: accountName,
-             Constraints: []validation.Constraint{	{Target: "accountName", Name: validation.MaxLength, Rule: 24, Chain: nil },
-            	{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil }}},
-            { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("storage.ManagementPoliciesClient", "Delete", err.Error())
-            }
-
-                req, err := client.DeletePreparer(ctx, resourceGroupName, accountName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Delete", nil , "Failure preparing request")
-    return
-    }
-
-            resp, err := client.DeleteSender(req)
-            if err != nil {
-            result.Response = resp
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Delete", resp, "Failure sending request")
-            return
-            }
-
-            result, err = client.DeleteResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Delete", resp, "Failure responding to request")
-            }
-
-    return
-    }
-
-    // DeletePreparer prepares the Delete request.
-    func (client ManagementPoliciesClient) DeletePreparer(ctx context.Context, resourceGroupName string, accountName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "accountName": autorest.Encode("path",accountName),
-            "managementPolicyName": autorest.Encode("path", "default"),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
-
-                        const APIVersion = "2019-04-01"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-
-        preparer := autorest.CreatePreparer(
-    autorest.AsDelete(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
-
-    // DeleteSender sends the Delete request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementPoliciesClient) DeleteSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
-
-// DeleteResponder handles the response to the Delete request. The method always
-// closes the http.Response Body.
-func (client ManagementPoliciesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusNoContent),
-    autorest.ByClosing())
-    result.Response = resp
-        return
-    }
-
-// Get gets the managementpolicy associated with the specified storage account.
-    // Parameters:
-        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
-        // insensitive.
-        // accountName - the name of the storage account within the specified resource group. Storage account names
-        // must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-func (client ManagementPoliciesClient) Get(ctx context.Context, resourceGroupName string, accountName string) (result ManagementPolicy, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ManagementPoliciesClient.Get")
-        defer func() {
-            sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: resourceGroupName,
-             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
-            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
-            { TargetValue: accountName,
-             Constraints: []validation.Constraint{	{Target: "accountName", Name: validation.MaxLength, Rule: 24, Chain: nil },
-            	{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil }}},
-            { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("storage.ManagementPoliciesClient", "Get", err.Error())
-            }
-
-                req, err := client.GetPreparer(ctx, resourceGroupName, accountName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Get", nil , "Failure preparing request")
-    return
-    }
-
-            resp, err := client.GetSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Get", resp, "Failure sending request")
-            return
-            }
-
-            result, err = client.GetResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "storage.ManagementPoliciesClient", "Get", resp, "Failure responding to request")
-            }
-
-    return
-    }
-
-    // GetPreparer prepares the Get request.
-    func (client ManagementPoliciesClient) GetPreparer(ctx context.Context, resourceGroupName string, accountName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "accountName": autorest.Encode("path",accountName),
-            "managementPolicyName": autorest.Encode("path", "default"),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
-
-                        const APIVersion = "2019-04-01"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
-
-    // GetSender sends the Get request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementPoliciesClient) GetSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
-
-// GetResponder handles the response to the Get request. The method always
-// closes the http.Response Body.
-func (client ManagementPoliciesClient) GetResponder(resp *http.Response) (result ManagementPolicy, err error) {
+func (client FileServicesClient) PutServicePropertiesResponder(resp *http.Response) (result FileServiceProperties, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
