@@ -18,96 +18,96 @@ package billing
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "context"
-    "github.com/Azure/go-autorest/tracing"
+	"context"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // PropertyClient is the billing client provides access to billing resources for Azure subscriptions.
 type PropertyClient struct {
-    BaseClient
+	BaseClient
 }
+
 // NewPropertyClient creates an instance of the PropertyClient client.
 func NewPropertyClient(subscriptionID string) PropertyClient {
-    return NewPropertyClientWithBaseURI(DefaultBaseURI, subscriptionID)
+	return NewPropertyClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewPropertyClientWithBaseURI creates an instance of the PropertyClient client.
-    func NewPropertyClientWithBaseURI(baseURI string, subscriptionID string) PropertyClient {
-        return PropertyClient{ NewWithBaseURI(baseURI, subscriptionID)}
-    }
+func NewPropertyClientWithBaseURI(baseURI string, subscriptionID string) PropertyClient {
+	return PropertyClient{NewWithBaseURI(baseURI, subscriptionID)}
+}
 
 // Get get billing property by subscription Id.
 func (client PropertyClient) Get(ctx context.Context) (result Property, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PropertyClient.Get")
-        defer func() {
-            sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-        req, err := client.GetPreparer(ctx)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", nil , "Failure preparing request")
-    return
-    }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PropertyClient.Get")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.GetSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.GetSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", resp, "Failure sending request")
+		return
+	}
 
-            result, err = client.GetResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", resp, "Failure responding to request")
-            }
+	result, err = client.GetResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "billing.PropertyClient", "Get", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // GetPreparer prepares the Get request.
-    func (client PropertyClient) GetPreparer(ctx context.Context) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
+// GetPreparer prepares the Get request.
+func (client PropertyClient) GetPreparer(ctx context.Context) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
+	}
 
-                        const APIVersion = "2018-11-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "2018-11-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // GetSender sends the Get request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client PropertyClient) GetSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// GetSender sends the Get request. The method will close the
+// http.Response Body if it receives an error.
+func (client PropertyClient) GetSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
 func (client PropertyClient) GetResponder(resp *http.Response) (result Property, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
-
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
