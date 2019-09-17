@@ -18,52 +18,56 @@ package managednetworkapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/preview/managednetwork/mgmt/2019-06-01-preview/managednetwork"
-    "github.com/Azure/go-autorest/autorest"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/preview/managednetwork/mgmt/2019-06-01-preview/managednetwork"
+	"github.com/Azure/go-autorest/autorest"
 )
 
-        // ManagedNetworksClientAPI contains the set of methods on the ManagedNetworksClient type.
-        type ManagedNetworksClientAPI interface {
-            CreateOrUpdate(ctx context.Context, managedNetwork managednetwork.ManagedNetwork, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetwork, err error)
-            Delete(ctx context.Context, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetworksDeleteFutureType, err error)
-            Get(ctx context.Context, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetwork, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string, top *int32, skiptoken string) (result managednetwork.ListResultPage, err error)
-            ListBySubscription(ctx context.Context, top *int32, skiptoken string) (result managednetwork.ListResultPage, err error)
-            Update(ctx context.Context, parameters managednetwork.Update, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetworksUpdateFutureType, err error)
-        }
+// ManagedNetworksClientAPI contains the set of methods on the ManagedNetworksClient type.
+type ManagedNetworksClientAPI interface {
+	CreateOrUpdate(ctx context.Context, managedNetwork managednetwork.ManagedNetwork, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetwork, err error)
+	Delete(ctx context.Context, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetworksDeleteFutureType, err error)
+	Get(ctx context.Context, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetwork, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string, top *int32, skiptoken string) (result managednetwork.ListResultPage, err error)
+	ListBySubscription(ctx context.Context, top *int32, skiptoken string) (result managednetwork.ListResultPage, err error)
+	Update(ctx context.Context, parameters managednetwork.Update, resourceGroupName string, managedNetworkName string) (result managednetwork.ManagedNetworksUpdateFutureType, err error)
+}
 
-        var _ ManagedNetworksClientAPI = (*managednetwork.ManagedNetworksClient)(nil)
-        // ScopeAssignmentsClientAPI contains the set of methods on the ScopeAssignmentsClient type.
-        type ScopeAssignmentsClientAPI interface {
-            CreateOrUpdate(ctx context.Context, parameters managednetwork.ScopeAssignment, scope string, scopeAssignmentName string) (result managednetwork.ScopeAssignment, err error)
-            Delete(ctx context.Context, scope string, scopeAssignmentName string) (result autorest.Response, err error)
-            Get(ctx context.Context, scope string, scopeAssignmentName string) (result managednetwork.ScopeAssignment, err error)
-            List(ctx context.Context, scope string) (result managednetwork.ScopeAssignmentListResultPage, err error)
-        }
+var _ ManagedNetworksClientAPI = (*managednetwork.ManagedNetworksClient)(nil)
 
-        var _ ScopeAssignmentsClientAPI = (*managednetwork.ScopeAssignmentsClient)(nil)
-        // GroupsClientAPI contains the set of methods on the GroupsClient type.
-        type GroupsClientAPI interface {
-            CreateOrUpdate(ctx context.Context, managedNetworkGroup managednetwork.Group, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.GroupsCreateOrUpdateFuture, err error)
-            Delete(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.GroupsDeleteFuture, err error)
-            Get(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.Group, err error)
-            ListByManagedNetwork(ctx context.Context, resourceGroupName string, managedNetworkName string, top *int32, skiptoken string) (result managednetwork.GroupListResultPage, err error)
-        }
+// ScopeAssignmentsClientAPI contains the set of methods on the ScopeAssignmentsClient type.
+type ScopeAssignmentsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, parameters managednetwork.ScopeAssignment, scope string, scopeAssignmentName string) (result managednetwork.ScopeAssignment, err error)
+	Delete(ctx context.Context, scope string, scopeAssignmentName string) (result autorest.Response, err error)
+	Get(ctx context.Context, scope string, scopeAssignmentName string) (result managednetwork.ScopeAssignment, err error)
+	List(ctx context.Context, scope string) (result managednetwork.ScopeAssignmentListResultPage, err error)
+}
 
-        var _ GroupsClientAPI = (*managednetwork.GroupsClient)(nil)
-        // PeeringPoliciesClientAPI contains the set of methods on the PeeringPoliciesClient type.
-        type PeeringPoliciesClientAPI interface {
-            CreateOrUpdate(ctx context.Context, managedNetworkPolicy managednetwork.PeeringPolicy, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPoliciesCreateOrUpdateFuture, err error)
-            Delete(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPoliciesDeleteFuture, err error)
-            Get(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPolicy, err error)
-            ListByManagedNetwork(ctx context.Context, resourceGroupName string, managedNetworkName string, top *int32, skiptoken string) (result managednetwork.PeeringPolicyListResultPage, err error)
-        }
+var _ ScopeAssignmentsClientAPI = (*managednetwork.ScopeAssignmentsClient)(nil)
 
-        var _ PeeringPoliciesClientAPI = (*managednetwork.PeeringPoliciesClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result managednetwork.OperationListResultPage, err error)
-        }
+// GroupsClientAPI contains the set of methods on the GroupsClient type.
+type GroupsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, managedNetworkGroup managednetwork.Group, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.GroupsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.GroupsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkGroupName string) (result managednetwork.Group, err error)
+	ListByManagedNetwork(ctx context.Context, resourceGroupName string, managedNetworkName string, top *int32, skiptoken string) (result managednetwork.GroupListResultPage, err error)
+}
 
-        var _ OperationsClientAPI = (*managednetwork.OperationsClient)(nil)
+var _ GroupsClientAPI = (*managednetwork.GroupsClient)(nil)
+
+// PeeringPoliciesClientAPI contains the set of methods on the PeeringPoliciesClient type.
+type PeeringPoliciesClientAPI interface {
+	CreateOrUpdate(ctx context.Context, managedNetworkPolicy managednetwork.PeeringPolicy, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPoliciesCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPoliciesDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, managedNetworkName string, managedNetworkPeeringPolicyName string) (result managednetwork.PeeringPolicy, err error)
+	ListByManagedNetwork(ctx context.Context, resourceGroupName string, managedNetworkName string, top *int32, skiptoken string) (result managednetwork.PeeringPolicyListResultPage, err error)
+}
+
+var _ PeeringPoliciesClientAPI = (*managednetwork.PeeringPoliciesClient)(nil)
+
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result managednetwork.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*managednetwork.OperationsClient)(nil)
