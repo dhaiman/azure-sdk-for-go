@@ -26,31 +26,32 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// CasesAggregationsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
-type CasesAggregationsClient struct {
+// DataConnectorRequirementsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource
+// provider
+type DataConnectorRequirementsClient struct {
     BaseClient
 }
-// NewCasesAggregationsClient creates an instance of the CasesAggregationsClient client.
-func NewCasesAggregationsClient(subscriptionID string) CasesAggregationsClient {
-    return NewCasesAggregationsClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewDataConnectorRequirementsClient creates an instance of the DataConnectorRequirementsClient client.
+func NewDataConnectorRequirementsClient(subscriptionID string) DataConnectorRequirementsClient {
+    return NewDataConnectorRequirementsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewCasesAggregationsClientWithBaseURI creates an instance of the CasesAggregationsClient client.
-    func NewCasesAggregationsClientWithBaseURI(baseURI string, subscriptionID string) CasesAggregationsClient {
-        return CasesAggregationsClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewDataConnectorRequirementsClientWithBaseURI creates an instance of the DataConnectorRequirementsClient client.
+    func NewDataConnectorRequirementsClientWithBaseURI(baseURI string, subscriptionID string) DataConnectorRequirementsClient {
+        return DataConnectorRequirementsClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// Get get aggregative result for the given resources under the defined workspace
+// List get requirements state for a data connector type.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
+        // workspaceName - the name of the workspace.
         // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
         // Microsoft.OperationalInsights.
-        // workspaceName - the name of the workspace.
-        // aggregationsName - the aggregation name. Supports - Cases
-func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, aggregationsName string) (result AggregationsModel, err error) {
+        // dataConnectorsCheckRequirements - the paramertes for requirements check message
+func (client DataConnectorRequirementsClient) List(ctx context.Context, resourceGroupName string, workspaceName string, operationalInsightsResourceProvider string, dataConnectorsCheckRequirements DataConnectorsCheckRequirements) (result DataConnectorRequirementsState, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/CasesAggregationsClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DataConnectorRequirementsClient.List")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -69,34 +70,33 @@ func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName
             { TargetValue: workspaceName,
              Constraints: []validation.Constraint{	{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil },
             	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("securityinsight.CasesAggregationsClient", "Get", err.Error())
+            return result, validation.NewError("securityinsight.DataConnectorRequirementsClient", "List", err.Error())
             }
 
-                req, err := client.GetPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, aggregationsName)
+                req, err := client.ListPreparer(ctx, resourceGroupName, workspaceName, operationalInsightsResourceProvider, dataConnectorsCheckRequirements)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "securityinsight.DataConnectorRequirementsClient", "List", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.GetSender(req)
+            resp, err := client.ListSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "securityinsight.DataConnectorRequirementsClient", "List", resp, "Failure sending request")
             return
             }
 
-            result, err = client.GetResponder(resp)
+            result, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "securityinsight.CasesAggregationsClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "securityinsight.DataConnectorRequirementsClient", "List", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // GetPreparer prepares the Get request.
-    func (client CasesAggregationsClient) GetPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, aggregationsName string) (*http.Request, error) {
+    // ListPreparer prepares the List request.
+    func (client DataConnectorRequirementsClient) ListPreparer(ctx context.Context, resourceGroupName string, workspaceName string, operationalInsightsResourceProvider string, dataConnectorsCheckRequirements DataConnectorsCheckRequirements) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "aggregationsName": autorest.Encode("path",aggregationsName),
             "operationalInsightsResourceProvider": autorest.Encode("path",operationalInsightsResourceProvider),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
@@ -109,23 +109,25 @@ func (client CasesAggregationsClient) Get(ctx context.Context, resourceGroupName
         }
 
         preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
+    autorest.AsContentType("application/json; charset=utf-8"),
+    autorest.AsPost(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/aggregations/{aggregationsName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/checkDataConnectorRequirements",pathParameters),
+    autorest.WithJSON(dataConnectorsCheckRequirements),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // GetSender sends the Get request. The method will close the
+    // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client CasesAggregationsClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client DataConnectorRequirementsClient) ListSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// GetResponder handles the response to the Get request. The method always
+// ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client CasesAggregationsClient) GetResponder(resp *http.Response) (result AggregationsModel, err error) {
+func (client DataConnectorRequirementsClient) ListResponder(resp *http.Response) (result DataConnectorRequirementsState, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
