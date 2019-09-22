@@ -29,6 +29,7 @@ type CaseCommentsClientAPI = original.CaseCommentsClientAPI
 type CasesAggregationsClientAPI = original.CasesAggregationsClientAPI
 type CasesClientAPI = original.CasesClientAPI
 type CommentsClientAPI = original.CommentsClientAPI
+type DataConnectorRequirementsClientAPI = original.DataConnectorRequirementsClientAPI
 type DataConnectorsClientAPI = original.DataConnectorsClientAPI
 type EntitiesClientAPI = original.EntitiesClientAPI
 type EntityQueriesClientAPI = original.EntityQueriesClientAPI
