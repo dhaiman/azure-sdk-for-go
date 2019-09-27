@@ -18,36 +18,33 @@ package subscriptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/subscription/mgmt/2018-03-01-preview/subscription"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/subscription/mgmt/2018-03-01-preview/subscription"
 )
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result subscription.OperationListResult, err error)
-}
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result subscription.OperationListResult, err error)
+        }
 
-var _ OperationsClientAPI = (*subscription.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*subscription.OperationsClient)(nil)
+        // FactoryClientAPI contains the set of methods on the FactoryClient type.
+        type FactoryClientAPI interface {
+            CreateSubscriptionInEnrollmentAccount(ctx context.Context, enrollmentAccountName string, body subscription.CreationParameters) (result subscription.FactoryCreateSubscriptionInEnrollmentAccountFuture, err error)
+        }
 
-// FactoryClientAPI contains the set of methods on the FactoryClient type.
-type FactoryClientAPI interface {
-	CreateSubscriptionInEnrollmentAccount(ctx context.Context, enrollmentAccountName string, body subscription.CreationParameters) (result subscription.FactoryCreateSubscriptionInEnrollmentAccountFuture, err error)
-}
+        var _ FactoryClientAPI = (*subscription.FactoryClient)(nil)
+        // SubscriptionsClientAPI contains the set of methods on the SubscriptionsClient type.
+        type SubscriptionsClientAPI interface {
+            Get(ctx context.Context, subscriptionID string) (result subscription.Model, err error)
+            List(ctx context.Context) (result subscription.ListResultPage, err error)
+            ListLocations(ctx context.Context, subscriptionID string) (result subscription.LocationListResult, err error)
+        }
 
-var _ FactoryClientAPI = (*subscription.FactoryClient)(nil)
+        var _ SubscriptionsClientAPI = (*subscription.SubscriptionsClient)(nil)
+        // TenantsClientAPI contains the set of methods on the TenantsClient type.
+        type TenantsClientAPI interface {
+            List(ctx context.Context) (result subscription.TenantListResultPage, err error)
+        }
 
-// SubscriptionsClientAPI contains the set of methods on the SubscriptionsClient type.
-type SubscriptionsClientAPI interface {
-	Get(ctx context.Context, subscriptionID string) (result subscription.Model, err error)
-	List(ctx context.Context) (result subscription.ListResultPage, err error)
-	ListLocations(ctx context.Context, subscriptionID string) (result subscription.LocationListResult, err error)
-}
-
-var _ SubscriptionsClientAPI = (*subscription.SubscriptionsClient)(nil)
-
-// TenantsClientAPI contains the set of methods on the TenantsClient type.
-type TenantsClientAPI interface {
-	List(ctx context.Context) (result subscription.TenantListResultPage, err error)
-}
-
-var _ TenantsClientAPI = (*subscription.TenantsClient)(nil)
+        var _ TenantsClientAPI = (*subscription.TenantsClient)(nil)
