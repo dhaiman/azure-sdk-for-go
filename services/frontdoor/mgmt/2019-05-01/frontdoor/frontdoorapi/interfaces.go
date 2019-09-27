@@ -18,55 +18,60 @@ package frontdoorapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/frontdoor/mgmt/2019-05-01/frontdoor"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/frontdoor/mgmt/2019-05-01/frontdoor"
 )
 
-        // BaseClientAPI contains the set of methods on the BaseClient type.
-        type BaseClientAPI interface {
-            CheckFrontDoorNameAvailability(ctx context.Context, checkFrontDoorNameAvailabilityInput frontdoor.CheckNameAvailabilityInput) (result frontdoor.CheckNameAvailabilityOutput, err error)
-            CheckFrontDoorNameAvailabilityWithSubscription(ctx context.Context, checkFrontDoorNameAvailabilityInput frontdoor.CheckNameAvailabilityInput) (result frontdoor.CheckNameAvailabilityOutput, err error)
-        }
+// BaseClientAPI contains the set of methods on the BaseClient type.
+type BaseClientAPI interface {
+	CheckFrontDoorNameAvailability(ctx context.Context, checkFrontDoorNameAvailabilityInput frontdoor.CheckNameAvailabilityInput) (result frontdoor.CheckNameAvailabilityOutput, err error)
+	CheckFrontDoorNameAvailabilityWithSubscription(ctx context.Context, checkFrontDoorNameAvailabilityInput frontdoor.CheckNameAvailabilityInput) (result frontdoor.CheckNameAvailabilityOutput, err error)
+}
 
-        var _ BaseClientAPI = (*frontdoor.BaseClient)(nil)
-        // FrontDoorsClientAPI contains the set of methods on the FrontDoorsClient type.
-        type FrontDoorsClientAPI interface {
-            CreateOrUpdate(ctx context.Context, resourceGroupName string, frontDoorName string, frontDoorParameters frontdoor.FrontDoor) (result frontdoor.FrontDoorsCreateOrUpdateFutureType, err error)
-            Delete(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontDoorsDeleteFutureType, err error)
-            Get(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontDoor, err error)
-            List(ctx context.Context) (result frontdoor.ListResultPage, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result frontdoor.ListResultPage, err error)
-            ValidateCustomDomain(ctx context.Context, resourceGroupName string, frontDoorName string, customDomainProperties frontdoor.ValidateCustomDomainInput) (result frontdoor.ValidateCustomDomainOutput, err error)
-        }
+var _ BaseClientAPI = (*frontdoor.BaseClient)(nil)
 
-        var _ FrontDoorsClientAPI = (*frontdoor.FrontDoorsClient)(nil)
-        // FrontendEndpointsClientAPI contains the set of methods on the FrontendEndpointsClient type.
-        type FrontendEndpointsClientAPI interface {
-            DisableHTTPS(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string) (result frontdoor.FrontendEndpointsDisableHTTPSFuture, err error)
-            EnableHTTPS(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string, customHTTPSConfiguration frontdoor.CustomHTTPSConfiguration) (result frontdoor.FrontendEndpointsEnableHTTPSFuture, err error)
-            Get(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string) (result frontdoor.FrontendEndpoint, err error)
-            ListByFrontDoor(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontendEndpointsListResultPage, err error)
-        }
+// FrontDoorsClientAPI contains the set of methods on the FrontDoorsClient type.
+type FrontDoorsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, frontDoorName string, frontDoorParameters frontdoor.FrontDoor) (result frontdoor.FrontDoorsCreateOrUpdateFutureType, err error)
+	Delete(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontDoorsDeleteFutureType, err error)
+	Get(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontDoor, err error)
+	List(ctx context.Context) (result frontdoor.ListResultPage, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result frontdoor.ListResultPage, err error)
+	ValidateCustomDomain(ctx context.Context, resourceGroupName string, frontDoorName string, customDomainProperties frontdoor.ValidateCustomDomainInput) (result frontdoor.ValidateCustomDomainOutput, err error)
+}
 
-        var _ FrontendEndpointsClientAPI = (*frontdoor.FrontendEndpointsClient)(nil)
-        // EndpointsClientAPI contains the set of methods on the EndpointsClient type.
-        type EndpointsClientAPI interface {
-            PurgeContent(ctx context.Context, resourceGroupName string, frontDoorName string, contentFilePaths frontdoor.PurgeParameters) (result frontdoor.EndpointsPurgeContentFuture, err error)
-        }
+var _ FrontDoorsClientAPI = (*frontdoor.FrontDoorsClient)(nil)
 
-        var _ EndpointsClientAPI = (*frontdoor.EndpointsClient)(nil)
-        // PoliciesClientAPI contains the set of methods on the PoliciesClient type.
-        type PoliciesClientAPI interface {
-            CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters frontdoor.WebApplicationFirewallPolicy) (result frontdoor.PoliciesCreateOrUpdateFuture, err error)
-            Delete(ctx context.Context, resourceGroupName string, policyName string) (result frontdoor.PoliciesDeleteFuture, err error)
-            Get(ctx context.Context, resourceGroupName string, policyName string) (result frontdoor.WebApplicationFirewallPolicy, err error)
-            List(ctx context.Context, resourceGroupName string) (result frontdoor.WebApplicationFirewallPolicyListPage, err error)
-        }
+// FrontendEndpointsClientAPI contains the set of methods on the FrontendEndpointsClient type.
+type FrontendEndpointsClientAPI interface {
+	DisableHTTPS(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string) (result frontdoor.FrontendEndpointsDisableHTTPSFuture, err error)
+	EnableHTTPS(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string, customHTTPSConfiguration frontdoor.CustomHTTPSConfiguration) (result frontdoor.FrontendEndpointsEnableHTTPSFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, frontDoorName string, frontendEndpointName string) (result frontdoor.FrontendEndpoint, err error)
+	ListByFrontDoor(ctx context.Context, resourceGroupName string, frontDoorName string) (result frontdoor.FrontendEndpointsListResultPage, err error)
+}
 
-        var _ PoliciesClientAPI = (*frontdoor.PoliciesClient)(nil)
-        // ManagedRuleSetsClientAPI contains the set of methods on the ManagedRuleSetsClient type.
-        type ManagedRuleSetsClientAPI interface {
-            List(ctx context.Context) (result frontdoor.ManagedRuleSetDefinitionListPage, err error)
-        }
+var _ FrontendEndpointsClientAPI = (*frontdoor.FrontendEndpointsClient)(nil)
 
-        var _ ManagedRuleSetsClientAPI = (*frontdoor.ManagedRuleSetsClient)(nil)
+// EndpointsClientAPI contains the set of methods on the EndpointsClient type.
+type EndpointsClientAPI interface {
+	PurgeContent(ctx context.Context, resourceGroupName string, frontDoorName string, contentFilePaths frontdoor.PurgeParameters) (result frontdoor.EndpointsPurgeContentFuture, err error)
+}
+
+var _ EndpointsClientAPI = (*frontdoor.EndpointsClient)(nil)
+
+// PoliciesClientAPI contains the set of methods on the PoliciesClient type.
+type PoliciesClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters frontdoor.WebApplicationFirewallPolicy) (result frontdoor.PoliciesCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, policyName string) (result frontdoor.PoliciesDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, policyName string) (result frontdoor.WebApplicationFirewallPolicy, err error)
+	List(ctx context.Context, resourceGroupName string) (result frontdoor.WebApplicationFirewallPolicyListPage, err error)
+}
+
+var _ PoliciesClientAPI = (*frontdoor.PoliciesClient)(nil)
+
+// ManagedRuleSetsClientAPI contains the set of methods on the ManagedRuleSetsClient type.
+type ManagedRuleSetsClientAPI interface {
+	List(ctx context.Context) (result frontdoor.ManagedRuleSetDefinitionListPage, err error)
+}
+
+var _ ManagedRuleSetsClientAPI = (*frontdoor.ManagedRuleSetsClient)(nil)
