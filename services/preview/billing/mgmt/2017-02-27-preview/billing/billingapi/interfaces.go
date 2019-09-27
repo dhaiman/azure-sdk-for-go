@@ -18,21 +18,22 @@ package billingapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/preview/billing/mgmt/2017-02-27-preview/billing"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/preview/billing/mgmt/2017-02-27-preview/billing"
 )
 
-        // InvoicesClientAPI contains the set of methods on the InvoicesClient type.
-        type InvoicesClientAPI interface {
-            Get(ctx context.Context, invoiceName string) (result billing.Invoice, err error)
-            GetLatest(ctx context.Context) (result billing.Invoice, err error)
-            List(ctx context.Context, expand string, filter string, skiptoken string, top *int32) (result billing.InvoicesListResultPage, err error)
-        }
+// InvoicesClientAPI contains the set of methods on the InvoicesClient type.
+type InvoicesClientAPI interface {
+	Get(ctx context.Context, invoiceName string) (result billing.Invoice, err error)
+	GetLatest(ctx context.Context) (result billing.Invoice, err error)
+	List(ctx context.Context, expand string, filter string, skiptoken string, top *int32) (result billing.InvoicesListResultPage, err error)
+}
 
-        var _ InvoicesClientAPI = (*billing.InvoicesClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result billing.OperationListResultPage, err error)
-        }
+var _ InvoicesClientAPI = (*billing.InvoicesClient)(nil)
 
-        var _ OperationsClientAPI = (*billing.OperationsClient)(nil)
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result billing.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*billing.OperationsClient)(nil)
