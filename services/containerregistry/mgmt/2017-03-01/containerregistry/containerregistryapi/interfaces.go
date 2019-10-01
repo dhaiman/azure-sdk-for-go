@@ -18,28 +18,29 @@ package containerregistryapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/containerregistry/mgmt/2017-03-01/containerregistry"
-    "github.com/Azure/go-autorest/autorest"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/containerregistry/mgmt/2017-03-01/containerregistry"
+	"github.com/Azure/go-autorest/autorest"
 )
 
-        // RegistriesClientAPI contains the set of methods on the RegistriesClient type.
-        type RegistriesClientAPI interface {
-            CheckNameAvailability(ctx context.Context, registryNameCheckRequest containerregistry.RegistryNameCheckRequest) (result containerregistry.RegistryNameStatus, err error)
-            Create(ctx context.Context, resourceGroupName string, registryName string, registryCreateParameters containerregistry.RegistryCreateParameters) (result containerregistry.RegistriesCreateFuture, err error)
-            Delete(ctx context.Context, resourceGroupName string, registryName string) (result autorest.Response, err error)
-            Get(ctx context.Context, resourceGroupName string, registryName string) (result containerregistry.Registry, err error)
-            List(ctx context.Context) (result containerregistry.RegistryListResultPage, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerregistry.RegistryListResultPage, err error)
-            ListCredentials(ctx context.Context, resourceGroupName string, registryName string) (result containerregistry.RegistryListCredentialsResult, err error)
-            RegenerateCredential(ctx context.Context, resourceGroupName string, registryName string, regenerateCredentialParameters containerregistry.RegenerateCredentialParameters) (result containerregistry.RegistryListCredentialsResult, err error)
-            Update(ctx context.Context, resourceGroupName string, registryName string, registryUpdateParameters containerregistry.RegistryUpdateParameters) (result containerregistry.Registry, err error)
-        }
+// RegistriesClientAPI contains the set of methods on the RegistriesClient type.
+type RegistriesClientAPI interface {
+	CheckNameAvailability(ctx context.Context, registryNameCheckRequest containerregistry.RegistryNameCheckRequest) (result containerregistry.RegistryNameStatus, err error)
+	Create(ctx context.Context, resourceGroupName string, registryName string, registryCreateParameters containerregistry.RegistryCreateParameters) (result containerregistry.RegistriesCreateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, registryName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, registryName string) (result containerregistry.Registry, err error)
+	List(ctx context.Context) (result containerregistry.RegistryListResultPage, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerregistry.RegistryListResultPage, err error)
+	ListCredentials(ctx context.Context, resourceGroupName string, registryName string) (result containerregistry.RegistryListCredentialsResult, err error)
+	RegenerateCredential(ctx context.Context, resourceGroupName string, registryName string, regenerateCredentialParameters containerregistry.RegenerateCredentialParameters) (result containerregistry.RegistryListCredentialsResult, err error)
+	Update(ctx context.Context, resourceGroupName string, registryName string, registryUpdateParameters containerregistry.RegistryUpdateParameters) (result containerregistry.Registry, err error)
+}
 
-        var _ RegistriesClientAPI = (*containerregistry.RegistriesClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result containerregistry.OperationListResultPage, err error)
-        }
+var _ RegistriesClientAPI = (*containerregistry.RegistriesClient)(nil)
 
-        var _ OperationsClientAPI = (*containerregistry.OperationsClient)(nil)
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result containerregistry.OperationListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*containerregistry.OperationsClient)(nil)
