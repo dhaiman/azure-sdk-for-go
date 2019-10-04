@@ -18,24 +18,25 @@ package linksapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2016-09-01/links"
-    "github.com/Azure/go-autorest/autorest"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2016-09-01/links"
+	"github.com/Azure/go-autorest/autorest"
 )
 
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result links.OperationListResultPage, err error)
-        }
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result links.OperationListResultPage, err error)
+}
 
-        var _ OperationsClientAPI = (*links.OperationsClient)(nil)
-        // ResourceLinksClientAPI contains the set of methods on the ResourceLinksClient type.
-        type ResourceLinksClientAPI interface {
-            CreateOrUpdate(ctx context.Context, linkID string, parameters links.ResourceLink) (result links.ResourceLink, err error)
-            Delete(ctx context.Context, linkID string) (result autorest.Response, err error)
-            Get(ctx context.Context, linkID string) (result links.ResourceLink, err error)
-            ListAtSourceScope(ctx context.Context, scope string, filter links.Filter) (result links.ResourceLinkResultPage, err error)
-            ListAtSubscription(ctx context.Context, filter string) (result links.ResourceLinkResultPage, err error)
-        }
+var _ OperationsClientAPI = (*links.OperationsClient)(nil)
 
-        var _ ResourceLinksClientAPI = (*links.ResourceLinksClient)(nil)
+// ResourceLinksClientAPI contains the set of methods on the ResourceLinksClient type.
+type ResourceLinksClientAPI interface {
+	CreateOrUpdate(ctx context.Context, linkID string, parameters links.ResourceLink) (result links.ResourceLink, err error)
+	Delete(ctx context.Context, linkID string) (result autorest.Response, err error)
+	Get(ctx context.Context, linkID string) (result links.ResourceLink, err error)
+	ListAtSourceScope(ctx context.Context, scope string, filter links.Filter) (result links.ResourceLinkResultPage, err error)
+	ListAtSubscription(ctx context.Context, filter string) (result links.ResourceLinkResultPage, err error)
+}
+
+var _ ResourceLinksClientAPI = (*links.ResourceLinksClient)(nil)
