@@ -18,31 +18,30 @@ package containerserviceapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/containerservice/mgmt/2017-08-31/containerservice"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/containerservice/mgmt/2017-08-31/containerservice"
 )
 
-// ContainerServicesClientAPI contains the set of methods on the ContainerServicesClient type.
-type ContainerServicesClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters containerservice.ContainerService) (result containerservice.ContainerServicesCreateOrUpdateFutureType, err error)
-	Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerServicesDeleteFutureType, err error)
-	Get(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerService, err error)
-	List(ctx context.Context) (result containerservice.ListResultPage, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ListResultPage, err error)
-}
+        // ContainerServicesClientAPI contains the set of methods on the ContainerServicesClient type.
+        type ContainerServicesClientAPI interface {
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters containerservice.ContainerService) (result containerservice.ContainerServicesCreateOrUpdateFutureType, err error)
+            Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerServicesDeleteFutureType, err error)
+            Get(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerService, err error)
+            List(ctx context.Context) (result containerservice.ListResultPage, err error)
+            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ListResultPage, err error)
+        }
 
-var _ ContainerServicesClientAPI = (*containerservice.ContainerServicesClient)(nil)
+        var _ ContainerServicesClientAPI = (*containerservice.ContainerServicesClient)(nil)
+        // ManagedClustersClientAPI contains the set of methods on the ManagedClustersClient type.
+        type ManagedClustersClientAPI interface {
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, resourceName string, parameters containerservice.ManagedCluster) (result containerservice.ManagedClustersCreateOrUpdateFuture, err error)
+            Delete(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedClustersDeleteFuture, err error)
+            Get(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedCluster, err error)
+            GetAccessProfile(ctx context.Context, resourceGroupName string, resourceName string, roleName string) (result containerservice.ManagedClusterAccessProfile, err error)
+            GetAccessProfiles(ctx context.Context, resourceGroupName string, resourceName string, roleName string) (result containerservice.ManagedClusterAccessProfile, err error)
+            GetUpgradeProfile(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedClusterUpgradeProfile, err error)
+            List(ctx context.Context) (result containerservice.ManagedClusterListResultPage, err error)
+            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ManagedClusterListResultPage, err error)
+        }
 
-// ManagedClustersClientAPI contains the set of methods on the ManagedClustersClient type.
-type ManagedClustersClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, resourceName string, parameters containerservice.ManagedCluster) (result containerservice.ManagedClustersCreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedClustersDeleteFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedCluster, err error)
-	GetAccessProfile(ctx context.Context, resourceGroupName string, resourceName string, roleName string) (result containerservice.ManagedClusterAccessProfile, err error)
-	GetAccessProfiles(ctx context.Context, resourceGroupName string, resourceName string, roleName string) (result containerservice.ManagedClusterAccessProfile, err error)
-	GetUpgradeProfile(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedClusterUpgradeProfile, err error)
-	List(ctx context.Context) (result containerservice.ManagedClusterListResultPage, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ManagedClusterListResultPage, err error)
-}
-
-var _ ManagedClustersClientAPI = (*containerservice.ManagedClustersClient)(nil)
+        var _ ManagedClustersClientAPI = (*containerservice.ManagedClustersClient)(nil)
