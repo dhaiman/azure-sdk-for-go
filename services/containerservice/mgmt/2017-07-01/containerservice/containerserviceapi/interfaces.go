@@ -18,17 +18,17 @@ package containerserviceapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/containerservice/mgmt/2017-07-01/containerservice"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/containerservice/mgmt/2017-07-01/containerservice"
 )
 
-        // ContainerServicesClientAPI contains the set of methods on the ContainerServicesClient type.
-        type ContainerServicesClientAPI interface {
-            CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters containerservice.ContainerService) (result containerservice.ContainerServicesCreateOrUpdateFutureType, err error)
-            Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerServicesDeleteFutureType, err error)
-            Get(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerService, err error)
-            List(ctx context.Context) (result containerservice.ListResultPage, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ListResultPage, err error)
-        }
+// ContainerServicesClientAPI contains the set of methods on the ContainerServicesClient type.
+type ContainerServicesClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters containerservice.ContainerService) (result containerservice.ContainerServicesCreateOrUpdateFutureType, err error)
+	Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerServicesDeleteFutureType, err error)
+	Get(ctx context.Context, resourceGroupName string, containerServiceName string) (result containerservice.ContainerService, err error)
+	List(ctx context.Context) (result containerservice.ListResultPage, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result containerservice.ListResultPage, err error)
+}
 
-        var _ ContainerServicesClientAPI = (*containerservice.ContainerServicesClient)(nil)
+var _ ContainerServicesClientAPI = (*containerservice.ContainerServicesClient)(nil)
