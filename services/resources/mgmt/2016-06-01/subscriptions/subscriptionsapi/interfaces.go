@@ -18,27 +18,29 @@ package subscriptionsapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2016-06-01/subscriptions"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2016-06-01/subscriptions"
 )
 
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            List(ctx context.Context) (result subscriptions.OperationListResultPage, err error)
-        }
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result subscriptions.OperationListResultPage, err error)
+}
 
-        var _ OperationsClientAPI = (*subscriptions.OperationsClient)(nil)
-        // ClientAPI contains the set of methods on the Client type.
-        type ClientAPI interface {
-            Get(ctx context.Context, subscriptionID string) (result subscriptions.Subscription, err error)
-            List(ctx context.Context) (result subscriptions.ListResultPage, err error)
-            ListLocations(ctx context.Context, subscriptionID string) (result subscriptions.LocationListResult, err error)
-        }
+var _ OperationsClientAPI = (*subscriptions.OperationsClient)(nil)
 
-        var _ ClientAPI = (*subscriptions.Client)(nil)
-        // TenantsClientAPI contains the set of methods on the TenantsClient type.
-        type TenantsClientAPI interface {
-            List(ctx context.Context) (result subscriptions.TenantListResultPage, err error)
-        }
+// ClientAPI contains the set of methods on the Client type.
+type ClientAPI interface {
+	Get(ctx context.Context, subscriptionID string) (result subscriptions.Subscription, err error)
+	List(ctx context.Context) (result subscriptions.ListResultPage, err error)
+	ListLocations(ctx context.Context, subscriptionID string) (result subscriptions.LocationListResult, err error)
+}
 
-        var _ TenantsClientAPI = (*subscriptions.TenantsClient)(nil)
+var _ ClientAPI = (*subscriptions.Client)(nil)
+
+// TenantsClientAPI contains the set of methods on the TenantsClient type.
+type TenantsClientAPI interface {
+	List(ctx context.Context) (result subscriptions.TenantListResultPage, err error)
+}
+
+var _ TenantsClientAPI = (*subscriptions.TenantsClient)(nil)
