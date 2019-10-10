@@ -18,23 +18,22 @@ package featuresapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-12-01/features"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-12-01/features"
 )
 
-// BaseClientAPI contains the set of methods on the BaseClient type.
-type BaseClientAPI interface {
-	ListOperations(ctx context.Context) (result features.OperationListResultPage, err error)
-}
+        // BaseClientAPI contains the set of methods on the BaseClient type.
+        type BaseClientAPI interface {
+            ListOperations(ctx context.Context) (result features.OperationListResultPage, err error)
+        }
 
-var _ BaseClientAPI = (*features.BaseClient)(nil)
+        var _ BaseClientAPI = (*features.BaseClient)(nil)
+        // ClientAPI contains the set of methods on the Client type.
+        type ClientAPI interface {
+            Get(ctx context.Context, resourceProviderNamespace string, featureName string) (result features.Result, err error)
+            List(ctx context.Context, resourceProviderNamespace string) (result features.OperationsListResultPage, err error)
+            ListAll(ctx context.Context) (result features.OperationsListResultPage, err error)
+            Register(ctx context.Context, resourceProviderNamespace string, featureName string) (result features.Result, err error)
+        }
 
-// ClientAPI contains the set of methods on the Client type.
-type ClientAPI interface {
-	Get(ctx context.Context, resourceProviderNamespace string, featureName string) (result features.Result, err error)
-	List(ctx context.Context, resourceProviderNamespace string) (result features.OperationsListResultPage, err error)
-	ListAll(ctx context.Context) (result features.OperationsListResultPage, err error)
-	Register(ctx context.Context, resourceProviderNamespace string, featureName string) (result features.Result, err error)
-}
-
-var _ ClientAPI = (*features.Client)(nil)
+        var _ ClientAPI = (*features.Client)(nil)
