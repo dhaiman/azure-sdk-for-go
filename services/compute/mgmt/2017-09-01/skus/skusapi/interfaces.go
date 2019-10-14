@@ -18,13 +18,13 @@ package skusapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/compute/mgmt/2017-09-01/skus"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/compute/mgmt/2017-09-01/skus"
 )
 
-        // ResourceSkusClientAPI contains the set of methods on the ResourceSkusClient type.
-        type ResourceSkusClientAPI interface {
-            List(ctx context.Context) (result skus.ResourceSkusResultPage, err error)
-        }
+// ResourceSkusClientAPI contains the set of methods on the ResourceSkusClient type.
+type ResourceSkusClientAPI interface {
+	List(ctx context.Context) (result skus.ResourceSkusResultPage, err error)
+}
 
-        var _ ResourceSkusClientAPI = (*skus.ResourceSkusClient)(nil)
+var _ ResourceSkusClientAPI = (*skus.ResourceSkusClient)(nil)
