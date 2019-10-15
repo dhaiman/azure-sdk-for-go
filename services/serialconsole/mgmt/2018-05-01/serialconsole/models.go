@@ -18,42 +18,63 @@ package serialconsole
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest"
 )
 
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/serialconsole/mgmt/2018-05-01/serialconsole"
 
-// DeploymentValidateResult details on Failure
-type DeploymentValidateResult struct {
-	// ErrorMessage - Error message
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-}
+            // DisableSerialConsoleResult returns whether or not Serial Console is disabled.
+            type DisableSerialConsoleResult struct {
+            // Disabled - Whether or not Serial Console is disabled.
+            Disabled *bool `json:"disabled,omitempty"`
+            }
 
-// GetDisabledResult returns whether or not Serial Console is disabled for this given subscription
-type GetDisabledResult struct {
-	autorest.Response `json:"-"`
-	// Disabled - Disabled result
-	Disabled *bool `json:"disabled,omitempty"`
-}
+            // EnableSerialConsoleResult returns whether or not Serial Console is disabled (enabled).
+            type EnableSerialConsoleResult struct {
+            // Disabled - Whether or not Serial Console is disabled (enabled).
+            Disabled *bool `json:"disabled,omitempty"`
+            }
 
-// GetResult returns whether or not Serial Console is disabled.
-type GetResult struct {
-	// Value - Whether or not Serial Console is disabled.
-	Value *bool `json:"value,omitempty"`
-}
+            // GetSerialConsoleDisabledResult returns whether or not Serial Console is disabled.
+            type GetSerialConsoleDisabledResult struct {
+            // Disabled - Whether or not Serial Console is disabled.
+            Disabled *bool `json:"disabled,omitempty"`
+            }
 
-// Operations serial Console operations
-type Operations struct {
-	autorest.Response `json:"-"`
-	// Value - Serial Console operations
-	Value *string `json:"value,omitempty"`
-}
+            // GetSerialConsoleSubscriptionNotFound error saying that the provided subscription could not be found
+            type GetSerialConsoleSubscriptionNotFound struct {
+            // Code - Error code
+            Code *string `json:"code,omitempty"`
+            // Message - Subscription not found message
+            Message *string `json:"message,omitempty"`
+            }
 
-// SetDisabledResult sets disable status and returns whether or not Serial Console is now disabled for this
-// given subscription
-type SetDisabledResult struct {
-	autorest.Response `json:"-"`
-	// Disabled - Disabled result
-	Disabled *bool `json:"disabled,omitempty"`
-}
+            // Operations serial Console operations
+            type Operations struct {
+            autorest.Response `json:"-"`
+            // Value - A list of Serial Console operations
+            Value *[]OperationsValueItem `json:"value,omitempty"`
+            }
+
+            // OperationsValueItem ...
+            type OperationsValueItem struct {
+            Name *string `json:"name,omitempty"`
+            IsDataAction *string `json:"isDataAction,omitempty"`
+            Display *OperationsValueItemDisplay `json:"display,omitempty"`
+            }
+
+            // OperationsValueItemDisplay ...
+            type OperationsValueItemDisplay struct {
+            Provider *string `json:"provider,omitempty"`
+            Resource *string `json:"resource,omitempty"`
+            Operation *string `json:"operation,omitempty"`
+            Description *string `json:"description,omitempty"`
+            }
+
+            // SetObject ...
+            type SetObject struct {
+            autorest.Response `json:"-"`
+            Value interface{} `json:"value,omitempty"`
+            }
+
