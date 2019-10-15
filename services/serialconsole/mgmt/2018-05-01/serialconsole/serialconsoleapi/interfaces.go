@@ -18,16 +18,16 @@ package serialconsoleapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/serialconsole/mgmt/2018-05-01/serialconsole"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/serialconsole/mgmt/2018-05-01/serialconsole"
 )
 
-        // BaseClientAPI contains the set of methods on the BaseClient type.
-        type BaseClientAPI interface {
-            DisableConsole(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
-            EnableConsole(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
-            GetConsoleStatus(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
-            ListOperations(ctx context.Context) (result serialconsole.Operations, err error)
-        }
+// BaseClientAPI contains the set of methods on the BaseClient type.
+type BaseClientAPI interface {
+	DisableConsole(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
+	EnableConsole(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
+	GetConsoleStatus(ctx context.Context, defaultParameter string) (result serialconsole.SetObject, err error)
+	ListOperations(ctx context.Context) (result serialconsole.Operations, err error)
+}
 
-        var _ BaseClientAPI = (*serialconsole.BaseClient)(nil)
+var _ BaseClientAPI = (*serialconsole.BaseClient)(nil)

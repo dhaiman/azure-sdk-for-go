@@ -18,63 +18,62 @@ package serialconsole
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/serialconsole/mgmt/2018-05-01/serialconsole"
 
-            // DisableSerialConsoleResult returns whether or not Serial Console is disabled.
-            type DisableSerialConsoleResult struct {
-            // Disabled - Whether or not Serial Console is disabled.
-            Disabled *bool `json:"disabled,omitempty"`
-            }
+// DisableSerialConsoleResult returns whether or not Serial Console is disabled.
+type DisableSerialConsoleResult struct {
+	// Disabled - Whether or not Serial Console is disabled.
+	Disabled *bool `json:"disabled,omitempty"`
+}
 
-            // EnableSerialConsoleResult returns whether or not Serial Console is disabled (enabled).
-            type EnableSerialConsoleResult struct {
-            // Disabled - Whether or not Serial Console is disabled (enabled).
-            Disabled *bool `json:"disabled,omitempty"`
-            }
+// EnableSerialConsoleResult returns whether or not Serial Console is disabled (enabled).
+type EnableSerialConsoleResult struct {
+	// Disabled - Whether or not Serial Console is disabled (enabled).
+	Disabled *bool `json:"disabled,omitempty"`
+}
 
-            // GetSerialConsoleDisabledResult returns whether or not Serial Console is disabled.
-            type GetSerialConsoleDisabledResult struct {
-            // Disabled - Whether or not Serial Console is disabled.
-            Disabled *bool `json:"disabled,omitempty"`
-            }
+// GetSerialConsoleDisabledResult returns whether or not Serial Console is disabled.
+type GetSerialConsoleDisabledResult struct {
+	// Disabled - Whether or not Serial Console is disabled.
+	Disabled *bool `json:"disabled,omitempty"`
+}
 
-            // GetSerialConsoleSubscriptionNotFound error saying that the provided subscription could not be found
-            type GetSerialConsoleSubscriptionNotFound struct {
-            // Code - Error code
-            Code *string `json:"code,omitempty"`
-            // Message - Subscription not found message
-            Message *string `json:"message,omitempty"`
-            }
+// GetSerialConsoleSubscriptionNotFound error saying that the provided subscription could not be found
+type GetSerialConsoleSubscriptionNotFound struct {
+	// Code - Error code
+	Code *string `json:"code,omitempty"`
+	// Message - Subscription not found message
+	Message *string `json:"message,omitempty"`
+}
 
-            // Operations serial Console operations
-            type Operations struct {
-            autorest.Response `json:"-"`
-            // Value - A list of Serial Console operations
-            Value *[]OperationsValueItem `json:"value,omitempty"`
-            }
+// Operations serial Console operations
+type Operations struct {
+	autorest.Response `json:"-"`
+	// Value - A list of Serial Console operations
+	Value *[]OperationsValueItem `json:"value,omitempty"`
+}
 
-            // OperationsValueItem ...
-            type OperationsValueItem struct {
-            Name *string `json:"name,omitempty"`
-            IsDataAction *string `json:"isDataAction,omitempty"`
-            Display *OperationsValueItemDisplay `json:"display,omitempty"`
-            }
+// OperationsValueItem ...
+type OperationsValueItem struct {
+	Name         *string                     `json:"name,omitempty"`
+	IsDataAction *string                     `json:"isDataAction,omitempty"`
+	Display      *OperationsValueItemDisplay `json:"display,omitempty"`
+}
 
-            // OperationsValueItemDisplay ...
-            type OperationsValueItemDisplay struct {
-            Provider *string `json:"provider,omitempty"`
-            Resource *string `json:"resource,omitempty"`
-            Operation *string `json:"operation,omitempty"`
-            Description *string `json:"description,omitempty"`
-            }
+// OperationsValueItemDisplay ...
+type OperationsValueItemDisplay struct {
+	Provider    *string `json:"provider,omitempty"`
+	Resource    *string `json:"resource,omitempty"`
+	Operation   *string `json:"operation,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
 
-            // SetObject ...
-            type SetObject struct {
-            autorest.Response `json:"-"`
-            Value interface{} `json:"value,omitempty"`
-            }
-
+// SetObject ...
+type SetObject struct {
+	autorest.Response `json:"-"`
+	Value             interface{} `json:"value,omitempty"`
+}
