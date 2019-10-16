@@ -18,24 +18,24 @@ package formrecognizerapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/formrecognizer"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/satori/go.uuid"
-	"io"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/formrecognizer"
+    "github.com/satori/go.uuid"
+    "io"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// BaseClientAPI contains the set of methods on the BaseClient type.
-type BaseClientAPI interface {
-	AnalyzeWithCustomModel(ctx context.Context, ID uuid.UUID, formStream io.ReadCloser, keys []string) (result formrecognizer.AnalyzeResult, err error)
-	BatchReadReceipt(ctx context.Context, imageURL formrecognizer.ImageURL) (result autorest.Response, err error)
-	BatchReadReceiptInStream(ctx context.Context, imageParameter io.ReadCloser) (result autorest.Response, err error)
-	DeleteCustomModel(ctx context.Context, ID uuid.UUID) (result autorest.Response, err error)
-	GetCustomModel(ctx context.Context, ID uuid.UUID) (result formrecognizer.ModelResult, err error)
-	GetCustomModels(ctx context.Context) (result formrecognizer.ModelsResult, err error)
-	GetExtractedKeys(ctx context.Context, ID uuid.UUID) (result formrecognizer.KeysResult, err error)
-	GetReadReceiptResult(ctx context.Context, operationID string) (result formrecognizer.ReadReceiptResult, err error)
-	TrainCustomModel(ctx context.Context, trainRequest formrecognizer.TrainRequest) (result formrecognizer.TrainResult, err error)
-}
+        // BaseClientAPI contains the set of methods on the BaseClient type.
+        type BaseClientAPI interface {
+            AnalyzeWithCustomModel(ctx context.Context, ID uuid.UUID, formStream io.ReadCloser, keys []string) (result formrecognizer.AnalyzeResult, err error)
+            BatchReadReceipt(ctx context.Context, imageURL formrecognizer.ImageURL) (result autorest.Response, err error)
+            BatchReadReceiptInStream(ctx context.Context, imageParameter io.ReadCloser) (result autorest.Response, err error)
+            DeleteCustomModel(ctx context.Context, ID uuid.UUID) (result autorest.Response, err error)
+            GetCustomModel(ctx context.Context, ID uuid.UUID) (result formrecognizer.ModelResult, err error)
+            GetCustomModels(ctx context.Context) (result formrecognizer.ModelsResult, err error)
+            GetExtractedKeys(ctx context.Context, ID uuid.UUID) (result formrecognizer.KeysResult, err error)
+            GetReadReceiptResult(ctx context.Context, operationID string) (result formrecognizer.ReadReceiptResult, err error)
+            TrainCustomModel(ctx context.Context, trainRequest formrecognizer.TrainRequest) (result formrecognizer.TrainResult, err error)
+        }
 
-var _ BaseClientAPI = (*formrecognizer.BaseClient)(nil)
+        var _ BaseClientAPI = (*formrecognizer.BaseClient)(nil)
