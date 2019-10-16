@@ -18,38 +18,35 @@ package billingapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/billing/mgmt/2018-03-01-preview/billing"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/billing/mgmt/2018-03-01-preview/billing"
 )
 
-// EnrollmentAccountsClientAPI contains the set of methods on the EnrollmentAccountsClient type.
-type EnrollmentAccountsClientAPI interface {
-	Get(ctx context.Context, name string) (result billing.EnrollmentAccount, err error)
-	List(ctx context.Context) (result billing.EnrollmentAccountListResultPage, err error)
-}
+        // EnrollmentAccountsClientAPI contains the set of methods on the EnrollmentAccountsClient type.
+        type EnrollmentAccountsClientAPI interface {
+            Get(ctx context.Context, name string) (result billing.EnrollmentAccount, err error)
+            List(ctx context.Context) (result billing.EnrollmentAccountListResultPage, err error)
+        }
 
-var _ EnrollmentAccountsClientAPI = (*billing.EnrollmentAccountsClient)(nil)
+        var _ EnrollmentAccountsClientAPI = (*billing.EnrollmentAccountsClient)(nil)
+        // PeriodsClientAPI contains the set of methods on the PeriodsClient type.
+        type PeriodsClientAPI interface {
+            Get(ctx context.Context, billingPeriodName string) (result billing.Period, err error)
+            List(ctx context.Context, filter string, skiptoken string, top *int32) (result billing.PeriodsListResultPage, err error)
+        }
 
-// PeriodsClientAPI contains the set of methods on the PeriodsClient type.
-type PeriodsClientAPI interface {
-	Get(ctx context.Context, billingPeriodName string) (result billing.Period, err error)
-	List(ctx context.Context, filter string, skiptoken string, top *int32) (result billing.PeriodsListResultPage, err error)
-}
+        var _ PeriodsClientAPI = (*billing.PeriodsClient)(nil)
+        // InvoicesClientAPI contains the set of methods on the InvoicesClient type.
+        type InvoicesClientAPI interface {
+            Get(ctx context.Context, invoiceName string) (result billing.Invoice, err error)
+            GetLatest(ctx context.Context) (result billing.Invoice, err error)
+            List(ctx context.Context, expand string, filter string, skiptoken string, top *int32) (result billing.InvoicesListResultPage, err error)
+        }
 
-var _ PeriodsClientAPI = (*billing.PeriodsClient)(nil)
+        var _ InvoicesClientAPI = (*billing.InvoicesClient)(nil)
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result billing.OperationListResultPage, err error)
+        }
 
-// InvoicesClientAPI contains the set of methods on the InvoicesClient type.
-type InvoicesClientAPI interface {
-	Get(ctx context.Context, invoiceName string) (result billing.Invoice, err error)
-	GetLatest(ctx context.Context) (result billing.Invoice, err error)
-	List(ctx context.Context, expand string, filter string, skiptoken string, top *int32) (result billing.InvoicesListResultPage, err error)
-}
-
-var _ InvoicesClientAPI = (*billing.InvoicesClient)(nil)
-
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result billing.OperationListResultPage, err error)
-}
-
-var _ OperationsClientAPI = (*billing.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*billing.OperationsClient)(nil)
