@@ -18,24 +18,24 @@ package locksapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-01-01/locks"
-	"github.com/Azure/go-autorest/autorest"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-01-01/locks"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// ManagementLocksClientAPI contains the set of methods on the ManagementLocksClient type.
-type ManagementLocksClientAPI interface {
-	CreateOrUpdateAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
-	CreateOrUpdateAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
-	CreateOrUpdateAtSubscriptionLevel(ctx context.Context, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
-	DeleteAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string) (result autorest.Response, err error)
-	DeleteAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, lockName string) (result autorest.Response, err error)
-	DeleteAtSubscriptionLevel(ctx context.Context, lockName string) (result autorest.Response, err error)
-	Get(ctx context.Context, lockName string) (result locks.ManagementLockObject, err error)
-	GetAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string) (result locks.ManagementLockObject, err error)
-	ListAtResourceGroupLevel(ctx context.Context, resourceGroupName string, filter string) (result locks.ManagementLockListResultPage, err error)
-	ListAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, filter string) (result locks.ManagementLockListResultPage, err error)
-	ListAtSubscriptionLevel(ctx context.Context, filter string) (result locks.ManagementLockListResultPage, err error)
-}
+        // ManagementLocksClientAPI contains the set of methods on the ManagementLocksClient type.
+        type ManagementLocksClientAPI interface {
+            CreateOrUpdateAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
+            CreateOrUpdateAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
+            CreateOrUpdateAtSubscriptionLevel(ctx context.Context, lockName string, parameters locks.ManagementLockObject) (result locks.ManagementLockObject, err error)
+            DeleteAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string) (result autorest.Response, err error)
+            DeleteAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, lockName string) (result autorest.Response, err error)
+            DeleteAtSubscriptionLevel(ctx context.Context, lockName string) (result autorest.Response, err error)
+            Get(ctx context.Context, lockName string) (result locks.ManagementLockObject, err error)
+            GetAtResourceGroupLevel(ctx context.Context, resourceGroupName string, lockName string) (result locks.ManagementLockObject, err error)
+            ListAtResourceGroupLevel(ctx context.Context, resourceGroupName string, filter string) (result locks.ManagementLockListResultPage, err error)
+            ListAtResourceLevel(ctx context.Context, resourceGroupName string, resourceProviderNamespace string, parentResourcePath string, resourceType string, resourceName string, filter string) (result locks.ManagementLockListResultPage, err error)
+            ListAtSubscriptionLevel(ctx context.Context, filter string) (result locks.ManagementLockListResultPage, err error)
+        }
 
-var _ ManagementLocksClientAPI = (*locks.ManagementLocksClient)(nil)
+        var _ ManagementLocksClientAPI = (*locks.ManagementLocksClient)(nil)
