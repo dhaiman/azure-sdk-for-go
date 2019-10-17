@@ -18,25 +18,24 @@ package databricksapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/databricks/mgmt/2018-04-01/databricks"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/databricks/mgmt/2018-04-01/databricks"
 )
 
-// WorkspacesClientAPI contains the set of methods on the WorkspacesClient type.
-type WorkspacesClientAPI interface {
-	CreateOrUpdate(ctx context.Context, parameters databricks.Workspace, resourceGroupName string, workspaceName string) (result databricks.WorkspacesCreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, workspaceName string) (result databricks.WorkspacesDeleteFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, workspaceName string) (result databricks.Workspace, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result databricks.WorkspaceListResultPage, err error)
-	ListBySubscription(ctx context.Context) (result databricks.WorkspaceListResultPage, err error)
-	Update(ctx context.Context, parameters databricks.WorkspaceUpdate, resourceGroupName string, workspaceName string) (result databricks.WorkspacesUpdateFuture, err error)
-}
+        // WorkspacesClientAPI contains the set of methods on the WorkspacesClient type.
+        type WorkspacesClientAPI interface {
+            CreateOrUpdate(ctx context.Context, parameters databricks.Workspace, resourceGroupName string, workspaceName string) (result databricks.WorkspacesCreateOrUpdateFuture, err error)
+            Delete(ctx context.Context, resourceGroupName string, workspaceName string) (result databricks.WorkspacesDeleteFuture, err error)
+            Get(ctx context.Context, resourceGroupName string, workspaceName string) (result databricks.Workspace, err error)
+            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result databricks.WorkspaceListResultPage, err error)
+            ListBySubscription(ctx context.Context) (result databricks.WorkspaceListResultPage, err error)
+            Update(ctx context.Context, parameters databricks.WorkspaceUpdate, resourceGroupName string, workspaceName string) (result databricks.WorkspacesUpdateFuture, err error)
+        }
 
-var _ WorkspacesClientAPI = (*databricks.WorkspacesClient)(nil)
+        var _ WorkspacesClientAPI = (*databricks.WorkspacesClient)(nil)
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result databricks.OperationListResultPage, err error)
+        }
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result databricks.OperationListResultPage, err error)
-}
-
-var _ OperationsClientAPI = (*databricks.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*databricks.OperationsClient)(nil)
