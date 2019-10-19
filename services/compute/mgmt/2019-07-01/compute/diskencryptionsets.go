@@ -23,30 +23,34 @@ import (
     "net/http"
     "context"
     "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// ImagesClient is the compute Client
-type ImagesClient struct {
+// DiskEncryptionSetsClient is the compute Client
+type DiskEncryptionSetsClient struct {
     BaseClient
 }
-// NewImagesClient creates an instance of the ImagesClient client.
-func NewImagesClient(subscriptionID string) ImagesClient {
-    return NewImagesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewDiskEncryptionSetsClient creates an instance of the DiskEncryptionSetsClient client.
+func NewDiskEncryptionSetsClient(subscriptionID string) DiskEncryptionSetsClient {
+    return NewDiskEncryptionSetsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewImagesClientWithBaseURI creates an instance of the ImagesClient client.
-    func NewImagesClientWithBaseURI(baseURI string, subscriptionID string) ImagesClient {
-        return ImagesClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewDiskEncryptionSetsClientWithBaseURI creates an instance of the DiskEncryptionSetsClient client.
+    func NewDiskEncryptionSetsClientWithBaseURI(baseURI string, subscriptionID string) DiskEncryptionSetsClient {
+        return DiskEncryptionSetsClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// CreateOrUpdate create or update an image.
+// CreateOrUpdate creates or updates a disk encryption set
     // Parameters:
         // resourceGroupName - the name of the resource group.
-        // imageName - the name of the image.
-        // parameters - parameters supplied to the Create Image operation.
-func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image) (result ImagesCreateOrUpdateFuture, err error) {
+        // diskEncryptionSetName - the name of the disk encryption set that is being created. The name can't be changed
+        // after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        // maximum name length is 80 characters.
+        // diskEncryptionSet - disk encryption set object supplied in the body of the Put disk encryption set
+        // operation.
+func (client DiskEncryptionSetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet) (result DiskEncryptionSetsCreateOrUpdateFuture, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.CreateOrUpdate")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.CreateOrUpdate")
         defer func() {
             sc := -1
             if result.Response() != nil {
@@ -55,15 +59,26 @@ func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, imageName, parameters)
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: diskEncryptionSet,
+             Constraints: []validation.Constraint{	{Target: "diskEncryptionSet.EncryptionSetProperties", Name: validation.Null, Rule: false ,
+            Chain: []validation.Constraint{	{Target: "diskEncryptionSet.EncryptionSetProperties.ActiveKey", Name: validation.Null, Rule: false ,
+            Chain: []validation.Constraint{	{Target: "diskEncryptionSet.EncryptionSetProperties.ActiveKey.SourceVault", Name: validation.Null, Rule: true, Chain: nil },
+            	{Target: "diskEncryptionSet.EncryptionSetProperties.ActiveKey.KeyURL", Name: validation.Null, Rule: true, Chain: nil },
+            }},
+            }}}}}); err != nil {
+            return result, validation.NewError("compute.DiskEncryptionSetsClient", "CreateOrUpdate", err.Error())
+            }
+
+                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "CreateOrUpdate", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "CreateOrUpdate", nil , "Failure preparing request")
     return
     }
 
             result, err = client.CreateOrUpdateSender(req)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
             return
             }
 
@@ -71,14 +86,14 @@ func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName
     }
 
     // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-    func (client ImagesClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, imageName string, parameters Image) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "imageName": autorest.Encode("path",imageName),
+            "diskEncryptionSetName": autorest.Encode("path",diskEncryptionSetName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -87,15 +102,15 @@ func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}",pathParameters),
-    autorest.WithJSON(parameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}",pathParameters),
+    autorest.WithJSON(diskEncryptionSet),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) CreateOrUpdateSender(req *http.Request) (future ImagesCreateOrUpdateFuture, err error) {
+    func (client DiskEncryptionSetsClient) CreateOrUpdateSender(req *http.Request) (future DiskEncryptionSetsCreateOrUpdateFuture, err error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             var resp *http.Response
             resp, err = autorest.SendWithSender(client, req, sd...)
@@ -108,7 +123,7 @@ func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) CreateOrUpdateResponder(resp *http.Response) (result Image, err error) {
+func (client DiskEncryptionSetsClient) CreateOrUpdateResponder(resp *http.Response) (result DiskEncryptionSet, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -119,13 +134,15 @@ func (client ImagesClient) CreateOrUpdateResponder(resp *http.Response) (result 
         return
     }
 
-// Delete deletes an Image.
+// Delete deletes a disk encryption set.
     // Parameters:
         // resourceGroupName - the name of the resource group.
-        // imageName - the name of the image.
-func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string, imageName string) (result ImagesDeleteFuture, err error) {
+        // diskEncryptionSetName - the name of the disk encryption set that is being created. The name can't be changed
+        // after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        // maximum name length is 80 characters.
+func (client DiskEncryptionSetsClient) Delete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (result DiskEncryptionSetsDeleteFuture, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.Delete")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.Delete")
         defer func() {
             sc := -1
             if result.Response() != nil {
@@ -134,15 +151,15 @@ func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string,
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.DeletePreparer(ctx, resourceGroupName, imageName)
+        req, err := client.DeletePreparer(ctx, resourceGroupName, diskEncryptionSetName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Delete", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Delete", nil , "Failure preparing request")
     return
     }
 
             result, err = client.DeleteSender(req)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Delete", result.Response(), "Failure sending request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Delete", result.Response(), "Failure sending request")
             return
             }
 
@@ -150,14 +167,14 @@ func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string,
     }
 
     // DeletePreparer prepares the Delete request.
-    func (client ImagesClient) DeletePreparer(ctx context.Context, resourceGroupName string, imageName string) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) DeletePreparer(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "imageName": autorest.Encode("path",imageName),
+            "diskEncryptionSetName": autorest.Encode("path",diskEncryptionSetName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -165,14 +182,14 @@ func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string,
         preparer := autorest.CreatePreparer(
     autorest.AsDelete(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // DeleteSender sends the Delete request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) DeleteSender(req *http.Request) (future ImagesDeleteFuture, err error) {
+    func (client DiskEncryptionSetsClient) DeleteSender(req *http.Request) (future DiskEncryptionSetsDeleteFuture, err error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             var resp *http.Response
             resp, err = autorest.SendWithSender(client, req, sd...)
@@ -185,7 +202,7 @@ func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string,
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client DiskEncryptionSetsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -195,14 +212,15 @@ func (client ImagesClient) DeleteResponder(resp *http.Response) (result autorest
         return
     }
 
-// Get gets an image.
+// Get gets information about a disk encryption set.
     // Parameters:
         // resourceGroupName - the name of the resource group.
-        // imageName - the name of the image.
-        // expand - the expand expression to apply on the operation.
-func (client ImagesClient) Get(ctx context.Context, resourceGroupName string, imageName string, expand string) (result Image, err error) {
+        // diskEncryptionSetName - the name of the disk encryption set that is being created. The name can't be changed
+        // after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        // maximum name length is 80 characters.
+func (client DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (result DiskEncryptionSet, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -211,61 +229,58 @@ func (client ImagesClient) Get(ctx context.Context, resourceGroupName string, im
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.GetPreparer(ctx, resourceGroupName, imageName, expand)
+        req, err := client.GetPreparer(ctx, resourceGroupName, diskEncryptionSetName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Get", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Get", resp, "Failure sending request")
             return
             }
 
             result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
     // GetPreparer prepares the Get request.
-    func (client ImagesClient) GetPreparer(ctx context.Context, resourceGroupName string, imageName string, expand string) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) GetPreparer(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "imageName": autorest.Encode("path",imageName),
+            "diskEncryptionSetName": autorest.Encode("path",diskEncryptionSetName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
-            if len(expand) > 0 {
-            queryParameters["$expand"] = autorest.Encode("query",expand)
-            }
 
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client DiskEncryptionSetsClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) GetResponder(resp *http.Response) (result Image, err error) {
+func (client DiskEncryptionSetsClient) GetResponder(resp *http.Response) (result DiskEncryptionSet, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -276,15 +291,14 @@ func (client ImagesClient) GetResponder(resp *http.Response) (result Image, err 
         return
     }
 
-// List gets the list of Images in the subscription. Use nextLink property in the response to get the next page of
-// Images. Do this till nextLink is null to fetch all the Images.
-func (client ImagesClient) List(ctx context.Context) (result ImageListResultPage, err error) {
+// List lists all the disk encryption sets under a subscription.
+func (client DiskEncryptionSetsClient) List(ctx context.Context) (result DiskEncryptionSetListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.List")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.List")
         defer func() {
             sc := -1
-            if result.ilr.Response.Response != nil {
-                sc = result.ilr.Response.Response.StatusCode
+            if result.desl.Response.Response != nil {
+                sc = result.desl.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
@@ -292,32 +306,32 @@ func (client ImagesClient) List(ctx context.Context) (result ImageListResultPage
                 result.fn = client.listNextResults
     req, err := client.ListPreparer(ctx)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "List", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "List", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListSender(req)
             if err != nil {
-            result.ilr.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "List", resp, "Failure sending request")
+            result.desl.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "List", resp, "Failure sending request")
             return
             }
 
-            result.ilr, err = client.ListResponder(resp)
+            result.desl, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "List", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "List", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListPreparer prepares the List request.
-    func (client ImagesClient) ListPreparer(ctx context.Context) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) ListPreparer(ctx context.Context) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -325,21 +339,21 @@ func (client ImagesClient) List(ctx context.Context) (result ImageListResultPage
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/images",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) ListSender(req *http.Request) (*http.Response, error) {
+    func (client DiskEncryptionSetsClient) ListSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) ListResponder(resp *http.Response) (result ImageListResult, err error) {
+func (client DiskEncryptionSetsClient) ListResponder(resp *http.Response) (result DiskEncryptionSetList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -351,10 +365,10 @@ func (client ImagesClient) ListResponder(resp *http.Response) (result ImageListR
     }
 
             // listNextResults retrieves the next set of results, if any.
-            func (client ImagesClient) listNextResults(ctx context.Context, lastResults ImageListResult) (result ImageListResult, err error) {
-            req, err := lastResults.imageListResultPreparer(ctx)
+            func (client DiskEncryptionSetsClient) listNextResults(ctx context.Context, lastResults DiskEncryptionSetList) (result DiskEncryptionSetList, err error) {
+            req, err := lastResults.diskEncryptionSetListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "compute.ImagesClient", "listNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -362,19 +376,19 @@ func (client ImagesClient) ListResponder(resp *http.Response) (result ImageListR
             resp, err := client.ListSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "compute.ImagesClient", "listNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "listNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client ImagesClient) ListComplete(ctx context.Context) (result ImageListResultIterator, err error) {
+    func (client DiskEncryptionSetsClient) ListComplete(ctx context.Context) (result DiskEncryptionSetListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.List")
+            ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.List")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -387,16 +401,16 @@ func (client ImagesClient) ListResponder(resp *http.Response) (result ImageListR
                 return
         }
 
-// ListByResourceGroup gets the list of images under a resource group.
+// ListByResourceGroup lists all the disk encryption sets under a resource group.
     // Parameters:
         // resourceGroupName - the name of the resource group.
-func (client ImagesClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result ImageListResultPage, err error) {
+func (client DiskEncryptionSetsClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result DiskEncryptionSetListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.ListByResourceGroup")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.ListByResourceGroup")
         defer func() {
             sc := -1
-            if result.ilr.Response.Response != nil {
-                sc = result.ilr.Response.Response.StatusCode
+            if result.desl.Response.Response != nil {
+                sc = result.desl.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
@@ -404,33 +418,33 @@ func (client ImagesClient) ListByResourceGroup(ctx context.Context, resourceGrou
                 result.fn = client.listByResourceGroupNextResults
     req, err := client.ListByResourceGroupPreparer(ctx, resourceGroupName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "ListByResourceGroup", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "ListByResourceGroup", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListByResourceGroupSender(req)
             if err != nil {
-            result.ilr.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "ListByResourceGroup", resp, "Failure sending request")
+            result.desl.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "ListByResourceGroup", resp, "Failure sending request")
             return
             }
 
-            result.ilr, err = client.ListByResourceGroupResponder(resp)
+            result.desl, err = client.ListByResourceGroupResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "ListByResourceGroup", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "ListByResourceGroup", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListByResourceGroupPreparer prepares the ListByResourceGroup request.
-    func (client ImagesClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -438,21 +452,21 @@ func (client ImagesClient) ListByResourceGroup(ctx context.Context, resourceGrou
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListByResourceGroupSender sends the ListByResourceGroup request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) ListByResourceGroupSender(req *http.Request) (*http.Response, error) {
+    func (client DiskEncryptionSetsClient) ListByResourceGroupSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListByResourceGroupResponder handles the response to the ListByResourceGroup request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) ListByResourceGroupResponder(resp *http.Response) (result ImageListResult, err error) {
+func (client DiskEncryptionSetsClient) ListByResourceGroupResponder(resp *http.Response) (result DiskEncryptionSetList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -464,10 +478,10 @@ func (client ImagesClient) ListByResourceGroupResponder(resp *http.Response) (re
     }
 
             // listByResourceGroupNextResults retrieves the next set of results, if any.
-            func (client ImagesClient) listByResourceGroupNextResults(ctx context.Context, lastResults ImageListResult) (result ImageListResult, err error) {
-            req, err := lastResults.imageListResultPreparer(ctx)
+            func (client DiskEncryptionSetsClient) listByResourceGroupNextResults(ctx context.Context, lastResults DiskEncryptionSetList) (result DiskEncryptionSetList, err error) {
+            req, err := lastResults.diskEncryptionSetListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "compute.ImagesClient", "listByResourceGroupNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listByResourceGroupNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -475,19 +489,19 @@ func (client ImagesClient) ListByResourceGroupResponder(resp *http.Response) (re
             resp, err := client.ListByResourceGroupSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "compute.ImagesClient", "listByResourceGroupNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listByResourceGroupNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListByResourceGroupResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "listByResourceGroupNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "listByResourceGroupNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListByResourceGroupComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client ImagesClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result ImageListResultIterator, err error) {
+    func (client DiskEncryptionSetsClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result DiskEncryptionSetListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.ListByResourceGroup")
+            ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.ListByResourceGroup")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -500,14 +514,17 @@ func (client ImagesClient) ListByResourceGroupResponder(resp *http.Response) (re
                 return
         }
 
-// Update update an image.
+// Update updates (patches) a disk encryption set.
     // Parameters:
         // resourceGroupName - the name of the resource group.
-        // imageName - the name of the image.
-        // parameters - parameters supplied to the Update Image operation.
-func (client ImagesClient) Update(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate) (result ImagesUpdateFuture, err error) {
+        // diskEncryptionSetName - the name of the disk encryption set that is being created. The name can't be changed
+        // after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        // maximum name length is 80 characters.
+        // diskEncryptionSet - disk encryption set object supplied in the body of the Patch disk encryption set
+        // operation.
+func (client DiskEncryptionSetsClient) Update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate) (result DiskEncryptionSetsUpdateFuture, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImagesClient.Update")
+        ctx = tracing.StartSpan(ctx, fqdn + "/DiskEncryptionSetsClient.Update")
         defer func() {
             sc := -1
             if result.Response() != nil {
@@ -516,15 +533,15 @@ func (client ImagesClient) Update(ctx context.Context, resourceGroupName string,
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.UpdatePreparer(ctx, resourceGroupName, imageName, parameters)
+        req, err := client.UpdatePreparer(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Update", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Update", nil , "Failure preparing request")
     return
     }
 
             result, err = client.UpdateSender(req)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Update", result.Response(), "Failure sending request")
+            err = autorest.NewErrorWithError(err, "compute.DiskEncryptionSetsClient", "Update", result.Response(), "Failure sending request")
             return
             }
 
@@ -532,14 +549,14 @@ func (client ImagesClient) Update(ctx context.Context, resourceGroupName string,
     }
 
     // UpdatePreparer prepares the Update request.
-    func (client ImagesClient) UpdatePreparer(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate) (*http.Request, error) {
+    func (client DiskEncryptionSetsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "imageName": autorest.Encode("path",imageName),
+            "diskEncryptionSetName": autorest.Encode("path",diskEncryptionSetName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2019-03-01"
+                        const APIVersion = "2019-07-01"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -548,15 +565,15 @@ func (client ImagesClient) Update(ctx context.Context, resourceGroupName string,
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPatch(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}",pathParameters),
-    autorest.WithJSON(parameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}",pathParameters),
+    autorest.WithJSON(diskEncryptionSet),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // UpdateSender sends the Update request. The method will close the
     // http.Response Body if it receives an error.
-    func (client ImagesClient) UpdateSender(req *http.Request) (future ImagesUpdateFuture, err error) {
+    func (client DiskEncryptionSetsClient) UpdateSender(req *http.Request) (future DiskEncryptionSetsUpdateFuture, err error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             var resp *http.Response
             resp, err = autorest.SendWithSender(client, req, sd...)
@@ -569,11 +586,11 @@ func (client ImagesClient) Update(ctx context.Context, resourceGroupName string,
 
 // UpdateResponder handles the response to the Update request. The method always
 // closes the http.Response Body.
-func (client ImagesClient) UpdateResponder(resp *http.Response) (result Image, err error) {
+func (client DiskEncryptionSetsClient) UpdateResponder(resp *http.Response) (result DiskEncryptionSet, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusCreated),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusAccepted),
     autorest.ByUnmarshallingJSON(&result),
     autorest.ByClosing())
     result.Response = autorest.Response{Response: resp}
