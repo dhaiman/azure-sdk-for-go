@@ -18,21 +18,21 @@ package redisapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/redis/mgmt/2015-08-01/redis"
-	"github.com/Azure/go-autorest/autorest"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/redis/mgmt/2015-08-01/redis"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// ClientAPI contains the set of methods on the Client type.
-type ClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, parameters redis.CreateOrUpdateParameters) (result redis.ResourceWithAccessKey, err error)
-	Delete(ctx context.Context, resourceGroupName string, name string) (result autorest.Response, err error)
-	ForceReboot(ctx context.Context, resourceGroupName string, name string, parameters redis.RebootParameters) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, name string) (result redis.ResourceType, err error)
-	List(ctx context.Context) (result redis.ListResultPage, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result redis.ListResultPage, err error)
-	ListKeys(ctx context.Context, resourceGroupName string, name string) (result redis.ListKeysResult, err error)
-	RegenerateKey(ctx context.Context, resourceGroupName string, name string, parameters redis.RegenerateKeyParameters) (result redis.ListKeysResult, err error)
-}
+        // ClientAPI contains the set of methods on the Client type.
+        type ClientAPI interface {
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, parameters redis.CreateOrUpdateParameters) (result redis.ResourceWithAccessKey, err error)
+            Delete(ctx context.Context, resourceGroupName string, name string) (result autorest.Response, err error)
+            ForceReboot(ctx context.Context, resourceGroupName string, name string, parameters redis.RebootParameters) (result autorest.Response, err error)
+            Get(ctx context.Context, resourceGroupName string, name string) (result redis.ResourceType, err error)
+            List(ctx context.Context) (result redis.ListResultPage, err error)
+            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result redis.ListResultPage, err error)
+            ListKeys(ctx context.Context, resourceGroupName string, name string) (result redis.ListKeysResult, err error)
+            RegenerateKey(ctx context.Context, resourceGroupName string, name string, parameters redis.RegenerateKeyParameters) (result redis.ListKeysResult, err error)
+        }
 
-var _ ClientAPI = (*redis.Client)(nil)
+        var _ ClientAPI = (*redis.Client)(nil)
