@@ -1,7 +1,7 @@
-// Package policy implements the Azure ARM Policy service API version 2015-10-01-preview.
+// Package managedapplications implements the Azure ARM Managedapplications service API version 2019-07-01.
 //
-// To manage and control access to your resources, you can define customized policies and assign them at a scope.
-package policy
+// ARM applications
+package managedapplications
 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 //
@@ -25,11 +25,11 @@ import (
 )
 
 const (
-	// DefaultBaseURI is the default URI used for the service Policy
+	// DefaultBaseURI is the default URI used for the service Managedapplications
 	DefaultBaseURI = "https://management.azure.com"
 )
 
-// BaseClient is the base client for Policy.
+// BaseClient is the base client for Managedapplications.
 type BaseClient struct {
 	autorest.Client
 	BaseURI        string
