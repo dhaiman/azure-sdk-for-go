@@ -44,10 +44,10 @@ type AccountsClientAPI interface {
 	Delete(ctx context.Context, resourceGroupName string, accountName string) (result autorest.Response, err error)
 	Failover(ctx context.Context, resourceGroupName string, accountName string) (result storage.AccountsFailoverFuture, err error)
 	GetProperties(ctx context.Context, resourceGroupName string, accountName string, expand storage.AccountExpand) (result storage.Account, err error)
-	List(ctx context.Context) (result storage.AccountListResult, err error)
+	List(ctx context.Context) (result storage.AccountListResultPage, err error)
 	ListAccountSAS(ctx context.Context, resourceGroupName string, accountName string, parameters storage.AccountSasParameters) (result storage.ListAccountSasResponse, err error)
 	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result storage.AccountListResult, err error)
-	ListKeys(ctx context.Context, resourceGroupName string, accountName string) (result storage.AccountListKeysResult, err error)
+	ListKeys(ctx context.Context, resourceGroupName string, accountName string, expand storage.ListKeyExpand) (result storage.AccountListKeysResult, err error)
 	ListServiceSAS(ctx context.Context, resourceGroupName string, accountName string, parameters storage.ServiceSasParameters) (result storage.ListServiceSasResponse, err error)
 	RegenerateKey(ctx context.Context, resourceGroupName string, accountName string, regenerateKey storage.AccountRegenerateKeyParameters) (result storage.AccountListKeysResult, err error)
 	RevokeUserDelegationKeys(ctx context.Context, resourceGroupName string, accountName string) (result autorest.Response, err error)
@@ -104,7 +104,7 @@ var _ BlobContainersClientAPI = (*storage.BlobContainersClient)(nil)
 type FileServicesClientAPI interface {
 	GetServiceProperties(ctx context.Context, resourceGroupName string, accountName string) (result storage.FileServiceProperties, err error)
 	List(ctx context.Context, resourceGroupName string, accountName string) (result storage.FileServiceItems, err error)
-	PutServiceProperties(ctx context.Context, resourceGroupName string, accountName string, parameters storage.FileServiceProperties) (result storage.FileServiceProperties, err error)
+	SetServiceProperties(ctx context.Context, resourceGroupName string, accountName string, parameters storage.FileServiceProperties) (result storage.FileServiceProperties, err error)
 }
 
 var _ FileServicesClientAPI = (*storage.FileServicesClient)(nil)
@@ -114,7 +114,7 @@ type FileSharesClientAPI interface {
 	Create(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare) (result storage.FileShare, err error)
 	Delete(ctx context.Context, resourceGroupName string, accountName string, shareName string) (result autorest.Response, err error)
 	Get(ctx context.Context, resourceGroupName string, accountName string, shareName string) (result storage.FileShare, err error)
-	List(ctx context.Context, resourceGroupName string, accountName string, skipToken string, maxpagesize string, filter string) (result storage.FileShareItems, err error)
+	List(ctx context.Context, resourceGroupName string, accountName string, skipToken string, maxpagesize string, filter string) (result storage.FileShareItemsPage, err error)
 	Update(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare) (result storage.FileShare, err error)
 }
 

@@ -452,10 +452,15 @@ All packages and the runtime are instrumented using [OpenCensus](https://opencen
 
 ### Enable
 
-As of now, tracing is disabled by default. There are 2 ways to enable tracing:
+By default, no tracing provider will be compiled into your program, and the legacy approach of setting `AZURE_SDK_TRACING_ENABLED` environment variable will no longer take effect.
 
-- set the environment variable `AZURE_SDK_TRACING_ENABLED` (_Recommended_)
-- alternatively, import the `github.com/Azure/go-autorest/tracing` package and call the `tracing.Enable()` function or `tracing.EnableWithAIForwarding()` if using the [App Insights Forwarder](https://docs.microsoft.com/en-us/azure/application-insights/opencensus-local-forwarder).
+To enable tracing, you must now add the following include to your source file.
+
+``` go
+    include _ "github.com/Azure/go-autorest/tracing/opencensus"
+```
+
+To hook up a tracer simply call `tracing.Register()` passing in a type that satisfies the `tracing.Tracer` interface.
 
 **Note**: In future major releases of the SDK, tracing may become enabled by default.
 
@@ -509,14 +514,25 @@ Changing one or more values will affect all subsequet API calls.
 The default policy is to call `autorest.DoRetryForStatusCodes()` from an API's `Sender` method.  Example:
 ```go
 func (client OperationsClient) ListSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req,
-        autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 ```
 
 Details on how `autorest.DoRetryforStatusCodes()` works can be found in the [documentation](https://godoc.org/github.com/Azure/go-autorest/autorest#DoRetryForStatusCodes).
 
-It is not possible to change the invoked retry policy without writing a custom `Sender` and its calling code.
+The slice of `SendDecorators` used in a `Sender` method can be customized per API call by smuggling them in the context.  Here's an example.
+
+```go
+ctx := context.Background()
+autorest.WithSendDecorators(ctx, []autorest.SendDecorator{
+	autorest.DoRetryForStatusCodesWithCap(client.RetryAttempts,
+		client.RetryDuration, time.Duration(0),
+        autorest.StatusCodesForRetry...)})
+client.List(ctx)
+```
+
+This will replace the default slice of `SendDecorators` with the provided slice.
 
 The `PollingDelay` and `PollingDuration` values are used exclusively by [WaitForCompletionRef()](https://godoc.org/github.com/Azure/go-autorest/autorest/azure#Future.WaitForCompletionRef) when blocking on an async call until it completes.
 

@@ -1463,16 +1463,10 @@ type CheckOCIDriverTaskInput struct {
 
 // CheckOCIDriverTaskOutput output for the service task to check for OCI drivers.
 type CheckOCIDriverTaskOutput struct {
-	// InstalledDriver - READ-ONLY; Information about the installed driver if found and valid.
-	InstalledDriver map[string][]OracleOCIDriverInfo `json:"installedDriver"`
+	// InstalledDriver - Information about the installed driver if found and valid.
+	InstalledDriver *OracleOCIDriverInfo `json:"installedDriver,omitempty"`
 	// ValidationErrors - READ-ONLY; Validation errors
 	ValidationErrors *[]ReportableException `json:"validationErrors,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for CheckOCIDriverTaskOutput.
-func (codto CheckOCIDriverTaskOutput) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	return json.Marshal(objectMap)
 }
 
 // CheckOCIDriverTaskProperties properties for the task that checks for OCI drivers.
@@ -14590,6 +14584,8 @@ type MigrateSQLServerSQLMITaskInput struct {
 	BackupBlobShare *BlobShare `json:"backupBlobShare,omitempty"`
 	// BackupMode - Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. Possible values include: 'CreateBackup', 'ExistingBackup'
 	BackupMode BackupMode `json:"backupMode,omitempty"`
+	// AadDomainName - Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected
+	AadDomainName *string `json:"aadDomainName,omitempty"`
 	// SourceConnectionInfo - Information for connecting to source
 	SourceConnectionInfo *SQLConnectionInfo `json:"sourceConnectionInfo,omitempty"`
 	// TargetConnectionInfo - Information for connecting to target
@@ -15962,8 +15958,8 @@ func (msccp MigrateSyncCompleteCommandProperties) AsBasicCommandProperties() (Ba
 
 // MigrationEligibilityInfo information about migration eligibility of a server object
 type MigrationEligibilityInfo struct {
-	// IsEligibileForMigration - READ-ONLY; Whether object is eligible for migration or not.
-	IsEligibileForMigration *bool `json:"isEligibileForMigration,omitempty"`
+	// IsEligibleForMigration - READ-ONLY; Whether object is eligible for migration or not.
+	IsEligibleForMigration *bool `json:"isEligibleForMigration,omitempty"`
 	// ValidationMessages - READ-ONLY; Information about eligibility failure for the server object.
 	ValidationMessages *[]string `json:"validationMessages,omitempty"`
 }
