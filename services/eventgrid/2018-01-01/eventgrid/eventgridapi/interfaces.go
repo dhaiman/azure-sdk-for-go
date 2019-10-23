@@ -18,14 +18,14 @@ package eventgridapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/eventgrid/2018-01-01/eventgrid"
-    "github.com/Azure/go-autorest/autorest"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/eventgrid/2018-01-01/eventgrid"
+	"github.com/Azure/go-autorest/autorest"
 )
 
-        // BaseClientAPI contains the set of methods on the BaseClient type.
-        type BaseClientAPI interface {
-            PublishEvents(ctx context.Context, topicHostname string, events []eventgrid.Event) (result autorest.Response, err error)
-        }
+// BaseClientAPI contains the set of methods on the BaseClient type.
+type BaseClientAPI interface {
+	PublishEvents(ctx context.Context, topicHostname string, events []eventgrid.Event) (result autorest.Response, err error)
+}
 
-        var _ BaseClientAPI = (*eventgrid.BaseClient)(nil)
+var _ BaseClientAPI = (*eventgrid.BaseClient)(nil)
