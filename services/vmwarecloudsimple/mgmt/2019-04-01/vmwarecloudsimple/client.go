@@ -21,33 +21,33 @@ package vmwarecloudsimple
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-// DefaultBaseURI is the default URI used for the service Vmwarecloudsimple
-DefaultBaseURI = "https://management.azure.com")
+	// DefaultBaseURI is the default URI used for the service Vmwarecloudsimple
+	DefaultBaseURI = "https://management.azure.com"
+)
 
 // BaseClient is the base client for Vmwarecloudsimple.
 type BaseClient struct {
-    autorest.Client
-    BaseURI string
-            SubscriptionID string
-            Referer string
+	autorest.Client
+	BaseURI        string
+	SubscriptionID string
+	Referer        string
 }
 
 // New creates an instance of the BaseClient client.
-func New(subscriptionID string, referer string)BaseClient {
-    return NewWithBaseURI(DefaultBaseURI, subscriptionID, referer)
+func New(subscriptionID string, referer string) BaseClient {
+	return NewWithBaseURI(DefaultBaseURI, subscriptionID, referer)
 }
 
 // NewWithBaseURI creates an instance of the BaseClient client.
 func NewWithBaseURI(baseURI string, subscriptionID string, referer string) BaseClient {
-    return BaseClient{
-        Client: autorest.NewClientWithUserAgent(UserAgent()),
-        BaseURI: baseURI,
-                SubscriptionID: subscriptionID,
-                Referer: referer,
-    }
+	return BaseClient{
+		Client:         autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI:        baseURI,
+		SubscriptionID: subscriptionID,
+		Referer:        referer,
+	}
 }
-
