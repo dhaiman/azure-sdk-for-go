@@ -26,27 +26,29 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// AutoProvisioningSettingsClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
-type AutoProvisioningSettingsClient struct {
+// AssessmentsMetadataSubscriptionClient is the API spec for Microsoft.Security (Azure Security Center) resource
+// provider
+type AssessmentsMetadataSubscriptionClient struct {
     BaseClient
 }
-// NewAutoProvisioningSettingsClient creates an instance of the AutoProvisioningSettingsClient client.
-func NewAutoProvisioningSettingsClient(subscriptionID string, ascLocation string) AutoProvisioningSettingsClient {
-    return NewAutoProvisioningSettingsClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
+// NewAssessmentsMetadataSubscriptionClient creates an instance of the AssessmentsMetadataSubscriptionClient client.
+func NewAssessmentsMetadataSubscriptionClient(subscriptionID string, ascLocation string) AssessmentsMetadataSubscriptionClient {
+    return NewAssessmentsMetadataSubscriptionClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
 }
 
-// NewAutoProvisioningSettingsClientWithBaseURI creates an instance of the AutoProvisioningSettingsClient client.
-    func NewAutoProvisioningSettingsClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) AutoProvisioningSettingsClient {
-        return AutoProvisioningSettingsClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
+// NewAssessmentsMetadataSubscriptionClientWithBaseURI creates an instance of the AssessmentsMetadataSubscriptionClient
+// client.
+    func NewAssessmentsMetadataSubscriptionClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) AssessmentsMetadataSubscriptionClient {
+        return AssessmentsMetadataSubscriptionClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
     }
 
-// Create details of a specific setting
+// Create create metadata information on an assessment type in a specific subscription
     // Parameters:
-        // settingName - auto provisioning setting key
-        // setting - auto provisioning setting key
-func (client AutoProvisioningSettingsClient) Create(ctx context.Context, settingName string, setting AutoProvisioningSetting) (result AutoProvisioningSetting, err error) {
+        // assessmentMetadataName - the Assessment Key - Unique key for the assessment type
+        // assessmentMetadata - assessmentMetadata object
+func (client AssessmentsMetadataSubscriptionClient) Create(ctx context.Context, assessmentMetadataName string, assessmentMetadata AssessmentMetadata) (result AssessmentMetadata, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/AutoProvisioningSettingsClient.Create")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataSubscriptionClient.Create")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -58,38 +60,38 @@ func (client AutoProvisioningSettingsClient) Create(ctx context.Context, setting
             if err := validation.Validate([]validation.Validation{
             { TargetValue: client.SubscriptionID,
              Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.AutoProvisioningSettingsClient", "Create", err.Error())
+            return result, validation.NewError("security.AssessmentsMetadataSubscriptionClient", "Create", err.Error())
             }
 
-                req, err := client.CreatePreparer(ctx, settingName, setting)
+                req, err := client.CreatePreparer(ctx, assessmentMetadataName, assessmentMetadata)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Create", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Create", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.CreateSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Create", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Create", resp, "Failure sending request")
             return
             }
 
             result, err = client.CreateResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Create", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Create", resp, "Failure responding to request")
             }
 
     return
     }
 
     // CreatePreparer prepares the Create request.
-    func (client AutoProvisioningSettingsClient) CreatePreparer(ctx context.Context, settingName string, setting AutoProvisioningSetting) (*http.Request, error) {
+    func (client AssessmentsMetadataSubscriptionClient) CreatePreparer(ctx context.Context, assessmentMetadataName string, assessmentMetadata AssessmentMetadata) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "settingName": autorest.Encode("path",settingName),
+            "assessmentMetadataName": autorest.Encode("path",assessmentMetadataName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -98,22 +100,22 @@ func (client AutoProvisioningSettingsClient) Create(ctx context.Context, setting
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}",pathParameters),
-    autorest.WithJSON(setting),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}",pathParameters),
+    autorest.WithJSON(assessmentMetadata),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // CreateSender sends the Create request. The method will close the
     // http.Response Body if it receives an error.
-    func (client AutoProvisioningSettingsClient) CreateSender(req *http.Request) (*http.Response, error) {
+    func (client AssessmentsMetadataSubscriptionClient) CreateSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // CreateResponder handles the response to the Create request. The method always
 // closes the http.Response Body.
-func (client AutoProvisioningSettingsClient) CreateResponder(resp *http.Response) (result AutoProvisioningSetting, err error) {
+func (client AssessmentsMetadataSubscriptionClient) CreateResponder(resp *http.Response) (result AssessmentMetadata, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -124,12 +126,12 @@ func (client AutoProvisioningSettingsClient) CreateResponder(resp *http.Response
         return
     }
 
-// Get details of a specific setting
+// Get get metadata information on an assessment type in a specific subscription
     // Parameters:
-        // settingName - auto provisioning setting key
-func (client AutoProvisioningSettingsClient) Get(ctx context.Context, settingName string) (result AutoProvisioningSetting, err error) {
+        // assessmentMetadataName - the Assessment Key - Unique key for the assessment type
+func (client AssessmentsMetadataSubscriptionClient) Get(ctx context.Context, assessmentMetadataName string) (result AssessmentMetadata, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/AutoProvisioningSettingsClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataSubscriptionClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -141,38 +143,38 @@ func (client AutoProvisioningSettingsClient) Get(ctx context.Context, settingNam
             if err := validation.Validate([]validation.Validation{
             { TargetValue: client.SubscriptionID,
              Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.AutoProvisioningSettingsClient", "Get", err.Error())
+            return result, validation.NewError("security.AssessmentsMetadataSubscriptionClient", "Get", err.Error())
             }
 
-                req, err := client.GetPreparer(ctx, settingName)
+                req, err := client.GetPreparer(ctx, assessmentMetadataName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Get", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Get", resp, "Failure sending request")
             return
             }
 
             result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
     // GetPreparer prepares the Get request.
-    func (client AutoProvisioningSettingsClient) GetPreparer(ctx context.Context, settingName string) (*http.Request, error) {
+    func (client AssessmentsMetadataSubscriptionClient) GetPreparer(ctx context.Context, assessmentMetadataName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "settingName": autorest.Encode("path",settingName),
+            "assessmentMetadataName": autorest.Encode("path",assessmentMetadataName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -180,21 +182,21 @@ func (client AutoProvisioningSettingsClient) Get(ctx context.Context, settingNam
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client AutoProvisioningSettingsClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client AssessmentsMetadataSubscriptionClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client AutoProvisioningSettingsClient) GetResponder(resp *http.Response) (result AutoProvisioningSetting, err error) {
+func (client AssessmentsMetadataSubscriptionClient) GetResponder(resp *http.Response) (result AssessmentMetadata, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -205,14 +207,14 @@ func (client AutoProvisioningSettingsClient) GetResponder(resp *http.Response) (
         return
     }
 
-// List exposes the auto provisioning settings of the subscriptions
-func (client AutoProvisioningSettingsClient) List(ctx context.Context) (result AutoProvisioningSettingListPage, err error) {
+// List get metadata information on all assessment types in a specific subscription
+func (client AssessmentsMetadataSubscriptionClient) List(ctx context.Context) (result AssessmentMetadataListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/AutoProvisioningSettingsClient.List")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataSubscriptionClient.List")
         defer func() {
             sc := -1
-            if result.apsl.Response.Response != nil {
-                sc = result.apsl.Response.Response.StatusCode
+            if result.aml.Response.Response != nil {
+                sc = result.aml.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
@@ -220,38 +222,38 @@ func (client AutoProvisioningSettingsClient) List(ctx context.Context) (result A
             if err := validation.Validate([]validation.Validation{
             { TargetValue: client.SubscriptionID,
              Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.AutoProvisioningSettingsClient", "List", err.Error())
+            return result, validation.NewError("security.AssessmentsMetadataSubscriptionClient", "List", err.Error())
             }
 
                         result.fn = client.listNextResults
     req, err := client.ListPreparer(ctx)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "List", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "List", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListSender(req)
             if err != nil {
-            result.apsl.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "List", resp, "Failure sending request")
+            result.aml.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "List", resp, "Failure sending request")
             return
             }
 
-            result.apsl, err = client.ListResponder(resp)
+            result.aml, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "List", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "List", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListPreparer prepares the List request.
-    func (client AutoProvisioningSettingsClient) ListPreparer(ctx context.Context) (*http.Request, error) {
+    func (client AssessmentsMetadataSubscriptionClient) ListPreparer(ctx context.Context) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -259,21 +261,21 @@ func (client AutoProvisioningSettingsClient) List(ctx context.Context) (result A
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client AutoProvisioningSettingsClient) ListSender(req *http.Request) (*http.Response, error) {
+    func (client AssessmentsMetadataSubscriptionClient) ListSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client AutoProvisioningSettingsClient) ListResponder(resp *http.Response) (result AutoProvisioningSettingList, err error) {
+func (client AssessmentsMetadataSubscriptionClient) ListResponder(resp *http.Response) (result AssessmentMetadataList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -285,10 +287,10 @@ func (client AutoProvisioningSettingsClient) ListResponder(resp *http.Response) 
     }
 
             // listNextResults retrieves the next set of results, if any.
-            func (client AutoProvisioningSettingsClient) listNextResults(ctx context.Context, lastResults AutoProvisioningSettingList) (result AutoProvisioningSettingList, err error) {
-            req, err := lastResults.autoProvisioningSettingListPreparer(ctx)
+            func (client AssessmentsMetadataSubscriptionClient) listNextResults(ctx context.Context, lastResults AssessmentMetadataList) (result AssessmentMetadataList, err error) {
+            req, err := lastResults.assessmentMetadataListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "listNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "listNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -296,19 +298,19 @@ func (client AutoProvisioningSettingsClient) ListResponder(resp *http.Response) 
             resp, err := client.ListSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "listNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "listNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.AutoProvisioningSettingsClient", "listNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataSubscriptionClient", "listNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client AutoProvisioningSettingsClient) ListComplete(ctx context.Context) (result AutoProvisioningSettingListIterator, err error) {
+    func (client AssessmentsMetadataSubscriptionClient) ListComplete(ctx context.Context) (result AssessmentMetadataListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/AutoProvisioningSettingsClient.List")
+            ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataSubscriptionClient.List")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {

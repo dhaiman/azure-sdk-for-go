@@ -25,28 +25,26 @@ import (
     "github.com/Azure/go-autorest/tracing"
 )
 
-// CompliancesClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
-type CompliancesClient struct {
+// AssessmentsMetadataClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
+type AssessmentsMetadataClient struct {
     BaseClient
 }
-// NewCompliancesClient creates an instance of the CompliancesClient client.
-func NewCompliancesClient(subscriptionID string, ascLocation string) CompliancesClient {
-    return NewCompliancesClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
+// NewAssessmentsMetadataClient creates an instance of the AssessmentsMetadataClient client.
+func NewAssessmentsMetadataClient(subscriptionID string, ascLocation string) AssessmentsMetadataClient {
+    return NewAssessmentsMetadataClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
 }
 
-// NewCompliancesClientWithBaseURI creates an instance of the CompliancesClient client.
-    func NewCompliancesClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) CompliancesClient {
-        return CompliancesClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
+// NewAssessmentsMetadataClientWithBaseURI creates an instance of the AssessmentsMetadataClient client.
+    func NewAssessmentsMetadataClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) AssessmentsMetadataClient {
+        return AssessmentsMetadataClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
     }
 
-// Get details of a specific Compliance.
+// Get get metadata information on an assessment type
     // Parameters:
-        // scope - scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or
-        // management group (/providers/Microsoft.Management/managementGroups/mgName).
-        // complianceName - name of the Compliance
-func (client CompliancesClient) Get(ctx context.Context, scope string, complianceName string) (result Compliance, err error) {
+        // assessmentMetadataName - the Assessment Key - Unique key for the assessment type
+func (client AssessmentsMetadataClient) Get(ctx context.Context, assessmentMetadataName string) (result AssessmentMetadata, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/CompliancesClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -55,35 +53,34 @@ func (client CompliancesClient) Get(ctx context.Context, scope string, complianc
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.GetPreparer(ctx, scope, complianceName)
+        req, err := client.GetPreparer(ctx, assessmentMetadataName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.CompliancesClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "Get", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.CompliancesClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "Get", resp, "Failure sending request")
             return
             }
 
             result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.CompliancesClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
     // GetPreparer prepares the Get request.
-    func (client CompliancesClient) GetPreparer(ctx context.Context, scope string, complianceName string) (*http.Request, error) {
+    func (client AssessmentsMetadataClient) GetPreparer(ctx context.Context, assessmentMetadataName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "complianceName": autorest.Encode("path",complianceName),
-            "scope": autorest.Encode("path",scope),
+            "assessmentMetadataName": autorest.Encode("path",assessmentMetadataName),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -91,21 +88,21 @@ func (client CompliancesClient) Get(ctx context.Context, scope string, complianc
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/{scope}/providers/Microsoft.Security/compliances/{complianceName}",pathParameters),
+    autorest.WithPathParameters("/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client CompliancesClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client AssessmentsMetadataClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client CompliancesClient) GetResponder(resp *http.Response) (result Compliance, err error) {
+func (client AssessmentsMetadataClient) GetResponder(resp *http.Response) (result AssessmentMetadata, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -116,50 +113,43 @@ func (client CompliancesClient) GetResponder(resp *http.Response) (result Compli
         return
     }
 
-// List the Compliance scores of the specific management group.
-    // Parameters:
-        // scope - scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or
-        // management group (/providers/Microsoft.Management/managementGroups/mgName).
-func (client CompliancesClient) List(ctx context.Context, scope string) (result ComplianceListPage, err error) {
+// List get metadata information on all assessment types
+func (client AssessmentsMetadataClient) List(ctx context.Context) (result AssessmentMetadataListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/CompliancesClient.List")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataClient.List")
         defer func() {
             sc := -1
-            if result.cl.Response.Response != nil {
-                sc = result.cl.Response.Response.StatusCode
+            if result.aml.Response.Response != nil {
+                sc = result.aml.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
     }
                 result.fn = client.listNextResults
-    req, err := client.ListPreparer(ctx, scope)
+    req, err := client.ListPreparer(ctx)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.CompliancesClient", "List", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "List", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListSender(req)
             if err != nil {
-            result.cl.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.CompliancesClient", "List", resp, "Failure sending request")
+            result.aml.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "List", resp, "Failure sending request")
             return
             }
 
-            result.cl, err = client.ListResponder(resp)
+            result.aml, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.CompliancesClient", "List", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "List", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListPreparer prepares the List request.
-    func (client CompliancesClient) ListPreparer(ctx context.Context, scope string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "scope": autorest.Encode("path",scope),
-            }
-
-                        const APIVersion = "2017-08-01-preview"
+    func (client AssessmentsMetadataClient) ListPreparer(ctx context.Context) (*http.Request, error) {
+                    const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -167,21 +157,21 @@ func (client CompliancesClient) List(ctx context.Context, scope string) (result 
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/{scope}/providers/Microsoft.Security/compliances",pathParameters),
+    autorest.WithPath("/providers/Microsoft.Security/assessmentMetadata"),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client CompliancesClient) ListSender(req *http.Request) (*http.Response, error) {
+    func (client AssessmentsMetadataClient) ListSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client CompliancesClient) ListResponder(resp *http.Response) (result ComplianceList, err error) {
+func (client AssessmentsMetadataClient) ListResponder(resp *http.Response) (result AssessmentMetadataList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -193,10 +183,10 @@ func (client CompliancesClient) ListResponder(resp *http.Response) (result Compl
     }
 
             // listNextResults retrieves the next set of results, if any.
-            func (client CompliancesClient) listNextResults(ctx context.Context, lastResults ComplianceList) (result ComplianceList, err error) {
-            req, err := lastResults.complianceListPreparer(ctx)
+            func (client AssessmentsMetadataClient) listNextResults(ctx context.Context, lastResults AssessmentMetadataList) (result AssessmentMetadataList, err error) {
+            req, err := lastResults.assessmentMetadataListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "security.CompliancesClient", "listNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "listNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -204,19 +194,19 @@ func (client CompliancesClient) ListResponder(resp *http.Response) (result Compl
             resp, err := client.ListSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "security.CompliancesClient", "listNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "listNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.CompliancesClient", "listNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "security.AssessmentsMetadataClient", "listNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client CompliancesClient) ListComplete(ctx context.Context, scope string) (result ComplianceListIterator, err error) {
+    func (client AssessmentsMetadataClient) ListComplete(ctx context.Context) (result AssessmentMetadataListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/CompliancesClient.List")
+            ctx = tracing.StartSpan(ctx, fqdn + "/AssessmentsMetadataClient.List")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -225,7 +215,7 @@ func (client CompliancesClient) ListResponder(resp *http.Response) (result Compl
                 tracing.EndSpan(ctx, sc, err)
             }()
      }
-        result.page, err = client.List(ctx, scope)
+        result.page, err = client.List(ctx)
                 return
         }
 
