@@ -18,36 +18,34 @@ package signalrapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/signalr/mgmt/2018-10-01/signalr"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/signalr/mgmt/2018-10-01/signalr"
 )
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result signalr.OperationListPage, err error)
-}
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result signalr.OperationListPage, err error)
+        }
 
-var _ OperationsClientAPI = (*signalr.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*signalr.OperationsClient)(nil)
+        // ClientAPI contains the set of methods on the Client type.
+        type ClientAPI interface {
+            CheckNameAvailability(ctx context.Context, location string, parameters *signalr.NameAvailabilityParameters) (result signalr.NameAvailability, err error)
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.CreateParameters) (result signalr.CreateOrUpdateFuture, err error)
+            Delete(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.DeleteFuture, err error)
+            Get(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.ResourceType, err error)
+            ListByResourceGroup(ctx context.Context, resourceGroupName string) (result signalr.ResourceListPage, err error)
+            ListBySubscription(ctx context.Context) (result signalr.ResourceListPage, err error)
+            ListKeys(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.Keys, err error)
+            RegenerateKey(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.RegenerateKeyParameters) (result signalr.RegenerateKeyFuture, err error)
+            Restart(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.RestartFuture, err error)
+            Update(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.UpdateParameters) (result signalr.UpdateFuture, err error)
+        }
 
-// ClientAPI contains the set of methods on the Client type.
-type ClientAPI interface {
-	CheckNameAvailability(ctx context.Context, location string, parameters *signalr.NameAvailabilityParameters) (result signalr.NameAvailability, err error)
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.CreateParameters) (result signalr.CreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.DeleteFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.ResourceType, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result signalr.ResourceListPage, err error)
-	ListBySubscription(ctx context.Context) (result signalr.ResourceListPage, err error)
-	ListKeys(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.Keys, err error)
-	RegenerateKey(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.RegenerateKeyParameters) (result signalr.RegenerateKeyFuture, err error)
-	Restart(ctx context.Context, resourceGroupName string, resourceName string) (result signalr.RestartFuture, err error)
-	Update(ctx context.Context, resourceGroupName string, resourceName string, parameters *signalr.UpdateParameters) (result signalr.UpdateFuture, err error)
-}
+        var _ ClientAPI = (*signalr.Client)(nil)
+        // UsagesClientAPI contains the set of methods on the UsagesClient type.
+        type UsagesClientAPI interface {
+            List(ctx context.Context, location string) (result signalr.UsageListPage, err error)
+        }
 
-var _ ClientAPI = (*signalr.Client)(nil)
-
-// UsagesClientAPI contains the set of methods on the UsagesClient type.
-type UsagesClientAPI interface {
-	List(ctx context.Context, location string) (result signalr.UsageListPage, err error)
-}
-
-var _ UsagesClientAPI = (*signalr.UsagesClient)(nil)
+        var _ UsagesClientAPI = (*signalr.UsagesClient)(nil)
