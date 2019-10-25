@@ -18,403 +18,403 @@ package sql
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "context"
-    "github.com/Azure/go-autorest/tracing"
-    "github.com/Azure/go-autorest/autorest/validation"
+	"context"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // WorkloadGroupsClient is the the Azure SQL Database management API provides a RESTful set of web services that
 // interact with Azure SQL Database services to manage your databases. The API enables you to create, retrieve, update,
 // and delete databases.
 type WorkloadGroupsClient struct {
-    BaseClient
+	BaseClient
 }
+
 // NewWorkloadGroupsClient creates an instance of the WorkloadGroupsClient client.
 func NewWorkloadGroupsClient(subscriptionID string) WorkloadGroupsClient {
-    return NewWorkloadGroupsClientWithBaseURI(DefaultBaseURI, subscriptionID)
+	return NewWorkloadGroupsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewWorkloadGroupsClientWithBaseURI creates an instance of the WorkloadGroupsClient client.
-    func NewWorkloadGroupsClientWithBaseURI(baseURI string, subscriptionID string) WorkloadGroupsClient {
-        return WorkloadGroupsClient{ NewWithBaseURI(baseURI, subscriptionID)}
-    }
+func NewWorkloadGroupsClientWithBaseURI(baseURI string, subscriptionID string) WorkloadGroupsClient {
+	return WorkloadGroupsClient{NewWithBaseURI(baseURI, subscriptionID)}
+}
 
 // CreateOrUpdate creates or updates a workload group.
-    // Parameters:
-        // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
-        // from the Azure Resource Manager API or the portal.
-        // serverName - the name of the server.
-        // databaseName - the name of the database.
-        // workloadGroupName - the name of the workload group.
-        // parameters - the requested workload group state.
+// Parameters:
+// resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
+// from the Azure Resource Manager API or the portal.
+// serverName - the name of the server.
+// databaseName - the name of the database.
+// workloadGroupName - the name of the workload group.
+// parameters - the requested workload group state.
 func (client WorkloadGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string, parameters WorkloadGroup) (result WorkloadGroupsCreateOrUpdateFuture, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.CreateOrUpdate")
-        defer func() {
-            sc := -1
-            if result.Response() != nil {
-                sc = result.Response().StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: parameters,
-             Constraints: []validation.Constraint{	{Target: "parameters.WorkloadGroupProperties", Name: validation.Null, Rule: false ,
-            Chain: []validation.Constraint{	{Target: "parameters.WorkloadGroupProperties.MinResourcePercent", Name: validation.Null, Rule: true, Chain: nil },
-            	{Target: "parameters.WorkloadGroupProperties.MaxResourcePercent", Name: validation.Null, Rule: true, Chain: nil },
-            	{Target: "parameters.WorkloadGroupProperties.MinResourcePercentPerRequest", Name: validation.Null, Rule: true, Chain: nil },
-            }}}}}); err != nil {
-            return result, validation.NewError("sql.WorkloadGroupsClient", "CreateOrUpdate", err.Error())
-            }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupsClient.CreateOrUpdate")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: parameters,
+			Constraints: []validation.Constraint{{Target: "parameters.WorkloadGroupProperties", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "parameters.WorkloadGroupProperties.MinResourcePercent", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.WorkloadGroupProperties.MaxResourcePercent", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.WorkloadGroupProperties.MinResourcePercentPerRequest", Name: validation.Null, Rule: true, Chain: nil},
+				}}}}}); err != nil {
+		return result, validation.NewError("sql.WorkloadGroupsClient", "CreateOrUpdate", err.Error())
+	}
 
-                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName, parameters)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", nil , "Failure preparing request")
-    return
-    }
+	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName, parameters)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", nil, "Failure preparing request")
+		return
+	}
 
-            result, err = client.CreateOrUpdateSender(req)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
-            return
-            }
+	result, err = client.CreateOrUpdateSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+		return
+	}
 
-    return
-    }
+	return
+}
 
-    // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-    func (client WorkloadGroupsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string, parameters WorkloadGroup) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "databaseName": autorest.Encode("path",databaseName),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "serverName": autorest.Encode("path",serverName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "workloadGroupName": autorest.Encode("path",workloadGroupName),
-            }
+// CreateOrUpdatePreparer prepares the CreateOrUpdate request.
+func (client WorkloadGroupsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string, parameters WorkloadGroup) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"databaseName":      autorest.Encode("path", databaseName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"serverName":        autorest.Encode("path", serverName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+		"workloadGroupName": autorest.Encode("path", workloadGroupName),
+	}
 
-                        const APIVersion = "2019-06-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "2019-06-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsContentType("application/json; charset=utf-8"),
-    autorest.AsPut(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
-    autorest.WithJSON(parameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}", pathParameters),
+		autorest.WithJSON(parameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client WorkloadGroupsClient) CreateOrUpdateSender(req *http.Request) (future WorkloadGroupsCreateOrUpdateFuture, err error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            var resp *http.Response
-            resp, err = autorest.SendWithSender(client, req, sd...)
-            if err != nil {
-            return
-            }
-            future.Future, err = azure.NewFutureFromResponse(resp)
-            return
-            }
+// CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
+// http.Response Body if it receives an error.
+func (client WorkloadGroupsClient) CreateOrUpdateSender(req *http.Request) (future WorkloadGroupsCreateOrUpdateFuture, err error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req, sd...)
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
 func (client WorkloadGroupsClient) CreateOrUpdateResponder(resp *http.Response) (result WorkloadGroup, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusCreated,http.StatusAccepted),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
 // Delete deletes a workload group.
-    // Parameters:
-        // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
-        // from the Azure Resource Manager API or the portal.
-        // serverName - the name of the server.
-        // databaseName - the name of the database.
-        // workloadGroupName - the name of the workload group to delete.
+// Parameters:
+// resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
+// from the Azure Resource Manager API or the portal.
+// serverName - the name of the server.
+// databaseName - the name of the database.
+// workloadGroupName - the name of the workload group to delete.
 func (client WorkloadGroupsClient) Delete(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (result WorkloadGroupsDeleteFuture, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.Delete")
-        defer func() {
-            sc := -1
-            if result.Response() != nil {
-                sc = result.Response().StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-        req, err := client.DeletePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", nil , "Failure preparing request")
-    return
-    }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupsClient.Delete")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.DeletePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", nil, "Failure preparing request")
+		return
+	}
 
-            result, err = client.DeleteSender(req)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", result.Response(), "Failure sending request")
-            return
-            }
+	result, err = client.DeleteSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", result.Response(), "Failure sending request")
+		return
+	}
 
-    return
-    }
+	return
+}
 
-    // DeletePreparer prepares the Delete request.
-    func (client WorkloadGroupsClient) DeletePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "databaseName": autorest.Encode("path",databaseName),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "serverName": autorest.Encode("path",serverName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "workloadGroupName": autorest.Encode("path",workloadGroupName),
-            }
+// DeletePreparer prepares the Delete request.
+func (client WorkloadGroupsClient) DeletePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"databaseName":      autorest.Encode("path", databaseName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"serverName":        autorest.Encode("path", serverName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+		"workloadGroupName": autorest.Encode("path", workloadGroupName),
+	}
 
-                        const APIVersion = "2019-06-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "2019-06-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsDelete(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsDelete(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // DeleteSender sends the Delete request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client WorkloadGroupsClient) DeleteSender(req *http.Request) (future WorkloadGroupsDeleteFuture, err error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            var resp *http.Response
-            resp, err = autorest.SendWithSender(client, req, sd...)
-            if err != nil {
-            return
-            }
-            future.Future, err = azure.NewFutureFromResponse(resp)
-            return
-            }
+// DeleteSender sends the Delete request. The method will close the
+// http.Response Body if it receives an error.
+func (client WorkloadGroupsClient) DeleteSender(req *http.Request) (future WorkloadGroupsDeleteFuture, err error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req, sd...)
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
 func (client WorkloadGroupsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusAccepted,http.StatusNoContent),
-    autorest.ByClosing())
-    result.Response = resp
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
 
 // Get gets a workload group
-    // Parameters:
-        // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
-        // from the Azure Resource Manager API or the portal.
-        // serverName - the name of the server.
-        // databaseName - the name of the database.
-        // workloadGroupName - the name of the workload group.
+// Parameters:
+// resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
+// from the Azure Resource Manager API or the portal.
+// serverName - the name of the server.
+// databaseName - the name of the database.
+// workloadGroupName - the name of the workload group.
 func (client WorkloadGroupsClient) Get(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (result WorkloadGroup, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.Get")
-        defer func() {
-            sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-        req, err := client.GetPreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", nil , "Failure preparing request")
-    return
-    }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupsClient.Get")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetPreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.GetSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.GetSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure sending request")
+		return
+	}
 
-            result, err = client.GetResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure responding to request")
-            }
+	result, err = client.GetResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // GetPreparer prepares the Get request.
-    func (client WorkloadGroupsClient) GetPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "databaseName": autorest.Encode("path",databaseName),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "serverName": autorest.Encode("path",serverName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "workloadGroupName": autorest.Encode("path",workloadGroupName),
-            }
+// GetPreparer prepares the Get request.
+func (client WorkloadGroupsClient) GetPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"databaseName":      autorest.Encode("path", databaseName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"serverName":        autorest.Encode("path", serverName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+		"workloadGroupName": autorest.Encode("path", workloadGroupName),
+	}
 
-                        const APIVersion = "2019-06-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "2019-06-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // GetSender sends the Get request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client WorkloadGroupsClient) GetSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// GetSender sends the Get request. The method will close the
+// http.Response Body if it receives an error.
+func (client WorkloadGroupsClient) GetSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
 func (client WorkloadGroupsClient) GetResponder(resp *http.Response) (result WorkloadGroup, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
 // ListByDatabase gets the list of workload groups
-    // Parameters:
-        // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
-        // from the Azure Resource Manager API or the portal.
-        // serverName - the name of the server.
-        // databaseName - the name of the database.
+// Parameters:
+// resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
+// from the Azure Resource Manager API or the portal.
+// serverName - the name of the server.
+// databaseName - the name of the database.
 func (client WorkloadGroupsClient) ListByDatabase(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result WorkloadGroupListResultPage, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.ListByDatabase")
-        defer func() {
-            sc := -1
-            if result.wglr.Response.Response != nil {
-                sc = result.wglr.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-                result.fn = client.listByDatabaseNextResults
-    req, err := client.ListByDatabasePreparer(ctx, resourceGroupName, serverName, databaseName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", nil , "Failure preparing request")
-    return
-    }
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupsClient.ListByDatabase")
+		defer func() {
+			sc := -1
+			if result.wglr.Response.Response != nil {
+				sc = result.wglr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = client.listByDatabaseNextResults
+	req, err := client.ListByDatabasePreparer(ctx, resourceGroupName, serverName, databaseName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", nil, "Failure preparing request")
+		return
+	}
 
-            resp, err := client.ListByDatabaseSender(req)
-            if err != nil {
-            result.wglr.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure sending request")
-            return
-            }
+	resp, err := client.ListByDatabaseSender(req)
+	if err != nil {
+		result.wglr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure sending request")
+		return
+	}
 
-            result.wglr, err = client.ListByDatabaseResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure responding to request")
-            }
+	result.wglr, err = client.ListByDatabaseResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure responding to request")
+	}
 
-    return
-    }
+	return
+}
 
-    // ListByDatabasePreparer prepares the ListByDatabase request.
-    func (client WorkloadGroupsClient) ListByDatabasePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "databaseName": autorest.Encode("path",databaseName),
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
-            "serverName": autorest.Encode("path",serverName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
+// ListByDatabasePreparer prepares the ListByDatabase request.
+func (client WorkloadGroupsClient) ListByDatabasePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"databaseName":      autorest.Encode("path", databaseName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"serverName":        autorest.Encode("path", serverName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
 
-                        const APIVersion = "2019-06-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "2019-06-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
 
-    // ListByDatabaseSender sends the ListByDatabase request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client WorkloadGroupsClient) ListByDatabaseSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
+// ListByDatabaseSender sends the ListByDatabase request. The method will close the
+// http.Response Body if it receives an error.
+func (client WorkloadGroupsClient) ListByDatabaseSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+	return autorest.SendWithSender(client, req, sd...)
+}
 
 // ListByDatabaseResponder handles the response to the ListByDatabase request. The method always
 // closes the http.Response Body.
 func (client WorkloadGroupsClient) ListByDatabaseResponder(resp *http.Response) (result WorkloadGroupListResult, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
-            // listByDatabaseNextResults retrieves the next set of results, if any.
-            func (client WorkloadGroupsClient) listByDatabaseNextResults(ctx context.Context, lastResults WorkloadGroupListResult) (result WorkloadGroupListResult, err error) {
-            req, err := lastResults.workloadGroupListResultPreparer(ctx)
-            if err != nil {
-            return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", nil , "Failure preparing next results request")
-            }
-            if req == nil {
-            return
-            }
-            resp, err := client.ListByDatabaseSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure sending next results request")
-            }
-            result, err = client.ListByDatabaseResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure responding to next results request")
-            }
-            return
-                    }
+// listByDatabaseNextResults retrieves the next set of results, if any.
+func (client WorkloadGroupsClient) listByDatabaseNextResults(ctx context.Context, lastResults WorkloadGroupListResult) (result WorkloadGroupListResult, err error) {
+	req, err := lastResults.workloadGroupListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListByDatabaseSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListByDatabaseResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
 
-    // ListByDatabaseComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client WorkloadGroupsClient) ListByDatabaseComplete(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result WorkloadGroupListResultIterator, err error) {
-        if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.ListByDatabase")
-            defer func() {
-                sc := -1
-                if result.Response().Response.Response != nil {
-                    sc = result.page.Response().Response.Response.StatusCode
-                }
-                tracing.EndSpan(ctx, sc, err)
-            }()
-     }
-        result.page, err = client.ListByDatabase(ctx, resourceGroupName, serverName, databaseName)
-                return
-        }
-
+// ListByDatabaseComplete enumerates all values, automatically crossing page boundaries as required.
+func (client WorkloadGroupsClient) ListByDatabaseComplete(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result WorkloadGroupListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupsClient.ListByDatabase")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.ListByDatabase(ctx, resourceGroupName, serverName, databaseName)
+	return
+}
