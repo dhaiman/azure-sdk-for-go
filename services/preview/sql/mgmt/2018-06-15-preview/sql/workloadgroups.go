@@ -26,32 +26,33 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// VirtualNetworkRulesClient is the the Azure SQL Database management API provides a RESTful set of web services that
+// WorkloadGroupsClient is the the Azure SQL Database management API provides a RESTful set of web services that
 // interact with Azure SQL Database services to manage your databases. The API enables you to create, retrieve, update,
 // and delete databases.
-type VirtualNetworkRulesClient struct {
+type WorkloadGroupsClient struct {
     BaseClient
 }
-// NewVirtualNetworkRulesClient creates an instance of the VirtualNetworkRulesClient client.
-func NewVirtualNetworkRulesClient(subscriptionID string) VirtualNetworkRulesClient {
-    return NewVirtualNetworkRulesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewWorkloadGroupsClient creates an instance of the WorkloadGroupsClient client.
+func NewWorkloadGroupsClient(subscriptionID string) WorkloadGroupsClient {
+    return NewWorkloadGroupsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewVirtualNetworkRulesClientWithBaseURI creates an instance of the VirtualNetworkRulesClient client.
-    func NewVirtualNetworkRulesClientWithBaseURI(baseURI string, subscriptionID string) VirtualNetworkRulesClient {
-        return VirtualNetworkRulesClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewWorkloadGroupsClientWithBaseURI creates an instance of the WorkloadGroupsClient client.
+    func NewWorkloadGroupsClientWithBaseURI(baseURI string, subscriptionID string) WorkloadGroupsClient {
+        return WorkloadGroupsClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// CreateOrUpdate creates or updates an existing virtual network rule.
+// CreateOrUpdate creates or updates a workload group.
     // Parameters:
         // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
         // from the Azure Resource Manager API or the portal.
         // serverName - the name of the server.
-        // virtualNetworkRuleName - the name of the virtual network rule.
-        // parameters - the requested virtual Network Rule Resource state.
-func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string, parameters VirtualNetworkRule) (result VirtualNetworkRulesCreateOrUpdateFuture, err error) {
+        // databaseName - the name of the database.
+        // workloadGroupName - the name of the workload group.
+        // parameters - the requested workload group state.
+func (client WorkloadGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string, parameters WorkloadGroup) (result WorkloadGroupsCreateOrUpdateFuture, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/VirtualNetworkRulesClient.CreateOrUpdate")
+        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.CreateOrUpdate")
         defer func() {
             sc := -1
             if result.Response() != nil {
@@ -62,21 +63,23 @@ func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, reso
     }
             if err := validation.Validate([]validation.Validation{
             { TargetValue: parameters,
-             Constraints: []validation.Constraint{	{Target: "parameters.VirtualNetworkRuleProperties", Name: validation.Null, Rule: false ,
-            Chain: []validation.Constraint{	{Target: "parameters.VirtualNetworkRuleProperties.VirtualNetworkSubnetID", Name: validation.Null, Rule: true, Chain: nil },
+             Constraints: []validation.Constraint{	{Target: "parameters.WorkloadGroupProperties", Name: validation.Null, Rule: false ,
+            Chain: []validation.Constraint{	{Target: "parameters.WorkloadGroupProperties.MinResourcePercent", Name: validation.Null, Rule: true, Chain: nil },
+            	{Target: "parameters.WorkloadGroupProperties.MaxResourcePercent", Name: validation.Null, Rule: true, Chain: nil },
+            	{Target: "parameters.WorkloadGroupProperties.MinResourcePercentPerRequest", Name: validation.Null, Rule: true, Chain: nil },
             }}}}}); err != nil {
-            return result, validation.NewError("sql.VirtualNetworkRulesClient", "CreateOrUpdate", err.Error())
+            return result, validation.NewError("sql.WorkloadGroupsClient", "CreateOrUpdate", err.Error())
             }
 
-                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serverName, virtualNetworkRuleName, parameters)
+                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName, parameters)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "CreateOrUpdate", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", nil , "Failure preparing request")
     return
     }
 
             result, err = client.CreateOrUpdateSender(req)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
             return
             }
 
@@ -84,15 +87,16 @@ func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, reso
     }
 
     // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-    func (client VirtualNetworkRulesClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string, parameters VirtualNetworkRule) (*http.Request, error) {
+    func (client WorkloadGroupsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string, parameters WorkloadGroup) (*http.Request, error) {
             pathParameters := map[string]interface{} {
+            "databaseName": autorest.Encode("path",databaseName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "serverName": autorest.Encode("path",serverName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "virtualNetworkRuleName": autorest.Encode("path",virtualNetworkRuleName),
+            "workloadGroupName": autorest.Encode("path",workloadGroupName),
             }
 
-                        const APIVersion = "2015-05-01-preview"
+                        const APIVersion = "2019-06-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -101,7 +105,7 @@ func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, reso
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
     autorest.WithJSON(parameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
@@ -109,7 +113,7 @@ func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, reso
 
     // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
     // http.Response Body if it receives an error.
-    func (client VirtualNetworkRulesClient) CreateOrUpdateSender(req *http.Request) (future VirtualNetworkRulesCreateOrUpdateFuture, err error) {
+    func (client WorkloadGroupsClient) CreateOrUpdateSender(req *http.Request) (future WorkloadGroupsCreateOrUpdateFuture, err error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             var resp *http.Response
             resp, err = autorest.SendWithSender(client, req, sd...)
@@ -122,7 +126,7 @@ func (client VirtualNetworkRulesClient) CreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client VirtualNetworkRulesClient) CreateOrUpdateResponder(resp *http.Response) (result VirtualNetworkRule, err error) {
+func (client WorkloadGroupsClient) CreateOrUpdateResponder(resp *http.Response) (result WorkloadGroup, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -133,15 +137,16 @@ func (client VirtualNetworkRulesClient) CreateOrUpdateResponder(resp *http.Respo
         return
     }
 
-// Delete deletes the virtual network rule with the given name.
+// Delete deletes a workload group.
     // Parameters:
         // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
         // from the Azure Resource Manager API or the portal.
         // serverName - the name of the server.
-        // virtualNetworkRuleName - the name of the virtual network rule.
-func (client VirtualNetworkRulesClient) Delete(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string) (result VirtualNetworkRulesDeleteFuture, err error) {
+        // databaseName - the name of the database.
+        // workloadGroupName - the name of the workload group to delete.
+func (client WorkloadGroupsClient) Delete(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (result WorkloadGroupsDeleteFuture, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/VirtualNetworkRulesClient.Delete")
+        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.Delete")
         defer func() {
             sc := -1
             if result.Response() != nil {
@@ -150,15 +155,15 @@ func (client VirtualNetworkRulesClient) Delete(ctx context.Context, resourceGrou
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.DeletePreparer(ctx, resourceGroupName, serverName, virtualNetworkRuleName)
+        req, err := client.DeletePreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "Delete", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", nil , "Failure preparing request")
     return
     }
 
             result, err = client.DeleteSender(req)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "Delete", result.Response(), "Failure sending request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Delete", result.Response(), "Failure sending request")
             return
             }
 
@@ -166,15 +171,16 @@ func (client VirtualNetworkRulesClient) Delete(ctx context.Context, resourceGrou
     }
 
     // DeletePreparer prepares the Delete request.
-    func (client VirtualNetworkRulesClient) DeletePreparer(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string) (*http.Request, error) {
+    func (client WorkloadGroupsClient) DeletePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
+            "databaseName": autorest.Encode("path",databaseName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "serverName": autorest.Encode("path",serverName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "virtualNetworkRuleName": autorest.Encode("path",virtualNetworkRuleName),
+            "workloadGroupName": autorest.Encode("path",workloadGroupName),
             }
 
-                        const APIVersion = "2015-05-01-preview"
+                        const APIVersion = "2019-06-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -182,14 +188,14 @@ func (client VirtualNetworkRulesClient) Delete(ctx context.Context, resourceGrou
         preparer := autorest.CreatePreparer(
     autorest.AsDelete(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // DeleteSender sends the Delete request. The method will close the
     // http.Response Body if it receives an error.
-    func (client VirtualNetworkRulesClient) DeleteSender(req *http.Request) (future VirtualNetworkRulesDeleteFuture, err error) {
+    func (client WorkloadGroupsClient) DeleteSender(req *http.Request) (future WorkloadGroupsDeleteFuture, err error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             var resp *http.Response
             resp, err = autorest.SendWithSender(client, req, sd...)
@@ -202,7 +208,7 @@ func (client VirtualNetworkRulesClient) Delete(ctx context.Context, resourceGrou
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
-func (client VirtualNetworkRulesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client WorkloadGroupsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -212,15 +218,16 @@ func (client VirtualNetworkRulesClient) DeleteResponder(resp *http.Response) (re
         return
     }
 
-// Get gets a virtual network rule.
+// Get gets a workload group
     // Parameters:
         // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
         // from the Azure Resource Manager API or the portal.
         // serverName - the name of the server.
-        // virtualNetworkRuleName - the name of the virtual network rule.
-func (client VirtualNetworkRulesClient) Get(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string) (result VirtualNetworkRule, err error) {
+        // databaseName - the name of the database.
+        // workloadGroupName - the name of the workload group.
+func (client WorkloadGroupsClient) Get(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (result WorkloadGroup, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/VirtualNetworkRulesClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -229,37 +236,38 @@ func (client VirtualNetworkRulesClient) Get(ctx context.Context, resourceGroupNa
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.GetPreparer(ctx, resourceGroupName, serverName, virtualNetworkRuleName)
+        req, err := client.GetPreparer(ctx, resourceGroupName, serverName, databaseName, workloadGroupName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure sending request")
             return
             }
 
             result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
     // GetPreparer prepares the Get request.
-    func (client VirtualNetworkRulesClient) GetPreparer(ctx context.Context, resourceGroupName string, serverName string, virtualNetworkRuleName string) (*http.Request, error) {
+    func (client WorkloadGroupsClient) GetPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, workloadGroupName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
+            "databaseName": autorest.Encode("path",databaseName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "serverName": autorest.Encode("path",serverName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "virtualNetworkRuleName": autorest.Encode("path",virtualNetworkRuleName),
+            "workloadGroupName": autorest.Encode("path",workloadGroupName),
             }
 
-                        const APIVersion = "2015-05-01-preview"
+                        const APIVersion = "2019-06-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -267,21 +275,21 @@ func (client VirtualNetworkRulesClient) Get(ctx context.Context, resourceGroupNa
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client VirtualNetworkRulesClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client WorkloadGroupsClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client VirtualNetworkRulesClient) GetResponder(resp *http.Response) (result VirtualNetworkRule, err error) {
+func (client WorkloadGroupsClient) GetResponder(resp *http.Response) (result WorkloadGroup, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -292,53 +300,55 @@ func (client VirtualNetworkRulesClient) GetResponder(resp *http.Response) (resul
         return
     }
 
-// ListByServer gets a list of virtual network rules in a server.
+// ListByDatabase gets the list of workload groups
     // Parameters:
         // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
         // from the Azure Resource Manager API or the portal.
         // serverName - the name of the server.
-func (client VirtualNetworkRulesClient) ListByServer(ctx context.Context, resourceGroupName string, serverName string) (result VirtualNetworkRuleListResultPage, err error) {
+        // databaseName - the name of the database.
+func (client WorkloadGroupsClient) ListByDatabase(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result WorkloadGroupListResultPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/VirtualNetworkRulesClient.ListByServer")
+        ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.ListByDatabase")
         defer func() {
             sc := -1
-            if result.vnrlr.Response.Response != nil {
-                sc = result.vnrlr.Response.Response.StatusCode
+            if result.wglr.Response.Response != nil {
+                sc = result.wglr.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-                result.fn = client.listByServerNextResults
-    req, err := client.ListByServerPreparer(ctx, resourceGroupName, serverName)
+                result.fn = client.listByDatabaseNextResults
+    req, err := client.ListByDatabasePreparer(ctx, resourceGroupName, serverName, databaseName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "ListByServer", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.ListByServerSender(req)
+            resp, err := client.ListByDatabaseSender(req)
             if err != nil {
-            result.vnrlr.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "ListByServer", resp, "Failure sending request")
+            result.wglr.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure sending request")
             return
             }
 
-            result.vnrlr, err = client.ListByServerResponder(resp)
+            result.wglr, err = client.ListByDatabaseResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "ListByServer", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "ListByDatabase", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // ListByServerPreparer prepares the ListByServer request.
-    func (client VirtualNetworkRulesClient) ListByServerPreparer(ctx context.Context, resourceGroupName string, serverName string) (*http.Request, error) {
+    // ListByDatabasePreparer prepares the ListByDatabase request.
+    func (client WorkloadGroupsClient) ListByDatabasePreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
+            "databaseName": autorest.Encode("path",databaseName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "serverName": autorest.Encode("path",serverName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2015-05-01-preview"
+                        const APIVersion = "2019-06-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -346,21 +356,21 @@ func (client VirtualNetworkRulesClient) ListByServer(ctx context.Context, resour
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // ListByServerSender sends the ListByServer request. The method will close the
+    // ListByDatabaseSender sends the ListByDatabase request. The method will close the
     // http.Response Body if it receives an error.
-    func (client VirtualNetworkRulesClient) ListByServerSender(req *http.Request) (*http.Response, error) {
+    func (client WorkloadGroupsClient) ListByDatabaseSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// ListByServerResponder handles the response to the ListByServer request. The method always
+// ListByDatabaseResponder handles the response to the ListByDatabase request. The method always
 // closes the http.Response Body.
-func (client VirtualNetworkRulesClient) ListByServerResponder(resp *http.Response) (result VirtualNetworkRuleListResult, err error) {
+func (client WorkloadGroupsClient) ListByDatabaseResponder(resp *http.Response) (result WorkloadGroupListResult, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -371,31 +381,31 @@ func (client VirtualNetworkRulesClient) ListByServerResponder(resp *http.Respons
         return
     }
 
-            // listByServerNextResults retrieves the next set of results, if any.
-            func (client VirtualNetworkRulesClient) listByServerNextResults(ctx context.Context, lastResults VirtualNetworkRuleListResult) (result VirtualNetworkRuleListResult, err error) {
-            req, err := lastResults.virtualNetworkRuleListResultPreparer(ctx)
+            // listByDatabaseNextResults retrieves the next set of results, if any.
+            func (client WorkloadGroupsClient) listByDatabaseNextResults(ctx context.Context, lastResults WorkloadGroupListResult) (result WorkloadGroupListResult, err error) {
+            req, err := lastResults.workloadGroupListResultPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "listByServerNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
             }
-            resp, err := client.ListByServerSender(req)
+            resp, err := client.ListByDatabaseSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "listByServerNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure sending next results request")
             }
-            result, err = client.ListByServerResponder(resp)
+            result, err = client.ListByDatabaseResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "sql.VirtualNetworkRulesClient", "listByServerNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "sql.WorkloadGroupsClient", "listByDatabaseNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
-    // ListByServerComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client VirtualNetworkRulesClient) ListByServerComplete(ctx context.Context, resourceGroupName string, serverName string) (result VirtualNetworkRuleListResultIterator, err error) {
+    // ListByDatabaseComplete enumerates all values, automatically crossing page boundaries as required.
+    func (client WorkloadGroupsClient) ListByDatabaseComplete(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result WorkloadGroupListResultIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/VirtualNetworkRulesClient.ListByServer")
+            ctx = tracing.StartSpan(ctx, fqdn + "/WorkloadGroupsClient.ListByDatabase")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -404,7 +414,7 @@ func (client VirtualNetworkRulesClient) ListByServerResponder(resp *http.Respons
                 tracing.EndSpan(ctx, sc, err)
             }()
      }
-        result.page, err = client.ListByServer(ctx, resourceGroupName, serverName)
+        result.page, err = client.ListByDatabase(ctx, resourceGroupName, serverName, databaseName)
                 return
         }
 
