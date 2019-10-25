@@ -3,7 +3,11 @@
 // Visual Search API lets you discover insights about an image such as visually similar images, shopping sources, and
 // related searches. The API can also perform text recognition, identify entities (people, places, things), return
 // other topical content for the user to explore, and more. For more information, see [Visual Search
-// Overview](https://docs.microsoft.com/azure/cognitive-services/bing-visual-search/overview).
+// Overview](https://docs.microsoft.com/azure/cognitive-services/bing-visual-search/overview).<br/><br/><strong>NOTE:</strong>
+// To comply with the new EU Copyright Directive in France, the Bing Visual Search API must omit some content from
+// certain EU News sources for French users. The removed content may include thumbnail images and videos, video
+// previews, and snippets which accompany search results from these sources. As a consequence, the Bing APIs may serve
+// fewer results with thumbnail images and videos, video previews, and snippets to French users.
 package visualsearch
 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
@@ -24,29 +28,29 @@ package visualsearch
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest"
 )
 
 const (
-	// DefaultEndpoint is the default value for endpoint
-	DefaultEndpoint = "https://api.cognitive.microsoft.com"
-)
+// DefaultEndpoint is the default value for endpoint
+DefaultEndpoint = "https://api.cognitive.microsoft.com")
 
 // BaseClient is the base client for Visualsearch.
 type BaseClient struct {
-	autorest.Client
-	Endpoint string
+    autorest.Client
+            Endpoint string
 }
 
 // New creates an instance of the BaseClient client.
-func New() BaseClient {
-	return NewWithoutDefaults(DefaultEndpoint)
+func New()BaseClient {
+    return NewWithoutDefaults(DefaultEndpoint)
 }
 
 // NewWithoutDefaults creates an instance of the BaseClient client.
 func NewWithoutDefaults(endpoint string) BaseClient {
-	return BaseClient{
-		Client:   autorest.NewClientWithUserAgent(UserAgent()),
-		Endpoint: endpoint,
-	}
+    return BaseClient{
+        Client: autorest.NewClientWithUserAgent(UserAgent()),
+                Endpoint: endpoint,
+    }
 }
+

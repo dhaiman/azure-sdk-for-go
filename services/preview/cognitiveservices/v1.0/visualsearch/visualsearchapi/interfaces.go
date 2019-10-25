@@ -18,14 +18,14 @@ package visualsearchapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/visualsearch"
-	"io"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/cognitiveservices/v1.0/visualsearch"
+    "io"
 )
 
-// ImagesClientAPI contains the set of methods on the ImagesClient type.
-type ImagesClientAPI interface {
-	VisualSearch(ctx context.Context, acceptLanguage string, contentType string, userAgent string, clientID string, clientIP string, location string, market string, safeSearch visualsearch.SafeSearch, setLang string, knowledgeRequest string, imageParameter io.ReadCloser) (result visualsearch.ImageKnowledge, err error)
-}
+        // ImagesClientAPI contains the set of methods on the ImagesClient type.
+        type ImagesClientAPI interface {
+            VisualSearch(ctx context.Context, acceptLanguage string, contentType string, userAgent string, clientID string, clientIP string, location string, market string, safeSearch visualsearch.SafeSearch, setLang string, knowledgeRequest string, imageParameter io.ReadCloser) (result visualsearch.ImageKnowledge, err error)
+        }
 
-var _ ImagesClientAPI = (*visualsearch.ImagesClient)(nil)
+        var _ ImagesClientAPI = (*visualsearch.ImagesClient)(nil)
