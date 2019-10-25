@@ -18,12 +18,12 @@ package personalizer
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/validation"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/validation"
 )
 
 // EventsClient is the personalizer Service is an Azure Cognitive Service that makes it easy to target content and
@@ -31,169 +31,169 @@ import (
 // Personalizer Service returns your content in a ranked list. As rewards are sent in response to the ranked list, the
 // reinforcement learning algorithm will improve the model and improve performance of future rank calls.
 type EventsClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewEventsClient creates an instance of the EventsClient client.
 func NewEventsClient(endpoint string) EventsClient {
-	return EventsClient{New(endpoint)}
+    return EventsClient{ New(endpoint)}
 }
 
-// Activate sends the activate request.
-// Parameters:
-// eventID - the event ID this activation applies to.
+// Activate report that the specified event was actually displayed to the user and a reward should be expected for it
+    // Parameters:
+        // eventID - the event ID this activation applies to.
 func (client EventsClient) Activate(ctx context.Context, eventID string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EventsClient.Activate")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: eventID,
-			Constraints: []validation.Constraint{{Target: "eventID", Name: validation.MaxLength, Rule: 256, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("personalizer.EventsClient", "Activate", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/EventsClient.Activate")
+        defer func() {
+            sc := -1
+            if result.Response != nil {
+                sc = result.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: eventID,
+             Constraints: []validation.Constraint{	{Target: "eventID", Name: validation.MaxLength, Rule: 256, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("personalizer.EventsClient", "Activate", err.Error())
+            }
 
-	req, err := client.ActivatePreparer(ctx, eventID)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", nil, "Failure preparing request")
-		return
-	}
+                req, err := client.ActivatePreparer(ctx, eventID)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.ActivateSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", resp, "Failure sending request")
-		return
-	}
+            resp, err := client.ActivateSender(req)
+            if err != nil {
+            result.Response = resp
+            err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", resp, "Failure sending request")
+            return
+            }
 
-	result, err = client.ActivateResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", resp, "Failure responding to request")
-	}
+            result, err = client.ActivateResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Activate", resp, "Failure responding to request")
+            }
 
-	return
-}
+    return
+    }
 
-// ActivatePreparer prepares the Activate request.
-func (client EventsClient) ActivatePreparer(ctx context.Context, eventID string) (*http.Request, error) {
-	urlParameters := map[string]interface{}{
-		"Endpoint": client.Endpoint,
-	}
+    // ActivatePreparer prepares the Activate request.
+    func (client EventsClient) ActivatePreparer(ctx context.Context, eventID string) (*http.Request, error) {
+            urlParameters := map[string]interface{} {
+            "Endpoint": client.Endpoint,
+            }
 
-	pathParameters := map[string]interface{}{
-		"eventId": autorest.Encode("path", eventID),
-	}
+            pathParameters := map[string]interface{} {
+            "eventId": autorest.Encode("path",eventID),
+            }
 
-	preparer := autorest.CreatePreparer(
-		autorest.AsPost(),
-		autorest.WithCustomBaseURL("{Endpoint}/personalizer/v1.0", urlParameters),
-		autorest.WithPathParameters("/events/{eventId}/activate", pathParameters))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+        preparer := autorest.CreatePreparer(
+    autorest.AsPost(),
+    autorest.WithCustomBaseURL("{Endpoint}/personalizer/v1.0", urlParameters),
+    autorest.WithPathParameters("/events/{eventId}/activate",pathParameters))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// ActivateSender sends the Activate request. The method will close the
-// http.Response Body if it receives an error.
-func (client EventsClient) ActivateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
-}
+    // ActivateSender sends the Activate request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client EventsClient) ActivateSender(req *http.Request) (*http.Response, error) {
+        sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            return autorest.SendWithSender(client, req, sd...)
+            }
 
 // ActivateResponder handles the response to the Activate request. The method always
 // closes the http.Response Body.
 func (client EventsClient) ActivateResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusNoContent),
+    autorest.ByClosing())
+    result.Response = resp
+        return
+    }
 
-// Reward sends the reward request.
-// Parameters:
-// eventID - the event id this reward applies to.
-// reward - the reward should be a floating point number.
+// Reward report reward to allocate to the top ranked action for the specified event.
+    // Parameters:
+        // eventID - the event id this reward applies to.
+        // reward - the reward should be a floating point number.
 func (client EventsClient) Reward(ctx context.Context, eventID string, reward RewardRequest) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EventsClient.Reward")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: eventID,
-			Constraints: []validation.Constraint{{Target: "eventID", Name: validation.MaxLength, Rule: 256, Chain: nil}}},
-		{TargetValue: reward,
-			Constraints: []validation.Constraint{{Target: "reward.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("personalizer.EventsClient", "Reward", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/EventsClient.Reward")
+        defer func() {
+            sc := -1
+            if result.Response != nil {
+                sc = result.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: eventID,
+             Constraints: []validation.Constraint{	{Target: "eventID", Name: validation.MaxLength, Rule: 256, Chain: nil }}},
+            { TargetValue: reward,
+             Constraints: []validation.Constraint{	{Target: "reward.Value", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("personalizer.EventsClient", "Reward", err.Error())
+            }
 
-	req, err := client.RewardPreparer(ctx, eventID, reward)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", nil, "Failure preparing request")
-		return
-	}
+                req, err := client.RewardPreparer(ctx, eventID, reward)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.RewardSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", resp, "Failure sending request")
-		return
-	}
+            resp, err := client.RewardSender(req)
+            if err != nil {
+            result.Response = resp
+            err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", resp, "Failure sending request")
+            return
+            }
 
-	result, err = client.RewardResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", resp, "Failure responding to request")
-	}
+            result, err = client.RewardResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "personalizer.EventsClient", "Reward", resp, "Failure responding to request")
+            }
 
-	return
-}
+    return
+    }
 
-// RewardPreparer prepares the Reward request.
-func (client EventsClient) RewardPreparer(ctx context.Context, eventID string, reward RewardRequest) (*http.Request, error) {
-	urlParameters := map[string]interface{}{
-		"Endpoint": client.Endpoint,
-	}
+    // RewardPreparer prepares the Reward request.
+    func (client EventsClient) RewardPreparer(ctx context.Context, eventID string, reward RewardRequest) (*http.Request, error) {
+            urlParameters := map[string]interface{} {
+            "Endpoint": client.Endpoint,
+            }
 
-	pathParameters := map[string]interface{}{
-		"eventId": autorest.Encode("path", eventID),
-	}
+            pathParameters := map[string]interface{} {
+            "eventId": autorest.Encode("path",eventID),
+            }
 
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPost(),
-		autorest.WithCustomBaseURL("{Endpoint}/personalizer/v1.0", urlParameters),
-		autorest.WithPathParameters("/events/{eventId}/reward", pathParameters),
-		autorest.WithJSON(reward))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+        preparer := autorest.CreatePreparer(
+    autorest.AsContentType("application/json; charset=utf-8"),
+    autorest.AsPost(),
+    autorest.WithCustomBaseURL("{Endpoint}/personalizer/v1.0", urlParameters),
+    autorest.WithPathParameters("/events/{eventId}/reward",pathParameters),
+    autorest.WithJSON(reward))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// RewardSender sends the Reward request. The method will close the
-// http.Response Body if it receives an error.
-func (client EventsClient) RewardSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
-}
+    // RewardSender sends the Reward request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client EventsClient) RewardSender(req *http.Request) (*http.Response, error) {
+        sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            return autorest.SendWithSender(client, req, sd...)
+            }
 
 // RewardResponder handles the response to the Reward request. The method always
 // closes the http.Response Body.
 func (client EventsClient) RewardResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusNoContent),
+    autorest.ByClosing())
+    result.Response = resp
+        return
+    }
+
