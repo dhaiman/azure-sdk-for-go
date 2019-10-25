@@ -28,29 +28,29 @@ package visualsearch
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-// DefaultEndpoint is the default value for endpoint
-DefaultEndpoint = "https://api.cognitive.microsoft.com")
+	// DefaultEndpoint is the default value for endpoint
+	DefaultEndpoint = "https://api.cognitive.microsoft.com"
+)
 
 // BaseClient is the base client for Visualsearch.
 type BaseClient struct {
-    autorest.Client
-            Endpoint string
+	autorest.Client
+	Endpoint string
 }
 
 // New creates an instance of the BaseClient client.
-func New()BaseClient {
-    return NewWithoutDefaults(DefaultEndpoint)
+func New() BaseClient {
+	return NewWithoutDefaults(DefaultEndpoint)
 }
 
 // NewWithoutDefaults creates an instance of the BaseClient client.
 func NewWithoutDefaults(endpoint string) BaseClient {
-    return BaseClient{
-        Client: autorest.NewClientWithUserAgent(UserAgent()),
-                Endpoint: endpoint,
-    }
+	return BaseClient{
+		Client:   autorest.NewClientWithUserAgent(UserAgent()),
+		Endpoint: endpoint,
+	}
 }
-
