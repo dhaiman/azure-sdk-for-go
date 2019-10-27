@@ -26,29 +26,30 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// PricingsClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
-type PricingsClient struct {
+// AutomationsClient is the API spec for Microsoft.Security (Azure Security Center) resource provider
+type AutomationsClient struct {
     BaseClient
 }
-// NewPricingsClient creates an instance of the PricingsClient client.
-func NewPricingsClient(subscriptionID string, ascLocation string) PricingsClient {
-    return NewPricingsClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
+// NewAutomationsClient creates an instance of the AutomationsClient client.
+func NewAutomationsClient(subscriptionID string, ascLocation string) AutomationsClient {
+    return NewAutomationsClientWithBaseURI(DefaultBaseURI, subscriptionID, ascLocation)
 }
 
-// NewPricingsClientWithBaseURI creates an instance of the PricingsClient client.
-    func NewPricingsClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) PricingsClient {
-        return PricingsClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
+// NewAutomationsClientWithBaseURI creates an instance of the AutomationsClient client.
+    func NewAutomationsClientWithBaseURI(baseURI string, subscriptionID string, ascLocation string) AutomationsClient {
+        return AutomationsClient{ NewWithBaseURI(baseURI, subscriptionID, ascLocation)}
     }
 
-// CreateOrUpdateResourceGroupPricing security pricing configuration in the resource group
+// CreateOrUpdate create or update a security automation. If a security automation is already created and a subsequent
+// create request is issued with different properties, the security automation properties will be updated.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
-        // pricingName - name of the pricing configuration
-        // pricing - pricing object
-func (client PricingsClient) CreateOrUpdateResourceGroupPricing(ctx context.Context, resourceGroupName string, pricingName string, pricing Pricing) (result Pricing, err error) {
+        // automationName - the security automation name.
+        // automation - the security automation resource
+func (client AutomationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, automationName string, automation Automation) (result Automation, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.CreateOrUpdateResourceGroupPricing")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.CreateOrUpdate")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -64,39 +65,39 @@ func (client PricingsClient) CreateOrUpdateResourceGroupPricing(ctx context.Cont
              Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "CreateOrUpdateResourceGroupPricing", err.Error())
+            return result, validation.NewError("security.AutomationsClient", "CreateOrUpdate", err.Error())
             }
 
-                req, err := client.CreateOrUpdateResourceGroupPricingPreparer(ctx, resourceGroupName, pricingName, pricing)
+                req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, automationName, automation)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "CreateOrUpdateResourceGroupPricing", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "CreateOrUpdate", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.CreateOrUpdateResourceGroupPricingSender(req)
+            resp, err := client.CreateOrUpdateSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "CreateOrUpdateResourceGroupPricing", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "CreateOrUpdate", resp, "Failure sending request")
             return
             }
 
-            result, err = client.CreateOrUpdateResourceGroupPricingResponder(resp)
+            result, err = client.CreateOrUpdateResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "CreateOrUpdateResourceGroupPricing", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "CreateOrUpdate", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // CreateOrUpdateResourceGroupPricingPreparer prepares the CreateOrUpdateResourceGroupPricing request.
-    func (client PricingsClient) CreateOrUpdateResourceGroupPricingPreparer(ctx context.Context, resourceGroupName string, pricingName string, pricing Pricing) (*http.Request, error) {
+    // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
+    func (client AutomationsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, automationName string, automation Automation) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "pricingName": autorest.Encode("path",pricingName),
+            "automationName": autorest.Encode("path",automationName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -105,40 +106,127 @@ func (client PricingsClient) CreateOrUpdateResourceGroupPricing(ctx context.Cont
     autorest.AsContentType("application/json; charset=utf-8"),
     autorest.AsPut(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/pricings/{pricingName}",pathParameters),
-    autorest.WithJSON(pricing),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}",pathParameters),
+    autorest.WithJSON(automation),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // CreateOrUpdateResourceGroupPricingSender sends the CreateOrUpdateResourceGroupPricing request. The method will close the
+    // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
     // http.Response Body if it receives an error.
-    func (client PricingsClient) CreateOrUpdateResourceGroupPricingSender(req *http.Request) (*http.Response, error) {
+    func (client AutomationsClient) CreateOrUpdateSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// CreateOrUpdateResourceGroupPricingResponder handles the response to the CreateOrUpdateResourceGroupPricing request. The method always
+// CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client PricingsClient) CreateOrUpdateResourceGroupPricingResponder(resp *http.Response) (result Pricing, err error) {
+func (client AutomationsClient) CreateOrUpdateResponder(resp *http.Response) (result Automation, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusCreated),
     autorest.ByUnmarshallingJSON(&result),
     autorest.ByClosing())
     result.Response = autorest.Response{Response: resp}
         return
     }
 
-// GetResourceGroupPricing security pricing configuration in the resource group
+// Delete delete a security automation.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
-        // pricingName - name of the pricing configuration
-func (client PricingsClient) GetResourceGroupPricing(ctx context.Context, resourceGroupName string, pricingName string) (result Pricing, err error) {
+        // automationName - the security automation name.
+func (client AutomationsClient) Delete(ctx context.Context, resourceGroupName string, automationName string) (result autorest.Response, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.GetResourceGroupPricing")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.Delete")
+        defer func() {
+            sc := -1
+            if result.Response != nil {
+                sc = result.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: client.SubscriptionID,
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}},
+            { TargetValue: resourceGroupName,
+             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("security.AutomationsClient", "Delete", err.Error())
+            }
+
+                req, err := client.DeletePreparer(ctx, resourceGroupName, automationName)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Delete", nil , "Failure preparing request")
+    return
+    }
+
+            resp, err := client.DeleteSender(req)
+            if err != nil {
+            result.Response = resp
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Delete", resp, "Failure sending request")
+            return
+            }
+
+            result, err = client.DeleteResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Delete", resp, "Failure responding to request")
+            }
+
+    return
+    }
+
+    // DeletePreparer prepares the Delete request.
+    func (client AutomationsClient) DeletePreparer(ctx context.Context, resourceGroupName string, automationName string) (*http.Request, error) {
+            pathParameters := map[string]interface{} {
+            "automationName": autorest.Encode("path",automationName),
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
+            }
+
+                        const APIVersion = "2019-01-01-preview"
+        queryParameters := map[string]interface{} {
+        "api-version": APIVersion,
+        }
+
+        preparer := autorest.CreatePreparer(
+    autorest.AsDelete(),
+    autorest.WithBaseURL(client.BaseURI),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}",pathParameters),
+    autorest.WithQueryParameters(queryParameters))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
+
+    // DeleteSender sends the Delete request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client AutomationsClient) DeleteSender(req *http.Request) (*http.Response, error) {
+        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
+            return autorest.SendWithSender(client, req, sd...)
+            }
+
+// DeleteResponder handles the response to the Delete request. The method always
+// closes the http.Response Body.
+func (client AutomationsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusNoContent),
+    autorest.ByClosing())
+    result.Response = resp
+        return
+    }
+
+// Get get the details of a security automation.
+    // Parameters:
+        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
+        // insensitive.
+        // automationName - the security automation name.
+func (client AutomationsClient) Get(ctx context.Context, resourceGroupName string, automationName string) (result Automation, err error) {
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -154,39 +242,39 @@ func (client PricingsClient) GetResourceGroupPricing(ctx context.Context, resour
              Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "GetResourceGroupPricing", err.Error())
+            return result, validation.NewError("security.AutomationsClient", "Get", err.Error())
             }
 
-                req, err := client.GetResourceGroupPricingPreparer(ctx, resourceGroupName, pricingName)
+                req, err := client.GetPreparer(ctx, resourceGroupName, automationName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetResourceGroupPricing", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Get", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.GetResourceGroupPricingSender(req)
+            resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetResourceGroupPricing", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Get", resp, "Failure sending request")
             return
             }
 
-            result, err = client.GetResourceGroupPricingResponder(resp)
+            result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetResourceGroupPricing", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // GetResourceGroupPricingPreparer prepares the GetResourceGroupPricing request.
-    func (client PricingsClient) GetResourceGroupPricingPreparer(ctx context.Context, resourceGroupName string, pricingName string) (*http.Request, error) {
+    // GetPreparer prepares the Get request.
+    func (client AutomationsClient) GetPreparer(ctx context.Context, resourceGroupName string, automationName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "pricingName": autorest.Encode("path",pricingName),
+            "automationName": autorest.Encode("path",automationName),
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -194,21 +282,21 @@ func (client PricingsClient) GetResourceGroupPricing(ctx context.Context, resour
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/pricings/{pricingName}",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // GetResourceGroupPricingSender sends the GetResourceGroupPricing request. The method will close the
+    // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client PricingsClient) GetResourceGroupPricingSender(req *http.Request) (*http.Response, error) {
+    func (client AutomationsClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// GetResourceGroupPricingResponder handles the response to the GetResourceGroupPricing request. The method always
+// GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client PricingsClient) GetResourceGroupPricingResponder(resp *http.Response) (result Pricing, err error) {
+func (client AutomationsClient) GetResponder(resp *http.Response) (result Automation, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -219,17 +307,14 @@ func (client PricingsClient) GetResourceGroupPricingResponder(resp *http.Respons
         return
     }
 
-// GetSubscriptionPricing security pricing configuration in the subscriptionSecurity pricing configuration in the
-// subscription
-    // Parameters:
-        // pricingName - name of the pricing configuration
-func (client PricingsClient) GetSubscriptionPricing(ctx context.Context, pricingName string) (result Pricing, err error) {
+// List get all security automations in a subscription.
+func (client AutomationsClient) List(ctx context.Context) (result AutomationListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.GetSubscriptionPricing")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.List")
         defer func() {
             sc := -1
-            if result.Response.Response != nil {
-                sc = result.Response.Response.StatusCode
+            if result.al.Response.Response != nil {
+                sc = result.al.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
@@ -237,117 +322,38 @@ func (client PricingsClient) GetSubscriptionPricing(ctx context.Context, pricing
             if err := validation.Validate([]validation.Validation{
             { TargetValue: client.SubscriptionID,
              Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "GetSubscriptionPricing", err.Error())
-            }
-
-                req, err := client.GetSubscriptionPricingPreparer(ctx, pricingName)
-    if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetSubscriptionPricing", nil , "Failure preparing request")
-    return
-    }
-
-            resp, err := client.GetSubscriptionPricingSender(req)
-            if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetSubscriptionPricing", resp, "Failure sending request")
-            return
-            }
-
-            result, err = client.GetSubscriptionPricingResponder(resp)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "GetSubscriptionPricing", resp, "Failure responding to request")
-            }
-
-    return
-    }
-
-    // GetSubscriptionPricingPreparer prepares the GetSubscriptionPricing request.
-    func (client PricingsClient) GetSubscriptionPricingPreparer(ctx context.Context, pricingName string) (*http.Request, error) {
-            pathParameters := map[string]interface{} {
-            "pricingName": autorest.Encode("path",pricingName),
-            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            }
-
-                        const APIVersion = "2017-08-01-preview"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
-
-        preparer := autorest.CreatePreparer(
-    autorest.AsGet(),
-    autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}",pathParameters),
-    autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare((&http.Request{}).WithContext(ctx))
-    }
-
-    // GetSubscriptionPricingSender sends the GetSubscriptionPricing request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client PricingsClient) GetSubscriptionPricingSender(req *http.Request) (*http.Response, error) {
-        sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-            return autorest.SendWithSender(client, req, sd...)
-            }
-
-// GetSubscriptionPricingResponder handles the response to the GetSubscriptionPricing request. The method always
-// closes the http.Response Body.
-func (client PricingsClient) GetSubscriptionPricingResponder(resp *http.Response) (result Pricing, err error) {
-    err = autorest.Respond(
-    resp,
-    client.ByInspecting(),
-    azure.WithErrorUnlessStatusCode(http.StatusOK),
-    autorest.ByUnmarshallingJSON(&result),
-    autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-        return
-    }
-
-// List security pricing configurations in the subscription
-func (client PricingsClient) List(ctx context.Context) (result PricingListPage, err error) {
-    if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.List")
-        defer func() {
-            sc := -1
-            if result.pl.Response.Response != nil {
-                sc = result.pl.Response.Response.StatusCode
-            }
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    }
-            if err := validation.Validate([]validation.Validation{
-            { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "List", err.Error())
+            return result, validation.NewError("security.AutomationsClient", "List", err.Error())
             }
 
                         result.fn = client.listNextResults
     req, err := client.ListPreparer(ctx)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "List", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "List", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListSender(req)
             if err != nil {
-            result.pl.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "List", resp, "Failure sending request")
+            result.al.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "List", resp, "Failure sending request")
             return
             }
 
-            result.pl, err = client.ListResponder(resp)
+            result.al, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "List", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "List", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListPreparer prepares the List request.
-    func (client PricingsClient) ListPreparer(ctx context.Context) (*http.Request, error) {
+    func (client AutomationsClient) ListPreparer(ctx context.Context) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -355,21 +361,21 @@ func (client PricingsClient) List(ctx context.Context) (result PricingListPage, 
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client PricingsClient) ListSender(req *http.Request) (*http.Response, error) {
+    func (client AutomationsClient) ListSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client PricingsClient) ListResponder(resp *http.Response) (result PricingList, err error) {
+func (client AutomationsClient) ListResponder(resp *http.Response) (result AutomationList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -381,10 +387,10 @@ func (client PricingsClient) ListResponder(resp *http.Response) (result PricingL
     }
 
             // listNextResults retrieves the next set of results, if any.
-            func (client PricingsClient) listNextResults(ctx context.Context, lastResults PricingList) (result PricingList, err error) {
-            req, err := lastResults.pricingListPreparer(ctx)
+            func (client AutomationsClient) listNextResults(ctx context.Context, lastResults AutomationList) (result AutomationList, err error) {
+            req, err := lastResults.automationListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "security.PricingsClient", "listNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "security.AutomationsClient", "listNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -392,19 +398,19 @@ func (client PricingsClient) ListResponder(resp *http.Response) (result PricingL
             resp, err := client.ListSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "security.PricingsClient", "listNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "security.AutomationsClient", "listNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "listNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "listNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client PricingsClient) ListComplete(ctx context.Context) (result PricingListIterator, err error) {
+    func (client AutomationsClient) ListComplete(ctx context.Context) (result AutomationListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.List")
+            ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.List")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -417,17 +423,17 @@ func (client PricingsClient) ListResponder(resp *http.Response) (result PricingL
                 return
         }
 
-// ListByResourceGroup security pricing configurations in the resource group
+// ListByResourceGroup get all security automations in a resource group.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
-func (client PricingsClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result PricingListPage, err error) {
+func (client AutomationsClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result AutomationListPage, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.ListByResourceGroup")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.ListByResourceGroup")
         defer func() {
             sc := -1
-            if result.pl.Response.Response != nil {
-                sc = result.pl.Response.Response.StatusCode
+            if result.al.Response.Response != nil {
+                sc = result.al.Response.Response.StatusCode
             }
             tracing.EndSpan(ctx, sc, err)
         }()
@@ -439,39 +445,39 @@ func (client PricingsClient) ListByResourceGroup(ctx context.Context, resourceGr
              Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
             	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "ListByResourceGroup", err.Error())
+            return result, validation.NewError("security.AutomationsClient", "ListByResourceGroup", err.Error())
             }
 
                         result.fn = client.listByResourceGroupNextResults
     req, err := client.ListByResourceGroupPreparer(ctx, resourceGroupName)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "ListByResourceGroup", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "ListByResourceGroup", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.ListByResourceGroupSender(req)
             if err != nil {
-            result.pl.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "ListByResourceGroup", resp, "Failure sending request")
+            result.al.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "ListByResourceGroup", resp, "Failure sending request")
             return
             }
 
-            result.pl, err = client.ListByResourceGroupResponder(resp)
+            result.al, err = client.ListByResourceGroupResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "ListByResourceGroup", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "ListByResourceGroup", resp, "Failure responding to request")
             }
 
     return
     }
 
     // ListByResourceGroupPreparer prepares the ListByResourceGroup request.
-    func (client PricingsClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string) (*http.Request, error) {
+    func (client AutomationsClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
             "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
@@ -479,21 +485,21 @@ func (client PricingsClient) ListByResourceGroup(ctx context.Context, resourceGr
         preparer := autorest.CreatePreparer(
     autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/pricings",pathParameters),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // ListByResourceGroupSender sends the ListByResourceGroup request. The method will close the
     // http.Response Body if it receives an error.
-    func (client PricingsClient) ListByResourceGroupSender(req *http.Request) (*http.Response, error) {
+    func (client AutomationsClient) ListByResourceGroupSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // ListByResourceGroupResponder handles the response to the ListByResourceGroup request. The method always
 // closes the http.Response Body.
-func (client PricingsClient) ListByResourceGroupResponder(resp *http.Response) (result PricingList, err error) {
+func (client AutomationsClient) ListByResourceGroupResponder(resp *http.Response) (result AutomationList, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
@@ -505,10 +511,10 @@ func (client PricingsClient) ListByResourceGroupResponder(resp *http.Response) (
     }
 
             // listByResourceGroupNextResults retrieves the next set of results, if any.
-            func (client PricingsClient) listByResourceGroupNextResults(ctx context.Context, lastResults PricingList) (result PricingList, err error) {
-            req, err := lastResults.pricingListPreparer(ctx)
+            func (client AutomationsClient) listByResourceGroupNextResults(ctx context.Context, lastResults AutomationList) (result AutomationList, err error) {
+            req, err := lastResults.automationListPreparer(ctx)
             if err != nil {
-            return result, autorest.NewErrorWithError(err, "security.PricingsClient", "listByResourceGroupNextResults", nil , "Failure preparing next results request")
+            return result, autorest.NewErrorWithError(err, "security.AutomationsClient", "listByResourceGroupNextResults", nil , "Failure preparing next results request")
             }
             if req == nil {
             return
@@ -516,19 +522,19 @@ func (client PricingsClient) ListByResourceGroupResponder(resp *http.Response) (
             resp, err := client.ListByResourceGroupSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            return result, autorest.NewErrorWithError(err, "security.PricingsClient", "listByResourceGroupNextResults", resp, "Failure sending next results request")
+            return result, autorest.NewErrorWithError(err, "security.AutomationsClient", "listByResourceGroupNextResults", resp, "Failure sending next results request")
             }
             result, err = client.ListByResourceGroupResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "listByResourceGroupNextResults", resp, "Failure responding to next results request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "listByResourceGroupNextResults", resp, "Failure responding to next results request")
             }
             return
                     }
 
     // ListByResourceGroupComplete enumerates all values, automatically crossing page boundaries as required.
-    func (client PricingsClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result PricingListIterator, err error) {
+    func (client AutomationsClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result AutomationListIterator, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.ListByResourceGroup")
+            ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.ListByResourceGroup")
             defer func() {
                 sc := -1
                 if result.Response().Response.Response != nil {
@@ -541,13 +547,16 @@ func (client PricingsClient) ListByResourceGroupResponder(resp *http.Response) (
                 return
         }
 
-// UpdateSubscriptionPricing security pricing configuration in the subscription
+// Validate validate the security automation model before create or update. Any validation errors are returned to the
+// client.
     // Parameters:
-        // pricingName - name of the pricing configuration
-        // pricing - pricing object
-func (client PricingsClient) UpdateSubscriptionPricing(ctx context.Context, pricingName string, pricing Pricing) (result Pricing, err error) {
+        // resourceGroupName - the name of the resource group within the user's subscription. The name is case
+        // insensitive.
+        // automationName - the security automation name.
+        // automation - the security automation resource
+func (client AutomationsClient) Validate(ctx context.Context, resourceGroupName string, automationName string, automation Automation) (result AutomationValidationStatus, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/PricingsClient.UpdateSubscriptionPricing")
+        ctx = tracing.StartSpan(ctx, fqdn + "/AutomationsClient.Validate")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -558,63 +567,68 @@ func (client PricingsClient) UpdateSubscriptionPricing(ctx context.Context, pric
     }
             if err := validation.Validate([]validation.Validation{
             { TargetValue: client.SubscriptionID,
-             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}}}); err != nil {
-            return result, validation.NewError("security.PricingsClient", "UpdateSubscriptionPricing", err.Error())
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}},
+            { TargetValue: resourceGroupName,
+             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("security.AutomationsClient", "Validate", err.Error())
             }
 
-                req, err := client.UpdateSubscriptionPricingPreparer(ctx, pricingName, pricing)
+                req, err := client.ValidatePreparer(ctx, resourceGroupName, automationName, automation)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "security.PricingsClient", "UpdateSubscriptionPricing", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Validate", nil , "Failure preparing request")
     return
     }
 
-            resp, err := client.UpdateSubscriptionPricingSender(req)
+            resp, err := client.ValidateSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "UpdateSubscriptionPricing", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Validate", resp, "Failure sending request")
             return
             }
 
-            result, err = client.UpdateSubscriptionPricingResponder(resp)
+            result, err = client.ValidateResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "security.PricingsClient", "UpdateSubscriptionPricing", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "security.AutomationsClient", "Validate", resp, "Failure responding to request")
             }
 
     return
     }
 
-    // UpdateSubscriptionPricingPreparer prepares the UpdateSubscriptionPricing request.
-    func (client PricingsClient) UpdateSubscriptionPricingPreparer(ctx context.Context, pricingName string, pricing Pricing) (*http.Request, error) {
+    // ValidatePreparer prepares the Validate request.
+    func (client AutomationsClient) ValidatePreparer(ctx context.Context, resourceGroupName string, automationName string, automation Automation) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "pricingName": autorest.Encode("path",pricingName),
+            "automationName": autorest.Encode("path",automationName),
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
             }
 
-                        const APIVersion = "2017-08-01-preview"
+                        const APIVersion = "2019-01-01-preview"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
 
         preparer := autorest.CreatePreparer(
     autorest.AsContentType("application/json; charset=utf-8"),
-    autorest.AsPut(),
+    autorest.AsPost(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}",pathParameters),
-    autorest.WithJSON(pricing),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}/validate",pathParameters),
+    autorest.WithJSON(automation),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // UpdateSubscriptionPricingSender sends the UpdateSubscriptionPricing request. The method will close the
+    // ValidateSender sends the Validate request. The method will close the
     // http.Response Body if it receives an error.
-    func (client PricingsClient) UpdateSubscriptionPricingSender(req *http.Request) (*http.Response, error) {
+    func (client AutomationsClient) ValidateSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
-// UpdateSubscriptionPricingResponder handles the response to the UpdateSubscriptionPricing request. The method always
+// ValidateResponder handles the response to the Validate request. The method always
 // closes the http.Response Body.
-func (client PricingsClient) UpdateSubscriptionPricingResponder(resp *http.Response) (result Pricing, err error) {
+func (client AutomationsClient) ValidateResponder(resp *http.Response) (result AutomationValidationStatus, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
