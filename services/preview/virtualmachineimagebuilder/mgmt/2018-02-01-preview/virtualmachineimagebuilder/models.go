@@ -18,1545 +18,1577 @@ package virtualmachineimagebuilder
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "encoding/json"
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "github.com/Azure/go-autorest/autorest/date"
-    "github.com/Azure/go-autorest/autorest/to"
-    "github.com/Azure/go-autorest/tracing"
-    "net/http"
+	"context"
+	"encoding/json"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/autorest/to"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/virtualmachineimagebuilder/mgmt/2018-02-01-preview/virtualmachineimagebuilder"
 
-        // ProvisioningErrorCode enumerates the values for provisioning error code.
-    type ProvisioningErrorCode string
+// ProvisioningErrorCode enumerates the values for provisioning error code.
+type ProvisioningErrorCode string
 
-    const (
-                // BadCustomizerType ...
-        BadCustomizerType ProvisioningErrorCode = "BadCustomizerType"
-                // BadISOSource ...
-        BadISOSource ProvisioningErrorCode = "BadISOSource"
-                // BadPIRSource ...
-        BadPIRSource ProvisioningErrorCode = "BadPIRSource"
-                // BadSourceType ...
-        BadSourceType ProvisioningErrorCode = "BadSourceType"
-                // NoCustomizerShellScript ...
-        NoCustomizerShellScript ProvisioningErrorCode = "NoCustomizerShellScript"
-                // Other ...
-        Other ProvisioningErrorCode = "Other"
-                // ServerError ...
-        ServerError ProvisioningErrorCode = "ServerError"
-            )
-    // PossibleProvisioningErrorCodeValues returns an array of possible values for the ProvisioningErrorCode const type.
-    func PossibleProvisioningErrorCodeValues() []ProvisioningErrorCode {
-        return []ProvisioningErrorCode{BadCustomizerType,BadISOSource,BadPIRSource,BadSourceType,NoCustomizerShellScript,Other,ServerError}
-    }
+const (
+	// BadCustomizerType ...
+	BadCustomizerType ProvisioningErrorCode = "BadCustomizerType"
+	// BadISOSource ...
+	BadISOSource ProvisioningErrorCode = "BadISOSource"
+	// BadPIRSource ...
+	BadPIRSource ProvisioningErrorCode = "BadPIRSource"
+	// BadSourceType ...
+	BadSourceType ProvisioningErrorCode = "BadSourceType"
+	// NoCustomizerShellScript ...
+	NoCustomizerShellScript ProvisioningErrorCode = "NoCustomizerShellScript"
+	// Other ...
+	Other ProvisioningErrorCode = "Other"
+	// ServerError ...
+	ServerError ProvisioningErrorCode = "ServerError"
+)
 
-        // ProvisioningState enumerates the values for provisioning state.
-    type ProvisioningState string
+// PossibleProvisioningErrorCodeValues returns an array of possible values for the ProvisioningErrorCode const type.
+func PossibleProvisioningErrorCodeValues() []ProvisioningErrorCode {
+	return []ProvisioningErrorCode{BadCustomizerType, BadISOSource, BadPIRSource, BadSourceType, NoCustomizerShellScript, Other, ServerError}
+}
 
-    const (
-                // Creating ...
-        Creating ProvisioningState = "Creating"
-                // Deleting ...
-        Deleting ProvisioningState = "Deleting"
-                // Failed ...
-        Failed ProvisioningState = "Failed"
-                // Succeeded ...
-        Succeeded ProvisioningState = "Succeeded"
-            )
-    // PossibleProvisioningStateValues returns an array of possible values for the ProvisioningState const type.
-    func PossibleProvisioningStateValues() []ProvisioningState {
-        return []ProvisioningState{Creating,Deleting,Failed,Succeeded}
-    }
+// ProvisioningState enumerates the values for provisioning state.
+type ProvisioningState string
 
-        // ProvisioningState1 enumerates the values for provisioning state 1.
-    type ProvisioningState1 string
+const (
+	// Creating ...
+	Creating ProvisioningState = "Creating"
+	// Deleting ...
+	Deleting ProvisioningState = "Deleting"
+	// Failed ...
+	Failed ProvisioningState = "Failed"
+	// Succeeded ...
+	Succeeded ProvisioningState = "Succeeded"
+)
 
-    const (
-                // ProvisioningState1Creating ...
-        ProvisioningState1Creating ProvisioningState1 = "Creating"
-                // ProvisioningState1Deleting ...
-        ProvisioningState1Deleting ProvisioningState1 = "Deleting"
-                // ProvisioningState1Failed ...
-        ProvisioningState1Failed ProvisioningState1 = "Failed"
-                // ProvisioningState1Succeeded ...
-        ProvisioningState1Succeeded ProvisioningState1 = "Succeeded"
-            )
-    // PossibleProvisioningState1Values returns an array of possible values for the ProvisioningState1 const type.
-    func PossibleProvisioningState1Values() []ProvisioningState1 {
-        return []ProvisioningState1{ProvisioningState1Creating,ProvisioningState1Deleting,ProvisioningState1Failed,ProvisioningState1Succeeded}
-    }
+// PossibleProvisioningStateValues returns an array of possible values for the ProvisioningState const type.
+func PossibleProvisioningStateValues() []ProvisioningState {
+	return []ProvisioningState{Creating, Deleting, Failed, Succeeded}
+}
 
-        // RunState enumerates the values for run state.
-    type RunState string
+// ProvisioningState1 enumerates the values for provisioning state 1.
+type ProvisioningState1 string
 
-    const (
-                // RunStateFailed ...
-        RunStateFailed RunState = "failed"
-                // RunStatePartiallySucceeded ...
-        RunStatePartiallySucceeded RunState = "partiallySucceeded"
-                // RunStateReady ...
-        RunStateReady RunState = "ready"
-                // RunStateRunning ...
-        RunStateRunning RunState = "running"
-                // RunStateSucceeded ...
-        RunStateSucceeded RunState = "succeeded"
-            )
-    // PossibleRunStateValues returns an array of possible values for the RunState const type.
-    func PossibleRunStateValues() []RunState {
-        return []RunState{RunStateFailed,RunStatePartiallySucceeded,RunStateReady,RunStateRunning,RunStateSucceeded}
-    }
+const (
+	// ProvisioningState1Creating ...
+	ProvisioningState1Creating ProvisioningState1 = "Creating"
+	// ProvisioningState1Deleting ...
+	ProvisioningState1Deleting ProvisioningState1 = "Deleting"
+	// ProvisioningState1Failed ...
+	ProvisioningState1Failed ProvisioningState1 = "Failed"
+	// ProvisioningState1Succeeded ...
+	ProvisioningState1Succeeded ProvisioningState1 = "Succeeded"
+)
 
-        // RunSubState enumerates the values for run sub state.
-    type RunSubState string
+// PossibleProvisioningState1Values returns an array of possible values for the ProvisioningState1 const type.
+func PossibleProvisioningState1Values() []ProvisioningState1 {
+	return []ProvisioningState1{ProvisioningState1Creating, ProvisioningState1Deleting, ProvisioningState1Failed, ProvisioningState1Succeeded}
+}
 
-    const (
-                // Building ...
-        Building RunSubState = "building"
-                // Customizing ...
-        Customizing RunSubState = "customizing"
-                // Distributing ...
-        Distributing RunSubState = "distributing"
-                // Queued ...
-        Queued RunSubState = "queued"
-            )
-    // PossibleRunSubStateValues returns an array of possible values for the RunSubState const type.
-    func PossibleRunSubStateValues() []RunSubState {
-        return []RunSubState{Building,Customizing,Distributing,Queued}
-    }
+// RunState enumerates the values for run state.
+type RunState string
 
-        // Type enumerates the values for type.
-    type Type string
+const (
+	// RunStateFailed ...
+	RunStateFailed RunState = "failed"
+	// RunStatePartiallySucceeded ...
+	RunStatePartiallySucceeded RunState = "partiallySucceeded"
+	// RunStateReady ...
+	RunStateReady RunState = "ready"
+	// RunStateRunning ...
+	RunStateRunning RunState = "running"
+	// RunStateSucceeded ...
+	RunStateSucceeded RunState = "succeeded"
+)
 
-    const (
-                // TypeImageTemplateSource ...
-        TypeImageTemplateSource Type = "ImageTemplateSource"
-                // TypeISO ...
-        TypeISO Type = "ISO"
-                // TypePlatformImage ...
-        TypePlatformImage Type = "PlatformImage"
-            )
-    // PossibleTypeValues returns an array of possible values for the Type const type.
-    func PossibleTypeValues() []Type {
-        return []Type{TypeImageTemplateSource,TypeISO,TypePlatformImage}
-    }
+// PossibleRunStateValues returns an array of possible values for the RunState const type.
+func PossibleRunStateValues() []RunState {
+	return []RunState{RunStateFailed, RunStatePartiallySucceeded, RunStateReady, RunStateRunning, RunStateSucceeded}
+}
 
-        // TypeBasicImageTemplateCustomizer enumerates the values for type basic image template customizer.
-    type TypeBasicImageTemplateCustomizer string
+// RunSubState enumerates the values for run sub state.
+type RunSubState string
 
-    const (
-                // TypeImageTemplateCustomizer ...
-        TypeImageTemplateCustomizer TypeBasicImageTemplateCustomizer = "ImageTemplateCustomizer"
-                // TypeShell ...
-        TypeShell TypeBasicImageTemplateCustomizer = "shell"
-            )
-    // PossibleTypeBasicImageTemplateCustomizerValues returns an array of possible values for the TypeBasicImageTemplateCustomizer const type.
-    func PossibleTypeBasicImageTemplateCustomizerValues() []TypeBasicImageTemplateCustomizer {
-        return []TypeBasicImageTemplateCustomizer{TypeImageTemplateCustomizer,TypeShell}
-    }
+const (
+	// Building ...
+	Building RunSubState = "building"
+	// Customizing ...
+	Customizing RunSubState = "customizing"
+	// Distributing ...
+	Distributing RunSubState = "distributing"
+	// Queued ...
+	Queued RunSubState = "queued"
+)
 
-        // TypeBasicImageTemplateDistributor enumerates the values for type basic image template distributor.
-    type TypeBasicImageTemplateDistributor string
+// PossibleRunSubStateValues returns an array of possible values for the RunSubState const type.
+func PossibleRunSubStateValues() []RunSubState {
+	return []RunSubState{Building, Customizing, Distributing, Queued}
+}
 
-    const (
-                // TypeImageTemplateDistributor ...
-        TypeImageTemplateDistributor TypeBasicImageTemplateDistributor = "ImageTemplateDistributor"
-                // TypeManagedImage ...
-        TypeManagedImage TypeBasicImageTemplateDistributor = "managedImage"
-                // TypeSharedImage ...
-        TypeSharedImage TypeBasicImageTemplateDistributor = "sharedImage"
-            )
-    // PossibleTypeBasicImageTemplateDistributorValues returns an array of possible values for the TypeBasicImageTemplateDistributor const type.
-    func PossibleTypeBasicImageTemplateDistributorValues() []TypeBasicImageTemplateDistributor {
-        return []TypeBasicImageTemplateDistributor{TypeImageTemplateDistributor,TypeManagedImage,TypeSharedImage}
-    }
+// Type enumerates the values for type.
+type Type string
 
-            // APIError api error.
-            type APIError struct {
-            // Details - The Api error details
-            Details *[]APIErrorBase `json:"details,omitempty"`
-            // Innererror - The Api inner error
-            Innererror *InnerError `json:"innererror,omitempty"`
-            // Code - The error code.
-            Code *string `json:"code,omitempty"`
-            // Target - The target of the particular error.
-            Target *string `json:"target,omitempty"`
-            // Message - The error message.
-            Message *string `json:"message,omitempty"`
-            }
+const (
+	// TypeImageTemplateSource ...
+	TypeImageTemplateSource Type = "ImageTemplateSource"
+	// TypeISO ...
+	TypeISO Type = "ISO"
+	// TypePlatformImage ...
+	TypePlatformImage Type = "PlatformImage"
+)
 
-            // APIErrorBase api error base.
-            type APIErrorBase struct {
-            // Code - The error code.
-            Code *string `json:"code,omitempty"`
-            // Target - The target of the particular error.
-            Target *string `json:"target,omitempty"`
-            // Message - The error message.
-            Message *string `json:"message,omitempty"`
-            }
+// PossibleTypeValues returns an array of possible values for the Type const type.
+func PossibleTypeValues() []Type {
+	return []Type{TypeImageTemplateSource, TypeISO, TypePlatformImage}
+}
 
-            // ImageTemplate ...
-            type ImageTemplate struct {
-            autorest.Response `json:"-"`
-            *ImageTemplateProperties `json:"properties,omitempty"`
-            // ID - READ-ONLY; Resource Id
-            ID *string `json:"id,omitempty"`
-            // Name - READ-ONLY; Resource name
-            Name *string `json:"name,omitempty"`
-            // Type - READ-ONLY; Resource type
-            Type *string `json:"type,omitempty"`
-            // Location - Resource location
-            Location *string `json:"location,omitempty"`
-            // Tags - Resource tags
-            Tags map[string]*string `json:"tags"`
-            }
+// TypeBasicImageTemplateCustomizer enumerates the values for type basic image template customizer.
+type TypeBasicImageTemplateCustomizer string
 
-        // MarshalJSON is the custom marshaler for ImageTemplate.
-        func (it ImageTemplate)MarshalJSON() ([]byte, error){
-        objectMap := make(map[string]interface{})
-                if(it.ImageTemplateProperties != nil) {
-                objectMap["properties"] = it.ImageTemplateProperties
-                }
-                if(it.Location != nil) {
-                objectMap["location"] = it.Location
-                }
-                if(it.Tags != nil) {
-                objectMap["tags"] = it.Tags
-                }
-                return json.Marshal(objectMap)
-        }
-        // UnmarshalJSON is the custom unmarshaler for ImageTemplate struct.
-        func (it *ImageTemplate) UnmarshalJSON(body []byte) error {
-        var m map[string]*json.RawMessage
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return err
-        }
-        for k, v := range  m {
-        switch k {
-                case "properties":
-    if v != nil {
-        var imageTemplateProperties ImageTemplateProperties
-        err = json.Unmarshal(*v, &imageTemplateProperties)
-    if err != nil {
-    return err
-    }
-        it.ImageTemplateProperties = &imageTemplateProperties
-    }
-                case "id":
-    if v != nil {
-        var ID string
-        err = json.Unmarshal(*v, &ID)
-    if err != nil {
-    return err
-    }
-        it.ID = &ID
-    }
-                case "name":
-    if v != nil {
-        var name string
-        err = json.Unmarshal(*v, &name)
-    if err != nil {
-    return err
-    }
-        it.Name = &name
-    }
-                case "type":
-    if v != nil {
-        var typeVar string
-        err = json.Unmarshal(*v, &typeVar)
-    if err != nil {
-    return err
-    }
-        it.Type = &typeVar
-    }
-                case "location":
-    if v != nil {
-        var location string
-        err = json.Unmarshal(*v, &location)
-    if err != nil {
-    return err
-    }
-        it.Location = &location
-    }
-                case "tags":
-    if v != nil {
-        var tags map[string]*string
-        err = json.Unmarshal(*v, &tags)
-    if err != nil {
-    return err
-    }
-        it.Tags = tags
-    }
-            }
-        }
+const (
+	// TypeImageTemplateCustomizer ...
+	TypeImageTemplateCustomizer TypeBasicImageTemplateCustomizer = "ImageTemplateCustomizer"
+	// TypeShell ...
+	TypeShell TypeBasicImageTemplateCustomizer = "shell"
+)
 
-        return nil
-        }
+// PossibleTypeBasicImageTemplateCustomizerValues returns an array of possible values for the TypeBasicImageTemplateCustomizer const type.
+func PossibleTypeBasicImageTemplateCustomizerValues() []TypeBasicImageTemplateCustomizer {
+	return []TypeBasicImageTemplateCustomizer{TypeImageTemplateCustomizer, TypeShell}
+}
+
+// TypeBasicImageTemplateDistributor enumerates the values for type basic image template distributor.
+type TypeBasicImageTemplateDistributor string
+
+const (
+	// TypeImageTemplateDistributor ...
+	TypeImageTemplateDistributor TypeBasicImageTemplateDistributor = "ImageTemplateDistributor"
+	// TypeManagedImage ...
+	TypeManagedImage TypeBasicImageTemplateDistributor = "managedImage"
+	// TypeSharedImage ...
+	TypeSharedImage TypeBasicImageTemplateDistributor = "sharedImage"
+)
+
+// PossibleTypeBasicImageTemplateDistributorValues returns an array of possible values for the TypeBasicImageTemplateDistributor const type.
+func PossibleTypeBasicImageTemplateDistributorValues() []TypeBasicImageTemplateDistributor {
+	return []TypeBasicImageTemplateDistributor{TypeImageTemplateDistributor, TypeManagedImage, TypeSharedImage}
+}
+
+// APIError api error.
+type APIError struct {
+	// Details - The Api error details
+	Details *[]APIErrorBase `json:"details,omitempty"`
+	// Innererror - The Api inner error
+	Innererror *InnerError `json:"innererror,omitempty"`
+	// Code - The error code.
+	Code *string `json:"code,omitempty"`
+	// Target - The target of the particular error.
+	Target *string `json:"target,omitempty"`
+	// Message - The error message.
+	Message *string `json:"message,omitempty"`
+}
+
+// APIErrorBase api error base.
+type APIErrorBase struct {
+	// Code - The error code.
+	Code *string `json:"code,omitempty"`
+	// Target - The target of the particular error.
+	Target *string `json:"target,omitempty"`
+	// Message - The error message.
+	Message *string `json:"message,omitempty"`
+}
+
+// ImageTemplate ...
+type ImageTemplate struct {
+	autorest.Response        `json:"-"`
+	*ImageTemplateProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+	// Location - Resource location
+	Location *string `json:"location,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for ImageTemplate.
+func (it ImageTemplate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if it.ImageTemplateProperties != nil {
+		objectMap["properties"] = it.ImageTemplateProperties
+	}
+	if it.Location != nil {
+		objectMap["location"] = it.Location
+	}
+	if it.Tags != nil {
+		objectMap["tags"] = it.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ImageTemplate struct.
+func (it *ImageTemplate) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var imageTemplateProperties ImageTemplateProperties
+				err = json.Unmarshal(*v, &imageTemplateProperties)
+				if err != nil {
+					return err
+				}
+				it.ImageTemplateProperties = &imageTemplateProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				it.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				it.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				it.Type = &typeVar
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				it.Location = &location
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				it.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
 
 // BasicImageTemplateCustomizer ...
-        type BasicImageTemplateCustomizer interface {
-            AsImageTemplateShellCustomizer () (*ImageTemplateShellCustomizer, bool)
-        AsImageTemplateCustomizer () (*ImageTemplateCustomizer, bool)
-        }
+type BasicImageTemplateCustomizer interface {
+	AsImageTemplateShellCustomizer() (*ImageTemplateShellCustomizer, bool)
+	AsImageTemplateCustomizer() (*ImageTemplateCustomizer, bool)
+}
 
-        // ImageTemplateCustomizer ...
-        type ImageTemplateCustomizer struct {
-        // Name - Friendly Name to provide context on what this customization step does
-        Name *string `json:"name,omitempty"`
-        // Type - Possible values include: 'TypeImageTemplateCustomizer', 'TypeShell'
-        Type TypeBasicImageTemplateCustomizer `json:"type,omitempty"`
-        }
+// ImageTemplateCustomizer ...
+type ImageTemplateCustomizer struct {
+	// Name - Friendly Name to provide context on what this customization step does
+	Name *string `json:"name,omitempty"`
+	// Type - Possible values include: 'TypeImageTemplateCustomizer', 'TypeShell'
+	Type TypeBasicImageTemplateCustomizer `json:"type,omitempty"`
+}
 
-        func unmarshalBasicImageTemplateCustomizer(body []byte) (BasicImageTemplateCustomizer, error){
-        var m map[string]interface{}
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return nil, err
-        }
+func unmarshalBasicImageTemplateCustomizer(body []byte) (BasicImageTemplateCustomizer, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
 
-        switch m["type"] {
-            case string(TypeShell):
-            var itsc ImageTemplateShellCustomizer
-            err := json.Unmarshal(body, &itsc)
-            return itsc, err
-            default:
-        var itc ImageTemplateCustomizer
-        err := json.Unmarshal(body, &itc)
-        return itc, err
-        }
-        }
-        func unmarshalBasicImageTemplateCustomizerArray(body []byte) ([]BasicImageTemplateCustomizer, error){
-        var rawMessages []*json.RawMessage
-        err := json.Unmarshal(body, &rawMessages)
-        if err != nil {
-        return nil, err
-        }
+	switch m["type"] {
+	case string(TypeShell):
+		var itsc ImageTemplateShellCustomizer
+		err := json.Unmarshal(body, &itsc)
+		return itsc, err
+	default:
+		var itc ImageTemplateCustomizer
+		err := json.Unmarshal(body, &itc)
+		return itc, err
+	}
+}
+func unmarshalBasicImageTemplateCustomizerArray(body []byte) ([]BasicImageTemplateCustomizer, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
 
-        itcArray := make([]BasicImageTemplateCustomizer, len(rawMessages))
+	itcArray := make([]BasicImageTemplateCustomizer, len(rawMessages))
 
-        for index, rawMessage := range rawMessages {
-        itc, err := unmarshalBasicImageTemplateCustomizer(*rawMessage)
-        if err != nil {
-        return nil, err
-        }
-        itcArray[index] = itc
-        }
-        return itcArray, nil
-        }
+	for index, rawMessage := range rawMessages {
+		itc, err := unmarshalBasicImageTemplateCustomizer(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		itcArray[index] = itc
+	}
+	return itcArray, nil
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateCustomizer.
-        func (itc ImageTemplateCustomizer)MarshalJSON() ([]byte, error){
-            itc.Type = TypeImageTemplateCustomizer
-            objectMap := make(map[string]interface{})
-                if(itc.Name != nil) {
-                objectMap["name"] = itc.Name
-                }
-                if(itc.Type != "") {
-                objectMap["type"] = itc.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// MarshalJSON is the custom marshaler for ImageTemplateCustomizer.
+func (itc ImageTemplateCustomizer) MarshalJSON() ([]byte, error) {
+	itc.Type = TypeImageTemplateCustomizer
+	objectMap := make(map[string]interface{})
+	if itc.Name != nil {
+		objectMap["name"] = itc.Name
+	}
+	if itc.Type != "" {
+		objectMap["type"] = itc.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-            // AsImageTemplateShellCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
-            func (itc ImageTemplateCustomizer) AsImageTemplateShellCustomizer() (*ImageTemplateShellCustomizer, bool) {
-                return nil, false
-            }
+// AsImageTemplateShellCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
+func (itc ImageTemplateCustomizer) AsImageTemplateShellCustomizer() (*ImageTemplateShellCustomizer, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
-            func (itc ImageTemplateCustomizer) AsImageTemplateCustomizer() (*ImageTemplateCustomizer, bool) {
-                return &itc, true
-            }
+// AsImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
+func (itc ImageTemplateCustomizer) AsImageTemplateCustomizer() (*ImageTemplateCustomizer, bool) {
+	return &itc, true
+}
 
-                // AsBasicImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
-                func(itc ImageTemplateCustomizer) AsBasicImageTemplateCustomizer()(BasicImageTemplateCustomizer, bool) {
-                    return &itc, true
-                }
-
+// AsBasicImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateCustomizer.
+func (itc ImageTemplateCustomizer) AsBasicImageTemplateCustomizer() (BasicImageTemplateCustomizer, bool) {
+	return &itc, true
+}
 
 // BasicImageTemplateDistributor generic distribution object
-        type BasicImageTemplateDistributor interface {
-            AsImageTemplateManagedImageDistributor () (*ImageTemplateManagedImageDistributor, bool)
-            AsImageTemplateSharedImageDistributor () (*ImageTemplateSharedImageDistributor, bool)
-        AsImageTemplateDistributor () (*ImageTemplateDistributor, bool)
-        }
+type BasicImageTemplateDistributor interface {
+	AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool)
+	AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool)
+	AsImageTemplateDistributor() (*ImageTemplateDistributor, bool)
+}
 
-        // ImageTemplateDistributor generic distribution object
-        type ImageTemplateDistributor struct {
-        // RunOutputName - The name to be used for the associated RunOutput.
-        RunOutputName *string `json:"runOutputName,omitempty"`
-        // ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
-        ArtifactTags map[string]*string `json:"artifactTags"`
-        // Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
-        Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
-        }
+// ImageTemplateDistributor generic distribution object
+type ImageTemplateDistributor struct {
+	// RunOutputName - The name to be used for the associated RunOutput.
+	RunOutputName *string `json:"runOutputName,omitempty"`
+	// ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
+	ArtifactTags map[string]*string `json:"artifactTags"`
+	// Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
+	Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
+}
 
-        func unmarshalBasicImageTemplateDistributor(body []byte) (BasicImageTemplateDistributor, error){
-        var m map[string]interface{}
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return nil, err
-        }
+func unmarshalBasicImageTemplateDistributor(body []byte) (BasicImageTemplateDistributor, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
 
-        switch m["type"] {
-            case string(TypeManagedImage):
-            var itmid ImageTemplateManagedImageDistributor
-            err := json.Unmarshal(body, &itmid)
-            return itmid, err
-            case string(TypeSharedImage):
-            var itsid ImageTemplateSharedImageDistributor
-            err := json.Unmarshal(body, &itsid)
-            return itsid, err
-            default:
-        var itd ImageTemplateDistributor
-        err := json.Unmarshal(body, &itd)
-        return itd, err
-        }
-        }
-        func unmarshalBasicImageTemplateDistributorArray(body []byte) ([]BasicImageTemplateDistributor, error){
-        var rawMessages []*json.RawMessage
-        err := json.Unmarshal(body, &rawMessages)
-        if err != nil {
-        return nil, err
-        }
+	switch m["type"] {
+	case string(TypeManagedImage):
+		var itmid ImageTemplateManagedImageDistributor
+		err := json.Unmarshal(body, &itmid)
+		return itmid, err
+	case string(TypeSharedImage):
+		var itsid ImageTemplateSharedImageDistributor
+		err := json.Unmarshal(body, &itsid)
+		return itsid, err
+	default:
+		var itd ImageTemplateDistributor
+		err := json.Unmarshal(body, &itd)
+		return itd, err
+	}
+}
+func unmarshalBasicImageTemplateDistributorArray(body []byte) ([]BasicImageTemplateDistributor, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
 
-        itdArray := make([]BasicImageTemplateDistributor, len(rawMessages))
+	itdArray := make([]BasicImageTemplateDistributor, len(rawMessages))
 
-        for index, rawMessage := range rawMessages {
-        itd, err := unmarshalBasicImageTemplateDistributor(*rawMessage)
-        if err != nil {
-        return nil, err
-        }
-        itdArray[index] = itd
-        }
-        return itdArray, nil
-        }
+	for index, rawMessage := range rawMessages {
+		itd, err := unmarshalBasicImageTemplateDistributor(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		itdArray[index] = itd
+	}
+	return itdArray, nil
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateDistributor.
-        func (itd ImageTemplateDistributor)MarshalJSON() ([]byte, error){
-            itd.Type = TypeImageTemplateDistributor
-            objectMap := make(map[string]interface{})
-                if(itd.RunOutputName != nil) {
-                objectMap["runOutputName"] = itd.RunOutputName
-                }
-                if(itd.ArtifactTags != nil) {
-                objectMap["artifactTags"] = itd.ArtifactTags
-                }
-                if(itd.Type != "") {
-                objectMap["type"] = itd.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// MarshalJSON is the custom marshaler for ImageTemplateDistributor.
+func (itd ImageTemplateDistributor) MarshalJSON() ([]byte, error) {
+	itd.Type = TypeImageTemplateDistributor
+	objectMap := make(map[string]interface{})
+	if itd.RunOutputName != nil {
+		objectMap["runOutputName"] = itd.RunOutputName
+	}
+	if itd.ArtifactTags != nil {
+		objectMap["artifactTags"] = itd.ArtifactTags
+	}
+	if itd.Type != "" {
+		objectMap["type"] = itd.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-            // AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
-            func (itd ImageTemplateDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
-                return nil, false
-            }
+// AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
+func (itd ImageTemplateDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
-            func (itd ImageTemplateDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
-                return nil, false
-            }
+// AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
+func (itd ImageTemplateDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
-            func (itd ImageTemplateDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
-                return &itd, true
-            }
+// AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
+func (itd ImageTemplateDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
+	return &itd, true
+}
 
-                // AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
-                func(itd ImageTemplateDistributor) AsBasicImageTemplateDistributor()(BasicImageTemplateDistributor, bool) {
-                    return &itd, true
-                }
+// AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateDistributor.
+func (itd ImageTemplateDistributor) AsBasicImageTemplateDistributor() (BasicImageTemplateDistributor, bool) {
+	return &itd, true
+}
 
+// ImageTemplateIsoSource describes an image source that is an installation ISO. Currently only supports
+// Red Hat Enterprise Linux 7.2-7.5 ISO's.
+type ImageTemplateIsoSource struct {
+	// SourceURI - URL to get the ISO image. This URL has to be accessible to the resource provider at the time of the imageTemplate creation.
+	SourceURI *string `json:"sourceURI,omitempty"`
+	// Sha256Checksum - SHA256 Checksum of the ISO image.
+	Sha256Checksum *string `json:"sha256Checksum,omitempty"`
+	// Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
+	Type Type `json:"type,omitempty"`
+}
 
-            // ImageTemplateIsoSource describes an image source that is an installation ISO. Currently only supports
-            // Red Hat Enterprise Linux 7.2-7.5 ISO's.
-            type ImageTemplateIsoSource struct {
-            // SourceURI - URL to get the ISO image. This URL has to be accessible to the resource provider at the time of the imageTemplate creation.
-            SourceURI *string `json:"sourceURI,omitempty"`
-            // Sha256Checksum - SHA256 Checksum of the ISO image.
-            Sha256Checksum *string `json:"sha256Checksum,omitempty"`
-            // Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
-            Type Type `json:"type,omitempty"`
-            }
+// MarshalJSON is the custom marshaler for ImageTemplateIsoSource.
+func (itis ImageTemplateIsoSource) MarshalJSON() ([]byte, error) {
+	itis.Type = TypeISO
+	objectMap := make(map[string]interface{})
+	if itis.SourceURI != nil {
+		objectMap["sourceURI"] = itis.SourceURI
+	}
+	if itis.Sha256Checksum != nil {
+		objectMap["sha256Checksum"] = itis.Sha256Checksum
+	}
+	if itis.Type != "" {
+		objectMap["type"] = itis.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateIsoSource.
-        func (itis ImageTemplateIsoSource)MarshalJSON() ([]byte, error){
-            itis.Type = TypeISO
-            objectMap := make(map[string]interface{})
-                if(itis.SourceURI != nil) {
-                objectMap["sourceURI"] = itis.SourceURI
-                }
-                if(itis.Sha256Checksum != nil) {
-                objectMap["sha256Checksum"] = itis.Sha256Checksum
-                }
-                if(itis.Type != "") {
-                objectMap["type"] = itis.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
+func (itis ImageTemplateIsoSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
+	return &itis, true
+}
 
-            // AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
-            func (itis ImageTemplateIsoSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
-                return &itis, true
-            }
+// AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
+func (itis ImageTemplateIsoSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
+	return nil, false
+}
 
-            // AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
-            func (itis ImageTemplateIsoSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
-                return nil, false
-            }
+// AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
+func (itis ImageTemplateIsoSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
-            func (itis ImageTemplateIsoSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
-                return nil, false
-            }
+// AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
+func (itis ImageTemplateIsoSource) AsBasicImageTemplateSource() (BasicImageTemplateSource, bool) {
+	return &itis, true
+}
 
-                // AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateIsoSource.
-                func(itis ImageTemplateIsoSource) AsBasicImageTemplateSource()(BasicImageTemplateSource, bool) {
-                    return &itis, true
-                }
+// ImageTemplateLastRunStatus ...
+type ImageTemplateLastRunStatus struct {
+	// StartTime - Start time of the last run (UTC)
+	StartTime *date.Time `json:"startTime,omitempty"`
+	// EndTime - End time of the last run (UTC)
+	EndTime *date.Time `json:"endTime,omitempty"`
+	// RunState - State of the last run. Possible values include: 'RunStateReady', 'RunStateRunning', 'RunStateSucceeded', 'RunStatePartiallySucceeded', 'RunStateFailed'
+	RunState RunState `json:"runState,omitempty"`
+	// RunSubState - Sub state of the last run. Possible values include: 'Queued', 'Building', 'Customizing', 'Distributing'
+	RunSubState RunSubState `json:"runSubState,omitempty"`
+	// Message - Verbose information about the last run state
+	Message *string `json:"message,omitempty"`
+}
 
+// ImageTemplateListResult ...
+type ImageTemplateListResult struct {
+	autorest.Response `json:"-"`
+	Value             *[]ImageTemplate `json:"value,omitempty"`
+	// NextLink - The continuation token.
+	NextLink *string `json:"nextLink,omitempty"`
+}
 
-            // ImageTemplateLastRunStatus ...
-            type ImageTemplateLastRunStatus struct {
-            // StartTime - Start time of the last run (UTC)
-            StartTime *date.Time `json:"startTime,omitempty"`
-            // EndTime - End time of the last run (UTC)
-            EndTime *date.Time `json:"endTime,omitempty"`
-            // RunState - State of the last run. Possible values include: 'RunStateReady', 'RunStateRunning', 'RunStateSucceeded', 'RunStatePartiallySucceeded', 'RunStateFailed'
-            RunState RunState `json:"runState,omitempty"`
-            // RunSubState - Sub state of the last run. Possible values include: 'Queued', 'Building', 'Customizing', 'Distributing'
-            RunSubState RunSubState `json:"runSubState,omitempty"`
-            // Message - Verbose information about the last run state
-            Message *string `json:"message,omitempty"`
-            }
+// ImageTemplateListResultIterator provides access to a complete listing of ImageTemplate values.
+type ImageTemplateListResultIterator struct {
+	i    int
+	page ImageTemplateListResultPage
+}
 
-            // ImageTemplateListResult ...
-            type ImageTemplateListResult struct {
-            autorest.Response `json:"-"`
-            Value *[]ImageTemplate `json:"value,omitempty"`
-            // NextLink - The continuation token.
-            NextLink *string `json:"nextLink,omitempty"`
-            }
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *ImageTemplateListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImageTemplateListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
 
-            // ImageTemplateListResultIterator provides access to a complete listing of ImageTemplate values.
-            type ImageTemplateListResultIterator struct {
-                i int
-                page ImageTemplateListResultPage
-            }
-        // NextWithContext advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        func (iter * ImageTemplateListResultIterator) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImageTemplateListResultIterator.NextWithContext")
-        defer func() {
-        sc := -1
-        if iter.Response().Response.Response != nil {
-        sc = iter.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        iter.i++
-        if iter.i < len(iter. page.Values()) {
-        return nil
-        }
-        err = iter.page.NextWithContext(ctx)
-        if err != nil {
-        iter. i--
-        return err
-        }
-        iter.i = 0
-        return nil
-        }
-        // Next advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (iter * ImageTemplateListResultIterator) Next() error {
-        return iter.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the enumeration should be started or is not yet complete.
-        func (iter ImageTemplateListResultIterator) NotDone() bool {
-        return iter.page.NotDone() && iter.i < len(iter. page.Values())
-        }
-        // Response returns the raw server response from the last page request.
-        func (iter ImageTemplateListResultIterator) Response() ImageTemplateListResult {
-        return iter.page.Response()
-        }
-        // Value returns the current value or a zero-initialized value if the
-        // iterator has advanced beyond the end of the collection.
-        func (iter ImageTemplateListResultIterator) Value() ImageTemplate {
-        if !iter.page.NotDone() {
-        return ImageTemplate{}
-        }
-        return iter.page.Values()[iter.i]
-        }
-        // Creates a new instance of the ImageTemplateListResultIterator type.
-        func NewImageTemplateListResultIterator (page ImageTemplateListResultPage) ImageTemplateListResultIterator {
-            return ImageTemplateListResultIterator{page: page}
-        }
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *ImageTemplateListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
 
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter ImageTemplateListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
 
-                // IsEmpty returns true if the ListResult contains no values.
-                func (itlr ImageTemplateListResult) IsEmpty() bool {
-                return itlr.Value == nil || len(*itlr.Value) == 0
-                }
+// Response returns the raw server response from the last page request.
+func (iter ImageTemplateListResultIterator) Response() ImageTemplateListResult {
+	return iter.page.Response()
+}
 
-                    // imageTemplateListResultPreparer prepares a request to retrieve the next set of results.
-                    // It returns nil if no more results exist.
-                    func (itlr ImageTemplateListResult) imageTemplateListResultPreparer(ctx context.Context) (*http.Request, error) {
-                    if itlr.NextLink == nil || len(to.String(itlr.NextLink)) < 1 {
-                    return nil, nil
-                    }
-                    return autorest.Prepare((&http.Request{}).WithContext(ctx),
-                    autorest.AsJSON(),
-                    autorest.AsGet(),
-                    autorest.WithBaseURL(to.String( itlr.NextLink)));
-                    }
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter ImageTemplateListResultIterator) Value() ImageTemplate {
+	if !iter.page.NotDone() {
+		return ImageTemplate{}
+	}
+	return iter.page.Values()[iter.i]
+}
 
-            // ImageTemplateListResultPage contains a page of ImageTemplate values.
-            type ImageTemplateListResultPage struct {
-                fn func(context.Context, ImageTemplateListResult) (ImageTemplateListResult, error)
-                itlr ImageTemplateListResult
-            }
+// Creates a new instance of the ImageTemplateListResultIterator type.
+func NewImageTemplateListResultIterator(page ImageTemplateListResultPage) ImageTemplateListResultIterator {
+	return ImageTemplateListResultIterator{page: page}
+}
 
-        // NextWithContext advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        func (page * ImageTemplateListResultPage) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/ImageTemplateListResultPage.NextWithContext")
-        defer func() {
-        sc := -1
-        if page.Response().Response.Response != nil {
-        sc = page.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        next, err := page.fn(ctx, page.itlr)
-        if err != nil {
-        return err
-        }
-        page.itlr = next
-        return nil
-        }
+// IsEmpty returns true if the ListResult contains no values.
+func (itlr ImageTemplateListResult) IsEmpty() bool {
+	return itlr.Value == nil || len(*itlr.Value) == 0
+}
 
-        // Next advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (page * ImageTemplateListResultPage) Next() error {
-        return page.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the page enumeration should be started or is not yet complete.
-        func (page ImageTemplateListResultPage) NotDone() bool {
-        return !page.itlr.IsEmpty()
-        }
-        // Response returns the raw server response from the last page request.
-        func (page ImageTemplateListResultPage) Response() ImageTemplateListResult {
-        return page.itlr
-        }
-        // Values returns the slice of values for the current page or nil if there are no values.
-        func (page ImageTemplateListResultPage) Values() []ImageTemplate {
-        if page.itlr.IsEmpty() {
-        return nil
-        }
-        return *page.itlr.Value
-        }
-        // Creates a new instance of the ImageTemplateListResultPage type.
-        func NewImageTemplateListResultPage (getNextPage func(context.Context, ImageTemplateListResult) (ImageTemplateListResult, error)) ImageTemplateListResultPage {
-            return ImageTemplateListResultPage{fn: getNextPage}
-        }
+// imageTemplateListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (itlr ImageTemplateListResult) imageTemplateListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if itlr.NextLink == nil || len(to.String(itlr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(itlr.NextLink)))
+}
 
-            // ImageTemplateManagedImageDistributor distribute as a Managed Disk Image.
-            type ImageTemplateManagedImageDistributor struct {
-            // ImageID - Resource Id of the Managed Disk Image
-            ImageID *string `json:"imageId,omitempty"`
-            // Location - Azure location for the image, should match if image already exists
-            Location *string `json:"location,omitempty"`
-            // RunOutputName - The name to be used for the associated RunOutput.
-            RunOutputName *string `json:"runOutputName,omitempty"`
-            // ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
-            ArtifactTags map[string]*string `json:"artifactTags"`
-            // Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
-            Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
-            }
+// ImageTemplateListResultPage contains a page of ImageTemplate values.
+type ImageTemplateListResultPage struct {
+	fn   func(context.Context, ImageTemplateListResult) (ImageTemplateListResult, error)
+	itlr ImageTemplateListResult
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateManagedImageDistributor.
-        func (itmid ImageTemplateManagedImageDistributor)MarshalJSON() ([]byte, error){
-            itmid.Type = TypeManagedImage
-            objectMap := make(map[string]interface{})
-                if(itmid.ImageID != nil) {
-                objectMap["imageId"] = itmid.ImageID
-                }
-                if(itmid.Location != nil) {
-                objectMap["location"] = itmid.Location
-                }
-                if(itmid.RunOutputName != nil) {
-                objectMap["runOutputName"] = itmid.RunOutputName
-                }
-                if(itmid.ArtifactTags != nil) {
-                objectMap["artifactTags"] = itmid.ArtifactTags
-                }
-                if(itmid.Type != "") {
-                objectMap["type"] = itmid.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *ImageTemplateListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImageTemplateListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.itlr)
+	if err != nil {
+		return err
+	}
+	page.itlr = next
+	return nil
+}
 
-            // AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
-            func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
-                return &itmid, true
-            }
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *ImageTemplateListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
 
-            // AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
-            func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
-                return nil, false
-            }
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page ImageTemplateListResultPage) NotDone() bool {
+	return !page.itlr.IsEmpty()
+}
 
-            // AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
-            func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
-                return nil, false
-            }
+// Response returns the raw server response from the last page request.
+func (page ImageTemplateListResultPage) Response() ImageTemplateListResult {
+	return page.itlr
+}
 
-                // AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
-                func(itmid ImageTemplateManagedImageDistributor) AsBasicImageTemplateDistributor()(BasicImageTemplateDistributor, bool) {
-                    return &itmid, true
-                }
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page ImageTemplateListResultPage) Values() []ImageTemplate {
+	if page.itlr.IsEmpty() {
+		return nil
+	}
+	return *page.itlr.Value
+}
 
+// Creates a new instance of the ImageTemplateListResultPage type.
+func NewImageTemplateListResultPage(getNextPage func(context.Context, ImageTemplateListResult) (ImageTemplateListResult, error)) ImageTemplateListResultPage {
+	return ImageTemplateListResultPage{fn: getNextPage}
+}
 
-            // ImageTemplatePlatformImageSource describes an image source from [Azure Gallery
-            // Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
-            type ImageTemplatePlatformImageSource struct {
-            // Publisher - Image Publisher in [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
-            Publisher *string `json:"publisher,omitempty"`
-            // Offer - Image offer from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
-            Offer *string `json:"offer,omitempty"`
-            // Sku - Image sku from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
-            Sku *string `json:"sku,omitempty"`
-            // Version - Image version from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
-            Version *string `json:"version,omitempty"`
-            // Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
-            Type Type `json:"type,omitempty"`
-            }
+// ImageTemplateManagedImageDistributor distribute as a Managed Disk Image.
+type ImageTemplateManagedImageDistributor struct {
+	// ImageID - Resource Id of the Managed Disk Image
+	ImageID *string `json:"imageId,omitempty"`
+	// Location - Azure location for the image, should match if image already exists
+	Location *string `json:"location,omitempty"`
+	// RunOutputName - The name to be used for the associated RunOutput.
+	RunOutputName *string `json:"runOutputName,omitempty"`
+	// ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
+	ArtifactTags map[string]*string `json:"artifactTags"`
+	// Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
+	Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplatePlatformImageSource.
-        func (itpis ImageTemplatePlatformImageSource)MarshalJSON() ([]byte, error){
-            itpis.Type = TypePlatformImage
-            objectMap := make(map[string]interface{})
-                if(itpis.Publisher != nil) {
-                objectMap["publisher"] = itpis.Publisher
-                }
-                if(itpis.Offer != nil) {
-                objectMap["offer"] = itpis.Offer
-                }
-                if(itpis.Sku != nil) {
-                objectMap["sku"] = itpis.Sku
-                }
-                if(itpis.Version != nil) {
-                objectMap["version"] = itpis.Version
-                }
-                if(itpis.Type != "") {
-                objectMap["type"] = itpis.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// MarshalJSON is the custom marshaler for ImageTemplateManagedImageDistributor.
+func (itmid ImageTemplateManagedImageDistributor) MarshalJSON() ([]byte, error) {
+	itmid.Type = TypeManagedImage
+	objectMap := make(map[string]interface{})
+	if itmid.ImageID != nil {
+		objectMap["imageId"] = itmid.ImageID
+	}
+	if itmid.Location != nil {
+		objectMap["location"] = itmid.Location
+	}
+	if itmid.RunOutputName != nil {
+		objectMap["runOutputName"] = itmid.RunOutputName
+	}
+	if itmid.ArtifactTags != nil {
+		objectMap["artifactTags"] = itmid.ArtifactTags
+	}
+	if itmid.Type != "" {
+		objectMap["type"] = itmid.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-            // AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
-            func (itpis ImageTemplatePlatformImageSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
-                return nil, false
-            }
+// AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
+func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
+	return &itmid, true
+}
 
-            // AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
-            func (itpis ImageTemplatePlatformImageSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
-                return &itpis, true
-            }
+// AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
+func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
-            func (itpis ImageTemplatePlatformImageSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
-                return nil, false
-            }
+// AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
+func (itmid ImageTemplateManagedImageDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
+	return nil, false
+}
 
-                // AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
-                func(itpis ImageTemplatePlatformImageSource) AsBasicImageTemplateSource()(BasicImageTemplateSource, bool) {
-                    return &itpis, true
-                }
+// AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateManagedImageDistributor.
+func (itmid ImageTemplateManagedImageDistributor) AsBasicImageTemplateDistributor() (BasicImageTemplateDistributor, bool) {
+	return &itmid, true
+}
 
+// ImageTemplatePlatformImageSource describes an image source from [Azure Gallery
+// Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+type ImageTemplatePlatformImageSource struct {
+	// Publisher - Image Publisher in [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+	Publisher *string `json:"publisher,omitempty"`
+	// Offer - Image offer from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+	Offer *string `json:"offer,omitempty"`
+	// Sku - Image sku from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+	Sku *string `json:"sku,omitempty"`
+	// Version - Image version from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages).
+	Version *string `json:"version,omitempty"`
+	// Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
+	Type Type `json:"type,omitempty"`
+}
 
-            // ImageTemplateProperties ...
-            type ImageTemplateProperties struct {
-            // Source - Specifies the properties used to describe the source image.
-            Source BasicImageTemplateSource `json:"source,omitempty"`
-            // Customize - Specifies the properties used to describe the customization steps of the image, like Image source etc
-            Customize *[]BasicImageTemplateCustomizer `json:"customize,omitempty"`
-            // Distribute - The distribution targets where the image output needs to go to.
-            Distribute *[]BasicImageTemplateDistributor `json:"distribute,omitempty"`
-            // ProvisioningState - READ-ONLY; Provisioning state of the resource. Possible values include: 'Creating', 'Succeeded', 'Failed', 'Deleting'
-            ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
-            // ProvisioningError - READ-ONLY; Provisioning error, if any
-            ProvisioningError *ProvisioningError `json:"provisioningError,omitempty"`
-            // LastRunStatus - READ-ONLY; State of 'run' that is currently executing or was last executed.
-            LastRunStatus *ImageTemplateLastRunStatus `json:"lastRunStatus,omitempty"`
-            }
-        // UnmarshalJSON is the custom unmarshaler for ImageTemplateProperties struct.
-        func (itp *ImageTemplateProperties) UnmarshalJSON(body []byte) error {
-        var m map[string]*json.RawMessage
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return err
-        }
-        for k, v := range  m {
-        switch k {
-                case "source":
-    if v != nil {
-        source, err := unmarshalBasicImageTemplateSource(*v)
-    if err != nil {
-    return err
-    }
-        itp.Source = source
-    }
-                case "customize":
-    if v != nil {
-        customize, err := unmarshalBasicImageTemplateCustomizerArray(*v)
-    if err != nil {
-    return err
-    }
-        itp.Customize = &customize
-    }
-                case "distribute":
-    if v != nil {
-        distribute, err := unmarshalBasicImageTemplateDistributorArray(*v)
-    if err != nil {
-    return err
-    }
-        itp.Distribute = &distribute
-    }
-                case "provisioningState":
-    if v != nil {
-        var provisioningState ProvisioningState
-        err = json.Unmarshal(*v, &provisioningState)
-    if err != nil {
-    return err
-    }
-        itp.ProvisioningState = provisioningState
-    }
-                case "provisioningError":
-    if v != nil {
-        var provisioningError ProvisioningError
-        err = json.Unmarshal(*v, &provisioningError)
-    if err != nil {
-    return err
-    }
-        itp.ProvisioningError = &provisioningError
-    }
-                case "lastRunStatus":
-    if v != nil {
-        var lastRunStatus ImageTemplateLastRunStatus
-        err = json.Unmarshal(*v, &lastRunStatus)
-    if err != nil {
-    return err
-    }
-        itp.LastRunStatus = &lastRunStatus
-    }
-            }
-        }
+// MarshalJSON is the custom marshaler for ImageTemplatePlatformImageSource.
+func (itpis ImageTemplatePlatformImageSource) MarshalJSON() ([]byte, error) {
+	itpis.Type = TypePlatformImage
+	objectMap := make(map[string]interface{})
+	if itpis.Publisher != nil {
+		objectMap["publisher"] = itpis.Publisher
+	}
+	if itpis.Offer != nil {
+		objectMap["offer"] = itpis.Offer
+	}
+	if itpis.Sku != nil {
+		objectMap["sku"] = itpis.Sku
+	}
+	if itpis.Version != nil {
+		objectMap["version"] = itpis.Version
+	}
+	if itpis.Type != "" {
+		objectMap["type"] = itpis.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-        return nil
-        }
+// AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
+func (itpis ImageTemplatePlatformImageSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
+	return nil, false
+}
 
-            // ImageTemplateSharedImageDistributor distribute via Shared Image Gallery.
-            type ImageTemplateSharedImageDistributor struct {
-            // GalleryImageID - Resource Id of the Shared Image Gallery image
-            GalleryImageID *string `json:"galleryImageId,omitempty"`
-            ReplicationRegions *[]string `json:"replicationRegions,omitempty"`
-            // RunOutputName - The name to be used for the associated RunOutput.
-            RunOutputName *string `json:"runOutputName,omitempty"`
-            // ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
-            ArtifactTags map[string]*string `json:"artifactTags"`
-            // Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
-            Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
-            }
+// AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
+func (itpis ImageTemplatePlatformImageSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
+	return &itpis, true
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateSharedImageDistributor.
-        func (itsid ImageTemplateSharedImageDistributor)MarshalJSON() ([]byte, error){
-            itsid.Type = TypeSharedImage
-            objectMap := make(map[string]interface{})
-                if(itsid.GalleryImageID != nil) {
-                objectMap["galleryImageId"] = itsid.GalleryImageID
-                }
-                if(itsid.ReplicationRegions != nil) {
-                objectMap["replicationRegions"] = itsid.ReplicationRegions
-                }
-                if(itsid.RunOutputName != nil) {
-                objectMap["runOutputName"] = itsid.RunOutputName
-                }
-                if(itsid.ArtifactTags != nil) {
-                objectMap["artifactTags"] = itsid.ArtifactTags
-                }
-                if(itsid.Type != "") {
-                objectMap["type"] = itsid.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
+func (itpis ImageTemplatePlatformImageSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
-            func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
-                return nil, false
-            }
+// AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplatePlatformImageSource.
+func (itpis ImageTemplatePlatformImageSource) AsBasicImageTemplateSource() (BasicImageTemplateSource, bool) {
+	return &itpis, true
+}
 
-            // AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
-            func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
-                return &itsid, true
-            }
+// ImageTemplateProperties ...
+type ImageTemplateProperties struct {
+	// Source - Specifies the properties used to describe the source image.
+	Source BasicImageTemplateSource `json:"source,omitempty"`
+	// Customize - Specifies the properties used to describe the customization steps of the image, like Image source etc
+	Customize *[]BasicImageTemplateCustomizer `json:"customize,omitempty"`
+	// Distribute - The distribution targets where the image output needs to go to.
+	Distribute *[]BasicImageTemplateDistributor `json:"distribute,omitempty"`
+	// ProvisioningState - READ-ONLY; Provisioning state of the resource. Possible values include: 'Creating', 'Succeeded', 'Failed', 'Deleting'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+	// ProvisioningError - READ-ONLY; Provisioning error, if any
+	ProvisioningError *ProvisioningError `json:"provisioningError,omitempty"`
+	// LastRunStatus - READ-ONLY; State of 'run' that is currently executing or was last executed.
+	LastRunStatus *ImageTemplateLastRunStatus `json:"lastRunStatus,omitempty"`
+}
 
-            // AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
-            func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
-                return nil, false
-            }
+// UnmarshalJSON is the custom unmarshaler for ImageTemplateProperties struct.
+func (itp *ImageTemplateProperties) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "source":
+			if v != nil {
+				source, err := unmarshalBasicImageTemplateSource(*v)
+				if err != nil {
+					return err
+				}
+				itp.Source = source
+			}
+		case "customize":
+			if v != nil {
+				customize, err := unmarshalBasicImageTemplateCustomizerArray(*v)
+				if err != nil {
+					return err
+				}
+				itp.Customize = &customize
+			}
+		case "distribute":
+			if v != nil {
+				distribute, err := unmarshalBasicImageTemplateDistributorArray(*v)
+				if err != nil {
+					return err
+				}
+				itp.Distribute = &distribute
+			}
+		case "provisioningState":
+			if v != nil {
+				var provisioningState ProvisioningState
+				err = json.Unmarshal(*v, &provisioningState)
+				if err != nil {
+					return err
+				}
+				itp.ProvisioningState = provisioningState
+			}
+		case "provisioningError":
+			if v != nil {
+				var provisioningError ProvisioningError
+				err = json.Unmarshal(*v, &provisioningError)
+				if err != nil {
+					return err
+				}
+				itp.ProvisioningError = &provisioningError
+			}
+		case "lastRunStatus":
+			if v != nil {
+				var lastRunStatus ImageTemplateLastRunStatus
+				err = json.Unmarshal(*v, &lastRunStatus)
+				if err != nil {
+					return err
+				}
+				itp.LastRunStatus = &lastRunStatus
+			}
+		}
+	}
 
-                // AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
-                func(itsid ImageTemplateSharedImageDistributor) AsBasicImageTemplateDistributor()(BasicImageTemplateDistributor, bool) {
-                    return &itsid, true
-                }
+	return nil
+}
 
+// ImageTemplateSharedImageDistributor distribute via Shared Image Gallery.
+type ImageTemplateSharedImageDistributor struct {
+	// GalleryImageID - Resource Id of the Shared Image Gallery image
+	GalleryImageID     *string   `json:"galleryImageId,omitempty"`
+	ReplicationRegions *[]string `json:"replicationRegions,omitempty"`
+	// RunOutputName - The name to be used for the associated RunOutput.
+	RunOutputName *string `json:"runOutputName,omitempty"`
+	// ArtifactTags - Tags that will be applied to the artifact once it has been created/updated by the distributor.
+	ArtifactTags map[string]*string `json:"artifactTags"`
+	// Type - Possible values include: 'TypeImageTemplateDistributor', 'TypeManagedImage', 'TypeSharedImage'
+	Type TypeBasicImageTemplateDistributor `json:"type,omitempty"`
+}
 
-            // ImageTemplateShellCustomizer runs a shell script during the customization phase
-            type ImageTemplateShellCustomizer struct {
-            // Script - The shell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc
-            Script *string `json:"script,omitempty"`
-            // Name - Friendly Name to provide context on what this customization step does
-            Name *string `json:"name,omitempty"`
-            // Type - Possible values include: 'TypeImageTemplateCustomizer', 'TypeShell'
-            Type TypeBasicImageTemplateCustomizer `json:"type,omitempty"`
-            }
+// MarshalJSON is the custom marshaler for ImageTemplateSharedImageDistributor.
+func (itsid ImageTemplateSharedImageDistributor) MarshalJSON() ([]byte, error) {
+	itsid.Type = TypeSharedImage
+	objectMap := make(map[string]interface{})
+	if itsid.GalleryImageID != nil {
+		objectMap["galleryImageId"] = itsid.GalleryImageID
+	}
+	if itsid.ReplicationRegions != nil {
+		objectMap["replicationRegions"] = itsid.ReplicationRegions
+	}
+	if itsid.RunOutputName != nil {
+		objectMap["runOutputName"] = itsid.RunOutputName
+	}
+	if itsid.ArtifactTags != nil {
+		objectMap["artifactTags"] = itsid.ArtifactTags
+	}
+	if itsid.Type != "" {
+		objectMap["type"] = itsid.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateShellCustomizer.
-        func (itsc ImageTemplateShellCustomizer)MarshalJSON() ([]byte, error){
-            itsc.Type = TypeShell
-            objectMap := make(map[string]interface{})
-                if(itsc.Script != nil) {
-                objectMap["script"] = itsc.Script
-                }
-                if(itsc.Name != nil) {
-                objectMap["name"] = itsc.Name
-                }
-                if(itsc.Type != "") {
-                objectMap["type"] = itsc.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// AsImageTemplateManagedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
+func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateManagedImageDistributor() (*ImageTemplateManagedImageDistributor, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateShellCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
-            func (itsc ImageTemplateShellCustomizer) AsImageTemplateShellCustomizer() (*ImageTemplateShellCustomizer, bool) {
-                return &itsc, true
-            }
+// AsImageTemplateSharedImageDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
+func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateSharedImageDistributor() (*ImageTemplateSharedImageDistributor, bool) {
+	return &itsid, true
+}
 
-            // AsImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
-            func (itsc ImageTemplateShellCustomizer) AsImageTemplateCustomizer() (*ImageTemplateCustomizer, bool) {
-                return nil, false
-            }
+// AsImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
+func (itsid ImageTemplateSharedImageDistributor) AsImageTemplateDistributor() (*ImageTemplateDistributor, bool) {
+	return nil, false
+}
 
-                // AsBasicImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
-                func(itsc ImageTemplateShellCustomizer) AsBasicImageTemplateCustomizer()(BasicImageTemplateCustomizer, bool) {
-                    return &itsc, true
-                }
+// AsBasicImageTemplateDistributor is the BasicImageTemplateDistributor implementation for ImageTemplateSharedImageDistributor.
+func (itsid ImageTemplateSharedImageDistributor) AsBasicImageTemplateDistributor() (BasicImageTemplateDistributor, bool) {
+	return &itsid, true
+}
 
+// ImageTemplateShellCustomizer runs a shell script during the customization phase
+type ImageTemplateShellCustomizer struct {
+	// Script - The shell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc
+	Script *string `json:"script,omitempty"`
+	// Name - Friendly Name to provide context on what this customization step does
+	Name *string `json:"name,omitempty"`
+	// Type - Possible values include: 'TypeImageTemplateCustomizer', 'TypeShell'
+	Type TypeBasicImageTemplateCustomizer `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ImageTemplateShellCustomizer.
+func (itsc ImageTemplateShellCustomizer) MarshalJSON() ([]byte, error) {
+	itsc.Type = TypeShell
+	objectMap := make(map[string]interface{})
+	if itsc.Script != nil {
+		objectMap["script"] = itsc.Script
+	}
+	if itsc.Name != nil {
+		objectMap["name"] = itsc.Name
+	}
+	if itsc.Type != "" {
+		objectMap["type"] = itsc.Type
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsImageTemplateShellCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
+func (itsc ImageTemplateShellCustomizer) AsImageTemplateShellCustomizer() (*ImageTemplateShellCustomizer, bool) {
+	return &itsc, true
+}
+
+// AsImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
+func (itsc ImageTemplateShellCustomizer) AsImageTemplateCustomizer() (*ImageTemplateCustomizer, bool) {
+	return nil, false
+}
+
+// AsBasicImageTemplateCustomizer is the BasicImageTemplateCustomizer implementation for ImageTemplateShellCustomizer.
+func (itsc ImageTemplateShellCustomizer) AsBasicImageTemplateCustomizer() (BasicImageTemplateCustomizer, bool) {
+	return &itsc, true
+}
 
 // BasicImageTemplateSource ...
-        type BasicImageTemplateSource interface {
-            AsImageTemplateIsoSource () (*ImageTemplateIsoSource, bool)
-            AsImageTemplatePlatformImageSource () (*ImageTemplatePlatformImageSource, bool)
-        AsImageTemplateSource () (*ImageTemplateSource, bool)
-        }
+type BasicImageTemplateSource interface {
+	AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool)
+	AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool)
+	AsImageTemplateSource() (*ImageTemplateSource, bool)
+}
 
-        // ImageTemplateSource ...
-        type ImageTemplateSource struct {
-        // Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
-        Type Type `json:"type,omitempty"`
-        }
+// ImageTemplateSource ...
+type ImageTemplateSource struct {
+	// Type - Possible values include: 'TypeImageTemplateSource', 'TypeISO', 'TypePlatformImage'
+	Type Type `json:"type,omitempty"`
+}
 
-        func unmarshalBasicImageTemplateSource(body []byte) (BasicImageTemplateSource, error){
-        var m map[string]interface{}
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return nil, err
-        }
+func unmarshalBasicImageTemplateSource(body []byte) (BasicImageTemplateSource, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
 
-        switch m["type"] {
-            case string(TypeISO):
-            var itis ImageTemplateIsoSource
-            err := json.Unmarshal(body, &itis)
-            return itis, err
-            case string(TypePlatformImage):
-            var itpis ImageTemplatePlatformImageSource
-            err := json.Unmarshal(body, &itpis)
-            return itpis, err
-            default:
-        var its ImageTemplateSource
-        err := json.Unmarshal(body, &its)
-        return its, err
-        }
-        }
-        func unmarshalBasicImageTemplateSourceArray(body []byte) ([]BasicImageTemplateSource, error){
-        var rawMessages []*json.RawMessage
-        err := json.Unmarshal(body, &rawMessages)
-        if err != nil {
-        return nil, err
-        }
+	switch m["type"] {
+	case string(TypeISO):
+		var itis ImageTemplateIsoSource
+		err := json.Unmarshal(body, &itis)
+		return itis, err
+	case string(TypePlatformImage):
+		var itpis ImageTemplatePlatformImageSource
+		err := json.Unmarshal(body, &itpis)
+		return itpis, err
+	default:
+		var its ImageTemplateSource
+		err := json.Unmarshal(body, &its)
+		return its, err
+	}
+}
+func unmarshalBasicImageTemplateSourceArray(body []byte) ([]BasicImageTemplateSource, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
 
-        itsArray := make([]BasicImageTemplateSource, len(rawMessages))
+	itsArray := make([]BasicImageTemplateSource, len(rawMessages))
 
-        for index, rawMessage := range rawMessages {
-        its, err := unmarshalBasicImageTemplateSource(*rawMessage)
-        if err != nil {
-        return nil, err
-        }
-        itsArray[index] = its
-        }
-        return itsArray, nil
-        }
+	for index, rawMessage := range rawMessages {
+		its, err := unmarshalBasicImageTemplateSource(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		itsArray[index] = its
+	}
+	return itsArray, nil
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateSource.
-        func (its ImageTemplateSource)MarshalJSON() ([]byte, error){
-            its.Type = TypeImageTemplateSource
-            objectMap := make(map[string]interface{})
-                if(its.Type != "") {
-                objectMap["type"] = its.Type
-                }
-                return json.Marshal(objectMap)
-        }
+// MarshalJSON is the custom marshaler for ImageTemplateSource.
+func (its ImageTemplateSource) MarshalJSON() ([]byte, error) {
+	its.Type = TypeImageTemplateSource
+	objectMap := make(map[string]interface{})
+	if its.Type != "" {
+		objectMap["type"] = its.Type
+	}
+	return json.Marshal(objectMap)
+}
 
-            // AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
-            func (its ImageTemplateSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
-                return nil, false
-            }
+// AsImageTemplateIsoSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
+func (its ImageTemplateSource) AsImageTemplateIsoSource() (*ImageTemplateIsoSource, bool) {
+	return nil, false
+}
 
-            // AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
-            func (its ImageTemplateSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
-                return nil, false
-            }
+// AsImageTemplatePlatformImageSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
+func (its ImageTemplateSource) AsImageTemplatePlatformImageSource() (*ImageTemplatePlatformImageSource, bool) {
+	return nil, false
+}
 
-            // AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
-            func (its ImageTemplateSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
-                return &its, true
-            }
+// AsImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
+func (its ImageTemplateSource) AsImageTemplateSource() (*ImageTemplateSource, bool) {
+	return &its, true
+}
 
-                // AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
-                func(its ImageTemplateSource) AsBasicImageTemplateSource()(BasicImageTemplateSource, bool) {
-                    return &its, true
-                }
+// AsBasicImageTemplateSource is the BasicImageTemplateSource implementation for ImageTemplateSource.
+func (its ImageTemplateSource) AsBasicImageTemplateSource() (BasicImageTemplateSource, bool) {
+	return &its, true
+}
 
+// ImageTemplateUpdateParameters parameters for updating an image template.
+type ImageTemplateUpdateParameters struct {
+	// Tags - The user-specified tags associated with the image template.
+	Tags map[string]*string `json:"tags"`
+}
 
-            // ImageTemplateUpdateParameters parameters for updating an image template.
-            type ImageTemplateUpdateParameters struct {
-            // Tags - The user-specified tags associated with the image template.
-            Tags map[string]*string `json:"tags"`
-            }
+// MarshalJSON is the custom marshaler for ImageTemplateUpdateParameters.
+func (itup ImageTemplateUpdateParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if itup.Tags != nil {
+		objectMap["tags"] = itup.Tags
+	}
+	return json.Marshal(objectMap)
+}
 
-        // MarshalJSON is the custom marshaler for ImageTemplateUpdateParameters.
-        func (itup ImageTemplateUpdateParameters)MarshalJSON() ([]byte, error){
-        objectMap := make(map[string]interface{})
-                if(itup.Tags != nil) {
-                objectMap["tags"] = itup.Tags
-                }
-                return json.Marshal(objectMap)
-        }
+// InnerError inner error details.
+type InnerError struct {
+	// Exceptiontype - The exception type.
+	Exceptiontype *string `json:"exceptiontype,omitempty"`
+	// Errordetail - The internal error message or exception dump.
+	Errordetail *string `json:"errordetail,omitempty"`
+}
 
-            // InnerError inner error details.
-            type InnerError struct {
-            // Exceptiontype - The exception type.
-            Exceptiontype *string `json:"exceptiontype,omitempty"`
-            // Errordetail - The internal error message or exception dump.
-            Errordetail *string `json:"errordetail,omitempty"`
-            }
+// Operation ...
+type Operation struct {
+	// Name - This is of the format {provider}/{resource}/{operation}
+	Name       *string           `json:"name,omitempty"`
+	Display    *OperationDisplay `json:"display,omitempty"`
+	Origin     *string           `json:"origin,omitempty"`
+	Properties interface{}       `json:"properties,omitempty"`
+}
 
-            // Operation ...
-            type Operation struct {
-            // Name - This is of the format {provider}/{resource}/{operation}
-            Name *string `json:"name,omitempty"`
-            Display *OperationDisplay `json:"display,omitempty"`
-            Origin *string `json:"origin,omitempty"`
-            Properties interface{} `json:"properties,omitempty"`
-            }
+// OperationDisplay ...
+type OperationDisplay struct {
+	Provider *string `json:"provider,omitempty"`
+	// Operation - For example: read, write, delete, or listKeys/action
+	Operation   *string `json:"operation,omitempty"`
+	Resource    *string `json:"resource,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
 
-            // OperationDisplay ...
-            type OperationDisplay struct {
-            Provider *string `json:"provider,omitempty"`
-            // Operation - For example: read, write, delete, or listKeys/action
-            Operation *string `json:"operation,omitempty"`
-            Resource *string `json:"resource,omitempty"`
-            Description *string `json:"description,omitempty"`
-            }
+// OperationListResult ...
+type OperationListResult struct {
+	autorest.Response `json:"-"`
+	Value             *[]Operation `json:"value,omitempty"`
+	NextLink          *string      `json:"nextLink,omitempty"`
+}
 
-            // OperationListResult ...
-            type OperationListResult struct {
-            autorest.Response `json:"-"`
-            Value *[]Operation `json:"value,omitempty"`
-            NextLink *string `json:"nextLink,omitempty"`
-            }
+// OperationListResultIterator provides access to a complete listing of Operation values.
+type OperationListResultIterator struct {
+	i    int
+	page OperationListResultPage
+}
 
-            // OperationListResultIterator provides access to a complete listing of Operation values.
-            type OperationListResultIterator struct {
-                i int
-                page OperationListResultPage
-            }
-        // NextWithContext advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        func (iter * OperationListResultIterator) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/OperationListResultIterator.NextWithContext")
-        defer func() {
-        sc := -1
-        if iter.Response().Response.Response != nil {
-        sc = iter.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        iter.i++
-        if iter.i < len(iter. page.Values()) {
-        return nil
-        }
-        err = iter.page.NextWithContext(ctx)
-        if err != nil {
-        iter. i--
-        return err
-        }
-        iter.i = 0
-        return nil
-        }
-        // Next advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (iter * OperationListResultIterator) Next() error {
-        return iter.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the enumeration should be started or is not yet complete.
-        func (iter OperationListResultIterator) NotDone() bool {
-        return iter.page.NotDone() && iter.i < len(iter. page.Values())
-        }
-        // Response returns the raw server response from the last page request.
-        func (iter OperationListResultIterator) Response() OperationListResult {
-        return iter.page.Response()
-        }
-        // Value returns the current value or a zero-initialized value if the
-        // iterator has advanced beyond the end of the collection.
-        func (iter OperationListResultIterator) Value() Operation {
-        if !iter.page.NotDone() {
-        return Operation{}
-        }
-        return iter.page.Values()[iter.i]
-        }
-        // Creates a new instance of the OperationListResultIterator type.
-        func NewOperationListResultIterator (page OperationListResultPage) OperationListResultIterator {
-            return OperationListResultIterator{page: page}
-        }
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *OperationListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/OperationListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
 
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *OperationListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
 
-                // IsEmpty returns true if the ListResult contains no values.
-                func (olr OperationListResult) IsEmpty() bool {
-                return olr.Value == nil || len(*olr.Value) == 0
-                }
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter OperationListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
 
-                    // operationListResultPreparer prepares a request to retrieve the next set of results.
-                    // It returns nil if no more results exist.
-                    func (olr OperationListResult) operationListResultPreparer(ctx context.Context) (*http.Request, error) {
-                    if olr.NextLink == nil || len(to.String(olr.NextLink)) < 1 {
-                    return nil, nil
-                    }
-                    return autorest.Prepare((&http.Request{}).WithContext(ctx),
-                    autorest.AsJSON(),
-                    autorest.AsGet(),
-                    autorest.WithBaseURL(to.String( olr.NextLink)));
-                    }
+// Response returns the raw server response from the last page request.
+func (iter OperationListResultIterator) Response() OperationListResult {
+	return iter.page.Response()
+}
 
-            // OperationListResultPage contains a page of Operation values.
-            type OperationListResultPage struct {
-                fn func(context.Context, OperationListResult) (OperationListResult, error)
-                olr OperationListResult
-            }
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter OperationListResultIterator) Value() Operation {
+	if !iter.page.NotDone() {
+		return Operation{}
+	}
+	return iter.page.Values()[iter.i]
+}
 
-        // NextWithContext advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        func (page * OperationListResultPage) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/OperationListResultPage.NextWithContext")
-        defer func() {
-        sc := -1
-        if page.Response().Response.Response != nil {
-        sc = page.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        next, err := page.fn(ctx, page.olr)
-        if err != nil {
-        return err
-        }
-        page.olr = next
-        return nil
-        }
+// Creates a new instance of the OperationListResultIterator type.
+func NewOperationListResultIterator(page OperationListResultPage) OperationListResultIterator {
+	return OperationListResultIterator{page: page}
+}
 
-        // Next advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (page * OperationListResultPage) Next() error {
-        return page.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the page enumeration should be started or is not yet complete.
-        func (page OperationListResultPage) NotDone() bool {
-        return !page.olr.IsEmpty()
-        }
-        // Response returns the raw server response from the last page request.
-        func (page OperationListResultPage) Response() OperationListResult {
-        return page.olr
-        }
-        // Values returns the slice of values for the current page or nil if there are no values.
-        func (page OperationListResultPage) Values() []Operation {
-        if page.olr.IsEmpty() {
-        return nil
-        }
-        return *page.olr.Value
-        }
-        // Creates a new instance of the OperationListResultPage type.
-        func NewOperationListResultPage (getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
-            return OperationListResultPage{fn: getNextPage}
-        }
+// IsEmpty returns true if the ListResult contains no values.
+func (olr OperationListResult) IsEmpty() bool {
+	return olr.Value == nil || len(*olr.Value) == 0
+}
 
-            // ProvisioningError ...
-            type ProvisioningError struct {
-            // ProvisioningErrorCode - Error code of the provisioning failure. Possible values include: 'BadSourceType', 'BadPIRSource', 'BadISOSource', 'BadCustomizerType', 'NoCustomizerShellScript', 'ServerError', 'Other'
-            ProvisioningErrorCode ProvisioningErrorCode `json:"provisioningErrorCode,omitempty"`
-            // Message - Verbose error message about the provisioning failure
-            Message *string `json:"message,omitempty"`
-            }
+// operationListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (olr OperationListResult) operationListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if olr.NextLink == nil || len(to.String(olr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(olr.NextLink)))
+}
 
-            // Resource the Resource model definition.
-            type Resource struct {
-            // ID - READ-ONLY; Resource Id
-            ID *string `json:"id,omitempty"`
-            // Name - READ-ONLY; Resource name
-            Name *string `json:"name,omitempty"`
-            // Type - READ-ONLY; Resource type
-            Type *string `json:"type,omitempty"`
-            // Location - Resource location
-            Location *string `json:"location,omitempty"`
-            // Tags - Resource tags
-            Tags map[string]*string `json:"tags"`
-            }
+// OperationListResultPage contains a page of Operation values.
+type OperationListResultPage struct {
+	fn  func(context.Context, OperationListResult) (OperationListResult, error)
+	olr OperationListResult
+}
 
-        // MarshalJSON is the custom marshaler for Resource.
-        func (r Resource)MarshalJSON() ([]byte, error){
-        objectMap := make(map[string]interface{})
-                if(r.Location != nil) {
-                objectMap["location"] = r.Location
-                }
-                if(r.Tags != nil) {
-                objectMap["tags"] = r.Tags
-                }
-                return json.Marshal(objectMap)
-        }
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *OperationListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/OperationListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.olr)
+	if err != nil {
+		return err
+	}
+	page.olr = next
+	return nil
+}
 
-            // RunOutput represents an output that was created by running an image template.
-            type RunOutput struct {
-            autorest.Response `json:"-"`
-            *RunOutputProperties `json:"properties,omitempty"`
-            // ID - READ-ONLY; Resource Id
-            ID *string `json:"id,omitempty"`
-            // Name - Resource name
-            Name *string `json:"name,omitempty"`
-            // Type - READ-ONLY; Resource type
-            Type *string `json:"type,omitempty"`
-            }
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *OperationListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
 
-        // MarshalJSON is the custom marshaler for RunOutput.
-        func (ro RunOutput)MarshalJSON() ([]byte, error){
-        objectMap := make(map[string]interface{})
-                if(ro.RunOutputProperties != nil) {
-                objectMap["properties"] = ro.RunOutputProperties
-                }
-                if(ro.Name != nil) {
-                objectMap["name"] = ro.Name
-                }
-                return json.Marshal(objectMap)
-        }
-        // UnmarshalJSON is the custom unmarshaler for RunOutput struct.
-        func (ro *RunOutput) UnmarshalJSON(body []byte) error {
-        var m map[string]*json.RawMessage
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return err
-        }
-        for k, v := range  m {
-        switch k {
-                case "properties":
-    if v != nil {
-        var runOutputProperties RunOutputProperties
-        err = json.Unmarshal(*v, &runOutputProperties)
-    if err != nil {
-    return err
-    }
-        ro.RunOutputProperties = &runOutputProperties
-    }
-                case "id":
-    if v != nil {
-        var ID string
-        err = json.Unmarshal(*v, &ID)
-    if err != nil {
-    return err
-    }
-        ro.ID = &ID
-    }
-                case "name":
-    if v != nil {
-        var name string
-        err = json.Unmarshal(*v, &name)
-    if err != nil {
-    return err
-    }
-        ro.Name = &name
-    }
-                case "type":
-    if v != nil {
-        var typeVar string
-        err = json.Unmarshal(*v, &typeVar)
-    if err != nil {
-    return err
-    }
-        ro.Type = &typeVar
-    }
-            }
-        }
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page OperationListResultPage) NotDone() bool {
+	return !page.olr.IsEmpty()
+}
 
-        return nil
-        }
+// Response returns the raw server response from the last page request.
+func (page OperationListResultPage) Response() OperationListResult {
+	return page.olr
+}
 
-            // RunOutputCollection ...
-            type RunOutputCollection struct {
-            autorest.Response `json:"-"`
-            Value *[]RunOutput `json:"value,omitempty"`
-            // NextLink - The continuation token.
-            NextLink *string `json:"nextLink,omitempty"`
-            }
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page OperationListResultPage) Values() []Operation {
+	if page.olr.IsEmpty() {
+		return nil
+	}
+	return *page.olr.Value
+}
 
-            // RunOutputCollectionIterator provides access to a complete listing of RunOutput values.
-            type RunOutputCollectionIterator struct {
-                i int
-                page RunOutputCollectionPage
-            }
-        // NextWithContext advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        func (iter * RunOutputCollectionIterator) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/RunOutputCollectionIterator.NextWithContext")
-        defer func() {
-        sc := -1
-        if iter.Response().Response.Response != nil {
-        sc = iter.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        iter.i++
-        if iter.i < len(iter. page.Values()) {
-        return nil
-        }
-        err = iter.page.NextWithContext(ctx)
-        if err != nil {
-        iter. i--
-        return err
-        }
-        iter.i = 0
-        return nil
-        }
-        // Next advances to the next value.  If there was an error making
-        // the request the iterator does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (iter * RunOutputCollectionIterator) Next() error {
-        return iter.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the enumeration should be started or is not yet complete.
-        func (iter RunOutputCollectionIterator) NotDone() bool {
-        return iter.page.NotDone() && iter.i < len(iter. page.Values())
-        }
-        // Response returns the raw server response from the last page request.
-        func (iter RunOutputCollectionIterator) Response() RunOutputCollection {
-        return iter.page.Response()
-        }
-        // Value returns the current value or a zero-initialized value if the
-        // iterator has advanced beyond the end of the collection.
-        func (iter RunOutputCollectionIterator) Value() RunOutput {
-        if !iter.page.NotDone() {
-        return RunOutput{}
-        }
-        return iter.page.Values()[iter.i]
-        }
-        // Creates a new instance of the RunOutputCollectionIterator type.
-        func NewRunOutputCollectionIterator (page RunOutputCollectionPage) RunOutputCollectionIterator {
-            return RunOutputCollectionIterator{page: page}
-        }
+// Creates a new instance of the OperationListResultPage type.
+func NewOperationListResultPage(getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
+	return OperationListResultPage{fn: getNextPage}
+}
 
+// ProvisioningError ...
+type ProvisioningError struct {
+	// ProvisioningErrorCode - Error code of the provisioning failure. Possible values include: 'BadSourceType', 'BadPIRSource', 'BadISOSource', 'BadCustomizerType', 'NoCustomizerShellScript', 'ServerError', 'Other'
+	ProvisioningErrorCode ProvisioningErrorCode `json:"provisioningErrorCode,omitempty"`
+	// Message - Verbose error message about the provisioning failure
+	Message *string `json:"message,omitempty"`
+}
 
-                // IsEmpty returns true if the ListResult contains no values.
-                func (roc RunOutputCollection) IsEmpty() bool {
-                return roc.Value == nil || len(*roc.Value) == 0
-                }
+// Resource the Resource model definition.
+type Resource struct {
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+	// Location - Resource location
+	Location *string `json:"location,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
 
-                    // runOutputCollectionPreparer prepares a request to retrieve the next set of results.
-                    // It returns nil if no more results exist.
-                    func (roc RunOutputCollection) runOutputCollectionPreparer(ctx context.Context) (*http.Request, error) {
-                    if roc.NextLink == nil || len(to.String(roc.NextLink)) < 1 {
-                    return nil, nil
-                    }
-                    return autorest.Prepare((&http.Request{}).WithContext(ctx),
-                    autorest.AsJSON(),
-                    autorest.AsGet(),
-                    autorest.WithBaseURL(to.String( roc.NextLink)));
-                    }
+// MarshalJSON is the custom marshaler for Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.Location != nil {
+		objectMap["location"] = r.Location
+	}
+	if r.Tags != nil {
+		objectMap["tags"] = r.Tags
+	}
+	return json.Marshal(objectMap)
+}
 
-            // RunOutputCollectionPage contains a page of RunOutput values.
-            type RunOutputCollectionPage struct {
-                fn func(context.Context, RunOutputCollection) (RunOutputCollection, error)
-                roc RunOutputCollection
-            }
+// RunOutput represents an output that was created by running an image template.
+type RunOutput struct {
+	autorest.Response    `json:"-"`
+	*RunOutputProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+}
 
-        // NextWithContext advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        func (page * RunOutputCollectionPage) NextWithContext(ctx context.Context) (err error) {
-        if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/RunOutputCollectionPage.NextWithContext")
-        defer func() {
-        sc := -1
-        if page.Response().Response.Response != nil {
-        sc = page.Response().Response.Response.StatusCode
-        }
-        tracing.EndSpan(ctx, sc, err)
-        }()
-        }
-        next, err := page.fn(ctx, page.roc)
-        if err != nil {
-        return err
-        }
-        page.roc = next
-        return nil
-        }
+// MarshalJSON is the custom marshaler for RunOutput.
+func (ro RunOutput) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ro.RunOutputProperties != nil {
+		objectMap["properties"] = ro.RunOutputProperties
+	}
+	if ro.Name != nil {
+		objectMap["name"] = ro.Name
+	}
+	return json.Marshal(objectMap)
+}
 
-        // Next advances to the next page of values.  If there was an error making
-        // the request the page does not advance and the error is returned.
-        // Deprecated: Use NextWithContext() instead.
-        func (page * RunOutputCollectionPage) Next() error {
-        return page.NextWithContext(context.Background())
-        }
-        // NotDone returns true if the page enumeration should be started or is not yet complete.
-        func (page RunOutputCollectionPage) NotDone() bool {
-        return !page.roc.IsEmpty()
-        }
-        // Response returns the raw server response from the last page request.
-        func (page RunOutputCollectionPage) Response() RunOutputCollection {
-        return page.roc
-        }
-        // Values returns the slice of values for the current page or nil if there are no values.
-        func (page RunOutputCollectionPage) Values() []RunOutput {
-        if page.roc.IsEmpty() {
-        return nil
-        }
-        return *page.roc.Value
-        }
-        // Creates a new instance of the RunOutputCollectionPage type.
-        func NewRunOutputCollectionPage (getNextPage func(context.Context, RunOutputCollection) (RunOutputCollection, error)) RunOutputCollectionPage {
-            return RunOutputCollectionPage{fn: getNextPage}
-        }
+// UnmarshalJSON is the custom unmarshaler for RunOutput struct.
+func (ro *RunOutput) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var runOutputProperties RunOutputProperties
+				err = json.Unmarshal(*v, &runOutputProperties)
+				if err != nil {
+					return err
+				}
+				ro.RunOutputProperties = &runOutputProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				ro.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				ro.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ro.Type = &typeVar
+			}
+		}
+	}
 
-            // RunOutputProperties ...
-            type RunOutputProperties struct {
-            // ArtifactID - The resource id of the artifact.
-            ArtifactID *string `json:"artifactId,omitempty"`
-            // ProvisioningState - READ-ONLY; Provisioning state of the resource. Possible values include: 'ProvisioningState1Creating', 'ProvisioningState1Succeeded', 'ProvisioningState1Failed', 'ProvisioningState1Deleting'
-            ProvisioningState ProvisioningState1 `json:"provisioningState,omitempty"`
-            }
+	return nil
+}
 
-            // SubResource the Sub Resource model definition.
-            type SubResource struct {
-            // ID - READ-ONLY; Resource Id
-            ID *string `json:"id,omitempty"`
-            // Name - Resource name
-            Name *string `json:"name,omitempty"`
-            // Type - READ-ONLY; Resource type
-            Type *string `json:"type,omitempty"`
-            }
+// RunOutputCollection ...
+type RunOutputCollection struct {
+	autorest.Response `json:"-"`
+	Value             *[]RunOutput `json:"value,omitempty"`
+	// NextLink - The continuation token.
+	NextLink *string `json:"nextLink,omitempty"`
+}
 
-            // VirtualMachineImageTemplateCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
-            // of a long-running operation.
-            type VirtualMachineImageTemplateCreateOrUpdateFuture struct {
-                azure.Future
-            }
-        // Result returns the result of the asynchronous operation.
-        // If the operation has not completed it will return an error.
-        func (future *VirtualMachineImageTemplateCreateOrUpdateFuture) Result(client VirtualMachineImageTemplateClient) (it ImageTemplate, err error) {
-        var done bool
-        done, err = future.DoneWithContext(context.Background(), client)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
-        return
-        }
-        if !done {
-        err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture")
-        return
-        }
-            sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-            if it.Response.Response, err = future.GetResult(sender); err == nil && it.Response.Response.StatusCode != http.StatusNoContent {
-            it, err = client.CreateOrUpdateResponder(it.Response.Response)
-            if err != nil {
-            err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture", "Result", it.Response.Response, "Failure responding to request")
-            }
-            }
-            return
-        }
+// RunOutputCollectionIterator provides access to a complete listing of RunOutput values.
+type RunOutputCollectionIterator struct {
+	i    int
+	page RunOutputCollectionPage
+}
 
-            // VirtualMachineImageTemplateDeleteFuture an abstraction for monitoring and retrieving the results of a
-            // long-running operation.
-            type VirtualMachineImageTemplateDeleteFuture struct {
-                azure.Future
-            }
-        // Result returns the result of the asynchronous operation.
-        // If the operation has not completed it will return an error.
-        func (future *VirtualMachineImageTemplateDeleteFuture) Result(client VirtualMachineImageTemplateClient) (ar autorest.Response, err error) {
-        var done bool
-        done, err = future.DoneWithContext(context.Background(), client)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateDeleteFuture", "Result", future.Response(), "Polling failure")
-        return
-        }
-        if !done {
-        err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateDeleteFuture")
-        return
-        }
-            ar.Response = future.Response()
-        return
-        }
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *RunOutputCollectionIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/RunOutputCollectionIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
 
-            // VirtualMachineImageTemplateRunFuture an abstraction for monitoring and retrieving the results of a
-            // long-running operation.
-            type VirtualMachineImageTemplateRunFuture struct {
-                azure.Future
-            }
-        // Result returns the result of the asynchronous operation.
-        // If the operation has not completed it will return an error.
-        func (future *VirtualMachineImageTemplateRunFuture) Result(client VirtualMachineImageTemplateClient) (ar autorest.Response, err error) {
-        var done bool
-        done, err = future.DoneWithContext(context.Background(), client)
-        if err != nil {
-        err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateRunFuture", "Result", future.Response(), "Polling failure")
-        return
-        }
-        if !done {
-        err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateRunFuture")
-        return
-        }
-            ar.Response = future.Response()
-        return
-        }
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *RunOutputCollectionIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
 
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter RunOutputCollectionIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter RunOutputCollectionIterator) Response() RunOutputCollection {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter RunOutputCollectionIterator) Value() RunOutput {
+	if !iter.page.NotDone() {
+		return RunOutput{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the RunOutputCollectionIterator type.
+func NewRunOutputCollectionIterator(page RunOutputCollectionPage) RunOutputCollectionIterator {
+	return RunOutputCollectionIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (roc RunOutputCollection) IsEmpty() bool {
+	return roc.Value == nil || len(*roc.Value) == 0
+}
+
+// runOutputCollectionPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (roc RunOutputCollection) runOutputCollectionPreparer(ctx context.Context) (*http.Request, error) {
+	if roc.NextLink == nil || len(to.String(roc.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(roc.NextLink)))
+}
+
+// RunOutputCollectionPage contains a page of RunOutput values.
+type RunOutputCollectionPage struct {
+	fn  func(context.Context, RunOutputCollection) (RunOutputCollection, error)
+	roc RunOutputCollection
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *RunOutputCollectionPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/RunOutputCollectionPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.roc)
+	if err != nil {
+		return err
+	}
+	page.roc = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *RunOutputCollectionPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page RunOutputCollectionPage) NotDone() bool {
+	return !page.roc.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page RunOutputCollectionPage) Response() RunOutputCollection {
+	return page.roc
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page RunOutputCollectionPage) Values() []RunOutput {
+	if page.roc.IsEmpty() {
+		return nil
+	}
+	return *page.roc.Value
+}
+
+// Creates a new instance of the RunOutputCollectionPage type.
+func NewRunOutputCollectionPage(getNextPage func(context.Context, RunOutputCollection) (RunOutputCollection, error)) RunOutputCollectionPage {
+	return RunOutputCollectionPage{fn: getNextPage}
+}
+
+// RunOutputProperties ...
+type RunOutputProperties struct {
+	// ArtifactID - The resource id of the artifact.
+	ArtifactID *string `json:"artifactId,omitempty"`
+	// ProvisioningState - READ-ONLY; Provisioning state of the resource. Possible values include: 'ProvisioningState1Creating', 'ProvisioningState1Succeeded', 'ProvisioningState1Failed', 'ProvisioningState1Deleting'
+	ProvisioningState ProvisioningState1 `json:"provisioningState,omitempty"`
+}
+
+// SubResource the Sub Resource model definition.
+type SubResource struct {
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+}
+
+// VirtualMachineImageTemplateCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type VirtualMachineImageTemplateCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineImageTemplateCreateOrUpdateFuture) Result(client VirtualMachineImageTemplateClient) (it ImageTemplate, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if it.Response.Response, err = future.GetResult(sender); err == nil && it.Response.Response.StatusCode != http.StatusNoContent {
+		it, err = client.CreateOrUpdateResponder(it.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateCreateOrUpdateFuture", "Result", it.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// VirtualMachineImageTemplateDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type VirtualMachineImageTemplateDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineImageTemplateDeleteFuture) Result(client VirtualMachineImageTemplateClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
+// VirtualMachineImageTemplateRunFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type VirtualMachineImageTemplateRunFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineImageTemplateRunFuture) Result(client VirtualMachineImageTemplateClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "virtualmachineimagebuilder.VirtualMachineImageTemplateRunFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("virtualmachineimagebuilder.VirtualMachineImageTemplateRunFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
