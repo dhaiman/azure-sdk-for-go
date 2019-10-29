@@ -18,28 +18,29 @@ package appconfigurationapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "context"
-    "github.com/Azure/azure-sdk-for-go/services/appconfiguration/mgmt/2019-10-01/appconfiguration"
+	"context"
+	"github.com/Azure/azure-sdk-for-go/services/appconfiguration/mgmt/2019-10-01/appconfiguration"
 )
 
-        // ConfigurationStoresClientAPI contains the set of methods on the ConfigurationStoresClient type.
-        type ConfigurationStoresClientAPI interface {
-            Create(ctx context.Context, resourceGroupName string, configStoreName string, configStoreCreationParameters appconfiguration.ConfigurationStore) (result appconfiguration.ConfigurationStoresCreateFuture, err error)
-            Delete(ctx context.Context, resourceGroupName string, configStoreName string) (result appconfiguration.ConfigurationStoresDeleteFuture, err error)
-            Get(ctx context.Context, resourceGroupName string, configStoreName string) (result appconfiguration.ConfigurationStore, err error)
-            List(ctx context.Context, skipToken string) (result appconfiguration.ConfigurationStoreListResultPage, err error)
-            ListByResourceGroup(ctx context.Context, resourceGroupName string, skipToken string) (result appconfiguration.ConfigurationStoreListResultPage, err error)
-            ListKeys(ctx context.Context, resourceGroupName string, configStoreName string, skipToken string) (result appconfiguration.APIKeyListResultPage, err error)
-            ListKeyValue(ctx context.Context, resourceGroupName string, configStoreName string, listKeyValueParameters appconfiguration.ListKeyValueParameters) (result appconfiguration.KeyValue, err error)
-            RegenerateKey(ctx context.Context, resourceGroupName string, configStoreName string, regenerateKeyParameters appconfiguration.RegenerateKeyParameters) (result appconfiguration.APIKey, err error)
-            Update(ctx context.Context, resourceGroupName string, configStoreName string, configStoreUpdateParameters appconfiguration.ConfigurationStoreUpdateParameters) (result appconfiguration.ConfigurationStoresUpdateFuture, err error)
-        }
+// ConfigurationStoresClientAPI contains the set of methods on the ConfigurationStoresClient type.
+type ConfigurationStoresClientAPI interface {
+	Create(ctx context.Context, resourceGroupName string, configStoreName string, configStoreCreationParameters appconfiguration.ConfigurationStore) (result appconfiguration.ConfigurationStoresCreateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, configStoreName string) (result appconfiguration.ConfigurationStoresDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, configStoreName string) (result appconfiguration.ConfigurationStore, err error)
+	List(ctx context.Context, skipToken string) (result appconfiguration.ConfigurationStoreListResultPage, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string, skipToken string) (result appconfiguration.ConfigurationStoreListResultPage, err error)
+	ListKeys(ctx context.Context, resourceGroupName string, configStoreName string, skipToken string) (result appconfiguration.APIKeyListResultPage, err error)
+	ListKeyValue(ctx context.Context, resourceGroupName string, configStoreName string, listKeyValueParameters appconfiguration.ListKeyValueParameters) (result appconfiguration.KeyValue, err error)
+	RegenerateKey(ctx context.Context, resourceGroupName string, configStoreName string, regenerateKeyParameters appconfiguration.RegenerateKeyParameters) (result appconfiguration.APIKey, err error)
+	Update(ctx context.Context, resourceGroupName string, configStoreName string, configStoreUpdateParameters appconfiguration.ConfigurationStoreUpdateParameters) (result appconfiguration.ConfigurationStoresUpdateFuture, err error)
+}
 
-        var _ ConfigurationStoresClientAPI = (*appconfiguration.ConfigurationStoresClient)(nil)
-        // OperationsClientAPI contains the set of methods on the OperationsClient type.
-        type OperationsClientAPI interface {
-            CheckNameAvailability(ctx context.Context, checkNameAvailabilityParameters appconfiguration.CheckNameAvailabilityParameters) (result appconfiguration.NameAvailabilityStatus, err error)
-            List(ctx context.Context, skipToken string) (result appconfiguration.OperationDefinitionListResultPage, err error)
-        }
+var _ ConfigurationStoresClientAPI = (*appconfiguration.ConfigurationStoresClient)(nil)
 
-        var _ OperationsClientAPI = (*appconfiguration.OperationsClient)(nil)
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	CheckNameAvailability(ctx context.Context, checkNameAvailabilityParameters appconfiguration.CheckNameAvailabilityParameters) (result appconfiguration.NameAvailabilityStatus, err error)
+	List(ctx context.Context, skipToken string) (result appconfiguration.OperationDefinitionListResultPage, err error)
+}
+
+var _ OperationsClientAPI = (*appconfiguration.OperationsClient)(nil)
