@@ -1025,6 +1025,12 @@ type DestinationProperties struct {
 	BlobContainer *string `json:"blobContainer,omitempty"`
 	// ArchiveNameFormat - Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order
 	ArchiveNameFormat *string `json:"archiveNameFormat,omitempty"`
+	// DataLakeSubscriptionID - DataLake SubscriptionId
+	DataLakeSubscriptionID *string `json:"dataLakeSubscriptionId,omitempty"`
+	// DataLakeAccountName - DataLake AccountName
+	DataLakeAccountName *string `json:"dataLakeAccountName,omitempty"`
+	// DataLakeFolderPath - DataLake FolderPath
+	DataLakeFolderPath *string `json:"dataLakeFolderPath,omitempty"`
 }
 
 // EHNamespace single Namespace item in List or Get Operation
