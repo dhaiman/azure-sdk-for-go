@@ -5571,6 +5571,16 @@ type WebhookReceiver struct {
 	ServiceURI *string `json:"serviceUri,omitempty"`
 }
 
+// WebtestLocationAvailabilityCriteria specifies the metric alert rule criteria for a web test resource.
+type WebtestLocationAvailabilityCriteria struct {
+	// WebTestID - The web test Id.
+	WebTestID *string `json:"webTestId,omitempty"`
+	// ComponentID - The Application Insights resource Id.
+	ComponentID *string `json:"componentId,omitempty"`
+	// FailedLocationCount - The number of failed locations.
+	FailedLocationCount *float64 `json:"failedLocationCount,omitempty"`
+}
+
 // WorkspaceInfo information about a Log Analytics Workspace.
 type WorkspaceInfo struct {
 	// ID - Azure Resource Manager identifier of the Log Analytics Workspace.
