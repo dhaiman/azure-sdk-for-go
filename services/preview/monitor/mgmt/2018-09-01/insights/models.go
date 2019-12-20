@@ -5423,3 +5423,13 @@ type WebhookReceiver struct {
 	// ServiceURI - The URI where webhooks should be sent.
 	ServiceURI *string `json:"serviceUri,omitempty"`
 }
+
+// WebtestLocationAvailabilityCriteria specifies the metric alert rule criteria for a web test resource.
+type WebtestLocationAvailabilityCriteria struct {
+	// WebTestID - The web test Id.
+	WebTestID *string `json:"webTestId,omitempty"`
+	// ComponentID - The Application Insights resource Id.
+	ComponentID *string `json:"componentId,omitempty"`
+	// FailedLocationCount - The number of failed locations.
+	FailedLocationCount *float64 `json:"failedLocationCount,omitempty"`
+}
