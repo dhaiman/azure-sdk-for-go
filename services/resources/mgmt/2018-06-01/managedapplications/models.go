@@ -586,7 +586,7 @@ type ApplicationDefinitionProperties struct {
 	// DisplayName - The managed application definition display name.
 	DisplayName *string `json:"displayName,omitempty"`
 	// IsEnabled - A value indicating whether the package is enabled or not.
-	IsEnabled *string `json:"isEnabled,omitempty"`
+	IsEnabled *bool `json:"isEnabled,omitempty"`
 	// Authorizations - The managed application provider authorizations.
 	Authorizations *[]ApplicationProviderAuthorization `json:"authorizations,omitempty"`
 	// Artifacts - The collection of managed application artifacts. The portal will use the files specified as artifacts to construct the user experience of creating a managed application from a managed application definition.
