@@ -37,7 +37,8 @@ func NewNamespacesClient(subscriptionID string) NamespacesClient {
 	return NewNamespacesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewNamespacesClientWithBaseURI creates an instance of the NamespacesClient client.
+// NewNamespacesClientWithBaseURI creates an instance of the NamespacesClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewNamespacesClientWithBaseURI(baseURI string, subscriptionID string) NamespacesClient {
 	return NamespacesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
@@ -45,7 +46,7 @@ func NewNamespacesClientWithBaseURI(baseURI string, subscriptionID string) Names
 // CreateOrUpdate creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This
 // operation is idempotent.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // parameters - parameters for creating a namespace resource.
 func (client NamespacesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, namespaceName string, parameters EHNamespace) (result NamespacesCreateOrUpdateFuture, err error) {
@@ -148,7 +149,7 @@ func (client NamespacesClient) CreateOrUpdateResponder(resp *http.Response) (res
 
 // CreateOrUpdateIPFilterRule creates or updates an IpFilterRule for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // IPFilterRuleName - the IP Filter Rule name.
 // parameters - the Namespace IpFilterRule.
@@ -242,7 +243,7 @@ func (client NamespacesClient) CreateOrUpdateIPFilterRuleResponder(resp *http.Re
 
 // CreateOrUpdateNetworkRuleSet create or update NetworkRuleSet for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // parameters - the Namespace IpFilterRule.
 func (client NamespacesClient) CreateOrUpdateNetworkRuleSet(ctx context.Context, resourceGroupName string, namespaceName string, parameters NetworkRuleSet) (result NetworkRuleSet, err error) {
@@ -332,7 +333,7 @@ func (client NamespacesClient) CreateOrUpdateNetworkRuleSetResponder(resp *http.
 
 // CreateOrUpdateVirtualNetworkRule creates or updates an VirtualNetworkRule for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // virtualNetworkRuleName - the Virtual Network Rule name.
 // parameters - the Namespace VirtualNetworkRule.
@@ -426,7 +427,7 @@ func (client NamespacesClient) CreateOrUpdateVirtualNetworkRuleResponder(resp *h
 
 // Delete deletes an existing namespace. This operation also removes all associated resources under the namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 func (client NamespacesClient) Delete(ctx context.Context, resourceGroupName string, namespaceName string) (result NamespacesDeleteFuture, err error) {
 	if tracing.IsEnabled() {
@@ -512,7 +513,7 @@ func (client NamespacesClient) DeleteResponder(resp *http.Response) (result auto
 
 // DeleteIPFilterRule deletes an IpFilterRule for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // IPFilterRuleName - the IP Filter Rule name.
 func (client NamespacesClient) DeleteIPFilterRule(ctx context.Context, resourceGroupName string, namespaceName string, IPFilterRuleName string) (result autorest.Response, err error) {
@@ -602,7 +603,7 @@ func (client NamespacesClient) DeleteIPFilterRuleResponder(resp *http.Response) 
 
 // DeleteVirtualNetworkRule deletes an VirtualNetworkRule for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // virtualNetworkRuleName - the Virtual Network Rule name.
 func (client NamespacesClient) DeleteVirtualNetworkRule(ctx context.Context, resourceGroupName string, namespaceName string, virtualNetworkRuleName string) (result autorest.Response, err error) {
@@ -692,7 +693,7 @@ func (client NamespacesClient) DeleteVirtualNetworkRuleResponder(resp *http.Resp
 
 // Get gets the description of the specified namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 func (client NamespacesClient) Get(ctx context.Context, resourceGroupName string, namespaceName string) (result EHNamespace, err error) {
 	if tracing.IsEnabled() {
@@ -779,7 +780,7 @@ func (client NamespacesClient) GetResponder(resp *http.Response) (result EHNames
 
 // GetIPFilterRule gets an IpFilterRule for a Namespace by rule name.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // IPFilterRuleName - the IP Filter Rule name.
 func (client NamespacesClient) GetIPFilterRule(ctx context.Context, resourceGroupName string, namespaceName string, IPFilterRuleName string) (result IPFilterRule, err error) {
@@ -870,7 +871,7 @@ func (client NamespacesClient) GetIPFilterRuleResponder(resp *http.Response) (re
 
 // GetNetworkRuleSet gets NetworkRuleSet for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 func (client NamespacesClient) GetNetworkRuleSet(ctx context.Context, resourceGroupName string, namespaceName string) (result NetworkRuleSet, err error) {
 	if tracing.IsEnabled() {
@@ -957,7 +958,7 @@ func (client NamespacesClient) GetNetworkRuleSetResponder(resp *http.Response) (
 
 // GetVirtualNetworkRule gets an VirtualNetworkRule for a Namespace by rule name.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // virtualNetworkRuleName - the Virtual Network Rule name.
 func (client NamespacesClient) GetVirtualNetworkRule(ctx context.Context, resourceGroupName string, namespaceName string, virtualNetworkRuleName string) (result VirtualNetworkRule, err error) {
@@ -1158,7 +1159,7 @@ func (client NamespacesClient) ListComplete(ctx context.Context) (result EHNames
 
 // ListByResourceGroup lists the available Namespaces within a resource group.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 func (client NamespacesClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result EHNamespaceListResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/NamespacesClient.ListByResourceGroup")
@@ -1278,7 +1279,7 @@ func (client NamespacesClient) ListByResourceGroupComplete(ctx context.Context, 
 
 // ListIPFilterRules gets a list of IP Filter rules for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 func (client NamespacesClient) ListIPFilterRules(ctx context.Context, resourceGroupName string, namespaceName string) (result IPFilterRuleListResultPage, err error) {
 	if tracing.IsEnabled() {
@@ -1403,7 +1404,7 @@ func (client NamespacesClient) ListIPFilterRulesComplete(ctx context.Context, re
 
 // ListVirtualNetworkRules gets a list of VirtualNetwork rules for a Namespace.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 func (client NamespacesClient) ListVirtualNetworkRules(ctx context.Context, resourceGroupName string, namespaceName string) (result VirtualNetworkRuleListResultPage, err error) {
 	if tracing.IsEnabled() {
@@ -1529,7 +1530,7 @@ func (client NamespacesClient) ListVirtualNetworkRulesComplete(ctx context.Conte
 // Update creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation
 // is idempotent.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // namespaceName - the Namespace name
 // parameters - parameters for updating a namespace resource.
 func (client NamespacesClient) Update(ctx context.Context, resourceGroupName string, namespaceName string, parameters EHNamespace) (result EHNamespace, err error) {

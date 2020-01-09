@@ -37,14 +37,15 @@ func NewClustersClient(subscriptionID string) ClustersClient {
 	return NewClustersClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewClustersClientWithBaseURI creates an instance of the ClustersClient client.
+// NewClustersClientWithBaseURI creates an instance of the ClustersClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewClustersClientWithBaseURI(baseURI string, subscriptionID string) ClustersClient {
 	return ClustersClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // Delete deletes an existing Event Hubs Cluster. This operation is idempotent.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 func (client ClustersClient) Delete(ctx context.Context, resourceGroupName string, clusterName string) (result ClustersDeleteFuture, err error) {
 	if tracing.IsEnabled() {
@@ -130,7 +131,7 @@ func (client ClustersClient) DeleteResponder(resp *http.Response) (result autore
 
 // Get gets the resource description of the specified Event Hubs Cluster.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 func (client ClustersClient) Get(ctx context.Context, resourceGroupName string, clusterName string) (result Cluster, err error) {
 	if tracing.IsEnabled() {
@@ -289,7 +290,7 @@ func (client ClustersClient) ListAvailableClustersResponder(resp *http.Response)
 
 // ListByResourceGroup lists the available Event Hubs Clusters within an ARM resource group.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 func (client ClustersClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result ClusterListResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ClustersClient.ListByResourceGroup")
@@ -409,7 +410,7 @@ func (client ClustersClient) ListByResourceGroupComplete(ctx context.Context, re
 
 // ListNamespaces list all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 func (client ClustersClient) ListNamespaces(ctx context.Context, resourceGroupName string, clusterName string) (result EHNamespaceIDListResult, err error) {
 	if tracing.IsEnabled() {
@@ -496,7 +497,7 @@ func (client ClustersClient) ListNamespacesResponder(resp *http.Response) (resul
 
 // Patch modifies mutable properties on the Event Hubs Cluster. This operation is idempotent.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 // parameters - the properties of the Event Hubs Cluster which should be updated.
 func (client ClustersClient) Patch(ctx context.Context, resourceGroupName string, clusterName string, parameters Cluster) (result ClustersPatchFuture, err error) {
@@ -586,7 +587,7 @@ func (client ClustersClient) PatchResponder(resp *http.Response) (result Cluster
 
 // Put creates or updates an instance of an Event Hubs Cluster.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 func (client ClustersClient) Put(ctx context.Context, resourceGroupName string, clusterName string) (result ClustersPutFuture, err error) {
 	if tracing.IsEnabled() {

@@ -37,7 +37,8 @@ func NewConfigurationClient(subscriptionID string) ConfigurationClient {
 	return NewConfigurationClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewConfigurationClientWithBaseURI creates an instance of the ConfigurationClient client.
+// NewConfigurationClientWithBaseURI creates an instance of the ConfigurationClient client using a custom endpoint.
+// Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewConfigurationClientWithBaseURI(baseURI string, subscriptionID string) ConfigurationClient {
 	return ConfigurationClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
@@ -45,7 +46,7 @@ func NewConfigurationClientWithBaseURI(baseURI string, subscriptionID string) Co
 // Get get all Event Hubs Cluster settings - a collection of key/value pairs which represent the quotas and settings
 // imposed on the cluster.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 func (client ConfigurationClient) Get(ctx context.Context, resourceGroupName string, clusterName string) (result ClusterQuotaConfigurationProperties, err error) {
 	if tracing.IsEnabled() {
@@ -133,7 +134,7 @@ func (client ConfigurationClient) GetResponder(resp *http.Response) (result Clus
 // Patch replace all specified Event Hubs Cluster settings with those contained in the request body. Leaves the
 // settings not specified in the request body unmodified.
 // Parameters:
-// resourceGroupName - name of the resource group within the Azure subscription.
+// resourceGroupName - name of the Resource group within the Azure subscription.
 // clusterName - the name of the Event Hubs Cluster.
 // parameters - parameters for creating an Event Hubs Cluster resource.
 func (client ConfigurationClient) Patch(ctx context.Context, resourceGroupName string, clusterName string, parameters ClusterQuotaConfigurationProperties) (result ClusterQuotaConfigurationProperties, err error) {
