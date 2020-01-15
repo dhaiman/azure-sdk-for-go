@@ -1911,11 +1911,11 @@ func NewOperationListResultPage(getNextPage func(context.Context, OperationListR
 // RegistryStatistics identity registry statistics.
 type RegistryStatistics struct {
 	autorest.Response `json:"-"`
-	// TotalDeviceCount - READ-ONLY; The total count of devices in the identity registry.
+	// TotalDeviceCount - READ-ONLY; The total count of devices in the identity registry. This API is eventually consistent and may not reflect correct device count immediately.
 	TotalDeviceCount *int64 `json:"totalDeviceCount,omitempty"`
-	// EnabledDeviceCount - READ-ONLY; The count of enabled devices in the identity registry.
+	// EnabledDeviceCount - READ-ONLY; The count of enabled devices in the identity registry. This API is eventually consistent and may not reflect correct device count immediately.
 	EnabledDeviceCount *int64 `json:"enabledDeviceCount,omitempty"`
-	// DisabledDeviceCount - READ-ONLY; The count of disabled devices in the identity registry.
+	// DisabledDeviceCount - READ-ONLY; The count of disabled devices in the identity registry. This API is eventually consistent and may not reflect correct device count immediately.
 	DisabledDeviceCount *int64 `json:"disabledDeviceCount,omitempty"`
 }
 
