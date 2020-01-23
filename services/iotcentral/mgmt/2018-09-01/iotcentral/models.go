@@ -397,7 +397,7 @@ type AppsCreateOrUpdateFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *AppsCreateOrUpdateFuture) Result(client AppsClient) (a App, err error) {
+func (future *AppsCreateOrUpdateFuture) Result(client AppsClient) (so SetObject, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -409,10 +409,10 @@ func (future *AppsCreateOrUpdateFuture) Result(client AppsClient) (a App, err er
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if a.Response.Response, err = future.GetResult(sender); err == nil && a.Response.Response.StatusCode != http.StatusNoContent {
-		a, err = client.CreateOrUpdateResponder(a.Response.Response)
+	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
+		so, err = client.CreateOrUpdateResponder(so.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "iotcentral.AppsCreateOrUpdateFuture", "Result", a.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "iotcentral.AppsCreateOrUpdateFuture", "Result", so.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -453,7 +453,7 @@ type AppsUpdateFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *AppsUpdateFuture) Result(client AppsClient) (a App, err error) {
+func (future *AppsUpdateFuture) Result(client AppsClient) (so SetObject, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -465,10 +465,10 @@ func (future *AppsUpdateFuture) Result(client AppsClient) (a App, err error) {
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if a.Response.Response, err = future.GetResult(sender); err == nil && a.Response.Response.StatusCode != http.StatusNoContent {
-		a, err = client.UpdateResponder(a.Response.Response)
+	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
+		so, err = client.UpdateResponder(so.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "iotcentral.AppsUpdateFuture", "Result", a.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "iotcentral.AppsUpdateFuture", "Result", so.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -634,6 +634,14 @@ func (page AppTemplatesResultPage) Values() []AppTemplate {
 // Creates a new instance of the AppTemplatesResultPage type.
 func NewAppTemplatesResultPage(getNextPage func(context.Context, AppTemplatesResult) (AppTemplatesResult, error)) AppTemplatesResultPage {
 	return AppTemplatesResultPage{fn: getNextPage}
+}
+
+// ARMErrorResponseBody ARM error response body.
+type ARMErrorResponseBody struct {
+	// Message - Gets or sets the string that describes the error in detail and provides debugging information.
+	Message *string `json:"message,omitempty"`
+	// Code - Gets or sets the string that can be used to programmatically identify the error.
+	Code *string `json:"code,omitempty"`
 }
 
 // ErrorDetails error details.
@@ -886,4 +894,10 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 		objectMap["tags"] = r.Tags
 	}
 	return json.Marshal(objectMap)
+}
+
+// SetObject ...
+type SetObject struct {
+	autorest.Response `json:"-"`
+	Value             interface{} `json:"value,omitempty"`
 }
