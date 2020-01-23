@@ -36,7 +36,8 @@ func NewAppsClient(subscriptionID string) AppsClient {
 	return NewAppsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewAppsClientWithBaseURI creates an instance of the AppsClient client.
+// NewAppsClientWithBaseURI creates an instance of the AppsClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewAppsClientWithBaseURI(baseURI string, subscriptionID string) AppsClient {
 	return AppsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
@@ -292,11 +293,11 @@ func (client AppsClient) CreateOrUpdateSender(req *http.Request) (future AppsCre
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client AppsClient) CreateOrUpdateResponder(resp *http.Response) (result App, err error) {
+func (client AppsClient) CreateOrUpdateResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusBadRequest),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -858,11 +859,11 @@ func (client AppsClient) UpdateSender(req *http.Request) (future AppsUpdateFutur
 
 // UpdateResponder handles the response to the Update request. The method always
 // closes the http.Response Body.
-func (client AppsClient) UpdateResponder(resp *http.Response) (result App, err error) {
+func (client AppsClient) UpdateResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusBadRequest),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
