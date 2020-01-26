@@ -31,19 +31,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/securityinsight/mgmt/2017-08-01-preview/securityinsight"
 
-// AggregationsKind enumerates the values for aggregations kind.
-type AggregationsKind string
-
-const (
-	// AggregationsKindCasesAggregation ...
-	AggregationsKindCasesAggregation AggregationsKind = "CasesAggregation"
-)
-
-// PossibleAggregationsKindValues returns an array of possible values for the AggregationsKind const type.
-func PossibleAggregationsKindValues() []AggregationsKind {
-	return []AggregationsKind{AggregationsKindCasesAggregation}
-}
-
 // AlertRuleKind enumerates the values for alert rule kind.
 type AlertRuleKind string
 
@@ -235,6 +222,21 @@ func PossibleConfidenceScoreStatusValues() []ConfidenceScoreStatus {
 	return []ConfidenceScoreStatus{Final, InProcess, NotApplicable, NotFinal}
 }
 
+// DataConnectorAuthorizationState enumerates the values for data connector authorization state.
+type DataConnectorAuthorizationState string
+
+const (
+	// Invalid ...
+	Invalid DataConnectorAuthorizationState = "Invalid"
+	// Valid ...
+	Valid DataConnectorAuthorizationState = "Valid"
+)
+
+// PossibleDataConnectorAuthorizationStateValues returns an array of possible values for the DataConnectorAuthorizationState const type.
+func PossibleDataConnectorAuthorizationStateValues() []DataConnectorAuthorizationState {
+	return []DataConnectorAuthorizationState{Invalid, Valid}
+}
+
 // DataConnectorKind enumerates the values for data connector kind.
 type DataConnectorKind string
 
@@ -260,6 +262,23 @@ const (
 // PossibleDataConnectorKindValues returns an array of possible values for the DataConnectorKind const type.
 func PossibleDataConnectorKindValues() []DataConnectorKind {
 	return []DataConnectorKind{DataConnectorKindAmazonWebServicesCloudTrail, DataConnectorKindAzureActiveDirectory, DataConnectorKindAzureAdvancedThreatProtection, DataConnectorKindAzureSecurityCenter, DataConnectorKindMicrosoftCloudAppSecurity, DataConnectorKindMicrosoftDefenderAdvancedThreatProtection, DataConnectorKindOffice365, DataConnectorKindThreatIntelligence}
+}
+
+// DataConnectorLicenseState enumerates the values for data connector license state.
+type DataConnectorLicenseState string
+
+const (
+	// DataConnectorLicenseStateInvalid ...
+	DataConnectorLicenseStateInvalid DataConnectorLicenseState = "Invalid"
+	// DataConnectorLicenseStateUnknown ...
+	DataConnectorLicenseStateUnknown DataConnectorLicenseState = "Unknown"
+	// DataConnectorLicenseStateValid ...
+	DataConnectorLicenseStateValid DataConnectorLicenseState = "Valid"
+)
+
+// PossibleDataConnectorLicenseStateValues returns an array of possible values for the DataConnectorLicenseState const type.
+func PossibleDataConnectorLicenseStateValues() []DataConnectorLicenseState {
+	return []DataConnectorLicenseState{DataConnectorLicenseStateInvalid, DataConnectorLicenseStateUnknown, DataConnectorLicenseStateValid}
 }
 
 // DataTypeState enumerates the values for data type state.
@@ -309,6 +328,23 @@ func PossibleElevationTokenValues() []ElevationToken {
 	return []ElevationToken{Default, Full, Limited}
 }
 
+// EntitiesMatchingMethod enumerates the values for entities matching method.
+type EntitiesMatchingMethod string
+
+const (
+	// All Grouping alerts into a single incident if all the entities match
+	All EntitiesMatchingMethod = "All"
+	// Custom Grouping alerts into a single incident if the selected entities match
+	Custom EntitiesMatchingMethod = "Custom"
+	// None Grouping all alerts triggered by this rule into a single incident
+	None EntitiesMatchingMethod = "None"
+)
+
+// PossibleEntitiesMatchingMethodValues returns an array of possible values for the EntitiesMatchingMethod const type.
+func PossibleEntitiesMatchingMethodValues() []EntitiesMatchingMethod {
+	return []EntitiesMatchingMethod{All, Custom, None}
+}
+
 // EntityKind enumerates the values for entity kind.
 type EntityKind string
 
@@ -329,6 +365,8 @@ const (
 	EntityKindFileHash EntityKind = "FileHash"
 	// EntityKindHost Entity represents host in the system.
 	EntityKindHost EntityKind = "Host"
+	// EntityKindIoTDevice Entity represents IoT device in the system.
+	EntityKindIoTDevice EntityKind = "IoTDevice"
 	// EntityKindIP Entity represents ip in the system.
 	EntityKindIP EntityKind = "Ip"
 	// EntityKindMalware Entity represents malware in the system.
@@ -349,7 +387,7 @@ const (
 
 // PossibleEntityKindValues returns an array of possible values for the EntityKind const type.
 func PossibleEntityKindValues() []EntityKind {
-	return []EntityKind{EntityKindAccount, EntityKindAzureResource, EntityKindBookmark, EntityKindCloudApplication, EntityKindDNSResolution, EntityKindFile, EntityKindFileHash, EntityKindHost, EntityKindIP, EntityKindMalware, EntityKindProcess, EntityKindRegistryKey, EntityKindRegistryValue, EntityKindSecurityAlert, EntityKindSecurityGroup, EntityKindURL}
+	return []EntityKind{EntityKindAccount, EntityKindAzureResource, EntityKindBookmark, EntityKindCloudApplication, EntityKindDNSResolution, EntityKindFile, EntityKindFileHash, EntityKindHost, EntityKindIoTDevice, EntityKindIP, EntityKindMalware, EntityKindProcess, EntityKindRegistryKey, EntityKindRegistryValue, EntityKindSecurityAlert, EntityKindSecurityGroup, EntityKindURL}
 }
 
 // EntityType enumerates the values for entity type.
@@ -372,6 +410,8 @@ const (
 	EntityTypeHost EntityType = "Host"
 	// EntityTypeHuntingBookmark Entity represents HuntingBookmark in the system.
 	EntityTypeHuntingBookmark EntityType = "HuntingBookmark"
+	// EntityTypeIoTDevice Entity represents IoT device in the system.
+	EntityTypeIoTDevice EntityType = "IoTDevice"
 	// EntityTypeIP Entity represents ip in the system.
 	EntityTypeIP EntityType = "IP"
 	// EntityTypeMalware Entity represents malware in the system.
@@ -392,7 +432,7 @@ const (
 
 // PossibleEntityTypeValues returns an array of possible values for the EntityType const type.
 func PossibleEntityTypeValues() []EntityType {
-	return []EntityType{EntityTypeAccount, EntityTypeAzureResource, EntityTypeCloudApplication, EntityTypeDNS, EntityTypeFile, EntityTypeFileHash, EntityTypeHost, EntityTypeHuntingBookmark, EntityTypeIP, EntityTypeMalware, EntityTypeProcess, EntityTypeRegistryKey, EntityTypeRegistryValue, EntityTypeSecurityAlert, EntityTypeSecurityGroup, EntityTypeURL}
+	return []EntityType{EntityTypeAccount, EntityTypeAzureResource, EntityTypeCloudApplication, EntityTypeDNS, EntityTypeFile, EntityTypeFileHash, EntityTypeHost, EntityTypeHuntingBookmark, EntityTypeIoTDevice, EntityTypeIP, EntityTypeMalware, EntityTypeProcess, EntityTypeRegistryKey, EntityTypeRegistryValue, EntityTypeSecurityAlert, EntityTypeSecurityGroup, EntityTypeURL}
 }
 
 // FileHashAlgorithm enumerates the values for file hash algorithm.
@@ -414,6 +454,25 @@ const (
 // PossibleFileHashAlgorithmValues returns an array of possible values for the FileHashAlgorithm const type.
 func PossibleFileHashAlgorithmValues() []FileHashAlgorithm {
 	return []FileHashAlgorithm{MD5, SHA1, SHA256, SHA256AC, Unknown}
+}
+
+// GroupingEntityType enumerates the values for grouping entity type.
+type GroupingEntityType string
+
+const (
+	// Account Account entity
+	Account GroupingEntityType = "Account"
+	// Host Host entity
+	Host GroupingEntityType = "Host"
+	// IP Ip entity
+	IP GroupingEntityType = "Ip"
+	// URL Url entity
+	URL GroupingEntityType = "Url"
+)
+
+// PossibleGroupingEntityTypeValues returns an array of possible values for the GroupingEntityType const type.
+func PossibleGroupingEntityTypeValues() []GroupingEntityType {
+	return []GroupingEntityType{Account, Host, IP, URL}
 }
 
 // IncidentSeverity enumerates the values for incident severity.
@@ -617,6 +676,8 @@ const (
 	KindFileHash KindBasicEntity = "FileHash"
 	// KindHost ...
 	KindHost KindBasicEntity = "Host"
+	// KindIoTDevice ...
+	KindIoTDevice KindBasicEntity = "IoTDevice"
 	// KindIP ...
 	KindIP KindBasicEntity = "Ip"
 	// KindMalware ...
@@ -637,7 +698,7 @@ const (
 
 // PossibleKindBasicEntityValues returns an array of possible values for the KindBasicEntity const type.
 func PossibleKindBasicEntityValues() []KindBasicEntity {
-	return []KindBasicEntity{KindAccount, KindAzureResource, KindCloudApplication, KindDNSResolution, KindEntity, KindFile, KindFileHash, KindHost, KindIP, KindMalware, KindProcess, KindRegistryKey, KindRegistryValue, KindSecurityAlert, KindSecurityGroup, KindURL}
+	return []KindBasicEntity{KindAccount, KindAzureResource, KindCloudApplication, KindDNSResolution, KindEntity, KindFile, KindFileHash, KindHost, KindIoTDevice, KindIP, KindMalware, KindProcess, KindRegistryKey, KindRegistryValue, KindSecurityAlert, KindSecurityGroup, KindURL}
 }
 
 // KindBasicSettings enumerates the values for kind basic settings.
@@ -864,6 +925,12 @@ func PossibleTriggerOperatorValues() []TriggerOperator {
 	return []TriggerOperator{Equal, GreaterThan, LessThan, NotEqual}
 }
 
+// AADCheckRequirements AAD (Azure Active Directory) requirements check properties.
+type AADCheckRequirements struct {
+	// TenantID - The tenant id to connect to, and get the data from.
+	TenantID *string `json:"tenantId,omitempty"`
+}
+
 // AADDataConnector represents AAD (Azure Active Directory) data connector.
 type AADDataConnector struct {
 	// AADDataConnectorProperties - AAD (Azure Active Directory) data connector properties.
@@ -1021,6 +1088,12 @@ type AADDataConnectorProperties struct {
 	TenantID *string `json:"tenantId,omitempty"`
 	// DataTypes - The available data types for the connector.
 	DataTypes *AlertsDataTypeOfDataConnector `json:"dataTypes,omitempty"`
+}
+
+// AATPCheckRequirements AATP (Azure Advanced Threat Protection) requirements check properties.
+type AATPCheckRequirements struct {
+	// TenantID - The tenant id to connect to, and get the data from.
+	TenantID *string `json:"tenantId,omitempty"`
 }
 
 // AATPDataConnector represents AATP (Azure Advanced Threat Protection) data connector.
@@ -1192,7 +1265,7 @@ type AccountEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -1281,6 +1354,11 @@ func (ae AccountEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for AccountEntity.
 func (ae AccountEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for AccountEntity.
+func (ae AccountEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -1378,6 +1456,8 @@ type AccountEntityProperties struct {
 	Sid *string `json:"sid,omitempty"`
 	// UpnSuffix - READ-ONLY; The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com.
 	UpnSuffix *string `json:"upnSuffix,omitempty"`
+	// DNSDomain - READ-ONLY; The fully qualified domain DNS name. Examples: middleeast.corp.microsoft.com
+	DNSDomain *string `json:"dnsDomain,omitempty"`
 	// AdditionalData - READ-ONLY; A bag of custom fields that should be part of the entity and will be presented to the user.
 	AdditionalData map[string]interface{} `json:"additionalData"`
 	// FriendlyName - READ-ONLY; The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
@@ -1802,10 +1882,10 @@ func (a Aggregations) AsBasicAggregations() (BasicAggregations, bool) {
 	return &a, true
 }
 
-// AggregationsKind1 describes an Azure resource with kind.
-type AggregationsKind1 struct {
-	// Kind - The kind of the setting. Possible values include: 'AggregationsKindCasesAggregation'
-	Kind AggregationsKind `json:"kind,omitempty"`
+// AggregationsKind describes an Azure resource with kind.
+type AggregationsKind struct {
+	// Kind - The kind of the setting
+	Kind *string `json:"kind,omitempty"`
 }
 
 // AggregationsModel ...
@@ -2458,6 +2538,14 @@ type AlertsDataTypeOfDataConnectorAlerts struct {
 	State DataTypeState `json:"state,omitempty"`
 }
 
+// ASCCheckRequirements ASC (Azure Security Center) requirements check properties.
+type ASCCheckRequirements struct {
+	// SubscriptionID - The subscription id to connect to, and get the data from.
+	SubscriptionID *string `json:"subscriptionId,omitempty"`
+	// Kind - The kind of the data connector. Possible values include: 'DataConnectorKindAzureActiveDirectory', 'DataConnectorKindAzureSecurityCenter', 'DataConnectorKindMicrosoftCloudAppSecurity', 'DataConnectorKindThreatIntelligence', 'DataConnectorKindOffice365', 'DataConnectorKindAmazonWebServicesCloudTrail', 'DataConnectorKindAzureAdvancedThreatProtection', 'DataConnectorKindMicrosoftDefenderAdvancedThreatProtection'
+	Kind DataConnectorKind `json:"kind,omitempty"`
+}
+
 // ASCDataConnector represents ASC (Azure Security Center) data connector.
 type ASCDataConnector struct {
 	// ASCDataConnectorProperties - ASC (Azure Security Center) data connector properties.
@@ -2615,6 +2703,12 @@ type ASCDataConnectorProperties struct {
 	SubscriptionID *string `json:"subscriptionId,omitempty"`
 	// DataTypes - The available data types for the connector.
 	DataTypes *AlertsDataTypeOfDataConnector `json:"dataTypes,omitempty"`
+}
+
+// AwsCloudTrailCheckRequirements amazon Web Services CloudTrail requirements check properties.
+type AwsCloudTrailCheckRequirements struct {
+	// Kind - The kind of the data connector. Possible values include: 'DataConnectorKindAzureActiveDirectory', 'DataConnectorKindAzureSecurityCenter', 'DataConnectorKindMicrosoftCloudAppSecurity', 'DataConnectorKindThreatIntelligence', 'DataConnectorKindOffice365', 'DataConnectorKindAmazonWebServicesCloudTrail', 'DataConnectorKindAzureAdvancedThreatProtection', 'DataConnectorKindMicrosoftDefenderAdvancedThreatProtection'
+	Kind DataConnectorKind `json:"kind,omitempty"`
 }
 
 // AwsCloudTrailDataConnector represents Amazon Web Services CloudTrail data connector.
@@ -2799,7 +2893,7 @@ type AzureResourceEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -2888,6 +2982,11 @@ func (are AzureResourceEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bo
 
 // AsURLEntity is the BasicEntity implementation for AzureResourceEntity.
 func (are AzureResourceEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for AzureResourceEntity.
+func (are AzureResourceEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -4392,7 +4491,7 @@ type CloudApplicationEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -4481,6 +4580,11 @@ func (cae CloudApplicationEntity) AsSecurityGroupEntity() (*SecurityGroupEntity,
 
 // AsURLEntity is the BasicEntity implementation for CloudApplicationEntity.
 func (cae CloudApplicationEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -4984,6 +5088,21 @@ func (dcm *DataConnectorModel) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// DataConnectorRequirementsState data connector requirements status.
+type DataConnectorRequirementsState struct {
+	autorest.Response `json:"-"`
+	// AuthorizationState - Authorization state for this connector. Possible values include: 'Valid', 'Invalid'
+	AuthorizationState DataConnectorAuthorizationState `json:"authorizationState,omitempty"`
+	// LicenseState - License state for this connector. Possible values include: 'DataConnectorLicenseStateValid', 'DataConnectorLicenseStateInvalid', 'DataConnectorLicenseStateUnknown'
+	LicenseState DataConnectorLicenseState `json:"licenseState,omitempty"`
+}
+
+// DataConnectorsCheckRequirements data connector requirements properties.
+type DataConnectorsCheckRequirements struct {
+	// Kind - The kind of the data connector. Possible values include: 'DataConnectorKindAzureActiveDirectory', 'DataConnectorKindAzureSecurityCenter', 'DataConnectorKindMicrosoftCloudAppSecurity', 'DataConnectorKindThreatIntelligence', 'DataConnectorKindOffice365', 'DataConnectorKindAmazonWebServicesCloudTrail', 'DataConnectorKindAzureAdvancedThreatProtection', 'DataConnectorKindMicrosoftDefenderAdvancedThreatProtection'
+	Kind DataConnectorKind `json:"kind,omitempty"`
+}
+
 // DataConnectorStatus alert rule template data connector status
 type DataConnectorStatus struct {
 	// ConnectorID - the connector id
@@ -5026,7 +5145,7 @@ type DNSEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -5115,6 +5234,11 @@ func (de DNSEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for DNSEntity.
 func (de DNSEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for DNSEntity.
+func (de DNSEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -5227,6 +5351,7 @@ type BasicEntity interface {
 	AsSecurityAlert() (*SecurityAlert, bool)
 	AsSecurityGroupEntity() (*SecurityGroupEntity, bool)
 	AsURLEntity() (*URLEntity, bool)
+	AsIoTDeviceEntity() (*IoTDeviceEntity, bool)
 	AsEntity() (*Entity, bool)
 }
 
@@ -5239,7 +5364,7 @@ type Entity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -5311,6 +5436,10 @@ func unmarshalBasicEntity(body []byte) (BasicEntity, error) {
 		var ue URLEntity
 		err := json.Unmarshal(body, &ue)
 		return ue, err
+	case string(KindIoTDevice):
+		var itde IoTDeviceEntity
+		err := json.Unmarshal(body, &itde)
+		return itde, err
 	default:
 		var e Entity
 		err := json.Unmarshal(body, &e)
@@ -5421,6 +5550,11 @@ func (e Entity) AsURLEntity() (*URLEntity, bool) {
 	return nil, false
 }
 
+// AsIoTDeviceEntity is the BasicEntity implementation for Entity.
+func (e Entity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
 // AsEntity is the BasicEntity implementation for Entity.
 func (e Entity) AsEntity() (*Entity, bool) {
 	return &e, true
@@ -5495,7 +5629,7 @@ func (eer *EntityExpandResponseValue) UnmarshalJSON(body []byte) error {
 
 // EntityKind1 describes an entity with kind.
 type EntityKind1 struct {
-	// Kind - The kind of the entity. Possible values include: 'EntityKindAccount', 'EntityKindHost', 'EntityKindFile', 'EntityKindAzureResource', 'EntityKindCloudApplication', 'EntityKindDNSResolution', 'EntityKindFileHash', 'EntityKindIP', 'EntityKindMalware', 'EntityKindProcess', 'EntityKindRegistryKey', 'EntityKindRegistryValue', 'EntityKindSecurityGroup', 'EntityKindURL', 'EntityKindSecurityAlert', 'EntityKindBookmark'
+	// Kind - The kind of the entity. Possible values include: 'EntityKindAccount', 'EntityKindHost', 'EntityKindFile', 'EntityKindAzureResource', 'EntityKindCloudApplication', 'EntityKindDNSResolution', 'EntityKindFileHash', 'EntityKindIP', 'EntityKindMalware', 'EntityKindProcess', 'EntityKindRegistryKey', 'EntityKindRegistryValue', 'EntityKindSecurityGroup', 'EntityKindURL', 'EntityKindIoTDevice', 'EntityKindSecurityAlert', 'EntityKindBookmark'
 	Kind EntityKind `json:"kind,omitempty"`
 }
 
@@ -5919,7 +6053,7 @@ type EntityQueryProperties struct {
 	DataSources *[]string `json:"dataSources,omitempty"`
 	// DisplayName - The query display name
 	DisplayName *string `json:"displayName,omitempty"`
-	// InputEntityType - The type of the query's source entity. Possible values include: 'EntityTypeAccount', 'EntityTypeHost', 'EntityTypeFile', 'EntityTypeAzureResource', 'EntityTypeCloudApplication', 'EntityTypeDNS', 'EntityTypeFileHash', 'EntityTypeIP', 'EntityTypeMalware', 'EntityTypeProcess', 'EntityTypeRegistryKey', 'EntityTypeRegistryValue', 'EntityTypeSecurityGroup', 'EntityTypeURL', 'EntityTypeSecurityAlert', 'EntityTypeHuntingBookmark'
+	// InputEntityType - The type of the query's source entity. Possible values include: 'EntityTypeAccount', 'EntityTypeHost', 'EntityTypeFile', 'EntityTypeAzureResource', 'EntityTypeCloudApplication', 'EntityTypeDNS', 'EntityTypeFileHash', 'EntityTypeIP', 'EntityTypeMalware', 'EntityTypeProcess', 'EntityTypeRegistryKey', 'EntityTypeRegistryValue', 'EntityTypeSecurityGroup', 'EntityTypeURL', 'EntityTypeIoTDevice', 'EntityTypeSecurityAlert', 'EntityTypeHuntingBookmark'
 	InputEntityType EntityType `json:"inputEntityType,omitempty"`
 	// InputFields - List of the fields of the source entity that are required to run the query
 	InputFields *[]string `json:"inputFields,omitempty"`
@@ -5937,7 +6071,7 @@ type ExpansionResultAggregation struct {
 	Count *int32 `json:"count,omitempty"`
 	// DisplayName - The display name of the aggregation by type.
 	DisplayName *string `json:"displayName,omitempty"`
-	// EntityKind - The kind of the aggregated entity. Possible values include: 'EntityKindAccount', 'EntityKindHost', 'EntityKindFile', 'EntityKindAzureResource', 'EntityKindCloudApplication', 'EntityKindDNSResolution', 'EntityKindFileHash', 'EntityKindIP', 'EntityKindMalware', 'EntityKindProcess', 'EntityKindRegistryKey', 'EntityKindRegistryValue', 'EntityKindSecurityGroup', 'EntityKindURL', 'EntityKindSecurityAlert', 'EntityKindBookmark'
+	// EntityKind - The kind of the aggregated entity. Possible values include: 'EntityKindAccount', 'EntityKindHost', 'EntityKindFile', 'EntityKindAzureResource', 'EntityKindCloudApplication', 'EntityKindDNSResolution', 'EntityKindFileHash', 'EntityKindIP', 'EntityKindMalware', 'EntityKindProcess', 'EntityKindRegistryKey', 'EntityKindRegistryValue', 'EntityKindSecurityGroup', 'EntityKindURL', 'EntityKindIoTDevice', 'EntityKindSecurityAlert', 'EntityKindBookmark'
 	EntityKind EntityKind `json:"entityKind,omitempty"`
 }
 
@@ -5957,7 +6091,7 @@ type FileEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -6046,6 +6180,11 @@ func (fe FileEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for FileEntity.
 func (fe FileEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for FileEntity.
+func (fe FileEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -6151,7 +6290,7 @@ type FileHashEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -6240,6 +6379,11 @@ func (fhe FileHashEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for FileHashEntity.
 func (fhe FileHashEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -6625,6 +6769,20 @@ type GeoLocation struct {
 	State *string `json:"state,omitempty"`
 }
 
+// GroupingConfiguration grouping configuration property bag.
+type GroupingConfiguration struct {
+	// Enabled - Grouping enabled
+	Enabled *bool `json:"enabled,omitempty"`
+	// ReopenClosedIncident - Re-open closed matching incidents
+	ReopenClosedIncident *bool `json:"reopenClosedIncident,omitempty"`
+	// LookbackDuration - Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)
+	LookbackDuration *string `json:"lookbackDuration,omitempty"`
+	// EntitiesMatchingMethod - Grouping matching method. Possible values include: 'All', 'None', 'Custom'
+	EntitiesMatchingMethod EntitiesMatchingMethod `json:"entitiesMatchingMethod,omitempty"`
+	// GroupByEntities - A list of entity types to group by (when entitiesMatchingMethod is Custom)
+	GroupByEntities *[]GroupingEntityType `json:"groupByEntities,omitempty"`
+}
+
 // HostEntity represents a host entity.
 type HostEntity struct {
 	// HostEntityProperties - Host entity properties
@@ -6635,7 +6793,7 @@ type HostEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -6724,6 +6882,11 @@ func (he HostEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for HostEntity.
 func (he HostEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for HostEntity.
+func (he HostEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -6832,6 +6995,14 @@ func (hep HostEntityProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// IncidentConfiguration incident Configuration property bag.
+type IncidentConfiguration struct {
+	// CreateIncident - Create incidents from alerts triggered by this analytics rule
+	CreateIncident *bool `json:"createIncident,omitempty"`
+	// GroupingConfiguration - Set how the alerts that are triggered by this analytics rule, are grouped into incidents
+	GroupingConfiguration *GroupingConfiguration `json:"groupingConfiguration,omitempty"`
+}
+
 // IncidentInfo describes related incident information for the bookmark
 type IncidentInfo struct {
 	// IncidentID - Incident Id
@@ -6844,6 +7015,213 @@ type IncidentInfo struct {
 	RelationName *string `json:"relationName,omitempty"`
 }
 
+// IoTDeviceEntity represents an IoT device entity.
+type IoTDeviceEntity struct {
+	// IoTDeviceEntityProperties - IoTDevice entity properties
+	*IoTDeviceEntityProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Azure resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Azure resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Azure resource type
+	Type *string `json:"type,omitempty"`
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
+	Kind KindBasicEntity `json:"kind,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IoTDeviceEntity.
+func (itde IoTDeviceEntity) MarshalJSON() ([]byte, error) {
+	itde.Kind = KindIoTDevice
+	objectMap := make(map[string]interface{})
+	if itde.IoTDeviceEntityProperties != nil {
+		objectMap["properties"] = itde.IoTDeviceEntityProperties
+	}
+	if itde.Kind != "" {
+		objectMap["kind"] = itde.Kind
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAccountEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAzureResourceEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsAzureResourceEntity() (*AzureResourceEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsIPEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsSecurityAlert is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsSecurityAlert() (*SecurityAlert, bool) {
+	return nil, false
+}
+
+// AsSecurityGroupEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
+	return nil, false
+}
+
+// AsURLEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return &itde, true
+}
+
+// AsEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsEntity() (*Entity, bool) {
+	return nil, false
+}
+
+// AsBasicEntity is the BasicEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsBasicEntity() (BasicEntity, bool) {
+	return &itde, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for IoTDeviceEntity struct.
+func (itde *IoTDeviceEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var ioTDeviceEntityProperties IoTDeviceEntityProperties
+				err = json.Unmarshal(*v, &ioTDeviceEntityProperties)
+				if err != nil {
+					return err
+				}
+				itde.IoTDeviceEntityProperties = &ioTDeviceEntityProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				itde.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				itde.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				itde.Type = &typeVar
+			}
+		case "kind":
+			if v != nil {
+				var kind KindBasicEntity
+				err = json.Unmarshal(*v, &kind)
+				if err != nil {
+					return err
+				}
+				itde.Kind = kind
+			}
+		}
+	}
+
+	return nil
+}
+
+// IoTDeviceEntityProperties ioTDevice entity property bag.
+type IoTDeviceEntityProperties struct {
+	// DeviceID - READ-ONLY; The ID of the IoT Device in the IoT Hub
+	DeviceID *string `json:"deviceId,omitempty"`
+	// IotSecurityAgentID - READ-ONLY; The ID of the security agent running on the device
+	IotSecurityAgentID *uuid.UUID `json:"iotSecurityAgentId,omitempty"`
+	// DeviceType - READ-ONLY; The type of the device
+	DeviceType *string `json:"deviceType,omitempty"`
+	// Vendor - READ-ONLY; The vendor of the device
+	Vendor *string `json:"vendor,omitempty"`
+	// EdgeID - READ-ONLY; The ID of the edge device
+	EdgeID *string `json:"edgeId,omitempty"`
+	// IotHubEntityID - READ-ONLY; The AzureResource entity id of the IoT Hub
+	IotHubEntityID *string `json:"iotHubEntityId,omitempty"`
+	// HostEntityID - READ-ONLY; The Host entity id of this device
+	HostEntityID *string `json:"hostEntityId,omitempty"`
+	// ThreatIntelligence - READ-ONLY; A list of TI contexts attached to the IoTDevice entity.
+	ThreatIntelligence *[]ThreatIntelligence `json:"threatIntelligence,omitempty"`
+	// AdditionalData - READ-ONLY; A bag of custom fields that should be part of the entity and will be presented to the user.
+	AdditionalData map[string]interface{} `json:"additionalData"`
+	// FriendlyName - READ-ONLY; The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+	FriendlyName *string `json:"friendlyName,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IoTDeviceEntityProperties.
+func (itdep IoTDeviceEntityProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
+}
+
 // IPEntity represents an ip entity.
 type IPEntity struct {
 	// IPEntityProperties - Ip entity properties
@@ -6854,7 +7232,7 @@ type IPEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -6943,6 +7321,11 @@ func (ie IPEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for IPEntity.
 func (ie IPEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for IPEntity.
+func (ie IPEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -7049,7 +7432,7 @@ type MalwareEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -7138,6 +7521,11 @@ func (me MalwareEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for MalwareEntity.
 func (me MalwareEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -7231,6 +7619,12 @@ type MalwareEntityProperties struct {
 func (mep MalwareEntityProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	return json.Marshal(objectMap)
+}
+
+// MCASCheckRequirements MCAS (Microsoft Cloud App Security) requirements check properties.
+type MCASCheckRequirements struct {
+	// TenantID - The tenant id to connect to, and get the data from.
+	TenantID *string `json:"tenantId,omitempty"`
 }
 
 // MCASDataConnector represents MCAS (Microsoft Cloud App Security) data connector.
@@ -7403,6 +7797,13 @@ type MCASDataConnectorDataTypesDiscoveryLogs struct {
 type MCASDataConnectorProperties struct {
 	// DataTypes - The available data types for the connector.
 	DataTypes *MCASDataConnectorDataTypes `json:"dataTypes,omitempty"`
+	// TenantID - The tenant id to connect to, and get the data from.
+	TenantID *string `json:"tenantId,omitempty"`
+}
+
+// MDATPCheckRequirements MDATP (Microsoft Defender Advanced Threat Protection) requirements check
+// properties.
+type MDATPCheckRequirements struct {
 	// TenantID - The tenant id to connect to, and get the data from.
 	TenantID *string `json:"tenantId,omitempty"`
 }
@@ -8447,7 +8848,7 @@ type ProcessEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -8536,6 +8937,11 @@ func (peVar ProcessEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) 
 
 // AsURLEntity is the BasicEntity implementation for ProcessEntity.
 func (peVar ProcessEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -8654,7 +9060,7 @@ type RegistryKeyEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -8743,6 +9149,11 @@ func (rke RegistryKeyEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool
 
 // AsURLEntity is the BasicEntity implementation for RegistryKeyEntity.
 func (rke RegistryKeyEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -8844,7 +9255,7 @@ type RegistryValueEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -8933,6 +9344,11 @@ func (rve RegistryValueEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bo
 
 // AsURLEntity is the BasicEntity implementation for RegistryValueEntity.
 func (rve RegistryValueEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -9358,6 +9774,8 @@ type ScheduledAlertRuleProperties struct {
 	SuppressionEnabled *bool `json:"suppressionEnabled,omitempty"`
 	// Tactics - The tactics of the alert rule
 	Tactics *[]AttackTactic `json:"tactics,omitempty"`
+	// IncidentConfiguration - The settings of the incidents that created from alerts triggered by this analytics rule
+	IncidentConfiguration *IncidentConfiguration `json:"incidentConfiguration,omitempty"`
 	// Query - The query that creates alerts for this rule.
 	Query *string `json:"query,omitempty"`
 	// QueryFrequency - The frequency (in ISO 8601 duration format) for this alert rule to run.
@@ -9524,7 +9942,7 @@ type SecurityAlert struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -9613,6 +10031,11 @@ func (sa SecurityAlert) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 
 // AsURLEntity is the BasicEntity implementation for SecurityAlert.
 func (sa SecurityAlert) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for SecurityAlert.
+func (sa SecurityAlert) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -9763,7 +10186,7 @@ type SecurityGroupEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -9852,6 +10275,11 @@ func (sge SecurityGroupEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bo
 
 // AsURLEntity is the BasicEntity implementation for SecurityGroupEntity.
 func (sge SecurityGroupEntity) AsURLEntity() (*URLEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for SecurityGroupEntity.
+func (sge SecurityGroupEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
 	return nil, false
 }
 
@@ -10078,6 +10506,12 @@ type ThreatIntelligence struct {
 	ThreatName *string `json:"threatName,omitempty"`
 	// ThreatType - READ-ONLY; Threat type (e.g. "Botnet")
 	ThreatType *string `json:"threatType,omitempty"`
+}
+
+// TICheckRequirements TI (Threat Intelligence) requirements check properties.
+type TICheckRequirements struct {
+	// TenantID - The tenant id to connect to, and get the data from.
+	TenantID *string `json:"tenantId,omitempty"`
 }
 
 // TIDataConnector represents threat intelligence data connector.
@@ -10519,7 +10953,7 @@ type URLEntity struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL'
+	// Kind - Possible values include: 'KindEntity', 'KindAccount', 'KindAzureResource', 'KindCloudApplication', 'KindDNSResolution', 'KindFile', 'KindFileHash', 'KindHost', 'KindIP', 'KindMalware', 'KindProcess', 'KindRegistryKey', 'KindRegistryValue', 'KindSecurityAlert', 'KindSecurityGroup', 'KindURL', 'KindIoTDevice'
 	Kind KindBasicEntity `json:"kind,omitempty"`
 }
 
@@ -10609,6 +11043,11 @@ func (ue URLEntity) AsSecurityGroupEntity() (*SecurityGroupEntity, bool) {
 // AsURLEntity is the BasicEntity implementation for URLEntity.
 func (ue URLEntity) AsURLEntity() (*URLEntity, bool) {
 	return &ue, true
+}
+
+// AsIoTDeviceEntity is the BasicEntity implementation for URLEntity.
+func (ue URLEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
 }
 
 // AsEntity is the BasicEntity implementation for URLEntity.
