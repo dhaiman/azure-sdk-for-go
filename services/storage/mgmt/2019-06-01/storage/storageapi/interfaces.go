@@ -51,6 +51,7 @@ type AccountsClientAPI interface {
 	ListKeys(ctx context.Context, resourceGroupName string, accountName string, expand storage.ListKeyExpand) (result storage.AccountListKeysResult, err error)
 	ListServiceSAS(ctx context.Context, resourceGroupName string, accountName string, parameters storage.ServiceSasParameters) (result storage.ListServiceSasResponse, err error)
 	RegenerateKey(ctx context.Context, resourceGroupName string, accountName string, regenerateKey storage.AccountRegenerateKeyParameters) (result storage.AccountListKeysResult, err error)
+	RestoreBlobRanges(ctx context.Context, resourceGroupName string, accountName string, parameters storage.BlobRestoreParameters) (result storage.AccountsRestoreBlobRangesFuture, err error)
 	RevokeUserDelegationKeys(ctx context.Context, resourceGroupName string, accountName string) (result autorest.Response, err error)
 	Update(ctx context.Context, resourceGroupName string, accountName string, parameters storage.AccountUpdateParameters) (result storage.Account, err error)
 }
@@ -132,8 +133,9 @@ type FileSharesClientAPI interface {
 	Create(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare) (result storage.FileShare, err error)
 	Delete(ctx context.Context, resourceGroupName string, accountName string, shareName string) (result autorest.Response, err error)
 	Get(ctx context.Context, resourceGroupName string, accountName string, shareName string) (result storage.FileShare, err error)
-	List(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string) (result storage.FileShareItemsPage, err error)
-	ListComplete(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string) (result storage.FileShareItemsIterator, err error)
+	List(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string, expand storage.ListSharesExpand) (result storage.FileShareItemsPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string, expand ListSharesExpand) (result storage.FileShareItemsIterator, err error)
+	Restore(ctx context.Context, resourceGroupName string, accountName string, shareName string, deletedShare storage.DeletedShare) (result autorest.Response, err error)
 	Update(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare) (result storage.FileShare, err error)
 }
 
