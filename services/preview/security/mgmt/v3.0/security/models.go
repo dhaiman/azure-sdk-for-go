@@ -9930,7 +9930,7 @@ func (tr TrackedResource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UpdateIotSecuritySolutionData ...
+// UpdateIotSecuritySolutionData security Solution data
 type UpdateIotSecuritySolutionData struct {
 	// UpdateIoTSecuritySolutionProperties - Security Solution data
 	*UpdateIoTSecuritySolutionProperties `json:"properties,omitempty"`
