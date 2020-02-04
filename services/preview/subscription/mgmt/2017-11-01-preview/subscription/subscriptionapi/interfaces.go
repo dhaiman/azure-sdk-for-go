@@ -18,26 +18,25 @@ package subscriptionapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/subscription/mgmt/2017-11-01-preview/subscription"
-	"github.com/satori/go.uuid"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/subscription/mgmt/2017-11-01-preview/subscription"
+    "github.com/satori/go.uuid"
 )
 
-// DefinitionsOperationMetadataClientAPI contains the set of methods on the DefinitionsOperationMetadataClient type.
-type DefinitionsOperationMetadataClientAPI interface {
-	List(ctx context.Context) (result subscription.OperationListResultPage, err error)
-	ListComplete(ctx context.Context) (result subscription.OperationListResultIterator, err error)
-}
+        // DefinitionsOperationMetadataClientAPI contains the set of methods on the DefinitionsOperationMetadataClient type.
+        type DefinitionsOperationMetadataClientAPI interface {
+            List(ctx context.Context) (result subscription.OperationListResultPage, err error)
+                ListComplete(ctx context.Context) (result subscription.OperationListResultIterator, err error)
+        }
 
-var _ DefinitionsOperationMetadataClientAPI = (*subscription.DefinitionsOperationMetadataClient)(nil)
+        var _ DefinitionsOperationMetadataClientAPI = (*subscription.DefinitionsOperationMetadataClient)(nil)
+        // DefinitionsClientAPI contains the set of methods on the DefinitionsClient type.
+        type DefinitionsClientAPI interface {
+            Create(ctx context.Context, subscriptionDefinitionName string, body subscription.Definition) (result subscription.DefinitionsCreateFuture, err error)
+            Get(ctx context.Context, subscriptionDefinitionName string) (result subscription.Definition, err error)
+            GetOperationStatus(ctx context.Context, operationID uuid.UUID) (result subscription.Definition, err error)
+            List(ctx context.Context) (result subscription.DefinitionListPage, err error)
+                ListComplete(ctx context.Context) (result subscription.DefinitionListIterator, err error)
+        }
 
-// DefinitionsClientAPI contains the set of methods on the DefinitionsClient type.
-type DefinitionsClientAPI interface {
-	Create(ctx context.Context, subscriptionDefinitionName string, body subscription.Definition) (result subscription.DefinitionsCreateFuture, err error)
-	Get(ctx context.Context, subscriptionDefinitionName string) (result subscription.Definition, err error)
-	GetOperationStatus(ctx context.Context, operationID uuid.UUID) (result subscription.Definition, err error)
-	List(ctx context.Context) (result subscription.DefinitionListPage, err error)
-	ListComplete(ctx context.Context) (result subscription.DefinitionListIterator, err error)
-}
-
-var _ DefinitionsClientAPI = (*subscription.DefinitionsClient)(nil)
+        var _ DefinitionsClientAPI = (*subscription.DefinitionsClient)(nil)
