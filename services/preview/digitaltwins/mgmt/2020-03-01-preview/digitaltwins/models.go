@@ -71,6 +71,21 @@ func PossibleEndpointTypeValues() []EndpointType {
 	return []EndpointType{EndpointTypeDigitalTwinsEndpointResourceProperties, EndpointTypeEventGrid, EndpointTypeEventHub, EndpointTypeServiceBus}
 }
 
+// EventGridType enumerates the values for event grid type.
+type EventGridType string
+
+const (
+	// Domain ...
+	Domain EventGridType = "Domain"
+	// Topic ...
+	Topic EventGridType = "Topic"
+)
+
+// PossibleEventGridTypeValues returns an array of possible values for the EventGridType const type.
+func PossibleEventGridTypeValues() []EventGridType {
+	return []EventGridType{Domain, Topic}
+}
+
 // IntegrationResourceState enumerates the values for integration resource state.
 type IntegrationResourceState string
 
@@ -862,8 +877,10 @@ type ErrorResponse struct {
 
 // EventGrid properties related to eventgrid.
 type EventGrid struct {
-	// TopicEndpoint - EventGrid Topic Endpoint
-	TopicEndpoint *string `json:"TopicEndpoint,omitempty"`
+	// Endpoint - EventGrid Endpoint
+	Endpoint *string `json:"endpoint,omitempty"`
+	// EventGridType - Type of EventGrid endpoint. Possible values include: 'Domain', 'Topic'
+	EventGridType EventGridType `json:"eventGridType,omitempty"`
 	// AccessKey1 - EventGrid secondary accesskey. Will be obfuscated during read
 	AccessKey1 *string `json:"accessKey1,omitempty"`
 	// AccessKey2 - EventGrid secondary accesskey. Will be obfuscated during read
@@ -882,8 +899,11 @@ type EventGrid struct {
 func (eg EventGrid) MarshalJSON() ([]byte, error) {
 	eg.EndpointType = EndpointTypeEventGrid
 	objectMap := make(map[string]interface{})
-	if eg.TopicEndpoint != nil {
-		objectMap["TopicEndpoint"] = eg.TopicEndpoint
+	if eg.Endpoint != nil {
+		objectMap["endpoint"] = eg.Endpoint
+	}
+	if eg.EventGridType != "" {
+		objectMap["eventGridType"] = eg.EventGridType
 	}
 	if eg.AccessKey1 != nil {
 		objectMap["accessKey1"] = eg.AccessKey1
