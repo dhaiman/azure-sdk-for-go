@@ -2872,8 +2872,10 @@ type ManagementPolicyDefinition struct {
 type ManagementPolicyFilter struct {
 	// PrefixMatch - An array of strings for prefixes to be match.
 	PrefixMatch *[]string `json:"prefixMatch,omitempty"`
-	// BlobTypes - An array of predefined enum values. Only blockBlob is supported.
+	// BlobTypes - An array of predefined enum values.
 	BlobTypes *[]string `json:"blobTypes,omitempty"`
+	// BlobIndexMatch - An array of tag based filters, there can be at most 10 tag filters
+	BlobIndexMatch *[]TagFilter `json:"blobIndexMatch,omitempty"`
 }
 
 // ManagementPolicyProperties the Storage Account ManagementPolicy properties.
@@ -3375,6 +3377,16 @@ type SkuListResult struct {
 	autorest.Response `json:"-"`
 	// Value - READ-ONLY; Get the list result of storage SKUs and their properties.
 	Value *[]SkuInformation `json:"value,omitempty"`
+}
+
+// TagFilter tag based filtering for blob objects
+type TagFilter struct {
+	// Name - This is the filter tag name, it can have 1 - 128 characters
+	Name *string `json:"name,omitempty"`
+	// Op - This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported
+	Op *string `json:"op,omitempty"`
+	// Value - This is the filter tag value field used for tag based filtering, it can have 1 - 256 characters
+	Value *string `json:"value,omitempty"`
 }
 
 // TagProperty a tag of the LegalHold of a blob container.
