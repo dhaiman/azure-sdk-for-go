@@ -25,28 +25,28 @@ import (
     "github.com/Azure/go-autorest/tracing"
 )
 
-// SecurityPINsClient is the open API 2.0 Specs for Azure RecoveryServices Backup service
-type SecurityPINsClient struct {
+// CrrOperationStatusClient is the open API 2.0 Specs for Azure RecoveryServices Backup service
+type CrrOperationStatusClient struct {
     BaseClient
 }
-// NewSecurityPINsClient creates an instance of the SecurityPINsClient client.
-func NewSecurityPINsClient(subscriptionID string) SecurityPINsClient {
-    return NewSecurityPINsClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewCrrOperationStatusClient creates an instance of the CrrOperationStatusClient client.
+func NewCrrOperationStatusClient(subscriptionID string) CrrOperationStatusClient {
+    return NewCrrOperationStatusClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewSecurityPINsClientWithBaseURI creates an instance of the SecurityPINsClient client using a custom endpoint.  Use
-// this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-    func NewSecurityPINsClientWithBaseURI(baseURI string, subscriptionID string) SecurityPINsClient {
-        return SecurityPINsClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewCrrOperationStatusClientWithBaseURI creates an instance of the CrrOperationStatusClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
+    func NewCrrOperationStatusClientWithBaseURI(baseURI string, subscriptionID string) CrrOperationStatusClient {
+        return CrrOperationStatusClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// Get get the security PIN.
+// Get sends the get request.
     // Parameters:
-        // vaultName - the name of the recovery services vault.
-        // resourceGroupName - the name of the resource group where the recovery services vault is present.
-func (client SecurityPINsClient) Get(ctx context.Context, vaultName string, resourceGroupName string) (result TokenInformation, err error) {
+        // azureRegion - azure region to hit Api
+func (client CrrOperationStatusClient) Get(ctx context.Context, azureRegion string, operationID string) (result OperationStatus, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/SecurityPINsClient.Get")
+        ctx = tracing.StartSpan(ctx, fqdn + "/CrrOperationStatusClient.Get")
         defer func() {
             sc := -1
             if result.Response.Response != nil {
@@ -55,58 +55,58 @@ func (client SecurityPINsClient) Get(ctx context.Context, vaultName string, reso
             tracing.EndSpan(ctx, sc, err)
         }()
     }
-        req, err := client.GetPreparer(ctx, vaultName, resourceGroupName)
+        req, err := client.GetPreparer(ctx, azureRegion, operationID)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "backup.SecurityPINsClient", "Get", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "backup.CrrOperationStatusClient", "Get", nil , "Failure preparing request")
     return
     }
 
             resp, err := client.GetSender(req)
             if err != nil {
             result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "backup.SecurityPINsClient", "Get", resp, "Failure sending request")
+            err = autorest.NewErrorWithError(err, "backup.CrrOperationStatusClient", "Get", resp, "Failure sending request")
             return
             }
 
             result, err = client.GetResponder(resp)
             if err != nil {
-            err = autorest.NewErrorWithError(err, "backup.SecurityPINsClient", "Get", resp, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "backup.CrrOperationStatusClient", "Get", resp, "Failure responding to request")
             }
 
     return
     }
 
     // GetPreparer prepares the Get request.
-    func (client SecurityPINsClient) GetPreparer(ctx context.Context, vaultName string, resourceGroupName string) (*http.Request, error) {
+    func (client CrrOperationStatusClient) GetPreparer(ctx context.Context, azureRegion string, operationID string) (*http.Request, error) {
             pathParameters := map[string]interface{} {
-            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "azureRegion": autorest.Encode("path",azureRegion),
+            "operationId": autorest.Encode("path",operationID),
             "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-            "vaultName": autorest.Encode("path",vaultName),
             }
 
-                        const APIVersion = "2016-12-01"
+                        const APIVersion = "2018-12-20"
         queryParameters := map[string]interface{} {
         "api-version": APIVersion,
         }
 
         preparer := autorest.CreatePreparer(
-    autorest.AsPost(),
+    autorest.AsGet(),
     autorest.WithBaseURL(client.BaseURI),
-    autorest.WithPathParameters("/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupSecurityPIN",pathParameters),
+    autorest.WithPathParameters("/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupCrrOperationsStatus/{operationId}",pathParameters),
     autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
     // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client SecurityPINsClient) GetSender(req *http.Request) (*http.Response, error) {
+    func (client CrrOperationStatusClient) GetSender(req *http.Request) (*http.Response, error) {
         sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
             return autorest.SendWithSender(client, req, sd...)
             }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client SecurityPINsClient) GetResponder(resp *http.Response) (result TokenInformation, err error) {
+func (client CrrOperationStatusClient) GetResponder(resp *http.Response) (result OperationStatus, err error) {
     err = autorest.Respond(
     resp,
     client.ByInspecting(),
