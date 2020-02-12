@@ -34,10 +34,6 @@ const fqdn = "github.com/Azure/azure-sdk-for-go/services/iotcentral/mgmt/2018-09
 type AppSku string
 
 const (
-	// F1 ...
-	F1 AppSku = "F1"
-	// S1 ...
-	S1 AppSku = "S1"
 	// ST0 ...
 	ST0 AppSku = "ST0"
 	// ST1 ...
@@ -48,7 +44,7 @@ const (
 
 // PossibleAppSkuValues returns an array of possible values for the AppSku const type.
 func PossibleAppSkuValues() []AppSku {
-	return []AppSku{F1, S1, ST0, ST1, ST2}
+	return []AppSku{ST0, ST1, ST2}
 }
 
 // App the IoT Central application.
@@ -442,7 +438,7 @@ func (future *AppsDeleteFuture) Result(client AppsClient) (ar autorest.Response,
 
 // AppSkuInfo information about the SKU of the IoT Central application.
 type AppSkuInfo struct {
-	// Name - The name of the SKU. Possible values include: 'F1', 'S1', 'ST0', 'ST1', 'ST2'
+	// Name - The name of the SKU. Possible values include: 'ST0', 'ST1', 'ST2'
 	Name AppSku `json:"name,omitempty"`
 }
 
