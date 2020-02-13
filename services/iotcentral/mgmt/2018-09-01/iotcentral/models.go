@@ -636,23 +636,23 @@ func NewAppTemplatesResultPage(getNextPage func(context.Context, AppTemplatesRes
 	return AppTemplatesResultPage{fn: getNextPage}
 }
 
-// ErrorDetails error details.
-type ErrorDetails struct {
+// CloudError error details.
+type CloudError struct {
 	// ErrorResponseBody - Error response body.
 	*ErrorResponseBody `json:"error,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ErrorDetails.
-func (ed ErrorDetails) MarshalJSON() ([]byte, error) {
+// MarshalJSON is the custom marshaler for CloudError.
+func (ce CloudError) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if ed.ErrorResponseBody != nil {
-		objectMap["error"] = ed.ErrorResponseBody
+	if ce.ErrorResponseBody != nil {
+		objectMap["error"] = ce.ErrorResponseBody
 	}
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON is the custom unmarshaler for ErrorDetails struct.
-func (ed *ErrorDetails) UnmarshalJSON(body []byte) error {
+// UnmarshalJSON is the custom unmarshaler for CloudError struct.
+func (ce *CloudError) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
 	err := json.Unmarshal(body, &m)
 	if err != nil {
@@ -667,7 +667,7 @@ func (ed *ErrorDetails) UnmarshalJSON(body []byte) error {
 				if err != nil {
 					return err
 				}
-				ed.ErrorResponseBody = &errorResponseBody
+				ce.ErrorResponseBody = &errorResponseBody
 			}
 		}
 	}
