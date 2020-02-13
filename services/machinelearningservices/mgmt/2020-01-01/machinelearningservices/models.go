@@ -3613,6 +3613,12 @@ type WorkspaceProperties struct {
 	Encryption *EncryptionProperty `json:"encryption,omitempty"`
 	// HbiWorkspace - The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service
 	HbiWorkspace *bool `json:"hbiWorkspace,omitempty"`
+	// ServiceProvisionedResourceGroup - READ-ONLY; The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace
+	ServiceProvisionedResourceGroup *string `json:"serviceProvisionedResourceGroup,omitempty"`
+	// PrivateLinkCount - READ-ONLY; Count of private connections in the workspace
+	PrivateLinkCount *int32 `json:"privateLinkCount,omitempty"`
+	// ImageBuildCompute - The compute name for image build
+	ImageBuildCompute *string `json:"imageBuildCompute,omitempty"`
 }
 
 // WorkspacePropertiesUpdateParameters the parameters for updating the properties of a machine learning
