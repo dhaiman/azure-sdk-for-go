@@ -44,13 +44,13 @@ func NewDeploymentsClientWithBaseURI(baseURI string, subscriptionID string) Depl
 
 // CreateOrUpdate create a new Deployment or update an exiting Deployment.
 // Parameters:
+// deploymentResource - parameters for the create or update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // deploymentName - the name of the Deployment resource.
-// deploymentResource - parameters for the create or update operation
-func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (result DeploymentsCreateOrUpdateFuture, err error) {
+func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (result DeploymentsCreateOrUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DeploymentsClient.CreateOrUpdate")
 		defer func() {
@@ -82,7 +82,7 @@ func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGrou
 		return result, validation.NewError("appplatform.DeploymentsClient", "CreateOrUpdate", err.Error())
 	}
 
-	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serviceName, appName, deploymentName, deploymentResource)
+	req, err := client.CreateOrUpdatePreparer(ctx, deploymentResource, resourceGroupName, serviceName, appName, deploymentName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "CreateOrUpdate", nil, "Failure preparing request")
 		return
@@ -98,7 +98,7 @@ func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGrou
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client DeploymentsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (*http.Request, error) {
+func (client DeploymentsClient) CreateOrUpdatePreparer(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"deploymentName":    autorest.Encode("path", deploymentName),
@@ -125,9 +125,8 @@ func (client DeploymentsClient) CreateOrUpdatePreparer(ctx context.Context, reso
 // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) CreateOrUpdateSender(req *http.Request) (future DeploymentsCreateOrUpdateFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
 	if err != nil {
 		return
 	}
@@ -213,8 +212,7 @@ func (client DeploymentsClient) DeletePreparer(ctx context.Context, resourceGrou
 // DeleteSender sends the Delete request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) DeleteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // DeleteResponder handles the response to the Delete request. The method always
@@ -294,8 +292,7 @@ func (client DeploymentsClient) GetPreparer(ctx context.Context, resourceGroupNa
 // GetSender sends the Get request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) GetSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // GetResponder handles the response to the Get request. The method always
@@ -376,8 +373,7 @@ func (client DeploymentsClient) GetLogFileURLPreparer(ctx context.Context, resou
 // GetLogFileURLSender sends the GetLogFileURL request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) GetLogFileURLSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // GetLogFileURLResponder handles the response to the GetLogFileURL request. The method always
@@ -461,8 +457,7 @@ func (client DeploymentsClient) ListPreparer(ctx context.Context, resourceGroupN
 // ListSender sends the List request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) ListSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // ListResponder handles the response to the List request. The method always
@@ -581,8 +576,7 @@ func (client DeploymentsClient) ListClusterAllDeploymentsPreparer(ctx context.Co
 // ListClusterAllDeploymentsSender sends the ListClusterAllDeployments request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) ListClusterAllDeploymentsSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // ListClusterAllDeploymentsResponder handles the response to the ListClusterAllDeployments request. The method always
@@ -694,9 +688,8 @@ func (client DeploymentsClient) RestartPreparer(ctx context.Context, resourceGro
 // RestartSender sends the Restart request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) RestartSender(req *http.Request) (future DeploymentsRestartFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
 	if err != nil {
 		return
 	}
@@ -775,9 +768,8 @@ func (client DeploymentsClient) StartPreparer(ctx context.Context, resourceGroup
 // StartSender sends the Start request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) StartSender(req *http.Request) (future DeploymentsStartFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
 	if err != nil {
 		return
 	}
@@ -856,9 +848,8 @@ func (client DeploymentsClient) StopPreparer(ctx context.Context, resourceGroupN
 // StopSender sends the Stop request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) StopSender(req *http.Request) (future DeploymentsStopFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
 	if err != nil {
 		return
 	}
@@ -880,13 +871,13 @@ func (client DeploymentsClient) StopResponder(resp *http.Response) (result autor
 
 // Update operation to update an exiting Deployment.
 // Parameters:
+// deploymentResource - parameters for the update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // deploymentName - the name of the Deployment resource.
-// deploymentResource - parameters for the update operation
-func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (result DeploymentsUpdateFuture, err error) {
+func (client DeploymentsClient) Update(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (result DeploymentsUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DeploymentsClient.Update")
 		defer func() {
@@ -897,7 +888,7 @@ func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName st
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.UpdatePreparer(ctx, resourceGroupName, serviceName, appName, deploymentName, deploymentResource)
+	req, err := client.UpdatePreparer(ctx, deploymentResource, resourceGroupName, serviceName, appName, deploymentName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "Update", nil, "Failure preparing request")
 		return
@@ -913,7 +904,7 @@ func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName st
 }
 
 // UpdatePreparer prepares the Update request.
-func (client DeploymentsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (*http.Request, error) {
+func (client DeploymentsClient) UpdatePreparer(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"deploymentName":    autorest.Encode("path", deploymentName),
@@ -940,9 +931,8 @@ func (client DeploymentsClient) UpdatePreparer(ctx context.Context, resourceGrou
 // UpdateSender sends the Update request. The method will close the
 // http.Response Body if it receives an error.
 func (client DeploymentsClient) UpdateSender(req *http.Request) (future DeploymentsUpdateFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
 	if err != nil {
 		return
 	}

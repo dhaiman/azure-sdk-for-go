@@ -37,6 +37,8 @@ type AppResourceProvisioningState string
 const (
 	// Creating ...
 	Creating AppResourceProvisioningState = "Creating"
+	// Deleting ...
+	Deleting AppResourceProvisioningState = "Deleting"
 	// Failed ...
 	Failed AppResourceProvisioningState = "Failed"
 	// Succeeded ...
@@ -47,7 +49,7 @@ const (
 
 // PossibleAppResourceProvisioningStateValues returns an array of possible values for the AppResourceProvisioningState const type.
 func PossibleAppResourceProvisioningStateValues() []AppResourceProvisioningState {
-	return []AppResourceProvisioningState{Creating, Failed, Succeeded, Updating}
+	return []AppResourceProvisioningState{Creating, Deleting, Failed, Succeeded, Updating}
 }
 
 // ConfigServerState enumerates the values for config server state.
@@ -77,6 +79,8 @@ type DeploymentResourceProvisioningState string
 const (
 	// DeploymentResourceProvisioningStateCreating ...
 	DeploymentResourceProvisioningStateCreating DeploymentResourceProvisioningState = "Creating"
+	// DeploymentResourceProvisioningStateDeleting ...
+	DeploymentResourceProvisioningStateDeleting DeploymentResourceProvisioningState = "Deleting"
 	// DeploymentResourceProvisioningStateFailed ...
 	DeploymentResourceProvisioningStateFailed DeploymentResourceProvisioningState = "Failed"
 	// DeploymentResourceProvisioningStateSucceeded ...
@@ -87,7 +91,7 @@ const (
 
 // PossibleDeploymentResourceProvisioningStateValues returns an array of possible values for the DeploymentResourceProvisioningState const type.
 func PossibleDeploymentResourceProvisioningStateValues() []DeploymentResourceProvisioningState {
-	return []DeploymentResourceProvisioningState{DeploymentResourceProvisioningStateCreating, DeploymentResourceProvisioningStateFailed, DeploymentResourceProvisioningStateSucceeded, DeploymentResourceProvisioningStateUpdating}
+	return []DeploymentResourceProvisioningState{DeploymentResourceProvisioningStateCreating, DeploymentResourceProvisioningStateDeleting, DeploymentResourceProvisioningStateFailed, DeploymentResourceProvisioningStateSucceeded, DeploymentResourceProvisioningStateUpdating}
 }
 
 // DeploymentResourceStatus enumerates the values for deployment resource status.
@@ -100,6 +104,8 @@ const (
 	DeploymentResourceStatusCompiling DeploymentResourceStatus = "Compiling"
 	// DeploymentResourceStatusFailed ...
 	DeploymentResourceStatusFailed DeploymentResourceStatus = "Failed"
+	// DeploymentResourceStatusProcessing ...
+	DeploymentResourceStatusProcessing DeploymentResourceStatus = "Processing"
 	// DeploymentResourceStatusRunning ...
 	DeploymentResourceStatusRunning DeploymentResourceStatus = "Running"
 	// DeploymentResourceStatusStopped ...
@@ -112,7 +118,7 @@ const (
 
 // PossibleDeploymentResourceStatusValues returns an array of possible values for the DeploymentResourceStatus const type.
 func PossibleDeploymentResourceStatusValues() []DeploymentResourceStatus {
-	return []DeploymentResourceStatus{DeploymentResourceStatusAllocating, DeploymentResourceStatusCompiling, DeploymentResourceStatusFailed, DeploymentResourceStatusRunning, DeploymentResourceStatusStopped, DeploymentResourceStatusUnknown, DeploymentResourceStatusUpgrading}
+	return []DeploymentResourceStatus{DeploymentResourceStatusAllocating, DeploymentResourceStatusCompiling, DeploymentResourceStatusFailed, DeploymentResourceStatusProcessing, DeploymentResourceStatusRunning, DeploymentResourceStatusStopped, DeploymentResourceStatusUnknown, DeploymentResourceStatusUpgrading}
 }
 
 // ProvisioningState enumerates the values for provisioning state.
@@ -374,7 +380,7 @@ type AppResourceProperties struct {
 	Public *bool `json:"public,omitempty"`
 	// URL - READ-ONLY; URL of the App
 	URL *string `json:"url,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating'
+	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating', 'Deleting'
 	ProvisioningState AppResourceProvisioningState `json:"provisioningState,omitempty"`
 	// ActiveDeploymentName - Name of the active deployment of the App
 	ActiveDeploymentName *string `json:"activeDeploymentName,omitempty"`
@@ -792,6 +798,68 @@ func (brp BindingResourceProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// CertificateCreateOrUpdateAsyncFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type CertificateCreateOrUpdateAsyncFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CertificateCreateOrUpdateAsyncFuture) Result(client CertificateClient) (cr CertificateResource, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.CertificateCreateOrUpdateAsyncFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("appplatform.CertificateCreateOrUpdateAsyncFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if cr.Response.Response, err = future.GetResult(sender); err == nil && cr.Response.Response.StatusCode != http.StatusNoContent {
+		cr, err = client.CreateOrUpdateAsyncResponder(cr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "appplatform.CertificateCreateOrUpdateAsyncFuture", "Result", cr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// CertificateProperties certificate resource payload.
+type CertificateProperties struct {
+	// KeyvaultResourceID - The resource id of user keyvault.
+	KeyvaultResourceID *string `json:"keyvaultResourceId,omitempty"`
+	// KeyvaultCertificateName - The certificate name of user keyvault.
+	KeyvaultCertificateName *string `json:"keyvaultCertificateName,omitempty"`
+	// VaultURI - The vault uri of user key vault.
+	VaultURI *string `json:"vaultUri,omitempty"`
+}
+
+// CertificateResource certificate resource payload.
+type CertificateResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the certificate resource payload.
+	Properties *CertificateProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CertificateResourceCollection collection compose of certificate resources list and a possible link for
+// next page.
+type CertificateResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The certificate resources list.
+	Resources *[]CertificateResourceCollection `json:"resources,omitempty"`
+	// NextLink - The link to next page of certificate list.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
 // CloudError an error response from the service.
 type CloudError struct {
 	Error *CloudErrorBody `json:"error,omitempty"`
@@ -861,6 +929,66 @@ type ConfigServerProperties struct {
 type ConfigServerSettings struct {
 	// GitProperty - Property of git environment.
 	GitProperty *ConfigServerGitProperty `json:"gitProperty,omitempty"`
+}
+
+// CustomDomainProperties custom domain of app resource payload.
+type CustomDomainProperties struct {
+	// Name - The name of custom domain.
+	Name *string `json:"name,omitempty"`
+	// Thumbprint - The thumbprint of bound ceritifcate.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+}
+
+// CustomDomainResource custom domain resource payload.
+type CustomDomainResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the custom domain resource.
+	Properties *CustomDomainProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CustomDomainResourceCollection collection compose of a custom domain resources list and a possible link
+// for next page.
+type CustomDomainResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The custom domain resources list.
+	Resources *[]CustomDomainResource `json:"resources,omitempty"`
+	// NextLink - The link to next page of custom domain list.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// CustomDomainsCreateOrUpdateAsyncFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type CustomDomainsCreateOrUpdateAsyncFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CustomDomainsCreateOrUpdateAsyncFuture) Result(client CustomDomainsClient) (cdr CustomDomainResource, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.CustomDomainsCreateOrUpdateAsyncFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("appplatform.CustomDomainsCreateOrUpdateAsyncFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if cdr.Response.Response, err = future.GetResult(sender); err == nil && cdr.Response.Response.StatusCode != http.StatusNoContent {
+		cdr, err = client.CreateOrUpdateAsyncResponder(cdr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "appplatform.CustomDomainsCreateOrUpdateAsyncFuture", "Result", cdr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // DeploymentInstance deployment instance payload
@@ -1042,11 +1170,11 @@ type DeploymentResourceProperties struct {
 	Source *UserSourceInfo `json:"source,omitempty"`
 	// AppName - READ-ONLY; App name of the deployment
 	AppName *string `json:"appName,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed'
+	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed', 'DeploymentResourceProvisioningStateDeleting'
 	ProvisioningState DeploymentResourceProvisioningState `json:"provisioningState,omitempty"`
 	// DeploymentSettings - Deployment settings of the Deployment
 	DeploymentSettings *DeploymentSettings `json:"deploymentSettings,omitempty"`
-	// Status - READ-ONLY; Status of the Deployment. Possible values include: 'DeploymentResourceStatusUnknown', 'DeploymentResourceStatusStopped', 'DeploymentResourceStatusRunning', 'DeploymentResourceStatusFailed', 'DeploymentResourceStatusAllocating', 'DeploymentResourceStatusUpgrading', 'DeploymentResourceStatusCompiling'
+	// Status - READ-ONLY; Status of the Deployment. Possible values include: 'DeploymentResourceStatusUnknown', 'DeploymentResourceStatusStopped', 'DeploymentResourceStatusRunning', 'DeploymentResourceStatusFailed', 'DeploymentResourceStatusAllocating', 'DeploymentResourceStatusUpgrading', 'DeploymentResourceStatusCompiling', 'DeploymentResourceStatusProcessing'
 	Status DeploymentResourceStatus `json:"status,omitempty"`
 	// Active - READ-ONLY; Indicates whether the Deployment is active
 	Active *bool `json:"active,omitempty"`
@@ -1280,6 +1408,8 @@ type MetricDimension struct {
 	Name *string `json:"name,omitempty"`
 	// DisplayName - Localized friendly display name of the dimension
 	DisplayName *string `json:"displayName,omitempty"`
+	// ToBeExportedForShoebox - Whether this dimension should be included for the Shoebox export scenario
+	ToBeExportedForShoebox *bool `json:"toBeExportedForShoebox,omitempty"`
 }
 
 // MetricSpecification specifications of the Metrics for Azure Monitoring
@@ -1394,6 +1524,21 @@ type Resource struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// ResourceTypeSku supported Skus of Azure Spring Cloud resources
+type ResourceTypeSku struct {
+	// ResourceType - Resource type
+	ResourceType *string `json:"resourceType,omitempty"`
+	// Skus - Supported Skus
+	Skus *[]SkuSetting `json:"skus,omitempty"`
+}
+
+// ResourceTypeSkuCollection collection of supported Skus of Azure Spring Cloud resources
+type ResourceTypeSkuCollection struct {
+	autorest.Response `json:"-"`
+	// Value - Collection of supported Skus
+	Value *[]ResourceTypeSku `json:"value,omitempty"`
+}
+
 // ResourceUploadDefinition resource upload definition payload
 type ResourceUploadDefinition struct {
 	autorest.Response `json:"-"`
@@ -1408,6 +1553,8 @@ type ServiceResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the Service resource
 	Properties *ClusterResourceProperties `json:"properties,omitempty"`
+	// Sku - Sku of the Service resource
+	Sku *Sku `json:"sku,omitempty"`
 	// Location - The GEO location of the resource.
 	Location *string `json:"location,omitempty"`
 	// Tags - Tags of the service which is a list of key value pairs that describe the resource.
@@ -1425,6 +1572,9 @@ func (sr ServiceResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if sr.Properties != nil {
 		objectMap["properties"] = sr.Properties
+	}
+	if sr.Sku != nil {
+		objectMap["sku"] = sr.Sku
 	}
 	if sr.Location != nil {
 		objectMap["location"] = sr.Location
@@ -1669,6 +1819,26 @@ func (future *ServicesUpdateFuture) Result(client ServicesClient) (sr ServiceRes
 		}
 	}
 	return
+}
+
+// Sku sku of Azure Spring Cloud
+type Sku struct {
+	// Name - READ-ONLY; Name of the Sku
+	Name *string `json:"name,omitempty"`
+	// Tier - READ-ONLY; Tier of the Sku
+	Tier *string `json:"tier,omitempty"`
+}
+
+// SkuSetting supported Sku settings of Azure Spring Cloud
+type SkuSetting struct {
+	// Name - Name of the Sku
+	Name *string `json:"name,omitempty"`
+	// Tier - Tier of the Sku
+	Tier *string `json:"tier,omitempty"`
+	// Locations - Locations of the Sku
+	Locations *[]string `json:"locations,omitempty"`
+	// RequiredFeatures - Required features of the Sku
+	RequiredFeatures *[]string `json:"requiredFeatures,omitempty"`
 }
 
 // TemporaryDisk temporary disk payload

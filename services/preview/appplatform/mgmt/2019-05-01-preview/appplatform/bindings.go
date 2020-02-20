@@ -43,13 +43,13 @@ func NewBindingsClientWithBaseURI(baseURI string, subscriptionID string) Binding
 
 // CreateOrUpdate create a new Binding or update an exiting Binding.
 // Parameters:
+// bindingResource - parameters for the create or update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // bindingName - the name of the Binding resource.
-// bindingResource - parameters for the create or update operation
-func (client BindingsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource BindingResource) (result BindingResource, err error) {
+func (client BindingsClient) CreateOrUpdate(ctx context.Context, bindingResource BindingResource, resourceGroupName string, serviceName string, appName string, bindingName string) (result BindingResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/BindingsClient.CreateOrUpdate")
 		defer func() {
@@ -60,7 +60,7 @@ func (client BindingsClient) CreateOrUpdate(ctx context.Context, resourceGroupNa
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serviceName, appName, bindingName, bindingResource)
+	req, err := client.CreateOrUpdatePreparer(ctx, bindingResource, resourceGroupName, serviceName, appName, bindingName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.BindingsClient", "CreateOrUpdate", nil, "Failure preparing request")
 		return
@@ -82,7 +82,7 @@ func (client BindingsClient) CreateOrUpdate(ctx context.Context, resourceGroupNa
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client BindingsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource BindingResource) (*http.Request, error) {
+func (client BindingsClient) CreateOrUpdatePreparer(ctx context.Context, bindingResource BindingResource, resourceGroupName string, serviceName string, appName string, bindingName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"bindingName":       autorest.Encode("path", bindingName),
@@ -109,8 +109,7 @@ func (client BindingsClient) CreateOrUpdatePreparer(ctx context.Context, resourc
 // CreateOrUpdateSender sends the CreateOrUpdate request. The method will close the
 // http.Response Body if it receives an error.
 func (client BindingsClient) CreateOrUpdateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
@@ -191,8 +190,7 @@ func (client BindingsClient) DeletePreparer(ctx context.Context, resourceGroupNa
 // DeleteSender sends the Delete request. The method will close the
 // http.Response Body if it receives an error.
 func (client BindingsClient) DeleteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // DeleteResponder handles the response to the Delete request. The method always
@@ -272,8 +270,7 @@ func (client BindingsClient) GetPreparer(ctx context.Context, resourceGroupName 
 // GetSender sends the Get request. The method will close the
 // http.Response Body if it receives an error.
 func (client BindingsClient) GetSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // GetResponder handles the response to the Get request. The method always
@@ -353,8 +350,7 @@ func (client BindingsClient) ListPreparer(ctx context.Context, resourceGroupName
 // ListSender sends the List request. The method will close the
 // http.Response Body if it receives an error.
 func (client BindingsClient) ListSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // ListResponder handles the response to the List request. The method always
@@ -409,13 +405,13 @@ func (client BindingsClient) ListComplete(ctx context.Context, resourceGroupName
 
 // Update operation to update an exiting Binding.
 // Parameters:
+// bindingResource - parameters for the update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // bindingName - the name of the Binding resource.
-// bindingResource - parameters for the update operation
-func (client BindingsClient) Update(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource BindingResource) (result BindingResource, err error) {
+func (client BindingsClient) Update(ctx context.Context, bindingResource BindingResource, resourceGroupName string, serviceName string, appName string, bindingName string) (result BindingResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/BindingsClient.Update")
 		defer func() {
@@ -426,7 +422,7 @@ func (client BindingsClient) Update(ctx context.Context, resourceGroupName strin
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.UpdatePreparer(ctx, resourceGroupName, serviceName, appName, bindingName, bindingResource)
+	req, err := client.UpdatePreparer(ctx, bindingResource, resourceGroupName, serviceName, appName, bindingName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.BindingsClient", "Update", nil, "Failure preparing request")
 		return
@@ -448,7 +444,7 @@ func (client BindingsClient) Update(ctx context.Context, resourceGroupName strin
 }
 
 // UpdatePreparer prepares the Update request.
-func (client BindingsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource BindingResource) (*http.Request, error) {
+func (client BindingsClient) UpdatePreparer(ctx context.Context, bindingResource BindingResource, resourceGroupName string, serviceName string, appName string, bindingName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"bindingName":       autorest.Encode("path", bindingName),
@@ -475,8 +471,7 @@ func (client BindingsClient) UpdatePreparer(ctx context.Context, resourceGroupNa
 // UpdateSender sends the Update request. The method will close the
 // http.Response Body if it receives an error.
 func (client BindingsClient) UpdateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // UpdateResponder handles the response to the Update request. The method always
