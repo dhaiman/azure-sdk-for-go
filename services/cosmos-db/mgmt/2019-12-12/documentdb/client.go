@@ -21,34 +21,34 @@ package documentdb
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest"
 )
 
 const (
-	// DefaultBaseURI is the default URI used for the service Documentdb
-	DefaultBaseURI = "https://management.azure.com"
-)
+// DefaultBaseURI is the default URI used for the service Documentdb
+DefaultBaseURI = "https://management.azure.com")
 
 // BaseClient is the base client for Documentdb.
 type BaseClient struct {
-	autorest.Client
-	BaseURI         string
-	SubscriptionID  string
-	SubscriptionID1 string
+    autorest.Client
+    BaseURI string
+            SubscriptionID string
+            SubscriptionID1 string
 }
 
 // New creates an instance of the BaseClient client.
-func New(subscriptionID string, subscriptionID1 string) BaseClient {
-	return NewWithBaseURI(DefaultBaseURI, subscriptionID, subscriptionID1)
+func New(subscriptionID string, subscriptionID1 string)BaseClient {
+    return NewWithBaseURI(DefaultBaseURI, subscriptionID, subscriptionID1)
 }
 
 // NewWithBaseURI creates an instance of the BaseClient client using a custom endpoint.  Use this when interacting with
 // an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewWithBaseURI(baseURI string, subscriptionID string, subscriptionID1 string) BaseClient {
-	return BaseClient{
-		Client:          autorest.NewClientWithUserAgent(UserAgent()),
-		BaseURI:         baseURI,
-		SubscriptionID:  subscriptionID,
-		SubscriptionID1: subscriptionID1,
-	}
+    return BaseClient{
+        Client: autorest.NewClientWithUserAgent(UserAgent()),
+        BaseURI: baseURI,
+                SubscriptionID: subscriptionID,
+                SubscriptionID1: subscriptionID1,
+    }
 }
+
