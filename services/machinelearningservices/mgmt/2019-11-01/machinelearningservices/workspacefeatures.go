@@ -18,141 +18,140 @@ package machinelearningservices
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
 )
 
 // WorkspaceFeaturesClient is the these APIs allow end users to operate on Azure Machine Learning Workspace resources.
 type WorkspaceFeaturesClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewWorkspaceFeaturesClient creates an instance of the WorkspaceFeaturesClient client.
 func NewWorkspaceFeaturesClient(subscriptionID string) WorkspaceFeaturesClient {
-	return NewWorkspaceFeaturesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+    return NewWorkspaceFeaturesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewWorkspaceFeaturesClientWithBaseURI creates an instance of the WorkspaceFeaturesClient client using a custom
 // endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
 // stack).
-func NewWorkspaceFeaturesClientWithBaseURI(baseURI string, subscriptionID string) WorkspaceFeaturesClient {
-	return WorkspaceFeaturesClient{NewWithBaseURI(baseURI, subscriptionID)}
-}
+    func NewWorkspaceFeaturesClientWithBaseURI(baseURI string, subscriptionID string) WorkspaceFeaturesClient {
+        return WorkspaceFeaturesClient{ NewWithBaseURI(baseURI, subscriptionID)}
+    }
 
 // List lists all enabled features for a workspace
-// Parameters:
-// resourceGroupName - name of the resource group in which workspace is located.
-// workspaceName - name of Azure Machine Learning workspace.
+    // Parameters:
+        // resourceGroupName - name of the resource group in which workspace is located.
+        // workspaceName - name of Azure Machine Learning workspace.
 func (client WorkspaceFeaturesClient) List(ctx context.Context, resourceGroupName string, workspaceName string) (result ListAmlUserFeatureResultPage, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/WorkspaceFeaturesClient.List")
-		defer func() {
-			sc := -1
-			if result.laufr.Response.Response != nil {
-				sc = result.laufr.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	result.fn = client.listNextResults
-	req, err := client.ListPreparer(ctx, resourceGroupName, workspaceName)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/WorkspaceFeaturesClient.List")
+        defer func() {
+            sc := -1
+            if result.laufr.Response.Response != nil {
+                sc = result.laufr.Response.Response.StatusCode
+            }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+                result.fn = client.listNextResults
+    req, err := client.ListPreparer(ctx, resourceGroupName, workspaceName)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.ListSender(req)
-	if err != nil {
-		result.laufr.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", resp, "Failure sending request")
-		return
-	}
+            resp, err := client.ListSender(req)
+            if err != nil {
+            result.laufr.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", resp, "Failure sending request")
+            return
+            }
 
-	result.laufr, err = client.ListResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", resp, "Failure responding to request")
-	}
+            result.laufr, err = client.ListResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "List", resp, "Failure responding to request")
+            }
 
-	return
-}
+    return
+    }
 
-// ListPreparer prepares the List request.
-func (client WorkspaceFeaturesClient) ListPreparer(ctx context.Context, resourceGroupName string, workspaceName string) (*http.Request, error) {
-	pathParameters := map[string]interface{}{
-		"resourceGroupName": autorest.Encode("path", resourceGroupName),
-		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
-		"workspaceName":     autorest.Encode("path", workspaceName),
-	}
+    // ListPreparer prepares the List request.
+    func (client WorkspaceFeaturesClient) ListPreparer(ctx context.Context, resourceGroupName string, workspaceName string) (*http.Request, error) {
+            pathParameters := map[string]interface{} {
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
+            "workspaceName": autorest.Encode("path",workspaceName),
+            }
 
-	const APIVersion = "2019-11-01"
-	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
-	}
+                        const APIVersion = "2019-11-01"
+        queryParameters := map[string]interface{} {
+        "api-version": APIVersion,
+        }
 
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/features", pathParameters),
-		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+        preparer := autorest.CreatePreparer(
+    autorest.AsGet(),
+    autorest.WithBaseURL(client.BaseURI),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/features",pathParameters),
+    autorest.WithQueryParameters(queryParameters))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// ListSender sends the List request. The method will close the
-// http.Response Body if it receives an error.
-func (client WorkspaceFeaturesClient) ListSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
-}
+    // ListSender sends the List request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client WorkspaceFeaturesClient) ListSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+            }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
 func (client WorkspaceFeaturesClient) ListResponder(resp *http.Response) (result ListAmlUserFeatureResult, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    err = autorest.Respond(
+    resp,
+    client.ByInspecting(),
+    azure.WithErrorUnlessStatusCode(http.StatusOK),
+    autorest.ByUnmarshallingJSON(&result),
+    autorest.ByClosing())
+    result.Response = autorest.Response{Response: resp}
+        return
+    }
 
-// listNextResults retrieves the next set of results, if any.
-func (client WorkspaceFeaturesClient) listNextResults(ctx context.Context, lastResults ListAmlUserFeatureResult) (result ListAmlUserFeatureResult, err error) {
-	req, err := lastResults.listAmlUserFeatureResultPreparer(ctx)
-	if err != nil {
-		return result, autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", nil, "Failure preparing next results request")
-	}
-	if req == nil {
-		return
-	}
-	resp, err := client.ListSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		return result, autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", resp, "Failure sending next results request")
-	}
-	result, err = client.ListResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", resp, "Failure responding to next results request")
-	}
-	return
-}
+            // listNextResults retrieves the next set of results, if any.
+            func (client WorkspaceFeaturesClient) listNextResults(ctx context.Context, lastResults ListAmlUserFeatureResult) (result ListAmlUserFeatureResult, err error) {
+            req, err := lastResults.listAmlUserFeatureResultPreparer(ctx)
+            if err != nil {
+            return result, autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", nil , "Failure preparing next results request")
+            }
+            if req == nil {
+            return
+            }
+            resp, err := client.ListSender(req)
+            if err != nil {
+            result.Response = autorest.Response{Response: resp}
+            return result, autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", resp, "Failure sending next results request")
+            }
+            result, err = client.ListResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "machinelearningservices.WorkspaceFeaturesClient", "listNextResults", resp, "Failure responding to next results request")
+            }
+            return
+                    }
 
-// ListComplete enumerates all values, automatically crossing page boundaries as required.
-func (client WorkspaceFeaturesClient) ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result ListAmlUserFeatureResultIterator, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/WorkspaceFeaturesClient.List")
-		defer func() {
-			sc := -1
-			if result.Response().Response.Response != nil {
-				sc = result.page.Response().Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	result.page, err = client.List(ctx, resourceGroupName, workspaceName)
-	return
-}
+    // ListComplete enumerates all values, automatically crossing page boundaries as required.
+    func (client WorkspaceFeaturesClient) ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result ListAmlUserFeatureResultIterator, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/WorkspaceFeaturesClient.List")
+            defer func() {
+                sc := -1
+                if result.Response().Response.Response != nil {
+                    sc = result.page.Response().Response.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+     }
+        result.page, err = client.List(ctx, resourceGroupName, workspaceName)
+                return
+        }
+
