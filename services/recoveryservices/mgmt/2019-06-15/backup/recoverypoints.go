@@ -111,13 +111,96 @@ func (client RecoveryPointsClient) GetPreparer(ctx context.Context, vaultName st
 // GetSender sends the Get request. The method will close the
 // http.Response Body if it receives an error.
 func (client RecoveryPointsClient) GetSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
 func (client RecoveryPointsClient) GetResponder(resp *http.Response) (result RecoveryPointResource, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetAccessToken sends the get access token request.
+// Parameters:
+// vaultName - the name of the recovery services vault.
+// resourceGroupName - the name of the resource group where the recovery services vault is present.
+// fabricName - fabric name associated with the container.
+// containerName - name of the container.
+// protectedItemName - name of the Protected Item.
+// recoveryPointID - recovery Point Id
+func (client RecoveryPointsClient) GetAccessToken(ctx context.Context, vaultName string, resourceGroupName string, fabricName string, containerName string, protectedItemName string, recoveryPointID string) (result CrrAccessTokenResource, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/RecoveryPointsClient.GetAccessToken")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetAccessTokenPreparer(ctx, vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointID)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "backup.RecoveryPointsClient", "GetAccessToken", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetAccessTokenSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "backup.RecoveryPointsClient", "GetAccessToken", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetAccessTokenResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "backup.RecoveryPointsClient", "GetAccessToken", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetAccessTokenPreparer prepares the GetAccessToken request.
+func (client RecoveryPointsClient) GetAccessTokenPreparer(ctx context.Context, vaultName string, resourceGroupName string, fabricName string, containerName string, protectedItemName string, recoveryPointID string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"containerName":     autorest.Encode("path", containerName),
+		"fabricName":        autorest.Encode("path", fabricName),
+		"protectedItemName": autorest.Encode("path", protectedItemName),
+		"recoveryPointId":   autorest.Encode("path", recoveryPointID),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+		"vaultName":         autorest.Encode("path", vaultName),
+	}
+
+	const APIVersion = "2018-12-20"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}/accessToken", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetAccessTokenSender sends the GetAccessToken request. The method will close the
+// http.Response Body if it receives an error.
+func (client RecoveryPointsClient) GetAccessTokenSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetAccessTokenResponder handles the response to the GetAccessToken request. The method always
+// closes the http.Response Body.
+func (client RecoveryPointsClient) GetAccessTokenResponder(resp *http.Response) (result CrrAccessTokenResource, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -199,8 +282,7 @@ func (client RecoveryPointsClient) ListPreparer(ctx context.Context, vaultName s
 // ListSender sends the List request. The method will close the
 // http.Response Body if it receives an error.
 func (client RecoveryPointsClient) ListSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), azure.DoRetryWithRegistration(client.Client))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // ListResponder handles the response to the List request. The method always
