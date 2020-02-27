@@ -20,6 +20,7 @@ package networkapi
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/services/network/mgmt/2019-11-01/network"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // BaseClientAPI contains the set of methods on the BaseClient type.
@@ -438,6 +439,84 @@ type LoadBalancerProbesClientAPI interface {
 
 var _ LoadBalancerProbesClientAPI = (*network.LoadBalancerProbesClient)(nil)
 
+// ConnectivityConfigurationsClientAPI contains the set of methods on the ConnectivityConfigurationsClient type.
+type ConnectivityConfigurationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, connectivityConfiguration network.ConnectivityConfiguration, resourceGroupName string, networkManagerName string, configurationName string) (result network.ConnectivityConfigurationsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.ConnectivityConfigurationsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.ConnectivityConfiguration, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string, networkManagerName string, top *int32, skiptoken string) (result network.ConnectivityConfigurationListResultPage, err error)
+	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string, networkManagerName string, top *int32, skiptoken string) (result network.ConnectivityConfigurationListResultIterator, err error)
+	Patch(ctx context.Context, parameters network.TagsObject, resourceGroupName string, networkManagerName string, configurationName string) (result network.ConnectivityConfiguration, err error)
+}
+
+var _ ConnectivityConfigurationsClientAPI = (*network.ConnectivityConfigurationsClient)(nil)
+
+// SecurityConfigurationsClientAPI contains the set of methods on the SecurityConfigurationsClient type.
+type SecurityConfigurationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, securityConfiguration network.SecurityConfiguration, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfigurationsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfigurationsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfiguration, err error)
+	List(ctx context.Context, resourceGroupName string, networkManagerName string, top *int32, skiptoken string) (result network.SecurityConfigurationListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, networkManagerName string, top *int32, skiptoken string) (result network.SecurityConfigurationListResultIterator, err error)
+	Patch(ctx context.Context, parameters network.TagsObject, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfiguration, err error)
+}
+
+var _ SecurityConfigurationsClientAPI = (*network.SecurityConfigurationsClient)(nil)
+
+// SecurityConfigurationRulesClientAPI contains the set of methods on the SecurityConfigurationRulesClient type.
+type SecurityConfigurationRulesClientAPI interface {
+	CreateOrUpdateRule(ctx context.Context, securityConfigurationRule network.SecurityConfigurationRule, resourceGroupName string, networkManagerName string, configurationName string, ruleName string) (result network.SecurityConfigurationRulesCreateOrUpdateRuleFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleName string) (result network.SecurityConfigurationRulesDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleName string) (result network.SecurityConfigurationRule, err error)
+	List(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfigurationRuleListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string) (result network.SecurityConfigurationRuleListResultIterator, err error)
+	Patch(ctx context.Context, parameters network.TagsObject, resourceGroupName string, networkManagerName string, configurationName string, ruleName string) (result network.SecurityConfigurationRule, err error)
+}
+
+var _ SecurityConfigurationRulesClientAPI = (*network.SecurityConfigurationRulesClient)(nil)
+
+// CommitsClientAPI contains the set of methods on the CommitsClient type.
+type CommitsClientAPI interface {
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string, commitName string) (result network.CommitsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, commitName string) (result network.Commit, err error)
+	Put(ctx context.Context, commit network.Commit, resourceGroupName string, networkManagerName string, commitName string) (result network.CommitsPutFuture, err error)
+}
+
+var _ CommitsClientAPI = (*network.CommitsClient)(nil)
+
+// GroupsClientAPI contains the set of methods on the GroupsClient type.
+type GroupsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, parameters network.Group, resourceGroupName string, networkManagerName string, networkGroupName string) (result network.Group, err error)
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string) (result network.Group, err error)
+	List(ctx context.Context, resourceGroupName string, networkManagerName string) (result network.GroupListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, networkManagerName string) (result network.GroupListResultIterator, err error)
+	Patch(ctx context.Context, parameters network.TagsObject, resourceGroupName string, networkManagerName string, networkGroupName string) (result network.Group, err error)
+}
+
+var _ GroupsClientAPI = (*network.GroupsClient)(nil)
+
+// ActiveConfigurationsClientAPI contains the set of methods on the ActiveConfigurationsClient type.
+type ActiveConfigurationsClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string, locationName string) (result network.ActiveConfiguration, err error)
+}
+
+var _ ActiveConfigurationsClientAPI = (*network.ActiveConfigurationsClient)(nil)
+
+// ManagersClientAPI contains the set of methods on the ManagersClient type.
+type ManagersClientAPI interface {
+	CreateOrUpdate(ctx context.Context, parameters network.Manager, resourceGroupName string, networkManagerName string) (result network.Manager, err error)
+	Delete(ctx context.Context, resourceGroupName string, networkManagerName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, networkManagerName string) (result network.Manager, err error)
+	List(ctx context.Context, resourceGroupName string) (result network.ManagerListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string) (result network.ManagerListResultIterator, err error)
+	ListBySubscription(ctx context.Context) (result network.ManagerListResultPage, err error)
+	ListBySubscriptionComplete(ctx context.Context) (result network.ManagerListResultIterator, err error)
+	Patch(ctx context.Context, resourceGroupName string, networkManagerName string, parameters network.TagsObject) (result network.Manager, err error)
+}
+
+var _ ManagersClientAPI = (*network.ManagersClient)(nil)
+
 // NatGatewaysClientAPI contains the set of methods on the NatGatewaysClient type.
 type NatGatewaysClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters network.NatGateway) (result network.NatGatewaysCreateOrUpdateFuture, err error)
@@ -562,7 +641,7 @@ type WatchersClientAPI interface {
 	GetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.FlowLogStatusParameters) (result network.WatchersGetFlowLogStatusFuture, err error)
 	GetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.ConfigurationDiagnosticParameters) (result network.WatchersGetNetworkConfigurationDiagnosticFuture, err error)
 	GetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.NextHopParameters) (result network.WatchersGetNextHopFuture, err error)
-	GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.TopologyParameters) (result network.Topology, err error)
+	GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.TopologyParameters) (result network.Topology1, err error)
 	GetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.TroubleshootingParameters) (result network.WatchersGetTroubleshootingFuture, err error)
 	GetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.QueryTroubleshootingParameters) (result network.WatchersGetTroubleshootingResultFuture, err error)
 	GetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters network.SecurityGroupViewParameters) (result network.WatchersGetVMSecurityRulesFuture, err error)

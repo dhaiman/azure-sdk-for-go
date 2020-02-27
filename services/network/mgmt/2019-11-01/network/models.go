@@ -1066,6 +1066,21 @@ func PossibleFlowLogFormatTypeValues() []FlowLogFormatType {
 	return []FlowLogFormatType{JSON}
 }
 
+// GroupConnectivity enumerates the values for group connectivity.
+type GroupConnectivity string
+
+const (
+	// NonTransitive ...
+	NonTransitive GroupConnectivity = "NonTransitive"
+	// Transitive ...
+	Transitive GroupConnectivity = "Transitive"
+)
+
+// PossibleGroupConnectivityValues returns an array of possible values for the GroupConnectivity const type.
+func PossibleGroupConnectivityValues() []GroupConnectivity {
+	return []GroupConnectivity{NonTransitive, Transitive}
+}
+
 // HTTPConfigurationMethod enumerates the values for http configuration method.
 type HTTPConfigurationMethod string
 
@@ -1765,6 +1780,61 @@ func PossibleRuleTypeValues() []RuleType {
 	return []RuleType{RuleTypeFirewallPolicyFilterRule, RuleTypeFirewallPolicyNatRule, RuleTypeFirewallPolicyRule}
 }
 
+// SecurityConfigurationRuleAccess enumerates the values for security configuration rule access.
+type SecurityConfigurationRuleAccess string
+
+const (
+	// SecurityConfigurationRuleAccessAllow ...
+	SecurityConfigurationRuleAccessAllow SecurityConfigurationRuleAccess = "Allow"
+	// SecurityConfigurationRuleAccessAlwaysAllow ...
+	SecurityConfigurationRuleAccessAlwaysAllow SecurityConfigurationRuleAccess = "AlwaysAllow"
+	// SecurityConfigurationRuleAccessDeny ...
+	SecurityConfigurationRuleAccessDeny SecurityConfigurationRuleAccess = "Deny"
+)
+
+// PossibleSecurityConfigurationRuleAccessValues returns an array of possible values for the SecurityConfigurationRuleAccess const type.
+func PossibleSecurityConfigurationRuleAccessValues() []SecurityConfigurationRuleAccess {
+	return []SecurityConfigurationRuleAccess{SecurityConfigurationRuleAccessAllow, SecurityConfigurationRuleAccessAlwaysAllow, SecurityConfigurationRuleAccessDeny}
+}
+
+// SecurityConfigurationRuleDirection enumerates the values for security configuration rule direction.
+type SecurityConfigurationRuleDirection string
+
+const (
+	// SecurityConfigurationRuleDirectionInbound ...
+	SecurityConfigurationRuleDirectionInbound SecurityConfigurationRuleDirection = "Inbound"
+	// SecurityConfigurationRuleDirectionOutbound ...
+	SecurityConfigurationRuleDirectionOutbound SecurityConfigurationRuleDirection = "Outbound"
+)
+
+// PossibleSecurityConfigurationRuleDirectionValues returns an array of possible values for the SecurityConfigurationRuleDirection const type.
+func PossibleSecurityConfigurationRuleDirectionValues() []SecurityConfigurationRuleDirection {
+	return []SecurityConfigurationRuleDirection{SecurityConfigurationRuleDirectionInbound, SecurityConfigurationRuleDirectionOutbound}
+}
+
+// SecurityConfigurationRuleProtocol enumerates the values for security configuration rule protocol.
+type SecurityConfigurationRuleProtocol string
+
+const (
+	// SecurityConfigurationRuleProtocolAh ...
+	SecurityConfigurationRuleProtocolAh SecurityConfigurationRuleProtocol = "Ah"
+	// SecurityConfigurationRuleProtocolAsterisk ...
+	SecurityConfigurationRuleProtocolAsterisk SecurityConfigurationRuleProtocol = "*"
+	// SecurityConfigurationRuleProtocolEsp ...
+	SecurityConfigurationRuleProtocolEsp SecurityConfigurationRuleProtocol = "Esp"
+	// SecurityConfigurationRuleProtocolIcmp ...
+	SecurityConfigurationRuleProtocolIcmp SecurityConfigurationRuleProtocol = "Icmp"
+	// SecurityConfigurationRuleProtocolTCP ...
+	SecurityConfigurationRuleProtocolTCP SecurityConfigurationRuleProtocol = "Tcp"
+	// SecurityConfigurationRuleProtocolUDP ...
+	SecurityConfigurationRuleProtocolUDP SecurityConfigurationRuleProtocol = "Udp"
+)
+
+// PossibleSecurityConfigurationRuleProtocolValues returns an array of possible values for the SecurityConfigurationRuleProtocol const type.
+func PossibleSecurityConfigurationRuleProtocolValues() []SecurityConfigurationRuleProtocol {
+	return []SecurityConfigurationRuleProtocol{SecurityConfigurationRuleProtocolAh, SecurityConfigurationRuleProtocolAsterisk, SecurityConfigurationRuleProtocolEsp, SecurityConfigurationRuleProtocolIcmp, SecurityConfigurationRuleProtocolTCP, SecurityConfigurationRuleProtocolUDP}
+}
+
 // SecurityRuleAccess enumerates the values for security rule access.
 type SecurityRuleAccess string
 
@@ -1850,6 +1920,21 @@ const (
 // PossibleSeverityValues returns an array of possible values for the Severity const type.
 func PossibleSeverityValues() []Severity {
 	return []Severity{SeverityError, SeverityWarning}
+}
+
+// Topology enumerates the values for topology.
+type Topology string
+
+const (
+	// HubAndSpokeTopology ...
+	HubAndSpokeTopology Topology = "HubAndSpokeTopology"
+	// MeshTopology ...
+	MeshTopology Topology = "MeshTopology"
+)
+
+// PossibleTopologyValues returns an array of possible values for the Topology const type.
+func PossibleTopologyValues() []Topology {
+	return []Topology{HubAndSpokeTopology, MeshTopology}
 }
 
 // TransportProtocol enumerates the values for transport protocol.
@@ -2373,6 +2458,103 @@ type AadAuthenticationParameters struct {
 	AadAudience *string `json:"aadAudience,omitempty"`
 	// AadIssuer - AAD Vpn authentication parameter AAD issuer.
 	AadIssuer *string `json:"aadIssuer,omitempty"`
+}
+
+// ActiveConfiguration configuration and location lists to commit.
+type ActiveConfiguration struct {
+	autorest.Response `json:"-"`
+	// ActiveConfigurationProperties - The Active Configuration properties
+	*ActiveConfigurationProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ActiveConfiguration.
+func (ac ActiveConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ac.ActiveConfigurationProperties != nil {
+		objectMap["properties"] = ac.ActiveConfigurationProperties
+	}
+	if ac.ID != nil {
+		objectMap["id"] = ac.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ActiveConfiguration struct.
+func (ac *ActiveConfiguration) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var activeConfigurationProperties ActiveConfigurationProperties
+				err = json.Unmarshal(*v, &activeConfigurationProperties)
+				if err != nil {
+					return err
+				}
+				ac.ActiveConfigurationProperties = &activeConfigurationProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				ac.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ac.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				ac.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				ac.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// ActiveConfigurationProperties configuration and location lists to deploy.
+type ActiveConfigurationProperties struct {
+	// Commits - configuration Id need to deploy.
+	Commits *[]CommitItem `json:"commits,omitempty"`
+	// DeploymentTime - Deployment time string
+	DeploymentTime *date.Time `json:"deploymentTime,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the peering Configuration resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 }
 
 // AddressSpace addressSpace contains an array of IP address ranges that can be used by subnets of the
@@ -8971,6 +9153,325 @@ type CloudErrorBody struct {
 	Details *[]CloudErrorBody `json:"details,omitempty"`
 }
 
+// Commit configuration and location lists to commit.
+type Commit struct {
+	autorest.Response `json:"-"`
+	// CommitProperties - The Commit properties
+	*CommitProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Commit.
+func (c Commit) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if c.CommitProperties != nil {
+		objectMap["properties"] = c.CommitProperties
+	}
+	if c.ID != nil {
+		objectMap["id"] = c.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Commit struct.
+func (c *Commit) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var commitProperties CommitProperties
+				err = json.Unmarshal(*v, &commitProperties)
+				if err != nil {
+					return err
+				}
+				c.CommitProperties = &commitProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				c.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				c.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				c.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				c.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// CommitItem configuration and location lists to commit.
+type CommitItem struct {
+	// CommitsProperties - The Commit properties
+	*CommitsProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CommitItem.
+func (ci CommitItem) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ci.CommitsProperties != nil {
+		objectMap["properties"] = ci.CommitsProperties
+	}
+	if ci.ID != nil {
+		objectMap["id"] = ci.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for CommitItem struct.
+func (ci *CommitItem) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var commitsProperties CommitsProperties
+				err = json.Unmarshal(*v, &commitsProperties)
+				if err != nil {
+					return err
+				}
+				ci.CommitsProperties = &commitsProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				ci.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ci.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				ci.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				ci.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// CommitProperties configuration and location lists to deploy.
+type CommitProperties struct {
+	// ConfigurationID - configuration Id need to deploy.
+	ConfigurationID *string `json:"configurationId,omitempty"`
+	// Location - Location string
+	Location *[]string `json:"location,omitempty"`
+	// DeploymentTime - Deployment time string
+	DeploymentTime *date.Time `json:"deploymentTime,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the peering Configuration resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
+// CommitsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type CommitsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CommitsDeleteFuture) Result(client CommitsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.CommitsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.CommitsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
+// CommitsProperties configuration and location lists to deploy.
+type CommitsProperties struct {
+	// ConfigurationType - configuration type.
+	ConfigurationType *string `json:"configurationType,omitempty"`
+	// SecurityConfiguration - configuration Id need to deploy.
+	SecurityConfiguration *CommitsPropertiesSecurityConfiguration `json:"securityConfiguration,omitempty"`
+	// ConnectivityConfiguration - configuration Id need to deploy.
+	ConnectivityConfiguration *CommitsPropertiesConnectivityConfiguration `json:"connectivityConfiguration,omitempty"`
+	// ConfigurationGroups - configuration rule.
+	ConfigurationGroups *[]Group `json:"configurationGroups,omitempty"`
+	// DeploymentTime - Deployment time string
+	DeploymentTime *date.Time `json:"deploymentTime,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the peering Configuration resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
+// CommitsPropertiesConnectivityConfiguration configuration Id need to deploy.
+type CommitsPropertiesConnectivityConfiguration struct {
+	// ConnectivityConfigurationProperties - Gets or sets the properties of a Managed Network Configuration
+	*ConnectivityConfigurationProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CommitsPropertiesConnectivityConfiguration.
+func (cpC CommitsPropertiesConnectivityConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cpC.ConnectivityConfigurationProperties != nil {
+		objectMap["properties"] = cpC.ConnectivityConfigurationProperties
+	}
+	if cpC.Tags != nil {
+		objectMap["tags"] = cpC.Tags
+	}
+	if cpC.ID != nil {
+		objectMap["id"] = cpC.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// CommitsPropertiesSecurityConfiguration configuration Id need to deploy.
+type CommitsPropertiesSecurityConfiguration struct {
+	// Rules - configuration rule.
+	Rules *[]SecurityConfigurationRule `json:"rules,omitempty"`
+	// SecurityConfigurationPropertiesFormat - Indicates the properties for the managed network security Configuration.
+	*SecurityConfigurationPropertiesFormat `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CommitsPropertiesSecurityConfiguration.
+func (cpC CommitsPropertiesSecurityConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cpC.Rules != nil {
+		objectMap["rules"] = cpC.Rules
+	}
+	if cpC.SecurityConfigurationPropertiesFormat != nil {
+		objectMap["properties"] = cpC.SecurityConfigurationPropertiesFormat
+	}
+	if cpC.Tags != nil {
+		objectMap["tags"] = cpC.Tags
+	}
+	if cpC.ID != nil {
+		objectMap["id"] = cpC.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// CommitsPutFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+type CommitsPutFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CommitsPutFuture) Result(client CommitsClient) (c Commit, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.CommitsPutFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.CommitsPutFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if c.Response.Response, err = future.GetResult(sender); err == nil && c.Response.Response.StatusCode != http.StatusNoContent {
+		c, err = client.PutResponder(c.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.CommitsPutFuture", "Result", c.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // ConfigurationDiagnosticParameters parameters to get network configuration diagnostic.
 type ConfigurationDiagnosticParameters struct {
 	// TargetResourceID - The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway.
@@ -9556,6 +10057,327 @@ type ConnectionStateSnapshot struct {
 	ProbesFailed *int32 `json:"probesFailed,omitempty"`
 	// Hops - READ-ONLY; List of hops between the source and the destination.
 	Hops *[]ConnectivityHop `json:"hops,omitempty"`
+}
+
+// ConnectivityConfiguration the Managed Network Peering Configuration resource
+type ConnectivityConfiguration struct {
+	autorest.Response `json:"-"`
+	// ConnectivityConfigurationProperties - Gets or sets the properties of a Managed Network Configuration
+	*ConnectivityConfigurationProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ConnectivityConfiguration.
+func (cc ConnectivityConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cc.ConnectivityConfigurationProperties != nil {
+		objectMap["properties"] = cc.ConnectivityConfigurationProperties
+	}
+	if cc.Tags != nil {
+		objectMap["tags"] = cc.Tags
+	}
+	if cc.ID != nil {
+		objectMap["id"] = cc.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ConnectivityConfiguration struct.
+func (cc *ConnectivityConfiguration) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var connectivityConfigurationProperties ConnectivityConfigurationProperties
+				err = json.Unmarshal(*v, &connectivityConfigurationProperties)
+				if err != nil {
+					return err
+				}
+				cc.ConnectivityConfigurationProperties = &connectivityConfigurationProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				cc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				cc.Type = &typeVar
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				cc.Tags = tags
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				cc.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				cc.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// ConnectivityConfigurationListResult result of the request to list Managed Network Connectivity
+// Configurations. It contains a list of Configurations and a URL link to get the next set of results.
+type ConnectivityConfigurationListResult struct {
+	autorest.Response `json:"-"`
+	// Value - Gets a page of Connectivity Configurations
+	Value *[]ConnectivityConfiguration `json:"value,omitempty"`
+	// NextLink - Gets the URL to get the next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// ConnectivityConfigurationListResultIterator provides access to a complete listing of
+// ConnectivityConfiguration values.
+type ConnectivityConfigurationListResultIterator struct {
+	i    int
+	page ConnectivityConfigurationListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *ConnectivityConfigurationListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ConnectivityConfigurationListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *ConnectivityConfigurationListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter ConnectivityConfigurationListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter ConnectivityConfigurationListResultIterator) Response() ConnectivityConfigurationListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter ConnectivityConfigurationListResultIterator) Value() ConnectivityConfiguration {
+	if !iter.page.NotDone() {
+		return ConnectivityConfiguration{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the ConnectivityConfigurationListResultIterator type.
+func NewConnectivityConfigurationListResultIterator(page ConnectivityConfigurationListResultPage) ConnectivityConfigurationListResultIterator {
+	return ConnectivityConfigurationListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (cclr ConnectivityConfigurationListResult) IsEmpty() bool {
+	return cclr.Value == nil || len(*cclr.Value) == 0
+}
+
+// connectivityConfigurationListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (cclr ConnectivityConfigurationListResult) connectivityConfigurationListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if cclr.NextLink == nil || len(to.String(cclr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(cclr.NextLink)))
+}
+
+// ConnectivityConfigurationListResultPage contains a page of ConnectivityConfiguration values.
+type ConnectivityConfigurationListResultPage struct {
+	fn   func(context.Context, ConnectivityConfigurationListResult) (ConnectivityConfigurationListResult, error)
+	cclr ConnectivityConfigurationListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *ConnectivityConfigurationListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ConnectivityConfigurationListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.cclr)
+	if err != nil {
+		return err
+	}
+	page.cclr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *ConnectivityConfigurationListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page ConnectivityConfigurationListResultPage) NotDone() bool {
+	return !page.cclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page ConnectivityConfigurationListResultPage) Response() ConnectivityConfigurationListResult {
+	return page.cclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page ConnectivityConfigurationListResultPage) Values() []ConnectivityConfiguration {
+	if page.cclr.IsEmpty() {
+		return nil
+	}
+	return *page.cclr.Value
+}
+
+// Creates a new instance of the ConnectivityConfigurationListResultPage type.
+func NewConnectivityConfigurationListResultPage(getNextPage func(context.Context, ConnectivityConfigurationListResult) (ConnectivityConfigurationListResult, error)) ConnectivityConfigurationListResultPage {
+	return ConnectivityConfigurationListResultPage{fn: getNextPage}
+}
+
+// ConnectivityConfigurationProperties properties of a Managed Network Peering Configuration
+type ConnectivityConfigurationProperties struct {
+	// DisplayName - A friendly name for the assignment.
+	DisplayName *string `json:"displayName,omitempty"`
+	// Description - A description of the Connectivity Configuration.
+	Description *string `json:"description,omitempty"`
+	// Topology - Gets or sets the connectivity type of a network structure Configuration. Possible values include: 'HubAndSpokeTopology', 'MeshTopology'
+	Topology Topology `json:"topology,omitempty"`
+	// GatewayVnetID - Gets or sets the gateway vnet ID
+	GatewayVnetID *string `json:"gatewayVnetId,omitempty"`
+	// GatewayVIP - Gets or sets the gateway vip ID
+	GatewayVIP *string `json:"gatewayVIP,omitempty"`
+	// HubID - Gets or sets the hub virtual network ID
+	HubID *string `json:"hubId,omitempty"`
+	// AppliesToGroups - Groups for configuration
+	AppliesToGroups *[]ManagerGroupItem `json:"appliesToGroups,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the peering Configuration resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
+// ConnectivityConfigurationsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type ConnectivityConfigurationsCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *ConnectivityConfigurationsCreateOrUpdateFuture) Result(client ConnectivityConfigurationsClient) (cc ConnectivityConfiguration, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.ConnectivityConfigurationsCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.ConnectivityConfigurationsCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if cc.Response.Response, err = future.GetResult(sender); err == nil && cc.Response.Response.StatusCode != http.StatusNoContent {
+		cc, err = client.CreateOrUpdateResponder(cc.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.ConnectivityConfigurationsCreateOrUpdateFuture", "Result", cc.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// ConnectivityConfigurationsDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type ConnectivityConfigurationsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *ConnectivityConfigurationsDeleteFuture) Result(client ConnectivityConfigurationsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.ConnectivityConfigurationsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.ConnectivityConfigurationsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // ConnectivityDestination parameters that define destination of connection.
@@ -16285,6 +17107,274 @@ type GetVpnSitesConfigurationRequest struct {
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 }
 
+// Group the Managed Network resource
+type Group struct {
+	autorest.Response `json:"-"`
+	// GroupProperties - The Network Group properties
+	*GroupProperties `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Group.
+func (g Group) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if g.GroupProperties != nil {
+		objectMap["properties"] = g.GroupProperties
+	}
+	if g.Tags != nil {
+		objectMap["tags"] = g.Tags
+	}
+	if g.ID != nil {
+		objectMap["id"] = g.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Group struct.
+func (g *Group) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var groupProperties GroupProperties
+				err = json.Unmarshal(*v, &groupProperties)
+				if err != nil {
+					return err
+				}
+				g.GroupProperties = &groupProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				g.Name = &name
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				g.Tags = tags
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				g.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				g.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				g.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// GroupListResult result of the request to list NetworkGroup. It contains a list of groups and a URL link
+// to get the next set of results.
+type GroupListResult struct {
+	autorest.Response `json:"-"`
+	// Value - Gets a page of NetworkGroup
+	Value *[]Group `json:"value,omitempty"`
+	// NextLink - Gets the URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// GroupListResultIterator provides access to a complete listing of Group values.
+type GroupListResultIterator struct {
+	i    int
+	page GroupListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *GroupListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/GroupListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *GroupListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter GroupListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter GroupListResultIterator) Response() GroupListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter GroupListResultIterator) Value() Group {
+	if !iter.page.NotDone() {
+		return Group{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the GroupListResultIterator type.
+func NewGroupListResultIterator(page GroupListResultPage) GroupListResultIterator {
+	return GroupListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (glr GroupListResult) IsEmpty() bool {
+	return glr.Value == nil || len(*glr.Value) == 0
+}
+
+// groupListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (glr GroupListResult) groupListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if glr.NextLink == nil || len(to.String(glr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(glr.NextLink)))
+}
+
+// GroupListResultPage contains a page of Group values.
+type GroupListResultPage struct {
+	fn  func(context.Context, GroupListResult) (GroupListResult, error)
+	glr GroupListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *GroupListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/GroupListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.glr)
+	if err != nil {
+		return err
+	}
+	page.glr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *GroupListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page GroupListResultPage) NotDone() bool {
+	return !page.glr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page GroupListResultPage) Response() GroupListResult {
+	return page.glr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page GroupListResultPage) Values() []Group {
+	if page.glr.IsEmpty() {
+		return nil
+	}
+	return *page.glr.Value
+}
+
+// Creates a new instance of the GroupListResultPage type.
+func NewGroupListResultPage(getNextPage func(context.Context, GroupListResult) (GroupListResult, error)) GroupListResultPage {
+	return GroupListResultPage{fn: getNextPage}
+}
+
+// GroupMembersItem ...
+type GroupMembersItem struct {
+	// VnetID - Virtual Network Id.
+	VnetID *string `json:"vnetId,omitempty"`
+}
+
+// GroupProperties properties of Managed Network
+type GroupProperties struct {
+	// DisplayName - A friendly name for the network group.
+	DisplayName *string `json:"displayName,omitempty"`
+	// Description - A description of the network group.
+	Description *string `json:"description,omitempty"`
+	// GroupMembers - Group members of network group.
+	GroupMembers *[]GroupMembersItem `json:"groupMembers,omitempty"`
+	// ConditionalMembership - Network group conditional filter.
+	ConditionalMembership interface{} `json:"conditionalMembership,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the scope assignment resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
 // HTTPConfiguration HTTP configuration of the connectivity check.
 type HTTPConfiguration struct {
 	// Method - HTTP method. Possible values include: 'HTTPMethodGet'
@@ -21795,6 +22885,308 @@ type ManagedServiceIdentityUserAssignedIdentitiesValue struct {
 	PrincipalID *string `json:"principalId,omitempty"`
 	// ClientID - READ-ONLY; The client id of user assigned identity.
 	ClientID *string `json:"clientId,omitempty"`
+}
+
+// Manager the Managed Network resource
+type Manager struct {
+	autorest.Response `json:"-"`
+	// ManagerProperties - The network manager properties
+	*ManagerProperties `json:"properties,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Location - Resource location.
+	Location *string `json:"location,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for Manager.
+func (mVar Manager) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if mVar.ManagerProperties != nil {
+		objectMap["properties"] = mVar.ManagerProperties
+	}
+	if mVar.ID != nil {
+		objectMap["id"] = mVar.ID
+	}
+	if mVar.Location != nil {
+		objectMap["location"] = mVar.Location
+	}
+	if mVar.Tags != nil {
+		objectMap["tags"] = mVar.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Manager struct.
+func (mVar *Manager) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var managerProperties ManagerProperties
+				err = json.Unmarshal(*v, &managerProperties)
+				if err != nil {
+					return err
+				}
+				mVar.ManagerProperties = &managerProperties
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				mVar.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				mVar.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				mVar.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				mVar.Type = &typeVar
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				mVar.Location = &location
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				mVar.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
+
+// ManagerGroupItem ...
+type ManagerGroupItem struct {
+	// NetworkGroupID - Network manager group Id.
+	NetworkGroupID *string `json:"networkGroupId,omitempty"`
+	// DeleteExistingPeering - Flag if need to remove current peerings.
+	DeleteExistingPeering *bool `json:"deleteExistingPeering,omitempty"`
+	// GroupConnectivity - Group Connectivity. Possible values include: 'Transitive', 'NonTransitive'
+	GroupConnectivity GroupConnectivity `json:"groupConnectivity,omitempty"`
+}
+
+// ManagerListResult result of the request to list NetworkManager. It contains a list of groups and a URL
+// link to get the next set of results.
+type ManagerListResult struct {
+	autorest.Response `json:"-"`
+	// Value - Gets a page of NetworkManager
+	Value *[]Manager `json:"value,omitempty"`
+	// NextLink - Gets the URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// ManagerListResultIterator provides access to a complete listing of Manager values.
+type ManagerListResultIterator struct {
+	i    int
+	page ManagerListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *ManagerListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ManagerListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *ManagerListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter ManagerListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter ManagerListResultIterator) Response() ManagerListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter ManagerListResultIterator) Value() Manager {
+	if !iter.page.NotDone() {
+		return Manager{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the ManagerListResultIterator type.
+func NewManagerListResultIterator(page ManagerListResultPage) ManagerListResultIterator {
+	return ManagerListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (mlr ManagerListResult) IsEmpty() bool {
+	return mlr.Value == nil || len(*mlr.Value) == 0
+}
+
+// managerListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (mlr ManagerListResult) managerListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if mlr.NextLink == nil || len(to.String(mlr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(mlr.NextLink)))
+}
+
+// ManagerListResultPage contains a page of Manager values.
+type ManagerListResultPage struct {
+	fn  func(context.Context, ManagerListResult) (ManagerListResult, error)
+	mlr ManagerListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *ManagerListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ManagerListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.mlr)
+	if err != nil {
+		return err
+	}
+	page.mlr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *ManagerListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page ManagerListResultPage) NotDone() bool {
+	return !page.mlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page ManagerListResultPage) Response() ManagerListResult {
+	return page.mlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page ManagerListResultPage) Values() []Manager {
+	if page.mlr.IsEmpty() {
+		return nil
+	}
+	return *page.mlr.Value
+}
+
+// Creates a new instance of the ManagerListResultPage type.
+func NewManagerListResultPage(getNextPage func(context.Context, ManagerListResult) (ManagerListResult, error)) ManagerListResultPage {
+	return ManagerListResultPage{fn: getNextPage}
+}
+
+// ManagerProperties properties of Managed Network
+type ManagerProperties struct {
+	// DisplayName - A friendly name for the network manager.
+	DisplayName *string `json:"displayName,omitempty"`
+	// Description - A description of the network manager.
+	Description *string `json:"description,omitempty"`
+	// NetworkManagerScopes - Scope of Network Manager.
+	NetworkManagerScopes *ManagerPropertiesNetworkManagerScopes `json:"networkManagerScopes,omitempty"`
+	// NetworkManagerScopeAccesses - Scope Access.
+	NetworkManagerScopeAccesses *[]string `json:"networkManagerScopeAccesses,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the scope assignment resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+	// SafeDeployment - Safe Deployment.
+	SafeDeployment *bool `json:"safeDeployment,omitempty"`
+}
+
+// ManagerPropertiesNetworkManagerScopes scope of Network Manager.
+type ManagerPropertiesNetworkManagerScopes struct {
+	// ManagementGroups - List of management groups.
+	ManagementGroups *[]string `json:"managementGroups,omitempty"`
+	// Subscriptions - List of subscriptions.
+	Subscriptions *[]string `json:"subscriptions,omitempty"`
+}
+
+// ManagerSecurityGroupItem ...
+type ManagerSecurityGroupItem struct {
+	// NetworkGroupID - Network manager group Id.
+	NetworkGroupID *string `json:"networkGroupId,omitempty"`
 }
 
 // MatchCondition define match conditions.
@@ -27652,6 +29044,645 @@ func (rc RuleCondition) AsBasicFirewallPolicyRuleCondition() (BasicFirewallPolic
 	return &rc, true
 }
 
+// SecurityConfiguration defines the security Configuration for a managed network
+type SecurityConfiguration struct {
+	autorest.Response `json:"-"`
+	// SecurityConfigurationPropertiesFormat - Indicates the properties for the managed network security Configuration.
+	*SecurityConfigurationPropertiesFormat `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecurityConfiguration.
+func (sc SecurityConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sc.SecurityConfigurationPropertiesFormat != nil {
+		objectMap["properties"] = sc.SecurityConfigurationPropertiesFormat
+	}
+	if sc.Tags != nil {
+		objectMap["tags"] = sc.Tags
+	}
+	if sc.ID != nil {
+		objectMap["id"] = sc.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for SecurityConfiguration struct.
+func (sc *SecurityConfiguration) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var securityConfigurationPropertiesFormat SecurityConfigurationPropertiesFormat
+				err = json.Unmarshal(*v, &securityConfigurationPropertiesFormat)
+				if err != nil {
+					return err
+				}
+				sc.SecurityConfigurationPropertiesFormat = &securityConfigurationPropertiesFormat
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				sc.Name = &name
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				sc.Tags = tags
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				sc.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				sc.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				sc.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// SecurityConfigurationListResult a list of managed network security configurations
+type SecurityConfigurationListResult struct {
+	autorest.Response `json:"-"`
+	// Value - Gets a page of security configurations
+	Value *[]SecurityConfiguration `json:"value,omitempty"`
+	// NextLink - Gets the URL to get the next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// SecurityConfigurationListResultIterator provides access to a complete listing of SecurityConfiguration
+// values.
+type SecurityConfigurationListResultIterator struct {
+	i    int
+	page SecurityConfigurationListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *SecurityConfigurationListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecurityConfigurationListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *SecurityConfigurationListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter SecurityConfigurationListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter SecurityConfigurationListResultIterator) Response() SecurityConfigurationListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter SecurityConfigurationListResultIterator) Value() SecurityConfiguration {
+	if !iter.page.NotDone() {
+		return SecurityConfiguration{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the SecurityConfigurationListResultIterator type.
+func NewSecurityConfigurationListResultIterator(page SecurityConfigurationListResultPage) SecurityConfigurationListResultIterator {
+	return SecurityConfigurationListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (sclr SecurityConfigurationListResult) IsEmpty() bool {
+	return sclr.Value == nil || len(*sclr.Value) == 0
+}
+
+// securityConfigurationListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (sclr SecurityConfigurationListResult) securityConfigurationListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if sclr.NextLink == nil || len(to.String(sclr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(sclr.NextLink)))
+}
+
+// SecurityConfigurationListResultPage contains a page of SecurityConfiguration values.
+type SecurityConfigurationListResultPage struct {
+	fn   func(context.Context, SecurityConfigurationListResult) (SecurityConfigurationListResult, error)
+	sclr SecurityConfigurationListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *SecurityConfigurationListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecurityConfigurationListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.sclr)
+	if err != nil {
+		return err
+	}
+	page.sclr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *SecurityConfigurationListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page SecurityConfigurationListResultPage) NotDone() bool {
+	return !page.sclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page SecurityConfigurationListResultPage) Response() SecurityConfigurationListResult {
+	return page.sclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page SecurityConfigurationListResultPage) Values() []SecurityConfiguration {
+	if page.sclr.IsEmpty() {
+		return nil
+	}
+	return *page.sclr.Value
+}
+
+// Creates a new instance of the SecurityConfigurationListResultPage type.
+func NewSecurityConfigurationListResultPage(getNextPage func(context.Context, SecurityConfigurationListResult) (SecurityConfigurationListResult, error)) SecurityConfigurationListResultPage {
+	return SecurityConfigurationListResultPage{fn: getNextPage}
+}
+
+// SecurityConfigurationPropertiesFormat defines the security Configuration properties for a managed
+// network
+type SecurityConfigurationPropertiesFormat struct {
+	// DisplayName - A display name of the network manager security Configuration.
+	DisplayName *string `json:"displayName,omitempty"`
+	// Description - A description of the network manager security Configuration.
+	Description *string `json:"description,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the scope assignment resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
+// SecurityConfigurationRule network security rule.
+type SecurityConfigurationRule struct {
+	autorest.Response `json:"-"`
+	// SecurityConfigurationRulePropertiesFormat - Indicates the properties of the security rule
+	*SecurityConfigurationRulePropertiesFormat `json:"properties,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecurityConfigurationRule.
+func (scr SecurityConfigurationRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if scr.SecurityConfigurationRulePropertiesFormat != nil {
+		objectMap["properties"] = scr.SecurityConfigurationRulePropertiesFormat
+	}
+	if scr.Tags != nil {
+		objectMap["tags"] = scr.Tags
+	}
+	if scr.ID != nil {
+		objectMap["id"] = scr.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for SecurityConfigurationRule struct.
+func (scr *SecurityConfigurationRule) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var securityConfigurationRulePropertiesFormat SecurityConfigurationRulePropertiesFormat
+				err = json.Unmarshal(*v, &securityConfigurationRulePropertiesFormat)
+				if err != nil {
+					return err
+				}
+				scr.SecurityConfigurationRulePropertiesFormat = &securityConfigurationRulePropertiesFormat
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				scr.Name = &name
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				scr.Tags = tags
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				scr.Type = &typeVar
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				scr.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				scr.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// SecurityConfigurationRuleListResult ...
+type SecurityConfigurationRuleListResult struct {
+	autorest.Response `json:"-"`
+	// Value - A list of managed network security configuration rules
+	Value *[]SecurityConfigurationRule `json:"value,omitempty"`
+	// NextLink - Gets the URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// SecurityConfigurationRuleListResultIterator provides access to a complete listing of
+// SecurityConfigurationRule values.
+type SecurityConfigurationRuleListResultIterator struct {
+	i    int
+	page SecurityConfigurationRuleListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *SecurityConfigurationRuleListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecurityConfigurationRuleListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *SecurityConfigurationRuleListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter SecurityConfigurationRuleListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter SecurityConfigurationRuleListResultIterator) Response() SecurityConfigurationRuleListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter SecurityConfigurationRuleListResultIterator) Value() SecurityConfigurationRule {
+	if !iter.page.NotDone() {
+		return SecurityConfigurationRule{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the SecurityConfigurationRuleListResultIterator type.
+func NewSecurityConfigurationRuleListResultIterator(page SecurityConfigurationRuleListResultPage) SecurityConfigurationRuleListResultIterator {
+	return SecurityConfigurationRuleListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (scrlr SecurityConfigurationRuleListResult) IsEmpty() bool {
+	return scrlr.Value == nil || len(*scrlr.Value) == 0
+}
+
+// securityConfigurationRuleListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (scrlr SecurityConfigurationRuleListResult) securityConfigurationRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if scrlr.NextLink == nil || len(to.String(scrlr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(scrlr.NextLink)))
+}
+
+// SecurityConfigurationRuleListResultPage contains a page of SecurityConfigurationRule values.
+type SecurityConfigurationRuleListResultPage struct {
+	fn    func(context.Context, SecurityConfigurationRuleListResult) (SecurityConfigurationRuleListResult, error)
+	scrlr SecurityConfigurationRuleListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *SecurityConfigurationRuleListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecurityConfigurationRuleListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.scrlr)
+	if err != nil {
+		return err
+	}
+	page.scrlr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *SecurityConfigurationRuleListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page SecurityConfigurationRuleListResultPage) NotDone() bool {
+	return !page.scrlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page SecurityConfigurationRuleListResultPage) Response() SecurityConfigurationRuleListResult {
+	return page.scrlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page SecurityConfigurationRuleListResultPage) Values() []SecurityConfigurationRule {
+	if page.scrlr.IsEmpty() {
+		return nil
+	}
+	return *page.scrlr.Value
+}
+
+// Creates a new instance of the SecurityConfigurationRuleListResultPage type.
+func NewSecurityConfigurationRuleListResultPage(getNextPage func(context.Context, SecurityConfigurationRuleListResult) (SecurityConfigurationRuleListResult, error)) SecurityConfigurationRuleListResultPage {
+	return SecurityConfigurationRuleListResultPage{fn: getNextPage}
+}
+
+// SecurityConfigurationRulePropertiesFormat security rule resource.
+type SecurityConfigurationRulePropertiesFormat struct {
+	// DisplayName - A friendly name for the rule.
+	DisplayName *string `json:"displayName,omitempty"`
+	// Description - A description for this rule. Restricted to 140 chars.
+	Description *string `json:"description,omitempty"`
+	// Protocol - Network protocol this rule applies to. Possible values include: 'SecurityConfigurationRuleProtocolTCP', 'SecurityConfigurationRuleProtocolUDP', 'SecurityConfigurationRuleProtocolIcmp', 'SecurityConfigurationRuleProtocolEsp', 'SecurityConfigurationRuleProtocolAsterisk', 'SecurityConfigurationRuleProtocolAh'
+	Protocol SecurityConfigurationRuleProtocol `json:"protocol,omitempty"`
+	// SourceAddressPrefixes - The CIDR or source IP ranges.
+	SourceAddressPrefixes *[]string `json:"sourceAddressPrefixes,omitempty"`
+	// DestinationAddressPrefixes - The destination address prefixes. CIDR or destination IP ranges.
+	DestinationAddressPrefixes *[]string `json:"destinationAddressPrefixes,omitempty"`
+	// SourcePortRanges - The source port ranges.
+	SourcePortRanges *[]string `json:"sourcePortRanges,omitempty"`
+	// DestinationPortRanges - The destination port ranges.
+	DestinationPortRanges *[]string `json:"destinationPortRanges,omitempty"`
+	// Access - Indicates the access allowed for this particular rule. Possible values include: 'SecurityConfigurationRuleAccessAllow', 'SecurityConfigurationRuleAccessDeny', 'SecurityConfigurationRuleAccessAlwaysAllow'
+	Access SecurityConfigurationRuleAccess `json:"access,omitempty"`
+	// Priority - The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule.
+	Priority *int32 `json:"priority,omitempty"`
+	// Direction - Indicates if the traffic matched against the rule in inbound or outbound. Possible values include: 'SecurityConfigurationRuleDirectionInbound', 'SecurityConfigurationRuleDirectionOutbound'
+	Direction SecurityConfigurationRuleDirection `json:"direction,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the security Configuration resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+	// AppliesToGroups - Groups for configuration
+	AppliesToGroups *[]ManagerSecurityGroupItem `json:"appliesToGroups,omitempty"`
+}
+
+// SecurityConfigurationRulesCreateOrUpdateRuleFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type SecurityConfigurationRulesCreateOrUpdateRuleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SecurityConfigurationRulesCreateOrUpdateRuleFuture) Result(client SecurityConfigurationRulesClient) (scr SecurityConfigurationRule, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.SecurityConfigurationRulesCreateOrUpdateRuleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.SecurityConfigurationRulesCreateOrUpdateRuleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if scr.Response.Response, err = future.GetResult(sender); err == nil && scr.Response.Response.StatusCode != http.StatusNoContent {
+		scr, err = client.CreateOrUpdateRuleResponder(scr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.SecurityConfigurationRulesCreateOrUpdateRuleFuture", "Result", scr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SecurityConfigurationRulesDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SecurityConfigurationRulesDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SecurityConfigurationRulesDeleteFuture) Result(client SecurityConfigurationRulesClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.SecurityConfigurationRulesDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.SecurityConfigurationRulesDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
+// SecurityConfigurationsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SecurityConfigurationsCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SecurityConfigurationsCreateOrUpdateFuture) Result(client SecurityConfigurationsClient) (sc SecurityConfiguration, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.SecurityConfigurationsCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.SecurityConfigurationsCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if sc.Response.Response, err = future.GetResult(sender); err == nil && sc.Response.Response.StatusCode != http.StatusNoContent {
+		sc, err = client.CreateOrUpdateResponder(sc.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.SecurityConfigurationsCreateOrUpdateFuture", "Result", sc.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SecurityConfigurationsDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SecurityConfigurationsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SecurityConfigurationsDeleteFuture) Result(client SecurityConfigurationsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.SecurityConfigurationsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.SecurityConfigurationsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // SecurityGroup networkSecurityGroup resource.
 type SecurityGroup struct {
 	autorest.Response `json:"-"`
@@ -29543,8 +31574,8 @@ func (toVar TagsObject) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Topology topology of the specified resource group.
-type Topology struct {
+// Topology1 topology of the specified resource group.
+type Topology1 struct {
 	autorest.Response `json:"-"`
 	// ID - READ-ONLY; GUID representing the operation id.
 	ID *string `json:"id,omitempty"`
