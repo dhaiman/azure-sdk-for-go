@@ -30064,6 +30064,8 @@ type VirtualHubProperties struct {
 	P2SVpnGateway *SubResource `json:"p2SVpnGateway,omitempty"`
 	// ExpressRouteGateway - The expressRouteGateway associated with this VirtualHub.
 	ExpressRouteGateway *SubResource `json:"expressRouteGateway,omitempty"`
+	// TrustedSecurityPartner - The trustedSecurityPartner associated with this VirtualHub.
+	TrustedSecurityPartner *SubResource `json:"trustedSecurityPartner,omitempty"`
 	// AzureFirewall - The azureFirewall associated with this VirtualHub.
 	AzureFirewall *SubResource `json:"azureFirewall,omitempty"`
 	// VirtualNetworkConnections - List of all vnet connections with this VirtualHub.
