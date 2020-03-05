@@ -1434,6 +1434,21 @@ func PossibleServerKeyTypeValues() []ServerKeyType {
 	return []ServerKeyType{AzureKeyVault, ServiceManaged}
 }
 
+// ServerPublicNetworkAccess enumerates the values for server public network access.
+type ServerPublicNetworkAccess string
+
+const (
+	// ServerPublicNetworkAccessDisabled ...
+	ServerPublicNetworkAccessDisabled ServerPublicNetworkAccess = "Disabled"
+	// ServerPublicNetworkAccessEnabled ...
+	ServerPublicNetworkAccessEnabled ServerPublicNetworkAccess = "Enabled"
+)
+
+// PossibleServerPublicNetworkAccessValues returns an array of possible values for the ServerPublicNetworkAccess const type.
+func PossibleServerPublicNetworkAccessValues() []ServerPublicNetworkAccess {
+	return []ServerPublicNetworkAccess{ServerPublicNetworkAccessDisabled, ServerPublicNetworkAccessEnabled}
+}
+
 // ServiceObjectiveName enumerates the values for service objective name.
 type ServiceObjectiveName string
 
@@ -11102,6 +11117,103 @@ type ManagedDatabaseProperties struct {
 	LongTermRetentionBackupResourceID *string `json:"longTermRetentionBackupResourceId,omitempty"`
 }
 
+// ManagedDatabaseRestoreDetailsProperties the managed database's restore details properties.
+type ManagedDatabaseRestoreDetailsProperties struct {
+	// Status - READ-ONLY; Restore status.
+	Status *string `json:"status,omitempty"`
+	// CurrentRestoringFileName - READ-ONLY; Current restoring file name.
+	CurrentRestoringFileName *string `json:"currentRestoringFileName,omitempty"`
+	// LastRestoredFileName - READ-ONLY; Last restored file name.
+	LastRestoredFileName *string `json:"lastRestoredFileName,omitempty"`
+	// LastRestoredFileTime - READ-ONLY; Last restored file time.
+	LastRestoredFileTime *date.Time `json:"lastRestoredFileTime,omitempty"`
+	// PercentCompleted - READ-ONLY; Percent completed.
+	PercentCompleted *float64 `json:"percentCompleted,omitempty"`
+	// UnrestorableFiles - READ-ONLY; List of unrestorable files.
+	UnrestorableFiles *[]string `json:"unrestorableFiles,omitempty"`
+	// NumberOfFilesDetected - READ-ONLY; Number of files detected.
+	NumberOfFilesDetected *int64 `json:"numberOfFilesDetected,omitempty"`
+	// LastUploadedFileName - READ-ONLY; Last uploaded file name.
+	LastUploadedFileName *string `json:"lastUploadedFileName,omitempty"`
+	// LastUploadedFileTime - READ-ONLY; Last uploaded file time.
+	LastUploadedFileTime *date.Time `json:"lastUploadedFileTime,omitempty"`
+	// BlockReason - READ-ONLY; The reason why restore is in Blocked state.
+	BlockReason *string `json:"blockReason,omitempty"`
+}
+
+// ManagedDatabaseRestoreDetailsResult a managed database restore details.
+type ManagedDatabaseRestoreDetailsResult struct {
+	autorest.Response `json:"-"`
+	// ManagedDatabaseRestoreDetailsProperties - Resource properties.
+	*ManagedDatabaseRestoreDetailsProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource ID.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ManagedDatabaseRestoreDetailsResult.
+func (mdrdr ManagedDatabaseRestoreDetailsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if mdrdr.ManagedDatabaseRestoreDetailsProperties != nil {
+		objectMap["properties"] = mdrdr.ManagedDatabaseRestoreDetailsProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ManagedDatabaseRestoreDetailsResult struct.
+func (mdrdr *ManagedDatabaseRestoreDetailsResult) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var managedDatabaseRestoreDetailsProperties ManagedDatabaseRestoreDetailsProperties
+				err = json.Unmarshal(*v, &managedDatabaseRestoreDetailsProperties)
+				if err != nil {
+					return err
+				}
+				mdrdr.ManagedDatabaseRestoreDetailsProperties = &managedDatabaseRestoreDetailsProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				mdrdr.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				mdrdr.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				mdrdr.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // ManagedDatabasesCompleteRestoreFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type ManagedDatabasesCompleteRestoreFuture struct {
@@ -13223,6 +13335,8 @@ type ManagedInstanceProperties struct {
 	TimezoneID *string `json:"timezoneId,omitempty"`
 	// InstancePoolID - The Id of the instance pool this managed server belongs to.
 	InstancePoolID *string `json:"instancePoolId,omitempty"`
+	// MinimalTLSVersion - Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
+	MinimalTLSVersion *string `json:"minimalTlsVersion,omitempty"`
 }
 
 // ManagedInstancesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -17995,6 +18109,8 @@ type ServerProperties struct {
 	PrivateEndpointConnections *[]ServerPrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 	// MinimalTLSVersion - Minimal TLS version. Allowed values: '1.0', '1.1', '1.2'
 	MinimalTLSVersion *string `json:"minimalTlsVersion,omitempty"`
+	// PublicNetworkAccess - Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. Possible values include: 'ServerPublicNetworkAccessEnabled', 'ServerPublicNetworkAccessDisabled'
+	PublicNetworkAccess ServerPublicNetworkAccess `json:"publicNetworkAccess,omitempty"`
 }
 
 // ServersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
