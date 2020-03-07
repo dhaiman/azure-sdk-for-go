@@ -473,7 +473,7 @@ type CachesDeleteFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *CachesDeleteFuture) Result(client CachesClient) (so SetObject, err error) {
+func (future *CachesDeleteFuture) Result(client CachesClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -484,13 +484,7 @@ func (future *CachesDeleteFuture) Result(client CachesClient) (so SetObject, err
 		err = azure.NewAsyncOpIncompleteError("storagecache.CachesDeleteFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.DeleteResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.CachesDeleteFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -501,7 +495,7 @@ type CachesFlushFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *CachesFlushFuture) Result(client CachesClient) (so SetObject, err error) {
+func (future *CachesFlushFuture) Result(client CachesClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -512,13 +506,7 @@ func (future *CachesFlushFuture) Result(client CachesClient) (so SetObject, err 
 		err = azure.NewAsyncOpIncompleteError("storagecache.CachesFlushFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.FlushResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.CachesFlushFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -682,7 +670,7 @@ type CachesStartFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *CachesStartFuture) Result(client CachesClient) (so SetObject, err error) {
+func (future *CachesStartFuture) Result(client CachesClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -693,13 +681,7 @@ func (future *CachesStartFuture) Result(client CachesClient) (so SetObject, err 
 		err = azure.NewAsyncOpIncompleteError("storagecache.CachesStartFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.StartResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.CachesStartFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -710,7 +692,7 @@ type CachesStopFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *CachesStopFuture) Result(client CachesClient) (so SetObject, err error) {
+func (future *CachesStopFuture) Result(client CachesClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -721,13 +703,7 @@ func (future *CachesStopFuture) Result(client CachesClient) (so SetObject, err e
 		err = azure.NewAsyncOpIncompleteError("storagecache.CachesStopFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.StopResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.CachesStopFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -739,7 +715,7 @@ type CachesUpgradeFirmwareFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *CachesUpgradeFirmwareFuture) Result(client CachesClient) (so SetObject, err error) {
+func (future *CachesUpgradeFirmwareFuture) Result(client CachesClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -750,13 +726,7 @@ func (future *CachesUpgradeFirmwareFuture) Result(client CachesClient) (so SetOb
 		err = azure.NewAsyncOpIncompleteError("storagecache.CachesUpgradeFirmwareFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.UpgradeFirmwareResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.CachesUpgradeFirmwareFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1004,12 +974,6 @@ type Restriction struct {
 	ReasonCode ReasonCode `json:"reasonCode,omitempty"`
 }
 
-// SetObject ...
-type SetObject struct {
-	autorest.Response `json:"-"`
-	Value             interface{} `json:"value,omitempty"`
-}
-
 // StorageTarget a storage system being cached by a Cache.
 type StorageTarget struct {
 	autorest.Response `json:"-"`
@@ -1136,7 +1100,7 @@ type StorageTargetsDeleteFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *StorageTargetsDeleteFuture) Result(client StorageTargetsClient) (so SetObject, err error) {
+func (future *StorageTargetsDeleteFuture) Result(client StorageTargetsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -1147,13 +1111,7 @@ func (future *StorageTargetsDeleteFuture) Result(client StorageTargetsClient) (s
 		err = azure.NewAsyncOpIncompleteError("storagecache.StorageTargetsDeleteFuture")
 		return
 	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
-		so, err = client.DeleteResponder(so.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "storagecache.StorageTargetsDeleteFuture", "Result", so.Response.Response, "Failure responding to request")
-		}
-	}
+	ar.Response = future.Response()
 	return
 }
 
