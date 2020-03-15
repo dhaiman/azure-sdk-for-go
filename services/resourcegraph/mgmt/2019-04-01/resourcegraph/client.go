@@ -1,6 +1,6 @@
-// Package resourcegraph implements the Azure ARM Resourcegraph service API version 2019-04-01.
+// Package resourcegraph implements the Azure ARM Resourcegraph service API version .
 //
-// Azure Resource Graph API Reference
+//
 package resourcegraph
 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
@@ -21,121 +21,124 @@ package resourcegraph
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/validation"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "context"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "github.com/Azure/go-autorest/autorest/validation"
+    "github.com/Azure/go-autorest/tracing"
+    "net/http"
 )
 
 const (
-	// DefaultBaseURI is the default URI used for the service Resourcegraph
-	DefaultBaseURI = "https://management.azure.com"
-)
+// DefaultBaseURI is the default URI used for the service Resourcegraph
+DefaultBaseURI = "https://management.azure.com")
 
 // BaseClient is the base client for Resourcegraph.
 type BaseClient struct {
-	autorest.Client
-	BaseURI string
+    autorest.Client
+    BaseURI string
+            SubscriptionID string
 }
 
 // New creates an instance of the BaseClient client.
-func New() BaseClient {
-	return NewWithBaseURI(DefaultBaseURI)
+func New(subscriptionID string)BaseClient {
+    return NewWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewWithBaseURI creates an instance of the BaseClient client using a custom endpoint.  Use this when interacting with
 // an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewWithBaseURI(baseURI string) BaseClient {
-	return BaseClient{
-		Client:  autorest.NewClientWithUserAgent(UserAgent()),
-		BaseURI: baseURI,
-	}
+func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
+    return BaseClient{
+        Client: autorest.NewClientWithUserAgent(UserAgent()),
+        BaseURI: baseURI,
+                SubscriptionID: subscriptionID,
+    }
 }
 
-// Resources queries the resources managed by Azure Resource Manager for all subscriptions specified in the request.
-// Parameters:
-// query - request specifying query and its options.
-func (client BaseClient) Resources(ctx context.Context, query QueryRequest) (result QueryResponse, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.Resources")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: query,
-			Constraints: []validation.Constraint{{Target: "query.Subscriptions", Name: validation.Null, Rule: true, Chain: nil},
-				{Target: "query.Query", Name: validation.Null, Rule: true, Chain: nil},
-				{Target: "query.Options", Name: validation.Null, Rule: false,
-					Chain: []validation.Constraint{{Target: "query.Options.Top", Name: validation.Null, Rule: false,
-						Chain: []validation.Constraint{{Target: "query.Options.Top", Name: validation.InclusiveMaximum, Rule: int64(1000), Chain: nil},
-							{Target: "query.Options.Top", Name: validation.InclusiveMinimum, Rule: int64(1), Chain: nil},
-						}},
-						{Target: "query.Options.Skip", Name: validation.Null, Rule: false,
-							Chain: []validation.Constraint{{Target: "query.Options.Skip", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil}}},
-					}}}}}); err != nil {
-		return result, validation.NewError("resourcegraph.BaseClient", "Resources", err.Error())
-	}
+    // Resources queries the resources managed by Azure Resource Manager for all subscriptions specified in the request.
+        // Parameters:
+            // query - request specifying query and its options.
+    func (client BaseClient) Resources(ctx context.Context, query QueryRequest) (result QueryResponse, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.Resources")
+            defer func() {
+                sc := -1
+                if result.Response.Response != nil {
+                    sc = result.Response.Response.StatusCode
+                }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+                if err := validation.Validate([]validation.Validation{
+                { TargetValue: query,
+                 Constraints: []validation.Constraint{	{Target: "query.Subscriptions", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "query.Query", Name: validation.Null, Rule: true, Chain: nil },
+                	{Target: "query.Options", Name: validation.Null, Rule: false ,
+                Chain: []validation.Constraint{	{Target: "query.Options.Top", Name: validation.Null, Rule: false ,
+                Chain: []validation.Constraint{	{Target: "query.Options.Top", Name: validation.InclusiveMaximum, Rule: int64(1000), Chain: nil },
+                	{Target: "query.Options.Top", Name: validation.InclusiveMinimum, Rule: int64(1), Chain: nil },
+                }},
+                	{Target: "query.Options.Skip", Name: validation.Null, Rule: false ,
+                Chain: []validation.Constraint{	{Target: "query.Options.Skip", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil },
+                }},
+                }}}}}); err != nil {
+                return result, validation.NewError("resourcegraph.BaseClient", "Resources", err.Error())
+                }
 
-	req, err := client.ResourcesPreparer(ctx, query)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", nil, "Failure preparing request")
-		return
-	}
+                    req, err := client.ResourcesPreparer(ctx, query)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", nil , "Failure preparing request")
+        return
+        }
 
-	resp, err := client.ResourcesSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", resp, "Failure sending request")
-		return
-	}
+                resp, err := client.ResourcesSender(req)
+                if err != nil {
+                result.Response = autorest.Response{Response: resp}
+                err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", resp, "Failure sending request")
+                return
+                }
 
-	result, err = client.ResourcesResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", resp, "Failure responding to request")
-	}
+                result, err = client.ResourcesResponder(resp)
+                if err != nil {
+                err = autorest.NewErrorWithError(err, "resourcegraph.BaseClient", "Resources", resp, "Failure responding to request")
+                }
 
-	return
-}
+        return
+        }
 
-// ResourcesPreparer prepares the Resources request.
-func (client BaseClient) ResourcesPreparer(ctx context.Context, query QueryRequest) (*http.Request, error) {
-	const APIVersion = "2019-04-01"
-	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
-	}
+        // ResourcesPreparer prepares the Resources request.
+        func (client BaseClient) ResourcesPreparer(ctx context.Context, query QueryRequest) (*http.Request, error) {
+                        const APIVersion = "2019-04-01"
+            queryParameters := map[string]interface{} {
+            "api-version": APIVersion,
+            }
 
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPost(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/providers/Microsoft.ResourceGraph/resources"),
-		autorest.WithJSON(query),
-		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+            preparer := autorest.CreatePreparer(
+        autorest.AsContentType("application/json; charset=utf-8"),
+        autorest.AsPost(),
+        autorest.WithBaseURL(client.BaseURI),
+        autorest.WithPath("/providers/Microsoft.ResourceGraph/resources"),
+        autorest.WithJSON(query),
+        autorest.WithQueryParameters(queryParameters))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
 
-// ResourcesSender sends the Resources request. The method will close the
-// http.Response Body if it receives an error.
-func (client BaseClient) ResourcesSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+        // ResourcesSender sends the Resources request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) ResourcesSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                }
 
-// ResourcesResponder handles the response to the Resources request. The method always
-// closes the http.Response Body.
-func (client BaseClient) ResourcesResponder(resp *http.Response) (result QueryResponse, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // ResourcesResponder handles the response to the Resources request. The method always
+    // closes the http.Response Body.
+    func (client BaseClient) ResourcesResponder(resp *http.Response) (result QueryResponse, err error) {
+        err = autorest.Respond(
+        resp,
+        client.ByInspecting(),
+        azure.WithErrorUnlessStatusCode(http.StatusOK),
+        autorest.ByUnmarshallingJSON(&result),
+        autorest.ByClosing())
+        result.Response = autorest.Response{Response: resp}
+            return
+        }
+
