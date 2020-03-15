@@ -25,20 +25,20 @@ import (
 	"net/http"
 )
 
-// OperationsClient is the azure Resource Graph API Reference
+// OperationsClient is the client for the Operations methods of the Resourcegraph service.
 type OperationsClient struct {
 	BaseClient
 }
 
 // NewOperationsClient creates an instance of the OperationsClient client.
-func NewOperationsClient() OperationsClient {
-	return NewOperationsClientWithBaseURI(DefaultBaseURI)
+func NewOperationsClient(subscriptionID string) OperationsClient {
+	return NewOperationsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewOperationsClientWithBaseURI creates an instance of the OperationsClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewOperationsClientWithBaseURI(baseURI string) OperationsClient {
-	return OperationsClient{NewWithBaseURI(baseURI)}
+func NewOperationsClientWithBaseURI(baseURI string, subscriptionID string) OperationsClient {
+	return OperationsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // List lists all of the available REST API operations.

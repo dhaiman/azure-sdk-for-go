@@ -20,6 +20,7 @@ package resourcegraphapi
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/services/resourcegraph/mgmt/2019-04-01/resourcegraph"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // BaseClientAPI contains the set of methods on the BaseClient type.
@@ -35,3 +36,15 @@ type OperationsClientAPI interface {
 }
 
 var _ OperationsClientAPI = (*resourcegraph.OperationsClient)(nil)
+
+// GraphQueryClientAPI contains the set of methods on the GraphQueryClient type.
+type GraphQueryClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, resourceName string, properties resourcegraph.GraphQueryResource) (result resourcegraph.GraphQueryResource, err error)
+	Delete(ctx context.Context, resourceGroupName string, resourceName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, resourceName string) (result resourcegraph.GraphQueryResource, err error)
+	List(ctx context.Context, resourceGroupName string) (result resourcegraph.GraphQueryListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string) (result resourcegraph.GraphQueryListResultIterator, err error)
+	Update(ctx context.Context, resourceGroupName string, resourceName string, body resourcegraph.GraphQueryUpdateParameters) (result resourcegraph.GraphQueryResource, err error)
+}
+
+var _ GraphQueryClientAPI = (*resourcegraph.GraphQueryClient)(nil)

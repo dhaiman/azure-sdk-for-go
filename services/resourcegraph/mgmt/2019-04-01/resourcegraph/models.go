@@ -18,8 +18,13 @@ package resourcegraph
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/autorest/to"
+	"github.com/Azure/go-autorest/tracing"
+	"net/http"
 )
 
 // The package's fully qualified name.
@@ -74,6 +79,19 @@ const (
 // PossibleResultFormatValues returns an array of possible values for the ResultFormat const type.
 func PossibleResultFormatValues() []ResultFormat {
 	return []ResultFormat{ResultFormatObjectArray, ResultFormatTable}
+}
+
+// ResultKind enumerates the values for result kind.
+type ResultKind string
+
+const (
+	// Basic ...
+	Basic ResultKind = "basic"
+)
+
+// PossibleResultKindValues returns an array of possible values for the ResultKind const type.
+func PossibleResultKindValues() []ResultKind {
+	return []ResultKind{Basic}
 }
 
 // ResultTruncated enumerates the values for result truncated.
@@ -194,6 +212,16 @@ func (ed *ErrorDetails) UnmarshalJSON(body []byte) error {
 	}
 
 	return nil
+}
+
+// ErrorFieldContract error Field contract.
+type ErrorFieldContract struct {
+	// Code - Property level error code.
+	Code *string `json:"code,omitempty"`
+	// Message - Human-readable representation of property-level error.
+	Message *string `json:"message,omitempty"`
+	// Target - Property name.
+	Target *string `json:"target,omitempty"`
 }
 
 // ErrorResponse an error response from the API.
@@ -415,6 +443,351 @@ func (fr FacetResult) AsBasicFacet() (BasicFacet, bool) {
 	return &fr, true
 }
 
+// GraphQueryError error message body that will indicate why the operation failed.
+type GraphQueryError struct {
+	// Code - Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response.
+	Code *string `json:"code,omitempty"`
+	// Message - Human-readable representation of the error.
+	Message *string `json:"message,omitempty"`
+	// Details - The list of invalid fields send in request, in case of validation error.
+	Details *[]ErrorFieldContract `json:"details,omitempty"`
+}
+
+// GraphQueryListResult graph query list result.
+type GraphQueryListResult struct {
+	autorest.Response `json:"-"`
+	// NextLink - URL to fetch the next set of queries.
+	NextLink *string `json:"nextLink,omitempty"`
+	// Value - READ-ONLY; An array of graph queries.
+	Value *[]GraphQueryResource `json:"value,omitempty"`
+}
+
+// GraphQueryListResultIterator provides access to a complete listing of GraphQueryResource values.
+type GraphQueryListResultIterator struct {
+	i    int
+	page GraphQueryListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *GraphQueryListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/GraphQueryListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *GraphQueryListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter GraphQueryListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter GraphQueryListResultIterator) Response() GraphQueryListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter GraphQueryListResultIterator) Value() GraphQueryResource {
+	if !iter.page.NotDone() {
+		return GraphQueryResource{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the GraphQueryListResultIterator type.
+func NewGraphQueryListResultIterator(page GraphQueryListResultPage) GraphQueryListResultIterator {
+	return GraphQueryListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (gqlr GraphQueryListResult) IsEmpty() bool {
+	return gqlr.Value == nil || len(*gqlr.Value) == 0
+}
+
+// graphQueryListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (gqlr GraphQueryListResult) graphQueryListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if gqlr.NextLink == nil || len(to.String(gqlr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(gqlr.NextLink)))
+}
+
+// GraphQueryListResultPage contains a page of GraphQueryResource values.
+type GraphQueryListResultPage struct {
+	fn   func(context.Context, GraphQueryListResult) (GraphQueryListResult, error)
+	gqlr GraphQueryListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *GraphQueryListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/GraphQueryListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.gqlr)
+	if err != nil {
+		return err
+	}
+	page.gqlr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *GraphQueryListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page GraphQueryListResultPage) NotDone() bool {
+	return !page.gqlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page GraphQueryListResultPage) Response() GraphQueryListResult {
+	return page.gqlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page GraphQueryListResultPage) Values() []GraphQueryResource {
+	if page.gqlr.IsEmpty() {
+		return nil
+	}
+	return *page.gqlr.Value
+}
+
+// Creates a new instance of the GraphQueryListResultPage type.
+func NewGraphQueryListResultPage(getNextPage func(context.Context, GraphQueryListResult) (GraphQueryListResult, error)) GraphQueryListResultPage {
+	return GraphQueryListResultPage{fn: getNextPage}
+}
+
+// GraphQueryProperties properties that contain a graph query.
+type GraphQueryProperties struct {
+	// TimeModified - READ-ONLY; Date and time in UTC of the last modification that was made to this graph query definition.
+	TimeModified *date.Time `json:"timeModified,omitempty"`
+	// Description - The description of a graph query.
+	Description *string `json:"description,omitempty"`
+	// Query - KQL query that will be graph.
+	Query *string `json:"query,omitempty"`
+	// ResultKind - READ-ONLY; Enum indicating a type of graph query. Possible values include: 'Basic'
+	ResultKind ResultKind `json:"resultKind,omitempty"`
+}
+
+// GraphQueryPropertiesUpdateParameters properties that contain a workbook for PATCH operation.
+type GraphQueryPropertiesUpdateParameters struct {
+	// Description - The description of a graph query.
+	Description *string `json:"description,omitempty"`
+	// Query - KQL query that will be graph.
+	Query *string `json:"query,omitempty"`
+}
+
+// GraphQueryResource graph Query entity definition.
+type GraphQueryResource struct {
+	autorest.Response `json:"-"`
+	// GraphQueryProperties - Metadata describing a graph query for an Azure resource.
+	*GraphQueryProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Azure resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Azure resource name. This is GUID value. The display name should be assigned within properties field.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Azure resource type
+	Type *string `json:"type,omitempty"`
+	// ETag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
+	ETag *string `json:"eTag,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for GraphQueryResource.
+func (gqr GraphQueryResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if gqr.GraphQueryProperties != nil {
+		objectMap["properties"] = gqr.GraphQueryProperties
+	}
+	if gqr.ETag != nil {
+		objectMap["eTag"] = gqr.ETag
+	}
+	if gqr.Tags != nil {
+		objectMap["tags"] = gqr.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for GraphQueryResource struct.
+func (gqr *GraphQueryResource) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var graphQueryProperties GraphQueryProperties
+				err = json.Unmarshal(*v, &graphQueryProperties)
+				if err != nil {
+					return err
+				}
+				gqr.GraphQueryProperties = &graphQueryProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				gqr.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				gqr.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				gqr.Type = &typeVar
+			}
+		case "eTag":
+			if v != nil {
+				var eTag string
+				err = json.Unmarshal(*v, &eTag)
+				if err != nil {
+					return err
+				}
+				gqr.ETag = &eTag
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				gqr.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
+
+// GraphQueryUpdateParameters the parameters that can be provided when updating workbook properties
+// properties.
+type GraphQueryUpdateParameters struct {
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+	// ETag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
+	ETag *string `json:"eTag,omitempty"`
+	// GraphQueryPropertiesUpdateParameters - Metadata describing a graph query for an Azure resource.
+	*GraphQueryPropertiesUpdateParameters `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for GraphQueryUpdateParameters.
+func (gqup GraphQueryUpdateParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if gqup.Tags != nil {
+		objectMap["tags"] = gqup.Tags
+	}
+	if gqup.ETag != nil {
+		objectMap["eTag"] = gqup.ETag
+	}
+	if gqup.GraphQueryPropertiesUpdateParameters != nil {
+		objectMap["properties"] = gqup.GraphQueryPropertiesUpdateParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for GraphQueryUpdateParameters struct.
+func (gqup *GraphQueryUpdateParameters) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				gqup.Tags = tags
+			}
+		case "eTag":
+			if v != nil {
+				var eTag string
+				err = json.Unmarshal(*v, &eTag)
+				if err != nil {
+					return err
+				}
+				gqup.ETag = &eTag
+			}
+		case "properties":
+			if v != nil {
+				var graphQueryPropertiesUpdateParameters GraphQueryPropertiesUpdateParameters
+				err = json.Unmarshal(*v, &graphQueryPropertiesUpdateParameters)
+				if err != nil {
+					return err
+				}
+				gqup.GraphQueryPropertiesUpdateParameters = &graphQueryPropertiesUpdateParameters
+			}
+		}
+	}
+
+	return nil
+}
+
 // Operation resource Graph REST API operation definition.
 type Operation struct {
 	// Name - Operation name: {provider}/{resource}/{operation}
@@ -552,6 +925,32 @@ func (qr *QueryResponse) UnmarshalJSON(body []byte) error {
 	}
 
 	return nil
+}
+
+// Resource an azure resource object
+type Resource struct {
+	// ID - READ-ONLY; Azure resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Azure resource name. This is GUID value. The display name should be assigned within properties field.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Azure resource type
+	Type *string `json:"type,omitempty"`
+	// ETag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
+	ETag *string `json:"eTag,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.ETag != nil {
+		objectMap["eTag"] = r.ETag
+	}
+	if r.Tags != nil {
+		objectMap["tags"] = r.Tags
+	}
+	return json.Marshal(objectMap)
 }
 
 // Table query output in tabular format.

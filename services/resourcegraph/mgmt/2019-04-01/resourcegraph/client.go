@@ -1,6 +1,6 @@
-// Package resourcegraph implements the Azure ARM Resourcegraph service API version 2019-04-01.
+// Package resourcegraph implements the Azure ARM Resourcegraph service API version .
 //
-// Azure Resource Graph API Reference
+//
 package resourcegraph
 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
@@ -37,20 +37,22 @@ const (
 // BaseClient is the base client for Resourcegraph.
 type BaseClient struct {
 	autorest.Client
-	BaseURI string
+	BaseURI        string
+	SubscriptionID string
 }
 
 // New creates an instance of the BaseClient client.
-func New() BaseClient {
-	return NewWithBaseURI(DefaultBaseURI)
+func New(subscriptionID string) BaseClient {
+	return NewWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewWithBaseURI creates an instance of the BaseClient client using a custom endpoint.  Use this when interacting with
 // an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewWithBaseURI(baseURI string) BaseClient {
+func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 	return BaseClient{
-		Client:  autorest.NewClientWithUserAgent(UserAgent()),
-		BaseURI: baseURI,
+		Client:         autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI:        baseURI,
+		SubscriptionID: subscriptionID,
 	}
 }
 
