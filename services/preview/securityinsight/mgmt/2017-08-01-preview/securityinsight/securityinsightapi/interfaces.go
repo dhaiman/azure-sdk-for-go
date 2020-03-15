@@ -18,48 +18,45 @@ package securityinsightapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/services/preview/securityinsight/mgmt/2017-08-01-preview/securityinsight"
-	"github.com/Azure/go-autorest/autorest"
+    "context"
+    "github.com/Azure/azure-sdk-for-go/services/preview/securityinsight/mgmt/2017-08-01-preview/securityinsight"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result securityinsight.OperationsListPage, err error)
-	ListComplete(ctx context.Context) (result securityinsight.OperationsListIterator, err error)
-}
+        // OperationsClientAPI contains the set of methods on the OperationsClient type.
+        type OperationsClientAPI interface {
+            List(ctx context.Context) (result securityinsight.OperationsListPage, err error)
+                ListComplete(ctx context.Context) (result securityinsight.OperationsListIterator, err error)
+        }
 
-var _ OperationsClientAPI = (*securityinsight.OperationsClient)(nil)
+        var _ OperationsClientAPI = (*securityinsight.OperationsClient)(nil)
+        // AlertRulesClientAPI contains the set of methods on the AlertRulesClient type.
+        type AlertRulesClientAPI interface {
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, alertRule securityinsight.BasicAlertRule) (result securityinsight.AlertRuleModel, err error)
+            CreateOrUpdateAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string, action securityinsight.ActionRequest) (result securityinsight.ActionResponse, err error)
+            Delete(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result autorest.Response, err error)
+            DeleteAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string) (result autorest.Response, err error)
+            Get(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.AlertRuleModel, err error)
+            GetAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string) (result securityinsight.ActionResponse, err error)
+            List(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.AlertRulesListPage, err error)
+                ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.AlertRulesListIterator, err error)
+        }
 
-// AlertRulesClientAPI contains the set of methods on the AlertRulesClient type.
-type AlertRulesClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, alertRule securityinsight.BasicAlertRule) (result securityinsight.AlertRuleModel, err error)
-	CreateOrUpdateAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string, action securityinsight.ActionRequest) (result securityinsight.ActionResponse, err error)
-	Delete(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result autorest.Response, err error)
-	DeleteAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.AlertRuleModel, err error)
-	GetAction(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string, actionID string) (result securityinsight.ActionResponse, err error)
-	List(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.AlertRulesListPage, err error)
-	ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.AlertRulesListIterator, err error)
-}
+        var _ AlertRulesClientAPI = (*securityinsight.AlertRulesClient)(nil)
+        // ActionsClientAPI contains the set of methods on the ActionsClient type.
+        type ActionsClientAPI interface {
+            ListByAlertRule(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.ActionsListPage, err error)
+                ListByAlertRuleComplete(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.ActionsListIterator, err error)
+        }
 
-var _ AlertRulesClientAPI = (*securityinsight.AlertRulesClient)(nil)
+        var _ ActionsClientAPI = (*securityinsight.ActionsClient)(nil)
+        // DataConnectorsClientAPI contains the set of methods on the DataConnectorsClient type.
+        type DataConnectorsClientAPI interface {
+            CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string, dataConnector securityinsight.BasicDataConnector) (result securityinsight.DataConnectorModel, err error)
+            Delete(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string) (result autorest.Response, err error)
+            Get(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string) (result securityinsight.DataConnectorModel, err error)
+            List(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.DataConnectorListPage, err error)
+                ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.DataConnectorListIterator, err error)
+        }
 
-// ActionsClientAPI contains the set of methods on the ActionsClient type.
-type ActionsClientAPI interface {
-	ListByAlertRule(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.ActionsListPage, err error)
-	ListByAlertRuleComplete(ctx context.Context, resourceGroupName string, workspaceName string, ruleID string) (result securityinsight.ActionsListIterator, err error)
-}
-
-var _ ActionsClientAPI = (*securityinsight.ActionsClient)(nil)
-
-// DataConnectorsClientAPI contains the set of methods on the DataConnectorsClient type.
-type DataConnectorsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string, dataConnector securityinsight.BasicDataConnector) (result securityinsight.DataConnectorModel, err error)
-	Delete(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, workspaceName string, dataConnectorID string) (result securityinsight.DataConnectorModel, err error)
-	List(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.DataConnectorListPage, err error)
-	ListComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result securityinsight.DataConnectorListIterator, err error)
-}
-
-var _ DataConnectorsClientAPI = (*securityinsight.DataConnectorsClient)(nil)
+        var _ DataConnectorsClientAPI = (*securityinsight.DataConnectorsClient)(nil)
