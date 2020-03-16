@@ -22,12 +22,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/services/resourcegraph/mgmt/2019-04-01/resourcegraph"
 )
 
-// BaseClientAPI contains the set of methods on the BaseClient type.
-type BaseClientAPI interface {
-	Resources(ctx context.Context, query resourcegraph.QueryRequest) (result resourcegraph.QueryResponse, err error)
+// ResourcesClientAPI contains the set of methods on the ResourcesClient type.
+type ResourcesClientAPI interface {
+	Query(ctx context.Context, query resourcegraph.QueryRequest) (result resourcegraph.QueryResponse, err error)
 }
 
-var _ BaseClientAPI = (*resourcegraph.BaseClient)(nil)
+var _ ResourcesClientAPI = (*resourcegraph.ResourcesClient)(nil)
 
 // OperationsClientAPI contains the set of methods on the OperationsClient type.
 type OperationsClientAPI interface {
