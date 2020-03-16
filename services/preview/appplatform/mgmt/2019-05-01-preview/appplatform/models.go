@@ -378,6 +378,10 @@ type AppResourceProperties struct {
 	ProvisioningState AppResourceProvisioningState `json:"provisioningState,omitempty"`
 	// ActiveDeploymentName - Name of the active deployment of the App
 	ActiveDeploymentName *string `json:"activeDeploymentName,omitempty"`
+	// Fqdn - Fully qualified dns Name.
+	Fqdn *string `json:"fqdn,omitempty"`
+	// HTTPSOnly - Indicate if only https is allowed.
+	HTTPSOnly *bool `json:"httpsOnly,omitempty"`
 	// CreatedTime - READ-ONLY; Date time when the resource is created
 	CreatedTime *date.Time `json:"createdTime,omitempty"`
 	// TemporaryDisk - Temporary disk settings
@@ -792,6 +796,84 @@ func (brp BindingResourceProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// CertificateProperties certificate resource payload.
+type CertificateProperties struct {
+	// Name - The name of certificate.
+	Name *string `json:"name,omitempty"`
+	// Thumbprint - The thumbprint of certificate.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+	// VaultURI - The vault uri of user key vault.
+	VaultURI *string `json:"vaultUri,omitempty"`
+	// KeyVaultCertName - The certificate name of key vault.
+	KeyVaultCertName *string `json:"keyVaultCertName,omitempty"`
+	// CertVersion - The certificate verion of key vault.
+	CertVersion *string `json:"certVersion,omitempty"`
+	// Issuer - The issuer of certificate.
+	Issuer *string `json:"issuer,omitempty"`
+	// IssuedDate - The issue date of certificate.
+	IssuedDate *string `json:"issuedDate,omitempty"`
+	// ExpirationDate - The expiration date of certificate.
+	ExpirationDate *string `json:"expirationDate,omitempty"`
+	// ActivateDate - The activate date of certificate.
+	ActivateDate *string `json:"activateDate,omitempty"`
+	// SubjectName - The subject name of certificate.
+	SubjectName *string `json:"subjectName,omitempty"`
+	// DNSNames - The domain list of certificate.
+	DNSNames *[]string `json:"dnsNames,omitempty"`
+}
+
+// CertificateResource certificate resource payload.
+type CertificateResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the certificate resource payload.
+	Properties *CertificateProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CertificateResourceCollection collection compose of certificate resources list and a possible link for
+// next page.
+type CertificateResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The certificate resources list.
+	Resources *[]CertificateResource `json:"resources,omitempty"`
+	// NextLink - The link to next page of certificate list.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// CertificatesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type CertificatesCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CertificatesCreateOrUpdateFuture) Result(client CertificatesClient) (cr CertificateResource, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.CertificatesCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("appplatform.CertificatesCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if cr.Response.Response, err = future.GetResult(sender); err == nil && cr.Response.Response.StatusCode != http.StatusNoContent {
+		cr, err = client.CreateOrUpdateResponder(cr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "appplatform.CertificatesCreateOrUpdateFuture", "Result", cr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // CloudError an error response from the service.
 type CloudError struct {
 	Error *CloudErrorBody `json:"error,omitempty"`
@@ -861,6 +943,41 @@ type ConfigServerProperties struct {
 type ConfigServerSettings struct {
 	// GitProperty - Property of git environment.
 	GitProperty *ConfigServerGitProperty `json:"gitProperty,omitempty"`
+}
+
+// CustomDomainProperties custom domain of app resource payload.
+type CustomDomainProperties struct {
+	// Name - The name of domain.
+	Name *string `json:"name,omitempty"`
+	// Thumbprint - The thumbprint of bound ceritifcate.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+	// AppName - The app name of domain.
+	AppName *string `json:"appName,omitempty"`
+	// CertName - The bound certificate name of domain.
+	CertName *string `json:"certName,omitempty"`
+}
+
+// CustomDomainResource custom domain resource payload.
+type CustomDomainResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the custom domain resource.
+	Properties *CustomDomainProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CustomDomainResourceCollection collection compose of a custom domain resources list and a possible link
+// for next page.
+type CustomDomainResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The custom domain resources list.
+	Resources *[]CustomDomainResource `json:"resources,omitempty"`
+	// NextLink - The link to next page of custom domain list.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // DeploymentInstance deployment instance payload

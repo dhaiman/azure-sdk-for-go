@@ -67,6 +67,28 @@ type BindingsClientAPI interface {
 
 var _ BindingsClientAPI = (*appplatform.BindingsClient)(nil)
 
+// CertificatesClientAPI contains the set of methods on the CertificatesClient type.
+type CertificatesClientAPI interface {
+	CreateOrUpdate(ctx context.Context, certificateResource appplatform.CertificateResource, resourceGroupName string, serviceName string, certificateName string) (result appplatform.CertificatesCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, serviceName string, certificateName string) (result appplatform.CertificateResource, err error)
+	Get(ctx context.Context, resourceGroupName string, serviceName string, certificateName string) (result appplatform.CertificateResource, err error)
+	List(ctx context.Context, resourceGroupName string, serviceName string, certificateName string) (result appplatform.CertificateResourceCollection, err error)
+}
+
+var _ CertificatesClientAPI = (*appplatform.CertificatesClient)(nil)
+
+// CustomDomainsClientAPI contains the set of methods on the CustomDomainsClient type.
+type CustomDomainsClientAPI interface {
+	CheckNameAvailability(ctx context.Context, parameters appplatform.NameAvailabilityParameters, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.NameAvailability, err error)
+	CreateOrUpdate(ctx context.Context, domainResource appplatform.CustomDomainResource, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.CustomDomainResource, err error)
+	Delete(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.CustomDomainResource, err error)
+	Get(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.CustomDomainResource, err error)
+	List(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.CustomDomainResourceCollection, err error)
+	Patch(ctx context.Context, domainResource appplatform.CustomDomainResource, resourceGroupName string, serviceName string, appName string, domainName string) (result appplatform.CustomDomainResource, err error)
+}
+
+var _ CustomDomainsClientAPI = (*appplatform.CustomDomainsClient)(nil)
+
 // DeploymentsClientAPI contains the set of methods on the DeploymentsClient type.
 type DeploymentsClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource appplatform.DeploymentResource) (result appplatform.DeploymentsCreateOrUpdateFuture, err error)
