@@ -44,13 +44,13 @@ func NewDeploymentsClientWithBaseURI(baseURI string, subscriptionID string) Depl
 
 // CreateOrUpdate create a new Deployment or update an exiting Deployment.
 // Parameters:
+// deploymentResource - parameters for the create or update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // deploymentName - the name of the Deployment resource.
-// deploymentResource - parameters for the create or update operation
-func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (result DeploymentsCreateOrUpdateFuture, err error) {
+func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (result DeploymentsCreateOrUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DeploymentsClient.CreateOrUpdate")
 		defer func() {
@@ -82,7 +82,7 @@ func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGrou
 		return result, validation.NewError("appplatform.DeploymentsClient", "CreateOrUpdate", err.Error())
 	}
 
-	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serviceName, appName, deploymentName, deploymentResource)
+	req, err := client.CreateOrUpdatePreparer(ctx, deploymentResource, resourceGroupName, serviceName, appName, deploymentName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "CreateOrUpdate", nil, "Failure preparing request")
 		return
@@ -98,7 +98,7 @@ func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGrou
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client DeploymentsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (*http.Request, error) {
+func (client DeploymentsClient) CreateOrUpdatePreparer(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"deploymentName":    autorest.Encode("path", deploymentName),
@@ -383,6 +383,87 @@ func (client DeploymentsClient) GetLogFileURLResponder(resp *http.Response) (res
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetSkus sends the get skus request.
+// Parameters:
+// resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
+// from the Azure Resource Manager API or the portal.
+// serviceName - the name of the Service resource.
+// appName - the name of the App resource.
+// deploymentName - the name of the Deployment resource.
+func (client DeploymentsClient) GetSkus(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string) (result AutoScaleSkuCollection, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeploymentsClient.GetSkus")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetSkusPreparer(ctx, resourceGroupName, serviceName, appName, deploymentName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "GetSkus", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetSkusSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "GetSkus", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetSkusResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "GetSkus", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetSkusPreparer prepares the GetSkus request.
+func (client DeploymentsClient) GetSkusPreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"appName":           autorest.Encode("path", appName),
+		"deploymentName":    autorest.Encode("path", deploymentName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"serviceName":       autorest.Encode("path", serviceName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2019-05-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/skus", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetSkusSender sends the GetSkus request. The method will close the
+// http.Response Body if it receives an error.
+func (client DeploymentsClient) GetSkusSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetSkusResponder handles the response to the GetSkus request. The method always
+// closes the http.Response Body.
+func (client DeploymentsClient) GetSkusResponder(resp *http.Response) (result AutoScaleSkuCollection, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -871,13 +952,13 @@ func (client DeploymentsClient) StopResponder(resp *http.Response) (result autor
 
 // Update operation to update an exiting Deployment.
 // Parameters:
+// deploymentResource - parameters for the update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
 // deploymentName - the name of the Deployment resource.
-// deploymentResource - parameters for the update operation
-func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (result DeploymentsUpdateFuture, err error) {
+func (client DeploymentsClient) Update(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (result DeploymentsUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DeploymentsClient.Update")
 		defer func() {
@@ -888,7 +969,7 @@ func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName st
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.UpdatePreparer(ctx, resourceGroupName, serviceName, appName, deploymentName, deploymentResource)
+	req, err := client.UpdatePreparer(ctx, deploymentResource, resourceGroupName, serviceName, appName, deploymentName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.DeploymentsClient", "Update", nil, "Failure preparing request")
 		return
@@ -904,7 +985,7 @@ func (client DeploymentsClient) Update(ctx context.Context, resourceGroupName st
 }
 
 // UpdatePreparer prepares the Update request.
-func (client DeploymentsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource DeploymentResource) (*http.Request, error) {
+func (client DeploymentsClient) UpdatePreparer(ctx context.Context, deploymentResource DeploymentResource, resourceGroupName string, serviceName string, appName string, deploymentName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"deploymentName":    autorest.Encode("path", deploymentName),

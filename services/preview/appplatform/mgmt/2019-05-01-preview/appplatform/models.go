@@ -37,6 +37,8 @@ type AppResourceProvisioningState string
 const (
 	// Creating ...
 	Creating AppResourceProvisioningState = "Creating"
+	// Deleting ...
+	Deleting AppResourceProvisioningState = "Deleting"
 	// Failed ...
 	Failed AppResourceProvisioningState = "Failed"
 	// Succeeded ...
@@ -47,7 +49,7 @@ const (
 
 // PossibleAppResourceProvisioningStateValues returns an array of possible values for the AppResourceProvisioningState const type.
 func PossibleAppResourceProvisioningStateValues() []AppResourceProvisioningState {
-	return []AppResourceProvisioningState{Creating, Failed, Succeeded, Updating}
+	return []AppResourceProvisioningState{Creating, Deleting, Failed, Succeeded, Updating}
 }
 
 // ConfigServerState enumerates the values for config server state.
@@ -77,6 +79,8 @@ type DeploymentResourceProvisioningState string
 const (
 	// DeploymentResourceProvisioningStateCreating ...
 	DeploymentResourceProvisioningStateCreating DeploymentResourceProvisioningState = "Creating"
+	// DeploymentResourceProvisioningStateDeleting ...
+	DeploymentResourceProvisioningStateDeleting DeploymentResourceProvisioningState = "Deleting"
 	// DeploymentResourceProvisioningStateFailed ...
 	DeploymentResourceProvisioningStateFailed DeploymentResourceProvisioningState = "Failed"
 	// DeploymentResourceProvisioningStateSucceeded ...
@@ -87,7 +91,7 @@ const (
 
 // PossibleDeploymentResourceProvisioningStateValues returns an array of possible values for the DeploymentResourceProvisioningState const type.
 func PossibleDeploymentResourceProvisioningStateValues() []DeploymentResourceProvisioningState {
-	return []DeploymentResourceProvisioningState{DeploymentResourceProvisioningStateCreating, DeploymentResourceProvisioningStateFailed, DeploymentResourceProvisioningStateSucceeded, DeploymentResourceProvisioningStateUpdating}
+	return []DeploymentResourceProvisioningState{DeploymentResourceProvisioningStateCreating, DeploymentResourceProvisioningStateDeleting, DeploymentResourceProvisioningStateFailed, DeploymentResourceProvisioningStateSucceeded, DeploymentResourceProvisioningStateUpdating}
 }
 
 // DeploymentResourceStatus enumerates the values for deployment resource status.
@@ -100,6 +104,8 @@ const (
 	DeploymentResourceStatusCompiling DeploymentResourceStatus = "Compiling"
 	// DeploymentResourceStatusFailed ...
 	DeploymentResourceStatusFailed DeploymentResourceStatus = "Failed"
+	// DeploymentResourceStatusProcessing ...
+	DeploymentResourceStatusProcessing DeploymentResourceStatus = "Processing"
 	// DeploymentResourceStatusRunning ...
 	DeploymentResourceStatusRunning DeploymentResourceStatus = "Running"
 	// DeploymentResourceStatusStopped ...
@@ -112,7 +118,43 @@ const (
 
 // PossibleDeploymentResourceStatusValues returns an array of possible values for the DeploymentResourceStatus const type.
 func PossibleDeploymentResourceStatusValues() []DeploymentResourceStatus {
-	return []DeploymentResourceStatus{DeploymentResourceStatusAllocating, DeploymentResourceStatusCompiling, DeploymentResourceStatusFailed, DeploymentResourceStatusRunning, DeploymentResourceStatusStopped, DeploymentResourceStatusUnknown, DeploymentResourceStatusUpgrading}
+	return []DeploymentResourceStatus{DeploymentResourceStatusAllocating, DeploymentResourceStatusCompiling, DeploymentResourceStatusFailed, DeploymentResourceStatusProcessing, DeploymentResourceStatusRunning, DeploymentResourceStatusStopped, DeploymentResourceStatusUnknown, DeploymentResourceStatusUpgrading}
+}
+
+// EncryptionKeySourceType enumerates the values for encryption key source type.
+type EncryptionKeySourceType string
+
+const (
+	// MicrosoftAppPlatform ...
+	MicrosoftAppPlatform EncryptionKeySourceType = "Microsoft.AppPlatform"
+	// MicrosoftKeyVault ...
+	MicrosoftKeyVault EncryptionKeySourceType = "Microsoft.KeyVault"
+	// None ...
+	None EncryptionKeySourceType = "None"
+)
+
+// PossibleEncryptionKeySourceTypeValues returns an array of possible values for the EncryptionKeySourceType const type.
+func PossibleEncryptionKeySourceTypeValues() []EncryptionKeySourceType {
+	return []EncryptionKeySourceType{MicrosoftAppPlatform, MicrosoftKeyVault, None}
+}
+
+// ManagedIdentityType enumerates the values for managed identity type.
+type ManagedIdentityType string
+
+const (
+	// ManagedIdentityTypeNone ...
+	ManagedIdentityTypeNone ManagedIdentityType = "None"
+	// ManagedIdentityTypeSystemAssigned ...
+	ManagedIdentityTypeSystemAssigned ManagedIdentityType = "SystemAssigned"
+	// ManagedIdentityTypeSystemAssignedUserAssigned ...
+	ManagedIdentityTypeSystemAssignedUserAssigned ManagedIdentityType = "SystemAssigned,UserAssigned"
+	// ManagedIdentityTypeUserAssigned ...
+	ManagedIdentityTypeUserAssigned ManagedIdentityType = "UserAssigned"
+)
+
+// PossibleManagedIdentityTypeValues returns an array of possible values for the ManagedIdentityType const type.
+func PossibleManagedIdentityTypeValues() []ManagedIdentityType {
+	return []ManagedIdentityType{ManagedIdentityTypeNone, ManagedIdentityTypeSystemAssigned, ManagedIdentityTypeSystemAssignedUserAssigned, ManagedIdentityTypeUserAssigned}
 }
 
 // ProvisioningState enumerates the values for provisioning state.
@@ -144,6 +186,21 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 	return []ProvisioningState{ProvisioningStateCreating, ProvisioningStateDeleted, ProvisioningStateDeleting, ProvisioningStateFailed, ProvisioningStateMoved, ProvisioningStateMoveFailed, ProvisioningStateMoving, ProvisioningStateSucceeded, ProvisioningStateUpdating}
 }
 
+// RuntimePlatform enumerates the values for runtime platform.
+type RuntimePlatform string
+
+const (
+	// Java ...
+	Java RuntimePlatform = "Java"
+	// NETCore ...
+	NETCore RuntimePlatform = ".NET Core"
+)
+
+// PossibleRuntimePlatformValues returns an array of possible values for the RuntimePlatform const type.
+func PossibleRuntimePlatformValues() []RuntimePlatform {
+	return []RuntimePlatform{Java, NETCore}
+}
+
 // RuntimeVersion enumerates the values for runtime version.
 type RuntimeVersion string
 
@@ -152,11 +209,30 @@ const (
 	Java11 RuntimeVersion = "Java_11"
 	// Java8 ...
 	Java8 RuntimeVersion = "Java_8"
+	// NetCore31 ...
+	NetCore31 RuntimeVersion = "NetCore_31"
 )
 
 // PossibleRuntimeVersionValues returns an array of possible values for the RuntimeVersion const type.
 func PossibleRuntimeVersionValues() []RuntimeVersion {
-	return []RuntimeVersion{Java11, Java8}
+	return []RuntimeVersion{Java11, Java8, NetCore31}
+}
+
+// SkuScaleType enumerates the values for sku scale type.
+type SkuScaleType string
+
+const (
+	// SkuScaleTypeAutomatic ...
+	SkuScaleTypeAutomatic SkuScaleType = "Automatic"
+	// SkuScaleTypeManual ...
+	SkuScaleTypeManual SkuScaleType = "Manual"
+	// SkuScaleTypeNone ...
+	SkuScaleTypeNone SkuScaleType = "None"
+)
+
+// PossibleSkuScaleTypeValues returns an array of possible values for the SkuScaleType const type.
+func PossibleSkuScaleTypeValues() []SkuScaleType {
+	return []SkuScaleType{SkuScaleTypeAutomatic, SkuScaleTypeManual, SkuScaleTypeNone}
 }
 
 // TestKeyType enumerates the values for test key type.
@@ -199,13 +275,15 @@ type UserSourceType string
 const (
 	// Jar ...
 	Jar UserSourceType = "Jar"
+	// NetCoreZip ...
+	NetCoreZip UserSourceType = "NetCoreZip"
 	// Source ...
 	Source UserSourceType = "Source"
 )
 
 // PossibleUserSourceTypeValues returns an array of possible values for the UserSourceType const type.
 func PossibleUserSourceTypeValues() []UserSourceType {
-	return []UserSourceType{Jar, Source}
+	return []UserSourceType{Jar, NetCoreZip, Source}
 }
 
 // AppResource app resource payload
@@ -213,6 +291,11 @@ type AppResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the App resource
 	Properties *AppResourceProperties `json:"properties,omitempty"`
+	// Identity - The Managed Identity type of the app resource
+	Identity *ManagedIdentityProperties `json:"identity,omitempty"`
+	// Location - The GEO location of the application, always the same with its parent resource.
+	// ARM use this property to route the MSI request to regional MSI RP
+	Location *string `json:"location,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource.
@@ -374,10 +457,14 @@ type AppResourceProperties struct {
 	Public *bool `json:"public,omitempty"`
 	// URL - READ-ONLY; URL of the App
 	URL *string `json:"url,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating'
+	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating', 'Deleting'
 	ProvisioningState AppResourceProvisioningState `json:"provisioningState,omitempty"`
 	// ActiveDeploymentName - Name of the active deployment of the App
 	ActiveDeploymentName *string `json:"activeDeploymentName,omitempty"`
+	// Fqdn - Fully qualified dns Name.
+	Fqdn *string `json:"fqdn,omitempty"`
+	// HTTPSOnly - Indicate if only https is allowed.
+	HTTPSOnly *bool `json:"httpsOnly,omitempty"`
 	// CreatedTime - READ-ONLY; Date time when the resource is created
 	CreatedTime *date.Time `json:"createdTime,omitempty"`
 	// TemporaryDisk - Temporary disk settings
@@ -441,6 +528,23 @@ func (future *AppsUpdateFuture) Result(client AppsClient) (ar AppResource, err e
 		}
 	}
 	return
+}
+
+// AutoScaleSku ...
+type AutoScaleSku struct {
+	// ResourceType - Gets or sets the resource type name.
+	ResourceType *string `json:"resourceType,omitempty"`
+	// Sku - Gets or sets the SKU.
+	Sku *Sku `json:"sku,omitempty"`
+	// Capacity - Gets or sets the SKU capacity.
+	Capacity *SkuCapacity `json:"capacity,omitempty"`
+}
+
+// AutoScaleSkuCollection ...
+type AutoScaleSkuCollection struct {
+	autorest.Response `json:"-"`
+	// Value - Collection of supported Skus
+	Value *[]AutoScaleSku `json:"value,omitempty"`
 }
 
 // AvailableOperations available operations of the service
@@ -588,6 +692,13 @@ func (page AvailableOperationsPage) Values() []OperationDetail {
 // Creates a new instance of the AvailableOperationsPage type.
 func NewAvailableOperationsPage(getNextPage func(context.Context, AvailableOperations) (AvailableOperations, error)) AvailableOperationsPage {
 	return AvailableOperationsPage{fn: getNextPage}
+}
+
+// AvailableRuntimeVersions ...
+type AvailableRuntimeVersions struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; A list of all supported runtime versions.
+	Value *[]SupportedRuntimeVersion `json:"value,omitempty"`
 }
 
 // BindingResource binding resource payload
@@ -792,6 +903,222 @@ func (brp BindingResourceProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// CertificateProperties certificate resource payload.
+type CertificateProperties struct {
+	// Name - The name of certificate.
+	Name *string `json:"name,omitempty"`
+	// Thumbprint - The thumbprint of certificate.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+	// VaultURI - The vault uri of user key vault.
+	VaultURI *string `json:"vaultUri,omitempty"`
+	// KeyVaultCertName - The certificate name of key vault.
+	KeyVaultCertName *string `json:"keyVaultCertName,omitempty"`
+	// CertVersion - The certificate verion of key vault.
+	CertVersion *string `json:"certVersion,omitempty"`
+	// Issuer - The issuer of certificate.
+	Issuer *string `json:"issuer,omitempty"`
+	// IssuedDate - The issue date of certificate.
+	IssuedDate *string `json:"issuedDate,omitempty"`
+	// ExpirationDate - The expiration date of certificate.
+	ExpirationDate *string `json:"expirationDate,omitempty"`
+	// ActivateDate - The activate date of certificate.
+	ActivateDate *string `json:"activateDate,omitempty"`
+	// SubjectName - The subject name of certificate.
+	SubjectName *string `json:"subjectName,omitempty"`
+	// DNSNames - The domain list of certificate.
+	DNSNames *[]string `json:"dnsNames,omitempty"`
+}
+
+// CertificateResource certificate resource payload.
+type CertificateResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the certificate resource payload.
+	Properties *CertificateProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CertificateResourceCollection collection compose of certificate resources list and a possible link for
+// next page.
+type CertificateResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The certificate resources list.
+	Resources *[]CertificateResource `json:"resources,omitempty"`
+	// NextLink - The link to next page of certificate list.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// CertificateResourceCollectionIterator provides access to a complete listing of CertificateResource
+// values.
+type CertificateResourceCollectionIterator struct {
+	i    int
+	page CertificateResourceCollectionPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *CertificateResourceCollectionIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/CertificateResourceCollectionIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *CertificateResourceCollectionIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter CertificateResourceCollectionIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter CertificateResourceCollectionIterator) Response() CertificateResourceCollection {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter CertificateResourceCollectionIterator) Value() CertificateResource {
+	if !iter.page.NotDone() {
+		return CertificateResource{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the CertificateResourceCollectionIterator type.
+func NewCertificateResourceCollectionIterator(page CertificateResourceCollectionPage) CertificateResourceCollectionIterator {
+	return CertificateResourceCollectionIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (crc CertificateResourceCollection) IsEmpty() bool {
+	return crc.Value == nil || len(*crc.Value) == 0
+}
+
+// certificateResourceCollectionPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (crc CertificateResourceCollection) certificateResourceCollectionPreparer(ctx context.Context) (*http.Request, error) {
+	if crc.NextLink == nil || len(to.String(crc.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(crc.NextLink)))
+}
+
+// CertificateResourceCollectionPage contains a page of CertificateResource values.
+type CertificateResourceCollectionPage struct {
+	fn  func(context.Context, CertificateResourceCollection) (CertificateResourceCollection, error)
+	crc CertificateResourceCollection
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *CertificateResourceCollectionPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/CertificateResourceCollectionPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.crc)
+	if err != nil {
+		return err
+	}
+	page.crc = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *CertificateResourceCollectionPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page CertificateResourceCollectionPage) NotDone() bool {
+	return !page.crc.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page CertificateResourceCollectionPage) Response() CertificateResourceCollection {
+	return page.crc
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page CertificateResourceCollectionPage) Values() []CertificateResource {
+	if page.crc.IsEmpty() {
+		return nil
+	}
+	return *page.crc.Value
+}
+
+// Creates a new instance of the CertificateResourceCollectionPage type.
+func NewCertificateResourceCollectionPage(getNextPage func(context.Context, CertificateResourceCollection) (CertificateResourceCollection, error)) CertificateResourceCollectionPage {
+	return CertificateResourceCollectionPage{fn: getNextPage}
+}
+
+// CertificatesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type CertificatesCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CertificatesCreateOrUpdateFuture) Result(client CertificatesClient) (cr CertificateResource, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "appplatform.CertificatesCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("appplatform.CertificatesCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if cr.Response.Response, err = future.GetResult(sender); err == nil && cr.Response.Response.StatusCode != http.StatusNoContent {
+		cr, err = client.CreateOrUpdateResponder(cr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "appplatform.CertificatesCreateOrUpdateFuture", "Result", cr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // CloudError an error response from the service.
 type CloudError struct {
 	Error *CloudErrorBody `json:"error,omitempty"`
@@ -817,10 +1144,13 @@ type ClusterResourceProperties struct {
 	ConfigServerProperties *ConfigServerProperties `json:"configServerProperties,omitempty"`
 	// Trace - Trace properties of the Service
 	Trace *TraceProperties `json:"trace,omitempty"`
+	// VNet - VNet injection properties of the Service
+	VNet *VNetProperties `json:"vNet,omitempty"`
 	// Version - READ-ONLY; Version of the Service
 	Version *int32 `json:"version,omitempty"`
 	// ServiceID - READ-ONLY; ServiceInstanceEntity GUID which uniquely identifies a created resource
-	ServiceID *string `json:"serviceId,omitempty"`
+	ServiceID  *string               `json:"serviceId,omitempty"`
+	Encryption *EncryptionProperties `json:"encryption,omitempty"`
 }
 
 // ConfigServerGitProperty property of git.
@@ -861,6 +1191,179 @@ type ConfigServerProperties struct {
 type ConfigServerSettings struct {
 	// GitProperty - Property of git environment.
 	GitProperty *ConfigServerGitProperty `json:"gitProperty,omitempty"`
+}
+
+// CustomDomainProperties custom domain of app resource payload.
+type CustomDomainProperties struct {
+	// Name - The name of domain.
+	Name *string `json:"name,omitempty"`
+	// Thumbprint - The thumbprint of bound ceritifcate.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+	// AppName - The app name of domain.
+	AppName *string `json:"appName,omitempty"`
+	// CertName - The bound certificate name of domain.
+	CertName *string `json:"certName,omitempty"`
+}
+
+// CustomDomainResource custom domain resource payload.
+type CustomDomainResource struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the custom domain resource.
+	Properties *CustomDomainProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource.
+	Type *string `json:"type,omitempty"`
+}
+
+// CustomDomainResourceCollection collection compose of a custom domain resources list and a possible link
+// for next page.
+type CustomDomainResourceCollection struct {
+	autorest.Response `json:"-"`
+	// Resources - The custom domain resources list.
+	Resources *[]CustomDomainResource `json:"resources,omitempty"`
+	// NextLink - The link to next page of custom domain list.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// CustomDomainResourceCollectionIterator provides access to a complete listing of CustomDomainResource
+// values.
+type CustomDomainResourceCollectionIterator struct {
+	i    int
+	page CustomDomainResourceCollectionPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *CustomDomainResourceCollectionIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/CustomDomainResourceCollectionIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *CustomDomainResourceCollectionIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter CustomDomainResourceCollectionIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter CustomDomainResourceCollectionIterator) Response() CustomDomainResourceCollection {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter CustomDomainResourceCollectionIterator) Value() CustomDomainResource {
+	if !iter.page.NotDone() {
+		return CustomDomainResource{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the CustomDomainResourceCollectionIterator type.
+func NewCustomDomainResourceCollectionIterator(page CustomDomainResourceCollectionPage) CustomDomainResourceCollectionIterator {
+	return CustomDomainResourceCollectionIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (cdrc CustomDomainResourceCollection) IsEmpty() bool {
+	return cdrc.Value == nil || len(*cdrc.Value) == 0
+}
+
+// customDomainResourceCollectionPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (cdrc CustomDomainResourceCollection) customDomainResourceCollectionPreparer(ctx context.Context) (*http.Request, error) {
+	if cdrc.NextLink == nil || len(to.String(cdrc.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(cdrc.NextLink)))
+}
+
+// CustomDomainResourceCollectionPage contains a page of CustomDomainResource values.
+type CustomDomainResourceCollectionPage struct {
+	fn   func(context.Context, CustomDomainResourceCollection) (CustomDomainResourceCollection, error)
+	cdrc CustomDomainResourceCollection
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *CustomDomainResourceCollectionPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/CustomDomainResourceCollectionPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.cdrc)
+	if err != nil {
+		return err
+	}
+	page.cdrc = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *CustomDomainResourceCollectionPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page CustomDomainResourceCollectionPage) NotDone() bool {
+	return !page.cdrc.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page CustomDomainResourceCollectionPage) Response() CustomDomainResourceCollection {
+	return page.cdrc
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page CustomDomainResourceCollectionPage) Values() []CustomDomainResource {
+	if page.cdrc.IsEmpty() {
+		return nil
+	}
+	return *page.cdrc.Value
+}
+
+// Creates a new instance of the CustomDomainResourceCollectionPage type.
+func NewCustomDomainResourceCollectionPage(getNextPage func(context.Context, CustomDomainResourceCollection) (CustomDomainResourceCollection, error)) CustomDomainResourceCollectionPage {
+	return CustomDomainResourceCollectionPage{fn: getNextPage}
 }
 
 // DeploymentInstance deployment instance payload
@@ -1042,11 +1545,11 @@ type DeploymentResourceProperties struct {
 	Source *UserSourceInfo `json:"source,omitempty"`
 	// AppName - READ-ONLY; App name of the deployment
 	AppName *string `json:"appName,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed'
+	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed', 'DeploymentResourceProvisioningStateDeleting'
 	ProvisioningState DeploymentResourceProvisioningState `json:"provisioningState,omitempty"`
 	// DeploymentSettings - Deployment settings of the Deployment
 	DeploymentSettings *DeploymentSettings `json:"deploymentSettings,omitempty"`
-	// Status - READ-ONLY; Status of the Deployment. Possible values include: 'DeploymentResourceStatusUnknown', 'DeploymentResourceStatusStopped', 'DeploymentResourceStatusRunning', 'DeploymentResourceStatusFailed', 'DeploymentResourceStatusAllocating', 'DeploymentResourceStatusUpgrading', 'DeploymentResourceStatusCompiling'
+	// Status - READ-ONLY; Status of the Deployment. Possible values include: 'DeploymentResourceStatusUnknown', 'DeploymentResourceStatusStopped', 'DeploymentResourceStatusRunning', 'DeploymentResourceStatusFailed', 'DeploymentResourceStatusAllocating', 'DeploymentResourceStatusUpgrading', 'DeploymentResourceStatusCompiling', 'DeploymentResourceStatusProcessing'
 	Status DeploymentResourceStatus `json:"status,omitempty"`
 	// Active - READ-ONLY; Indicates whether the Deployment is active
 	Active *bool `json:"active,omitempty"`
@@ -1093,11 +1596,13 @@ type DeploymentSettings struct {
 	MemoryInGB *int32 `json:"memoryInGB,omitempty"`
 	// JvmOptions - JVM parameter
 	JvmOptions *string `json:"jvmOptions,omitempty"`
+	// NetCoreMainEntryPath - The path to the .NET executable relative to zip root
+	NetCoreMainEntryPath *string `json:"netCoreMainEntryPath,omitempty"`
 	// InstanceCount - Instance count
 	InstanceCount *int32 `json:"instanceCount,omitempty"`
 	// EnvironmentVariables - Collection of environment variables
 	EnvironmentVariables map[string]*string `json:"environmentVariables"`
-	// RuntimeVersion - Runtime version. Possible values include: 'Java8', 'Java11'
+	// RuntimeVersion - Runtime version. Possible values include: 'Java8', 'Java11', 'NetCore31'
 	RuntimeVersion RuntimeVersion `json:"runtimeVersion,omitempty"`
 }
 
@@ -1112,6 +1617,9 @@ func (ds DeploymentSettings) MarshalJSON() ([]byte, error) {
 	}
 	if ds.JvmOptions != nil {
 		objectMap["jvmOptions"] = ds.JvmOptions
+	}
+	if ds.NetCoreMainEntryPath != nil {
+		objectMap["netCoreMainEntryPath"] = ds.NetCoreMainEntryPath
 	}
 	if ds.InstanceCount != nil {
 		objectMap["instanceCount"] = ds.InstanceCount
@@ -1223,6 +1731,20 @@ func (future *DeploymentsUpdateFuture) Result(client DeploymentsClient) (dr Depl
 	return
 }
 
+// EncryptionKeyProperties ...
+type EncryptionKeyProperties struct {
+	KeyVaultURI *string `json:"keyVaultUri,omitempty"`
+	KeyName     *string `json:"keyName,omitempty"`
+	KeyVersion  *string `json:"keyVersion,omitempty"`
+}
+
+// EncryptionProperties ...
+type EncryptionProperties struct {
+	// KeySource - Possible values include: 'None', 'MicrosoftAppPlatform', 'MicrosoftKeyVault'
+	KeySource          EncryptionKeySourceType  `json:"keySource,omitempty"`
+	KeyVaultProperties *EncryptionKeyProperties `json:"keyVaultProperties,omitempty"`
+}
+
 // Error the error code compose of code and message.
 type Error struct {
 	// Code - The code of error.
@@ -1274,12 +1796,22 @@ type LogSpecification struct {
 	BlobDuration *string `json:"blobDuration,omitempty"`
 }
 
+// ManagedIdentityProperties managed identity properties retrieved from ARM request headers.
+type ManagedIdentityProperties struct {
+	// Type - Possible values include: 'ManagedIdentityTypeNone', 'ManagedIdentityTypeSystemAssigned', 'ManagedIdentityTypeUserAssigned', 'ManagedIdentityTypeSystemAssignedUserAssigned'
+	Type        ManagedIdentityType `json:"type,omitempty"`
+	PrincipalID *string             `json:"principalId,omitempty"`
+	TenantID    *string             `json:"tenantId,omitempty"`
+}
+
 // MetricDimension specifications of the Dimension of metrics
 type MetricDimension struct {
 	// Name - Name of the dimension
 	Name *string `json:"name,omitempty"`
 	// DisplayName - Localized friendly display name of the dimension
 	DisplayName *string `json:"displayName,omitempty"`
+	// ToBeExportedForShoebox - Whether this dimension should be included for the Shoebox export scenario
+	ToBeExportedForShoebox *bool `json:"toBeExportedForShoebox,omitempty"`
 }
 
 // MetricSpecification specifications of the Metrics for Azure Monitoring
@@ -1394,6 +1926,21 @@ type Resource struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// ResourceTypeSku supported Skus of Azure Spring Cloud resources
+type ResourceTypeSku struct {
+	// ResourceType - Resource type
+	ResourceType *string `json:"resourceType,omitempty"`
+	// Skus - Supported Skus
+	Skus *[]SkuSetting `json:"skus,omitempty"`
+}
+
+// ResourceTypeSkuCollection collection of supported Skus of Azure Spring Cloud resources
+type ResourceTypeSkuCollection struct {
+	autorest.Response `json:"-"`
+	// Value - Collection of supported Skus
+	Value *[]ResourceTypeSku `json:"value,omitempty"`
+}
+
 // ResourceUploadDefinition resource upload definition payload
 type ResourceUploadDefinition struct {
 	autorest.Response `json:"-"`
@@ -1408,6 +1955,10 @@ type ServiceResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the Service resource
 	Properties *ClusterResourceProperties `json:"properties,omitempty"`
+	// Identity - The Managed Identity of the service resource.
+	Identity *ManagedIdentityProperties `json:"identity,omitempty"`
+	// Sku - Sku of the Service resource
+	Sku *Sku `json:"sku,omitempty"`
 	// Location - The GEO location of the resource.
 	Location *string `json:"location,omitempty"`
 	// Tags - Tags of the service which is a list of key value pairs that describe the resource.
@@ -1425,6 +1976,12 @@ func (sr ServiceResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if sr.Properties != nil {
 		objectMap["properties"] = sr.Properties
+	}
+	if sr.Identity != nil {
+		objectMap["identity"] = sr.Identity
+	}
+	if sr.Sku != nil {
+		objectMap["sku"] = sr.Sku
 	}
 	if sr.Location != nil {
 		objectMap["location"] = sr.Location
@@ -1671,6 +2228,52 @@ func (future *ServicesUpdateFuture) Result(client ServicesClient) (sr ServiceRes
 	return
 }
 
+// Sku sku of Azure Spring Cloud
+type Sku struct {
+	// Name - READ-ONLY; Name of the Sku
+	Name *string `json:"name,omitempty"`
+	// Tier - READ-ONLY; Tier of the Sku
+	Tier *string `json:"tier,omitempty"`
+	// Capacity - READ-ONLY; Current capacity of the target resource
+	Capacity *int32 `json:"capacity,omitempty"`
+}
+
+// SkuCapacity the SKU capacity
+type SkuCapacity struct {
+	// Minimum - Gets or sets the minimum.
+	Minimum *int32 `json:"minimum,omitempty"`
+	// Maximum - Gets or sets the maximum.
+	Maximum *int32 `json:"maximum,omitempty"`
+	// Default - Gets or sets the default.
+	Default *int32 `json:"default,omitempty"`
+	// ScaleType - Gets or sets the type of the scale. Possible values include: 'SkuScaleTypeNone', 'SkuScaleTypeManual', 'SkuScaleTypeAutomatic'
+	ScaleType SkuScaleType `json:"scaleType,omitempty"`
+}
+
+// SkuSetting supported Sku settings of Azure Spring Cloud
+type SkuSetting struct {
+	// Name - Name of the Sku
+	Name *string `json:"name,omitempty"`
+	// Tier - Tier of the Sku
+	Tier *string `json:"tier,omitempty"`
+	// Locations - Locations of the Sku
+	Locations *[]string `json:"locations,omitempty"`
+	// RequiredFeatures - Required features of the Sku
+	RequiredFeatures *[]string `json:"requiredFeatures,omitempty"`
+	// Capacity - Capacity of the SKU
+	Capacity *SkuCapacity `json:"capacity,omitempty"`
+}
+
+// SupportedRuntimeVersion supported deployment runtime version descriptor.
+type SupportedRuntimeVersion struct {
+	// Value - The raw value which could be passed to deployment CRUD operations. Possible values include: 'Java8', 'Java11', 'NetCore31'
+	Value RuntimeVersion `json:"value,omitempty"`
+	// Platform - The platform of this runtime version (possible values: "Java" or ".NET"). Possible values include: 'Java', 'NETCore'
+	Platform RuntimePlatform `json:"platform,omitempty"`
+	// Version - The detailed version (major.minor) of the platform.
+	Version *string `json:"version,omitempty"`
+}
+
 // TemporaryDisk temporary disk payload
 type TemporaryDisk struct {
 	// SizeInGB - Size of the temporary disk in GB
@@ -1734,7 +2337,7 @@ func (tr TrackedResource) MarshalJSON() ([]byte, error) {
 
 // UserSourceInfo source information for a deployment
 type UserSourceInfo struct {
-	// Type - Type of the source uploaded. Possible values include: 'Jar', 'Source'
+	// Type - Type of the source uploaded. Possible values include: 'Jar', 'NetCoreZip', 'Source'
 	Type UserSourceType `json:"type,omitempty"`
 	// RelativePath - Relative path of the storage which stores the source
 	RelativePath *string `json:"relativePath,omitempty"`
@@ -1743,4 +2346,16 @@ type UserSourceInfo struct {
 	// ArtifactSelector - Selector for the artifact to be used for the deployment for multi-module projects. This should be
 	// the relative path to the target module/project.
 	ArtifactSelector *string `json:"artifactSelector,omitempty"`
+}
+
+// VNetProperties VNET injection properties payload
+type VNetProperties struct {
+	// VNetResourceID - READ-ONLY; ResourceId of the Azure VNet resource
+	VNetResourceID *string `json:"vNetResourceId,omitempty"`
+	// SystemSubnetName - READ-ONLY; Name of the system cluster subnet
+	SystemSubnetName *string `json:"systemSubnetName,omitempty"`
+	// UserSubnetName - READ-ONLY; Name of the user cluster subnet
+	UserSubnetName *string `json:"userSubnetName,omitempty"`
+	// Enabled - READ-ONLY; Indicates whether VNET injection is enabled
+	Enabled *bool `json:"enabled,omitempty"`
 }

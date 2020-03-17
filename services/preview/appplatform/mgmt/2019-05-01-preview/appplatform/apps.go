@@ -44,12 +44,12 @@ func NewAppsClientWithBaseURI(baseURI string, subscriptionID string) AppsClient 
 
 // CreateOrUpdate create a new App or update an exiting App.
 // Parameters:
+// appResource - parameters for the create or update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
-// appResource - parameters for the create or update operation
-func (client AppsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource AppResource) (result AppsCreateOrUpdateFuture, err error) {
+func (client AppsClient) CreateOrUpdate(ctx context.Context, appResource AppResource, resourceGroupName string, serviceName string, appName string) (result AppsCreateOrUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.CreateOrUpdate")
 		defer func() {
@@ -83,7 +83,7 @@ func (client AppsClient) CreateOrUpdate(ctx context.Context, resourceGroupName s
 		return result, validation.NewError("appplatform.AppsClient", "CreateOrUpdate", err.Error())
 	}
 
-	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, serviceName, appName, appResource)
+	req, err := client.CreateOrUpdatePreparer(ctx, appResource, resourceGroupName, serviceName, appName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.AppsClient", "CreateOrUpdate", nil, "Failure preparing request")
 		return
@@ -99,7 +99,7 @@ func (client AppsClient) CreateOrUpdate(ctx context.Context, resourceGroupName s
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client AppsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource AppResource) (*http.Request, error) {
+func (client AppsClient) CreateOrUpdatePreparer(ctx context.Context, appResource AppResource, resourceGroupName string, serviceName string, appName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -504,12 +504,16 @@ func (client AppsClient) ListComplete(ctx context.Context, resourceGroupName str
 
 // Update operation to update an exiting App.
 // Parameters:
+// appResource - parameters for the update operation
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serviceName - the name of the Service resource.
 // appName - the name of the App resource.
-// appResource - parameters for the update operation
-func (client AppsClient) Update(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource AppResource) (result AppsUpdateFuture, err error) {
+// xMsIdentityURL - the URL to the data plane of MSI for the given resource
+// xMsIdentityPrincipalID - the object id of the identity resource
+// xMsHomeTenantID - the tenant id of the resource
+// xMsClientTenantID - he tenant id of the caller that made the request to ARM
+func (client AppsClient) Update(ctx context.Context, appResource AppResource, resourceGroupName string, serviceName string, appName string, xMsIdentityURL string, xMsIdentityPrincipalID string, xMsHomeTenantID string, xMsClientTenantID string) (result AppsUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.Update")
 		defer func() {
@@ -520,7 +524,7 @@ func (client AppsClient) Update(ctx context.Context, resourceGroupName string, s
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.UpdatePreparer(ctx, resourceGroupName, serviceName, appName, appResource)
+	req, err := client.UpdatePreparer(ctx, appResource, resourceGroupName, serviceName, appName, xMsIdentityURL, xMsIdentityPrincipalID, xMsHomeTenantID, xMsClientTenantID)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "appplatform.AppsClient", "Update", nil, "Failure preparing request")
 		return
@@ -536,7 +540,7 @@ func (client AppsClient) Update(ctx context.Context, resourceGroupName string, s
 }
 
 // UpdatePreparer prepares the Update request.
-func (client AppsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource AppResource) (*http.Request, error) {
+func (client AppsClient) UpdatePreparer(ctx context.Context, appResource AppResource, resourceGroupName string, serviceName string, appName string, xMsIdentityURL string, xMsIdentityPrincipalID string, xMsHomeTenantID string, xMsClientTenantID string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"appName":           autorest.Encode("path", appName),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -556,6 +560,22 @@ func (client AppsClient) UpdatePreparer(ctx context.Context, resourceGroupName s
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}", pathParameters),
 		autorest.WithJSON(appResource),
 		autorest.WithQueryParameters(queryParameters))
+	if len(xMsIdentityURL) > 0 {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("x-ms-identity-url", autorest.String(xMsIdentityURL)))
+	}
+	if len(xMsIdentityPrincipalID) > 0 {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("x-ms-identity-principal-id", autorest.String(xMsIdentityPrincipalID)))
+	}
+	if len(xMsHomeTenantID) > 0 {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("x-ms-home-tenant-id", autorest.String(xMsHomeTenantID)))
+	}
+	if len(xMsClientTenantID) > 0 {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("x-ms-client-tenant-id", autorest.String(xMsClientTenantID)))
+	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
