@@ -445,9 +445,9 @@ func (client EnvironmentsClient) ListBySubscriptionResponder(resp *http.Response
 // resourceGroupName - name of an Azure Resource group.
 // environmentName - the name of the Time Series Insights environment associated with the specified resource
 // group.
-// standardEnvironmentUpdateParameters - request object that contains the updated information for the
+// longTermEnvironmentUpdateParameters - request object that contains the updated information for the
 // environment.
-func (client EnvironmentsClient) Update(ctx context.Context, resourceGroupName string, environmentName string, standardEnvironmentUpdateParameters StandardEnvironmentUpdateParameters) (result EnvironmentsUpdateFuture, err error) {
+func (client EnvironmentsClient) Update(ctx context.Context, resourceGroupName string, environmentName string, longTermEnvironmentUpdateParameters LongTermEnvironmentUpdateParameters) (result EnvironmentsUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/EnvironmentsClient.Update")
 		defer func() {
@@ -458,7 +458,7 @@ func (client EnvironmentsClient) Update(ctx context.Context, resourceGroupName s
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.UpdatePreparer(ctx, resourceGroupName, environmentName, standardEnvironmentUpdateParameters)
+	req, err := client.UpdatePreparer(ctx, resourceGroupName, environmentName, longTermEnvironmentUpdateParameters)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "timeseriesinsights.EnvironmentsClient", "Update", nil, "Failure preparing request")
 		return
@@ -474,7 +474,7 @@ func (client EnvironmentsClient) Update(ctx context.Context, resourceGroupName s
 }
 
 // UpdatePreparer prepares the Update request.
-func (client EnvironmentsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, environmentName string, standardEnvironmentUpdateParameters StandardEnvironmentUpdateParameters) (*http.Request, error) {
+func (client EnvironmentsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, environmentName string, longTermEnvironmentUpdateParameters LongTermEnvironmentUpdateParameters) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"environmentName":   autorest.Encode("path", environmentName),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -491,7 +491,7 @@ func (client EnvironmentsClient) UpdatePreparer(ctx context.Context, resourceGro
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.TimeSeriesInsights/environments/{environmentName}", pathParameters),
-		autorest.WithJSON(standardEnvironmentUpdateParameters),
+		autorest.WithJSON(longTermEnvironmentUpdateParameters),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
