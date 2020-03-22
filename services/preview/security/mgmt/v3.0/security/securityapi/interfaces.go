@@ -131,17 +131,6 @@ type IotSecuritySolutionsAnalyticsRecommendationClientAPI interface {
 
 var _ IotSecuritySolutionsAnalyticsRecommendationClientAPI = (*security.IotSecuritySolutionsAnalyticsRecommendationClient)(nil)
 
-// AllowedConnectionsClientAPI contains the set of methods on the AllowedConnectionsClient type.
-type AllowedConnectionsClientAPI interface {
-	Get(ctx context.Context, resourceGroupName string, connectionType security.ConnectionType) (result security.AllowedConnectionsResource, err error)
-	List(ctx context.Context) (result security.AllowedConnectionsListPage, err error)
-	ListComplete(ctx context.Context) (result security.AllowedConnectionsListIterator, err error)
-	ListByHomeRegion(ctx context.Context) (result security.AllowedConnectionsListPage, err error)
-	ListByHomeRegionComplete(ctx context.Context) (result security.AllowedConnectionsListIterator, err error)
-}
-
-var _ AllowedConnectionsClientAPI = (*security.AllowedConnectionsClient)(nil)
-
 // DiscoveredSecuritySolutionsClientAPI contains the set of methods on the DiscoveredSecuritySolutionsClient type.
 type DiscoveredSecuritySolutionsClientAPI interface {
 	Get(ctx context.Context, resourceGroupName string, discoveredSecuritySolutionName string) (result security.DiscoveredSecuritySolution, err error)
@@ -184,6 +173,7 @@ var _ JitNetworkAccessPoliciesClientAPI = (*security.JitNetworkAccessPoliciesCli
 
 // AdaptiveApplicationControlsClientAPI contains the set of methods on the AdaptiveApplicationControlsClient type.
 type AdaptiveApplicationControlsClientAPI interface {
+	Delete(ctx context.Context, groupName string) (result autorest.Response, err error)
 	Get(ctx context.Context, groupName string) (result security.AppWhitelistingGroup, err error)
 	List(ctx context.Context, includePathRecommendations *bool, summary *bool) (result security.AppWhitelistingGroups, err error)
 	Put(ctx context.Context, groupName string, body security.AppWhitelistingPutGroupData) (result security.AppWhitelistingGroup, err error)
@@ -223,17 +213,6 @@ type TasksClientAPI interface {
 }
 
 var _ TasksClientAPI = (*security.TasksClient)(nil)
-
-// TopologyClientAPI contains the set of methods on the TopologyClient type.
-type TopologyClientAPI interface {
-	Get(ctx context.Context, resourceGroupName string, topologyResourceName string) (result security.TopologyResource, err error)
-	List(ctx context.Context) (result security.TopologyListPage, err error)
-	ListComplete(ctx context.Context) (result security.TopologyListIterator, err error)
-	ListByHomeRegion(ctx context.Context) (result security.TopologyListPage, err error)
-	ListByHomeRegionComplete(ctx context.Context) (result security.TopologyListIterator, err error)
-}
-
-var _ TopologyClientAPI = (*security.TopologyClient)(nil)
 
 // AutoProvisioningSettingsClientAPI contains the set of methods on the AutoProvisioningSettingsClient type.
 type AutoProvisioningSettingsClientAPI interface {
@@ -336,20 +315,6 @@ type SubAssessmentsClientAPI interface {
 
 var _ SubAssessmentsClientAPI = (*security.SubAssessmentsClient)(nil)
 
-// AutomationsClientAPI contains the set of methods on the AutomationsClient type.
-type AutomationsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, automationName string, automation security.Automation) (result security.Automation, err error)
-	Delete(ctx context.Context, resourceGroupName string, automationName string) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, automationName string) (result security.Automation, err error)
-	List(ctx context.Context) (result security.AutomationListPage, err error)
-	ListComplete(ctx context.Context) (result security.AutomationListIterator, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result security.AutomationListPage, err error)
-	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result security.AutomationListIterator, err error)
-	Validate(ctx context.Context, resourceGroupName string, automationName string, automation security.Automation) (result security.AutomationValidationStatus, err error)
-}
-
-var _ AutomationsClientAPI = (*security.AutomationsClient)(nil)
-
 // AssessmentsMetadataClientAPI contains the set of methods on the AssessmentsMetadataClient type.
 type AssessmentsMetadataClientAPI interface {
 	CreateInSubscription(ctx context.Context, assessmentMetadataName string, assessmentMetadata security.AssessmentMetadata) (result security.AssessmentMetadata, err error)
@@ -374,3 +339,49 @@ type AssessmentsClientAPI interface {
 }
 
 var _ AssessmentsClientAPI = (*security.AssessmentsClient)(nil)
+
+// AdaptiveNetworkHardeningsClientAPI contains the set of methods on the AdaptiveNetworkHardeningsClient type.
+type AdaptiveNetworkHardeningsClientAPI interface {
+	Enforce(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string, adaptiveNetworkHardeningResourceName string, body security.AdaptiveNetworkHardeningEnforceRequest) (result security.AdaptiveNetworkHardeningsEnforceFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string, adaptiveNetworkHardeningResourceName string) (result security.AdaptiveNetworkHardening, err error)
+	ListByExtendedResource(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string) (result security.AdaptiveNetworkHardeningsListPage, err error)
+	ListByExtendedResourceComplete(ctx context.Context, resourceGroupName string, resourceNamespace string, resourceType string, resourceName string) (result security.AdaptiveNetworkHardeningsListIterator, err error)
+}
+
+var _ AdaptiveNetworkHardeningsClientAPI = (*security.AdaptiveNetworkHardeningsClient)(nil)
+
+// AllowedConnectionsClientAPI contains the set of methods on the AllowedConnectionsClient type.
+type AllowedConnectionsClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, connectionType security.ConnectionType) (result security.AllowedConnectionsResource, err error)
+	List(ctx context.Context) (result security.AllowedConnectionsListPage, err error)
+	ListComplete(ctx context.Context) (result security.AllowedConnectionsListIterator, err error)
+	ListByHomeRegion(ctx context.Context) (result security.AllowedConnectionsListPage, err error)
+	ListByHomeRegionComplete(ctx context.Context) (result security.AllowedConnectionsListIterator, err error)
+}
+
+var _ AllowedConnectionsClientAPI = (*security.AllowedConnectionsClient)(nil)
+
+// TopologyClientAPI contains the set of methods on the TopologyClient type.
+type TopologyClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, topologyResourceName string) (result security.TopologyResource, err error)
+	List(ctx context.Context) (result security.TopologyListPage, err error)
+	ListComplete(ctx context.Context) (result security.TopologyListIterator, err error)
+	ListByHomeRegion(ctx context.Context) (result security.TopologyListPage, err error)
+	ListByHomeRegionComplete(ctx context.Context) (result security.TopologyListIterator, err error)
+}
+
+var _ TopologyClientAPI = (*security.TopologyClient)(nil)
+
+// AutomationsClientAPI contains the set of methods on the AutomationsClient type.
+type AutomationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, automationName string, automation security.Automation) (result security.Automation, err error)
+	Delete(ctx context.Context, resourceGroupName string, automationName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, automationName string) (result security.Automation, err error)
+	List(ctx context.Context) (result security.AutomationListPage, err error)
+	ListComplete(ctx context.Context) (result security.AutomationListIterator, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result security.AutomationListPage, err error)
+	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result security.AutomationListIterator, err error)
+	Validate(ctx context.Context, resourceGroupName string, automationName string, automation security.Automation) (result security.AutomationValidationStatus, err error)
+}
+
+var _ AutomationsClientAPI = (*security.AutomationsClient)(nil)
