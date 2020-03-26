@@ -189,6 +189,21 @@ func PossibleItemTypeParameterValues() []ItemTypeParameter {
 	return []ItemTypeParameter{ItemTypeParameterFolder, ItemTypeParameterFunction, ItemTypeParameterNone, ItemTypeParameterQuery, ItemTypeParameterRecent}
 }
 
+// PublicNetworkAccessType enumerates the values for public network access type.
+type PublicNetworkAccessType string
+
+const (
+	// Disabled Disables public connectivity to Application Insights through public DNS.
+	Disabled PublicNetworkAccessType = "Disabled"
+	// Enabled Enables connectivity to Application Insights through public DNS.
+	Enabled PublicNetworkAccessType = "Enabled"
+)
+
+// PossiblePublicNetworkAccessTypeValues returns an array of possible values for the PublicNetworkAccessType const type.
+func PossiblePublicNetworkAccessTypeValues() []PublicNetworkAccessType {
+	return []PublicNetworkAccessType{Disabled, Enabled}
+}
+
 // PurgeState enumerates the values for purge state.
 type PurgeState string
 
@@ -883,6 +898,10 @@ type ApplicationInsightsComponentProperties struct {
 	DisableIPMasking *bool `json:"DisableIpMasking,omitempty"`
 	// ImmediatePurgeDataOn30Days - Purge data immediately after 30 days.
 	ImmediatePurgeDataOn30Days *bool `json:"ImmediatePurgeDataOn30Days,omitempty"`
+	// PublicNetworkAccessForIngestion - Possible values include: 'Enabled', 'Disabled'
+	PublicNetworkAccessForIngestion PublicNetworkAccessType `json:"publicNetworkAccessForIngestion,omitempty"`
+	// PublicNetworkAccessForQuery - Possible values include: 'Enabled', 'Disabled'
+	PublicNetworkAccessForQuery PublicNetworkAccessType `json:"publicNetworkAccessForQuery,omitempty"`
 }
 
 // ApplicationInsightsComponentQuotaStatus an Application Insights component daily data volume cap status
