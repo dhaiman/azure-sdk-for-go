@@ -102,7 +102,6 @@ func (client PrivateEndpointConnectionsClient) CreateOrUpdatePreparer(ctx contex
 		"api-version": APIVersion,
 	}
 
-	privateEndpointConnection.ID = nil
 	privateEndpointConnection.Name = nil
 	privateEndpointConnection.Type = nil
 	preparer := autorest.CreatePreparer(

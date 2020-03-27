@@ -564,6 +564,8 @@ type ConfigurationStoreProperties struct {
 	Endpoint *string `json:"endpoint,omitempty"`
 	// Encryption - The encryption settings of the configuration store.
 	Encryption *EncryptionProperties `json:"encryption,omitempty"`
+	// PrivateEndpointConnections - READ-ONLY; private endpoint connections of configuration store
+	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 }
 
 // ConfigurationStorePropertiesUpdateParameters the properties for updating a configuration store.
@@ -982,7 +984,7 @@ type PrivateEndpoint struct {
 // PrivateEndpointConnection a private endpoint connection
 type PrivateEndpointConnection struct {
 	autorest.Response `json:"-"`
-	// ID - READ-ONLY; The resource ID.
+	// ID - The resource ID.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource.
 	Name *string `json:"name,omitempty"`
@@ -995,6 +997,9 @@ type PrivateEndpointConnection struct {
 // MarshalJSON is the custom marshaler for PrivateEndpointConnection.
 func (pec PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if pec.ID != nil {
+		objectMap["id"] = pec.ID
+	}
 	if pec.PrivateEndpointConnectionProperties != nil {
 		objectMap["properties"] = pec.PrivateEndpointConnectionProperties
 	}
