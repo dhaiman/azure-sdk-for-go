@@ -6260,8 +6260,6 @@ type WorkflowProperties struct {
 	AccessEndpoint *string `json:"accessEndpoint,omitempty"`
 	// EndpointsConfiguration - The endpoints configuration.
 	EndpointsConfiguration *FlowEndpointsConfiguration `json:"endpointsConfiguration,omitempty"`
-	// Sku - The sku.
-	Sku *Sku `json:"sku,omitempty"`
 	// IntegrationAccount - The integration account.
 	IntegrationAccount *ResourceReference `json:"integrationAccount,omitempty"`
 	// IntegrationServiceEnvironment - The integration service environment.
@@ -6280,9 +6278,6 @@ func (wp WorkflowProperties) MarshalJSON() ([]byte, error) {
 	}
 	if wp.EndpointsConfiguration != nil {
 		objectMap["endpointsConfiguration"] = wp.EndpointsConfiguration
-	}
-	if wp.Sku != nil {
-		objectMap["sku"] = wp.Sku
 	}
 	if wp.IntegrationAccount != nil {
 		objectMap["integrationAccount"] = wp.IntegrationAccount
