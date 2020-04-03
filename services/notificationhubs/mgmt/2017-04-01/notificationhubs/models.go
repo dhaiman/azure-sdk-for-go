@@ -39,13 +39,13 @@ const (
 	Listen AccessRights = "Listen"
 	// Manage ...
 	Manage AccessRights = "Manage"
-	// Send ...
-	Send AccessRights = "Send"
+	// SendEnumValue ...
+	SendEnumValue AccessRights = "Send"
 )
 
 // PossibleAccessRightsValues returns an array of possible values for the AccessRights const type.
 func PossibleAccessRightsValues() []AccessRights {
-	return []AccessRights{Listen, Manage, Send}
+	return []AccessRights{Listen, Manage, SendEnumValue}
 }
 
 // NamespaceType enumerates the values for namespace type.
@@ -292,8 +292,6 @@ type CheckAvailabilityResult struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for CheckAvailabilityResult.
@@ -307,9 +305,6 @@ func (car CheckAvailabilityResult) MarshalJSON() ([]byte, error) {
 	}
 	if car.Tags != nil {
 		objectMap["tags"] = car.Tags
-	}
-	if car.Sku != nil {
-		objectMap["sku"] = car.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -328,8 +323,6 @@ type CreateOrUpdateParameters struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for CreateOrUpdateParameters.
@@ -343,9 +336,6 @@ func (coup CreateOrUpdateParameters) MarshalJSON() ([]byte, error) {
 	}
 	if coup.Tags != nil {
 		objectMap["tags"] = coup.Tags
-	}
-	if coup.Sku != nil {
-		objectMap["sku"] = coup.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -413,15 +403,6 @@ func (coup *CreateOrUpdateParameters) UnmarshalJSON(body []byte) error {
 				}
 				coup.Tags = tags
 			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				coup.Sku = &sku
-			}
 		}
 	}
 
@@ -443,8 +424,6 @@ type DebugSendResponse struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for DebugSendResponse.
@@ -458,9 +437,6 @@ func (dsr DebugSendResponse) MarshalJSON() ([]byte, error) {
 	}
 	if dsr.Tags != nil {
 		objectMap["tags"] = dsr.Tags
-	}
-	if dsr.Sku != nil {
-		objectMap["sku"] = dsr.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -527,15 +503,6 @@ func (dsr *DebugSendResponse) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				dsr.Tags = tags
-			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				dsr.Sku = &sku
 			}
 		}
 	}
@@ -808,6 +775,8 @@ type MpnsCredentialProperties struct {
 type NamespaceCreateOrUpdateParameters struct {
 	// NamespaceProperties - Properties of the Namespace.
 	*NamespaceProperties `json:"properties,omitempty"`
+	// Sku - The sku of the created namespace
+	Sku *Sku `json:"sku,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name
@@ -818,8 +787,6 @@ type NamespaceCreateOrUpdateParameters struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for NamespaceCreateOrUpdateParameters.
@@ -828,94 +795,16 @@ func (ncoup NamespaceCreateOrUpdateParameters) MarshalJSON() ([]byte, error) {
 	if ncoup.NamespaceProperties != nil {
 		objectMap["properties"] = ncoup.NamespaceProperties
 	}
+	if ncoup.Sku != nil {
+		objectMap["sku"] = ncoup.Sku
+	}
 	if ncoup.Location != nil {
 		objectMap["location"] = ncoup.Location
 	}
 	if ncoup.Tags != nil {
 		objectMap["tags"] = ncoup.Tags
 	}
-	if ncoup.Sku != nil {
-		objectMap["sku"] = ncoup.Sku
-	}
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON is the custom unmarshaler for NamespaceCreateOrUpdateParameters struct.
-func (ncoup *NamespaceCreateOrUpdateParameters) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "properties":
-			if v != nil {
-				var namespaceProperties NamespaceProperties
-				err = json.Unmarshal(*v, &namespaceProperties)
-				if err != nil {
-					return err
-				}
-				ncoup.NamespaceProperties = &namespaceProperties
-			}
-		case "id":
-			if v != nil {
-				var ID string
-				err = json.Unmarshal(*v, &ID)
-				if err != nil {
-					return err
-				}
-				ncoup.ID = &ID
-			}
-		case "name":
-			if v != nil {
-				var name string
-				err = json.Unmarshal(*v, &name)
-				if err != nil {
-					return err
-				}
-				ncoup.Name = &name
-			}
-		case "type":
-			if v != nil {
-				var typeVar string
-				err = json.Unmarshal(*v, &typeVar)
-				if err != nil {
-					return err
-				}
-				ncoup.Type = &typeVar
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				ncoup.Location = &location
-			}
-		case "tags":
-			if v != nil {
-				var tags map[string]*string
-				err = json.Unmarshal(*v, &tags)
-				if err != nil {
-					return err
-				}
-				ncoup.Tags = tags
-			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				ncoup.Sku = &sku
-			}
-		}
-	}
-
-	return nil
 }
 
 // NamespaceListResult the response of the List Namespace operation.
@@ -1121,6 +1010,8 @@ type NamespaceResource struct {
 	autorest.Response `json:"-"`
 	// NamespaceProperties - Properties of the Namespace.
 	*NamespaceProperties `json:"properties,omitempty"`
+	// Sku - The sku of the created namespace
+	Sku *Sku `json:"sku,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name
@@ -1131,8 +1022,6 @@ type NamespaceResource struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for NamespaceResource.
@@ -1141,14 +1030,14 @@ func (nr NamespaceResource) MarshalJSON() ([]byte, error) {
 	if nr.NamespaceProperties != nil {
 		objectMap["properties"] = nr.NamespaceProperties
 	}
+	if nr.Sku != nil {
+		objectMap["sku"] = nr.Sku
+	}
 	if nr.Location != nil {
 		objectMap["location"] = nr.Location
 	}
 	if nr.Tags != nil {
 		objectMap["tags"] = nr.Tags
-	}
-	if nr.Sku != nil {
-		objectMap["sku"] = nr.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1170,6 +1059,15 @@ func (nr *NamespaceResource) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				nr.NamespaceProperties = &namespaceProperties
+			}
+		case "sku":
+			if v != nil {
+				var sku Sku
+				err = json.Unmarshal(*v, &sku)
+				if err != nil {
+					return err
+				}
+				nr.Sku = &sku
 			}
 		case "id":
 			if v != nil {
@@ -1215,15 +1113,6 @@ func (nr *NamespaceResource) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				nr.Tags = tags
-			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				nr.Sku = &sku
 			}
 		}
 	}
@@ -1433,8 +1322,6 @@ type PatchParameters struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PatchParameters.
@@ -1448,9 +1335,6 @@ func (pp PatchParameters) MarshalJSON() ([]byte, error) {
 	}
 	if pp.Tags != nil {
 		objectMap["tags"] = pp.Tags
-	}
-	if pp.Sku != nil {
-		objectMap["sku"] = pp.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1518,15 +1402,6 @@ func (pp *PatchParameters) UnmarshalJSON(body []byte) error {
 				}
 				pp.Tags = tags
 			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				pp.Sku = &sku
-			}
 		}
 	}
 
@@ -1564,8 +1439,6 @@ type PnsCredentialsResource struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PnsCredentialsResource.
@@ -1579,9 +1452,6 @@ func (pcr PnsCredentialsResource) MarshalJSON() ([]byte, error) {
 	}
 	if pcr.Tags != nil {
 		objectMap["tags"] = pcr.Tags
-	}
-	if pcr.Sku != nil {
-		objectMap["sku"] = pcr.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1649,15 +1519,6 @@ func (pcr *PnsCredentialsResource) UnmarshalJSON(body []byte) error {
 				}
 				pcr.Tags = tags
 			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				pcr.Sku = &sku
-			}
 		}
 	}
 
@@ -1704,8 +1565,6 @@ type Resource struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Resource.
@@ -1716,9 +1575,6 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	}
 	if r.Tags != nil {
 		objectMap["tags"] = r.Tags
-	}
-	if r.Sku != nil {
-		objectMap["sku"] = r.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1753,8 +1609,6 @@ type ResourceType struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for ResourceType.
@@ -1768,9 +1622,6 @@ func (rt ResourceType) MarshalJSON() ([]byte, error) {
 	}
 	if rt.Tags != nil {
 		objectMap["tags"] = rt.Tags
-	}
-	if rt.Sku != nil {
-		objectMap["sku"] = rt.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1837,15 +1688,6 @@ func (rt *ResourceType) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				rt.Tags = tags
-			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				rt.Sku = &sku
 			}
 		}
 	}
@@ -2045,8 +1887,6 @@ type SharedAccessAuthorizationRuleResource struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
-	// Sku - The sku of the created namespace
-	Sku *Sku `json:"sku,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SharedAccessAuthorizationRuleResource.
@@ -2060,9 +1900,6 @@ func (saarr SharedAccessAuthorizationRuleResource) MarshalJSON() ([]byte, error)
 	}
 	if saarr.Tags != nil {
 		objectMap["tags"] = saarr.Tags
-	}
-	if saarr.Sku != nil {
-		objectMap["sku"] = saarr.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -2130,15 +1967,6 @@ func (saarr *SharedAccessAuthorizationRuleResource) UnmarshalJSON(body []byte) e
 				}
 				saarr.Tags = tags
 			}
-		case "sku":
-			if v != nil {
-				var sku Sku
-				err = json.Unmarshal(*v, &sku)
-				if err != nil {
-					return err
-				}
-				saarr.Sku = &sku
-			}
 		}
 	}
 
@@ -2157,12 +1985,6 @@ type Sku struct {
 	Family *string `json:"family,omitempty"`
 	// Capacity - The capacity of the resource
 	Capacity *int32 `json:"capacity,omitempty"`
-}
-
-// SubResource ...
-type SubResource struct {
-	// ID - Resource Id
-	ID *string `json:"id,omitempty"`
 }
 
 // WnsCredential description of a NotificationHub WnsCredential.
