@@ -493,7 +493,7 @@ type IdentifyRequest struct {
 	PersonGroupID *string `json:"personGroupId,omitempty"`
 	// LargePersonGroupID - LargePersonGroupId of the target large person group, created by LargePersonGroup - Create. Parameter personGroupId and largePersonGroupId should not be provided at the same time.
 	LargePersonGroupID *string `json:"largePersonGroupId,omitempty"`
-	// MaxNumOfCandidatesReturned - The range of maxNumOfCandidatesReturned is between 1 and 5 (default is 1).
+	// MaxNumOfCandidatesReturned - The range of maxNumOfCandidatesReturned is between 1 and 100 (default is 1).
 	MaxNumOfCandidatesReturned *int32 `json:"maxNumOfCandidatesReturned,omitempty"`
 	// ConfidenceThreshold - Confidence threshold of identification, used to judge whether one face belong to one person. The range of confidenceThreshold is [0, 1] (default specified by algorithm).
 	ConfidenceThreshold *float64 `json:"confidenceThreshold,omitempty"`

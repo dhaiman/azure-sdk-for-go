@@ -602,7 +602,7 @@ func (client Client) Identify(ctx context.Context, body IdentifyRequest) (result
 						{Target: "body.LargePersonGroupID", Name: validation.Pattern, Rule: `^[a-z0-9-_]+$`, Chain: nil},
 					}},
 				{Target: "body.MaxNumOfCandidatesReturned", Name: validation.Null, Rule: false,
-					Chain: []validation.Constraint{{Target: "body.MaxNumOfCandidatesReturned", Name: validation.InclusiveMaximum, Rule: int64(5), Chain: nil},
+					Chain: []validation.Constraint{{Target: "body.MaxNumOfCandidatesReturned", Name: validation.InclusiveMaximum, Rule: int64(100), Chain: nil},
 						{Target: "body.MaxNumOfCandidatesReturned", Name: validation.InclusiveMinimum, Rule: int64(1), Chain: nil},
 					}}}}}); err != nil {
 		return result, validation.NewError("face.Client", "Identify", err.Error())
