@@ -150,15 +150,15 @@ type Cluster struct {
 	Sku *ClusterSku `json:"sku,omitempty"`
 	// ClusterProperties - Event Hubs Cluster properties supplied in responses in List or Get operations.
 	*ClusterProperties `json:"properties,omitempty"`
-	// Location - Resource location
+	// Location - Resource location.
 	Location *string `json:"location,omitempty"`
-	// Tags - Resource tags
+	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -525,17 +525,19 @@ type EHNamespace struct {
 	autorest.Response `json:"-"`
 	// Sku - Properties of sku resource
 	Sku *Sku `json:"sku,omitempty"`
+	// Identity - Properties of BYOK Identity description
+	Identity *Identity `json:"identity,omitempty"`
 	// EHNamespaceProperties - Namespace properties supplied for create namespace operation.
 	*EHNamespaceProperties `json:"properties,omitempty"`
-	// Location - Resource location
+	// Location - Resource location.
 	Location *string `json:"location,omitempty"`
-	// Tags - Resource tags
+	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -544,6 +546,9 @@ func (en EHNamespace) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if en.Sku != nil {
 		objectMap["sku"] = en.Sku
+	}
+	if en.Identity != nil {
+		objectMap["identity"] = en.Identity
 	}
 	if en.EHNamespaceProperties != nil {
 		objectMap["properties"] = en.EHNamespaceProperties
@@ -574,6 +579,15 @@ func (en *EHNamespace) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				en.Sku = &sku
+			}
+		case "identity":
+			if v != nil {
+				var identity Identity
+				err = json.Unmarshal(*v, &identity)
+				if err != nil {
+					return err
+				}
+				en.Identity = &identity
 			}
 		case "properties":
 			if v != nil {
@@ -816,8 +830,6 @@ type EHNamespaceProperties struct {
 	KafkaEnabled *bool `json:"kafkaEnabled,omitempty"`
 	// ZoneRedundant - Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones.
 	ZoneRedundant *bool `json:"zoneRedundant,omitempty"`
-	// Identity - Properties of BYOK Identity description
-	Identity *Identity `json:"identity,omitempty"`
 	// Encryption - Properties of BYOK Encryption description
 	Encryption *Encryption `json:"encryption,omitempty"`
 }
@@ -830,8 +842,8 @@ type Encryption struct {
 	KeySource KeySource `json:"keySource,omitempty"`
 }
 
-// ErrorResponse error response that indicates the service is not able to process the incoming request. The
-// reason is provided in the error message.
+// ErrorResponse error response indicates Event Hub service is not able to process the incoming request.
+// The reason is provided in the error message.
 type ErrorResponse struct {
 	// Code - Error code.
 	Code *string `json:"code,omitempty"`
@@ -854,11 +866,11 @@ type IPFilterRule struct {
 	autorest.Response `json:"-"`
 	// IPFilterRuleProperties - Properties supplied to create or update IpFilterRules
 	*IPFilterRuleProperties `json:"properties,omitempty"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -1143,11 +1155,11 @@ type NetworkRuleSet struct {
 	autorest.Response `json:"-"`
 	// NetworkRuleSetProperties - NetworkRuleSet properties
 	*NetworkRuleSetProperties `json:"properties,omitempty"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -1402,13 +1414,13 @@ func NewOperationListResultPage(getNextPage func(context.Context, OperationListR
 	return OperationListResultPage{fn: getNextPage}
 }
 
-// Resource the Resource definition
+// Resource the resource definition.
 type Resource struct {
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -1428,17 +1440,17 @@ type Subnet struct {
 	ID *string `json:"id,omitempty"`
 }
 
-// TrackedResource definition of an Azure resource.
+// TrackedResource definition of resource.
 type TrackedResource struct {
-	// Location - Resource location
+	// Location - Resource location.
 	Location *string `json:"location,omitempty"`
-	// Tags - Resource tags
+	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 
@@ -1459,11 +1471,11 @@ type VirtualNetworkRule struct {
 	autorest.Response `json:"-"`
 	// VirtualNetworkRuleProperties - Properties supplied to create or update VirtualNetworkRules
 	*VirtualNetworkRuleProperties `json:"properties,omitempty"`
-	// ID - READ-ONLY; Resource Id
+	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Resource name
+	// Name - READ-ONLY; Resource name.
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; Resource type
+	// Type - READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty"`
 }
 

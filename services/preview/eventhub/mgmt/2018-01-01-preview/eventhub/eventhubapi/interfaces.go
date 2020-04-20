@@ -23,14 +23,6 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result eventhub.OperationListResultPage, err error)
-	ListComplete(ctx context.Context) (result eventhub.OperationListResultIterator, err error)
-}
-
-var _ OperationsClientAPI = (*eventhub.OperationsClient)(nil)
-
 // ClustersClientAPI contains the set of methods on the ClustersClient type.
 type ClustersClientAPI interface {
 	Delete(ctx context.Context, resourceGroupName string, clusterName string) (result eventhub.ClustersDeleteFuture, err error)
@@ -44,14 +36,6 @@ type ClustersClientAPI interface {
 }
 
 var _ ClustersClientAPI = (*eventhub.ClustersClient)(nil)
-
-// ConfigurationClientAPI contains the set of methods on the ConfigurationClient type.
-type ConfigurationClientAPI interface {
-	Get(ctx context.Context, resourceGroupName string, clusterName string) (result eventhub.ClusterQuotaConfigurationProperties, err error)
-	Patch(ctx context.Context, resourceGroupName string, clusterName string, parameters eventhub.ClusterQuotaConfigurationProperties) (result eventhub.ClusterQuotaConfigurationProperties, err error)
-}
-
-var _ ConfigurationClientAPI = (*eventhub.ConfigurationClient)(nil)
 
 // NamespacesClientAPI contains the set of methods on the NamespacesClient type.
 type NamespacesClientAPI interface {
@@ -78,3 +62,19 @@ type NamespacesClientAPI interface {
 }
 
 var _ NamespacesClientAPI = (*eventhub.NamespacesClient)(nil)
+
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result eventhub.OperationListResultPage, err error)
+	ListComplete(ctx context.Context) (result eventhub.OperationListResultIterator, err error)
+}
+
+var _ OperationsClientAPI = (*eventhub.OperationsClient)(nil)
+
+// ConfigurationClientAPI contains the set of methods on the ConfigurationClient type.
+type ConfigurationClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, clusterName string) (result eventhub.ClusterQuotaConfigurationProperties, err error)
+	Patch(ctx context.Context, resourceGroupName string, clusterName string, parameters eventhub.ClusterQuotaConfigurationProperties) (result eventhub.ClusterQuotaConfigurationProperties, err error)
+}
+
+var _ ConfigurationClientAPI = (*eventhub.ConfigurationClient)(nil)
