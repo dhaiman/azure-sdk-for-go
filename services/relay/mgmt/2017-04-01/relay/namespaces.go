@@ -896,7 +896,7 @@ func (client NamespacesClient) ListAuthorizationRulesComplete(ctx context.Contex
 	return
 }
 
-// ListByResourceGroup lists all the available namespaces within the ResourceGroup.
+// ListByResourceGroup lists all the available namespaces within the ResourceGroup
 // Parameters:
 // resourceGroupName - name of the Resource group within the Azure subscription.
 func (client NamespacesClient) ListByResourceGroup(ctx context.Context, resourceGroupName string) (result NamespaceListResultPage, err error) {

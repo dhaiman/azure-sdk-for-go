@@ -86,21 +86,6 @@ func PossibleProvisioningStateEnumValues() []ProvisioningStateEnum {
 	return []ProvisioningStateEnum{Created, Deleted, Failed, Succeeded, Unknown, Updating}
 }
 
-// RelaytypeEnum enumerates the values for relaytype enum.
-type RelaytypeEnum string
-
-const (
-	// HTTP ...
-	HTTP RelaytypeEnum = "Http"
-	// NetTCP ...
-	NetTCP RelaytypeEnum = "NetTcp"
-)
-
-// PossibleRelaytypeEnumValues returns an array of possible values for the RelaytypeEnum const type.
-func PossibleRelaytypeEnumValues() []RelaytypeEnum {
-	return []RelaytypeEnum{HTTP, NetTCP}
-}
-
 // SkuTier enumerates the values for sku tier.
 type SkuTier string
 
@@ -112,6 +97,21 @@ const (
 // PossibleSkuTierValues returns an array of possible values for the SkuTier const type.
 func PossibleSkuTierValues() []SkuTier {
 	return []SkuTier{Standard}
+}
+
+// Type enumerates the values for type.
+type Type string
+
+const (
+	// HTTP ...
+	HTTP Type = "Http"
+	// NetTCP ...
+	NetTCP Type = "NetTcp"
+)
+
+// PossibleTypeValues returns an array of possible values for the Type const type.
+func PossibleTypeValues() []Type {
+	return []Type{HTTP, NetTCP}
 }
 
 // UnavailableReason enumerates the values for unavailable reason.
@@ -394,7 +394,7 @@ type CheckNameAvailabilityResult struct {
 	Reason UnavailableReason `json:"reason,omitempty"`
 }
 
-// ErrorResponse error reponse indicates Relay service is not able to process the incoming request. The
+// ErrorResponse error response indicates Relay service is not able to process the incoming request. The
 // reason is provided in the error message.
 type ErrorResponse struct {
 	// Code - Error code.
@@ -632,7 +632,7 @@ type HybridConnectionProperties struct {
 	ListenerCount *int32 `json:"listenerCount,omitempty"`
 	// RequiresClientAuthorization - Returns true if client authorization is needed for this hybrid connection; otherwise, false.
 	RequiresClientAuthorization *bool `json:"requiresClientAuthorization,omitempty"`
-	// UserMetadata - The usermetadata is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored.
+	// UserMetadata - The user meta data is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored.
 	UserMetadata *string `json:"userMetadata,omitempty"`
 }
 
@@ -1129,7 +1129,7 @@ func NewOperationListResultPage(getNextPage func(context.Context, OperationListR
 }
 
 // RegenerateAccessKeyParameters parameters supplied to the regenerate authorization rule operation,
-// specifies which key neeeds to be reset.
+// specifies which key needs to be reset.
 type RegenerateAccessKeyParameters struct {
 	// KeyType - The access key to regenerate. Possible values include: 'PrimaryKey', 'SecondaryKey'
 	KeyType KeyType `json:"keyType,omitempty"`
@@ -1386,12 +1386,12 @@ type WcfRelayProperties struct {
 	// ListenerCount - READ-ONLY; The number of listeners for this relay. Note that min :1 and max:25 are supported.
 	ListenerCount *int32 `json:"listenerCount,omitempty"`
 	// RelayType - WCF relay type. Possible values include: 'NetTCP', 'HTTP'
-	RelayType RelaytypeEnum `json:"relayType,omitempty"`
+	RelayType Type `json:"relayType,omitempty"`
 	// RequiresClientAuthorization - Returns true if client authorization is needed for this relay; otherwise, false.
 	RequiresClientAuthorization *bool `json:"requiresClientAuthorization,omitempty"`
 	// RequiresTransportSecurity - Returns true if transport security is needed for this relay; otherwise, false.
 	RequiresTransportSecurity *bool `json:"requiresTransportSecurity,omitempty"`
-	// UserMetadata - The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored.
+	// UserMetadata - The user meta data is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored.
 	UserMetadata *string `json:"userMetadata,omitempty"`
 }
 

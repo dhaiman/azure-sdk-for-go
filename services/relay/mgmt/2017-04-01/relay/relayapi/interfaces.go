@@ -23,14 +23,6 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// OperationsClientAPI contains the set of methods on the OperationsClient type.
-type OperationsClientAPI interface {
-	List(ctx context.Context) (result relay.OperationListResultPage, err error)
-	ListComplete(ctx context.Context) (result relay.OperationListResultIterator, err error)
-}
-
-var _ OperationsClientAPI = (*relay.OperationsClient)(nil)
-
 // NamespacesClientAPI contains the set of methods on the NamespacesClient type.
 type NamespacesClientAPI interface {
 	CheckNameAvailabilityMethod(ctx context.Context, parameters relay.CheckNameAvailability) (result relay.CheckNameAvailabilityResult, err error)
@@ -88,3 +80,11 @@ type WCFRelaysClientAPI interface {
 }
 
 var _ WCFRelaysClientAPI = (*relay.WCFRelaysClient)(nil)
+
+// OperationsClientAPI contains the set of methods on the OperationsClient type.
+type OperationsClientAPI interface {
+	List(ctx context.Context) (result relay.OperationListResultPage, err error)
+	ListComplete(ctx context.Context) (result relay.OperationListResultIterator, err error)
+}
+
+var _ OperationsClientAPI = (*relay.OperationsClient)(nil)
