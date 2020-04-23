@@ -288,9 +288,15 @@ var _ LogAnalyticsClientAPI = (*compute.LogAnalyticsClient)(nil)
 
 // VirtualMachineRunCommandsClientAPI contains the set of methods on the VirtualMachineRunCommandsClient type.
 type VirtualMachineRunCommandsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, VMName string, runCommandName string, runCommand compute.VirtualMachineRunCommand) (result compute.VirtualMachineRunCommandsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, VMName string, runCommandName string) (result compute.VirtualMachineRunCommandsDeleteFuture, err error)
 	Get(ctx context.Context, location string, commandID string) (result compute.RunCommandDocument, err error)
+	GetByVirtualMachine(ctx context.Context, resourceGroupName string, VMName string, runCommandName string, expand string) (result compute.VirtualMachineRunCommand, err error)
 	List(ctx context.Context, location string) (result compute.RunCommandListResultPage, err error)
 	ListComplete(ctx context.Context, location string) (result compute.RunCommandListResultIterator, err error)
+	ListByVirtualMachine(ctx context.Context, resourceGroupName string, VMName string, expand string) (result compute.VirtualMachineRunCommandsListResultPage, err error)
+	ListByVirtualMachineComplete(ctx context.Context, resourceGroupName string, VMName string, expand string) (result compute.VirtualMachineRunCommandsListResultIterator, err error)
+	Update(ctx context.Context, resourceGroupName string, VMName string, runCommandName string, runCommand compute.VirtualMachineRunCommandUpdate) (result compute.VirtualMachineRunCommandsUpdateFuture, err error)
 }
 
 var _ VirtualMachineRunCommandsClientAPI = (*compute.VirtualMachineRunCommandsClient)(nil)

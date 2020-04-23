@@ -402,6 +402,31 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 	return []EncryptionType{EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformKey}
 }
 
+// ExecutionState enumerates the values for execution state.
+type ExecutionState string
+
+const (
+	// ExecutionStateCanceled ...
+	ExecutionStateCanceled ExecutionState = "Canceled"
+	// ExecutionStateFailed ...
+	ExecutionStateFailed ExecutionState = "Failed"
+	// ExecutionStatePending ...
+	ExecutionStatePending ExecutionState = "Pending"
+	// ExecutionStateRunning ...
+	ExecutionStateRunning ExecutionState = "Running"
+	// ExecutionStateSucceeded ...
+	ExecutionStateSucceeded ExecutionState = "Succeeded"
+	// ExecutionStateTimedOut ...
+	ExecutionStateTimedOut ExecutionState = "TimedOut"
+	// ExecutionStateUnknown ...
+	ExecutionStateUnknown ExecutionState = "Unknown"
+)
+
+// PossibleExecutionStateValues returns an array of possible values for the ExecutionState const type.
+func PossibleExecutionStateValues() []ExecutionState {
+	return []ExecutionState{ExecutionStateCanceled, ExecutionStateFailed, ExecutionStatePending, ExecutionStateRunning, ExecutionStateSucceeded, ExecutionStateTimedOut, ExecutionStateUnknown}
+}
+
 // HostCaching enumerates the values for host caching.
 type HostCaching string
 
@@ -10620,6 +10645,434 @@ type VirtualMachineProperties struct {
 type VirtualMachineReimageParameters struct {
 	// TempDisk - Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk.
 	TempDisk *bool `json:"tempDisk,omitempty"`
+}
+
+// VirtualMachineRunCommand describes a Virtual Machine run command.
+type VirtualMachineRunCommand struct {
+	autorest.Response                   `json:"-"`
+	*VirtualMachineRunCommandProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+	// Location - Resource location
+	Location *string `json:"location,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for VirtualMachineRunCommand.
+func (vmrc VirtualMachineRunCommand) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vmrc.VirtualMachineRunCommandProperties != nil {
+		objectMap["properties"] = vmrc.VirtualMachineRunCommandProperties
+	}
+	if vmrc.Location != nil {
+		objectMap["location"] = vmrc.Location
+	}
+	if vmrc.Tags != nil {
+		objectMap["tags"] = vmrc.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for VirtualMachineRunCommand struct.
+func (vmrc *VirtualMachineRunCommand) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var virtualMachineRunCommandProperties VirtualMachineRunCommandProperties
+				err = json.Unmarshal(*v, &virtualMachineRunCommandProperties)
+				if err != nil {
+					return err
+				}
+				vmrc.VirtualMachineRunCommandProperties = &virtualMachineRunCommandProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				vmrc.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				vmrc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				vmrc.Type = &typeVar
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				vmrc.Location = &location
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				vmrc.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
+
+// VirtualMachineRunCommandInstanceView the instance view of a virtual machine run command.
+type VirtualMachineRunCommandInstanceView struct {
+	// ExecutionState - Script execution status. Possible values include: 'ExecutionStateUnknown', 'ExecutionStatePending', 'ExecutionStateRunning', 'ExecutionStateFailed', 'ExecutionStateSucceeded', 'ExecutionStateTimedOut', 'ExecutionStateCanceled'
+	ExecutionState ExecutionState `json:"executionState,omitempty"`
+	// Output - Script output stream.
+	Output *string `json:"output,omitempty"`
+	// Error - Script error stream.
+	Error *string `json:"error,omitempty"`
+	// StartTime - Script start time.
+	StartTime *date.Time `json:"startTime,omitempty"`
+	// EndTime - Script end time.
+	EndTime *date.Time `json:"endTime,omitempty"`
+	// Statuses - The resource status information.
+	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+}
+
+// VirtualMachineRunCommandProperties describes the properties of a Virtual Machine run command.
+type VirtualMachineRunCommandProperties struct {
+	// Source - The source of the run command script.
+	Source *VirtualMachineRunCommandScriptSource `json:"source,omitempty"`
+	// Parameters - The parameters used by the script.
+	Parameters *[]RunCommandInputParameter `json:"parameters,omitempty"`
+	// ProtectedParameters - The parameters used by the script.
+	ProtectedParameters *[]RunCommandInputParameter `json:"protectedParameters,omitempty"`
+	// RunAsUser - Specifies the user account on the VM when executing the run command.
+	RunAsUser *string `json:"runAsUser,omitempty"`
+	// RunAsPassword - Specifies the user account password on the VM when executing the run command.
+	RunAsPassword *string `json:"runAsPassword,omitempty"`
+	// TimeoutInSeconds - The timeout in seconds to execute the run command.
+	TimeoutInSeconds *int32 `json:"timeoutInSeconds,omitempty"`
+	// OutputBlobURI - Specifies the Azure storage blob where script output stream will be uploaded.
+	OutputBlobURI *string `json:"outputBlobUri,omitempty"`
+	// ErrorBlobURI - Specifies the Azure storage blob where script error stream will be uploaded.
+	ErrorBlobURI *string `json:"errorBlobUri,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state, which only appears in the response.
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+	// InstanceView - READ-ONLY; The virtual machine run command instance view.
+	InstanceView *VirtualMachineRunCommandInstanceView `json:"instanceView,omitempty"`
+}
+
+// VirtualMachineRunCommandsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type VirtualMachineRunCommandsCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineRunCommandsCreateOrUpdateFuture) Result(client VirtualMachineRunCommandsClient) (vmrc VirtualMachineRunCommand, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineRunCommandsCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("compute.VirtualMachineRunCommandsCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if vmrc.Response.Response, err = future.GetResult(sender); err == nil && vmrc.Response.Response.StatusCode != http.StatusNoContent {
+		vmrc, err = client.CreateOrUpdateResponder(vmrc.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "compute.VirtualMachineRunCommandsCreateOrUpdateFuture", "Result", vmrc.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// VirtualMachineRunCommandScriptSource describes the script sources for run command.
+type VirtualMachineRunCommandScriptSource struct {
+	// Script - Specifies the script content to be executed on the VM.
+	Script *string `json:"script,omitempty"`
+	// ScriptURI - Specifies the script download location.
+	ScriptURI *string `json:"scriptUri,omitempty"`
+}
+
+// VirtualMachineRunCommandsDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type VirtualMachineRunCommandsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineRunCommandsDeleteFuture) Result(client VirtualMachineRunCommandsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineRunCommandsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("compute.VirtualMachineRunCommandsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
+// VirtualMachineRunCommandsListResult the List run command operation response
+type VirtualMachineRunCommandsListResult struct {
+	autorest.Response `json:"-"`
+	// Value - The list of run commands
+	Value *[]VirtualMachineRunCommand `json:"value,omitempty"`
+	// NextLink - The uri to fetch the next page of run commands.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// VirtualMachineRunCommandsListResultIterator provides access to a complete listing of
+// VirtualMachineRunCommand values.
+type VirtualMachineRunCommandsListResultIterator struct {
+	i    int
+	page VirtualMachineRunCommandsListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *VirtualMachineRunCommandsListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/VirtualMachineRunCommandsListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *VirtualMachineRunCommandsListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter VirtualMachineRunCommandsListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter VirtualMachineRunCommandsListResultIterator) Response() VirtualMachineRunCommandsListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter VirtualMachineRunCommandsListResultIterator) Value() VirtualMachineRunCommand {
+	if !iter.page.NotDone() {
+		return VirtualMachineRunCommand{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the VirtualMachineRunCommandsListResultIterator type.
+func NewVirtualMachineRunCommandsListResultIterator(page VirtualMachineRunCommandsListResultPage) VirtualMachineRunCommandsListResultIterator {
+	return VirtualMachineRunCommandsListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (vmrclr VirtualMachineRunCommandsListResult) IsEmpty() bool {
+	return vmrclr.Value == nil || len(*vmrclr.Value) == 0
+}
+
+// virtualMachineRunCommandsListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (vmrclr VirtualMachineRunCommandsListResult) virtualMachineRunCommandsListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if vmrclr.NextLink == nil || len(to.String(vmrclr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(vmrclr.NextLink)))
+}
+
+// VirtualMachineRunCommandsListResultPage contains a page of VirtualMachineRunCommand values.
+type VirtualMachineRunCommandsListResultPage struct {
+	fn     func(context.Context, VirtualMachineRunCommandsListResult) (VirtualMachineRunCommandsListResult, error)
+	vmrclr VirtualMachineRunCommandsListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *VirtualMachineRunCommandsListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/VirtualMachineRunCommandsListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.vmrclr)
+	if err != nil {
+		return err
+	}
+	page.vmrclr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *VirtualMachineRunCommandsListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page VirtualMachineRunCommandsListResultPage) NotDone() bool {
+	return !page.vmrclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page VirtualMachineRunCommandsListResultPage) Response() VirtualMachineRunCommandsListResult {
+	return page.vmrclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page VirtualMachineRunCommandsListResultPage) Values() []VirtualMachineRunCommand {
+	if page.vmrclr.IsEmpty() {
+		return nil
+	}
+	return *page.vmrclr.Value
+}
+
+// Creates a new instance of the VirtualMachineRunCommandsListResultPage type.
+func NewVirtualMachineRunCommandsListResultPage(getNextPage func(context.Context, VirtualMachineRunCommandsListResult) (VirtualMachineRunCommandsListResult, error)) VirtualMachineRunCommandsListResultPage {
+	return VirtualMachineRunCommandsListResultPage{fn: getNextPage}
+}
+
+// VirtualMachineRunCommandsUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type VirtualMachineRunCommandsUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualMachineRunCommandsUpdateFuture) Result(client VirtualMachineRunCommandsClient) (vmrc VirtualMachineRunCommand, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineRunCommandsUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("compute.VirtualMachineRunCommandsUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if vmrc.Response.Response, err = future.GetResult(sender); err == nil && vmrc.Response.Response.StatusCode != http.StatusNoContent {
+		vmrc, err = client.UpdateResponder(vmrc.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "compute.VirtualMachineRunCommandsUpdateFuture", "Result", vmrc.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// VirtualMachineRunCommandUpdate describes a Virtual Machine run command.
+type VirtualMachineRunCommandUpdate struct {
+	*VirtualMachineRunCommandProperties `json:"properties,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for VirtualMachineRunCommandUpdate.
+func (vmrcu VirtualMachineRunCommandUpdate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vmrcu.VirtualMachineRunCommandProperties != nil {
+		objectMap["properties"] = vmrcu.VirtualMachineRunCommandProperties
+	}
+	if vmrcu.Tags != nil {
+		objectMap["tags"] = vmrcu.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for VirtualMachineRunCommandUpdate struct.
+func (vmrcu *VirtualMachineRunCommandUpdate) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var virtualMachineRunCommandProperties VirtualMachineRunCommandProperties
+				err = json.Unmarshal(*v, &virtualMachineRunCommandProperties)
+				if err != nil {
+					return err
+				}
+				vmrcu.VirtualMachineRunCommandProperties = &virtualMachineRunCommandProperties
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				vmrcu.Tags = tags
+			}
+		}
+	}
+
+	return nil
 }
 
 // VirtualMachineScaleSet describes a Virtual Machine Scale Set.
