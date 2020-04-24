@@ -31,14 +31,14 @@ type EventsClient struct {
 }
 
 // NewEventsClient creates an instance of the EventsClient client.
-func NewEventsClient(subscriptionID string, acceptLanguage string) EventsClient {
-	return NewEventsClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewEventsClient(subscriptionID string) EventsClient {
+	return NewEventsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewEventsClientWithBaseURI creates an instance of the EventsClient client using a custom endpoint.  Use this when
 // interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewEventsClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) EventsClient {
-	return EventsClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewEventsClientWithBaseURI(baseURI string, subscriptionID string) EventsClient {
+	return EventsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // DeleteEvent delete the migrate event. Deleting non-existent migrate event is a no-operation.
@@ -181,10 +181,6 @@ func (client EventsClient) EnumerateEventsPreparer(ctx context.Context, resource
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/migrateEvents", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

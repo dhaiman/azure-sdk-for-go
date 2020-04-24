@@ -31,14 +31,14 @@ type ProjectsClient struct {
 }
 
 // NewProjectsClient creates an instance of the ProjectsClient client.
-func NewProjectsClient(subscriptionID string, acceptLanguage string) ProjectsClient {
-	return NewProjectsClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewProjectsClient(subscriptionID string) ProjectsClient {
+	return NewProjectsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewProjectsClientWithBaseURI creates an instance of the ProjectsClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewProjectsClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) ProjectsClient {
-	return ProjectsClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewProjectsClientWithBaseURI(baseURI string, subscriptionID string) ProjectsClient {
+	return ProjectsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // DeleteMigrateProject delete the migrate project. Deleting non-existent project is a no-operation.
@@ -95,10 +95,6 @@ func (client ProjectsClient) DeleteMigrateProjectPreparer(ctx context.Context, r
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -257,10 +253,6 @@ func (client ProjectsClient) PatchMigrateProjectPreparer(ctx context.Context, re
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}", pathParameters),
 		autorest.WithJSON(body),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -343,10 +335,6 @@ func (client ProjectsClient) PutMigrateProjectPreparer(ctx context.Context, reso
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}", pathParameters),
 		autorest.WithJSON(body),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -505,10 +493,6 @@ func (client ProjectsClient) RegisterToolPreparer(ctx context.Context, resourceG
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/registerTool", pathParameters),
 		autorest.WithJSON(input),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

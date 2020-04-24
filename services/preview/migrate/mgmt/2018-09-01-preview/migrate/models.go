@@ -2031,8 +2031,26 @@ type Project struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Handled by resource provider. Type = Microsoft.Migrate/MigrateProject.
 	Type *string `json:"type,omitempty"`
-	// Tags - Gets or sets the tags.
-	Tags *ProjectTags `json:"tags,omitempty"`
+	// Tags - Resource tags
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for Project.
+func (p Project) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p.ETag != nil {
+		objectMap["eTag"] = p.ETag
+	}
+	if p.Location != nil {
+		objectMap["location"] = p.Location
+	}
+	if p.Properties != nil {
+		objectMap["properties"] = p.Properties
+	}
+	if p.Tags != nil {
+		objectMap["tags"] = p.Tags
+	}
+	return json.Marshal(objectMap)
 }
 
 // ProjectProperties class for migrate project properties.
@@ -2158,11 +2176,6 @@ func (ps ProjectSummary) AsProjectSummary() (*ProjectSummary, bool) {
 // AsBasicProjectSummary is the BasicProjectSummary implementation for ProjectSummary.
 func (ps ProjectSummary) AsBasicProjectSummary() (BasicProjectSummary, bool) {
 	return &ps, true
-}
-
-// ProjectTags gets or sets the tags.
-type ProjectTags struct {
-	AdditionalProperties *string `json:"additionalProperties,omitempty"`
 }
 
 // RangeVariable ...

@@ -31,14 +31,14 @@ type SolutionsClient struct {
 }
 
 // NewSolutionsClient creates an instance of the SolutionsClient client.
-func NewSolutionsClient(subscriptionID string, acceptLanguage string) SolutionsClient {
-	return NewSolutionsClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewSolutionsClient(subscriptionID string) SolutionsClient {
+	return NewSolutionsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewSolutionsClientWithBaseURI creates an instance of the SolutionsClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewSolutionsClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) SolutionsClient {
-	return SolutionsClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewSolutionsClientWithBaseURI(baseURI string, subscriptionID string) SolutionsClient {
+	return SolutionsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // CleanupSolutionData sends the cleanup solution data request.
@@ -174,10 +174,6 @@ func (client SolutionsClient) DeleteSolutionPreparer(ctx context.Context, resour
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/solutions/{solutionName}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

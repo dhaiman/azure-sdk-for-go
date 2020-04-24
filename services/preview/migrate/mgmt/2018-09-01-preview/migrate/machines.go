@@ -31,14 +31,14 @@ type MachinesClient struct {
 }
 
 // NewMachinesClient creates an instance of the MachinesClient client.
-func NewMachinesClient(subscriptionID string, acceptLanguage string) MachinesClient {
-	return NewMachinesClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewMachinesClient(subscriptionID string) MachinesClient {
+	return NewMachinesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewMachinesClientWithBaseURI creates an instance of the MachinesClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewMachinesClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) MachinesClient {
-	return MachinesClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewMachinesClientWithBaseURI(baseURI string, subscriptionID string) MachinesClient {
+	return MachinesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // EnumerateMachines sends the enumerate machines request.

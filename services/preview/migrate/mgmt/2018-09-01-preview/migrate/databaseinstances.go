@@ -31,15 +31,15 @@ type DatabaseInstancesClient struct {
 }
 
 // NewDatabaseInstancesClient creates an instance of the DatabaseInstancesClient client.
-func NewDatabaseInstancesClient(subscriptionID string, acceptLanguage string) DatabaseInstancesClient {
-	return NewDatabaseInstancesClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewDatabaseInstancesClient(subscriptionID string) DatabaseInstancesClient {
+	return NewDatabaseInstancesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewDatabaseInstancesClientWithBaseURI creates an instance of the DatabaseInstancesClient client using a custom
 // endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
 // stack).
-func NewDatabaseInstancesClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) DatabaseInstancesClient {
-	return DatabaseInstancesClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewDatabaseInstancesClientWithBaseURI(baseURI string, subscriptionID string) DatabaseInstancesClient {
+	return DatabaseInstancesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // EnumerateDatabaseInstances sends the enumerate database instances request.
@@ -105,10 +105,6 @@ func (client DatabaseInstancesClient) EnumerateDatabaseInstancesPreparer(ctx con
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/databaseInstances", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -187,10 +183,6 @@ func (client DatabaseInstancesClient) GetDatabaseInstancePreparer(ctx context.Co
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/databaseInstances/{databaseInstanceName}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

@@ -31,14 +31,14 @@ type DatabasesClient struct {
 }
 
 // NewDatabasesClient creates an instance of the DatabasesClient client.
-func NewDatabasesClient(subscriptionID string, acceptLanguage string) DatabasesClient {
-	return NewDatabasesClientWithBaseURI(DefaultBaseURI, subscriptionID, acceptLanguage)
+func NewDatabasesClient(subscriptionID string) DatabasesClient {
+	return NewDatabasesClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewDatabasesClientWithBaseURI creates an instance of the DatabasesClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewDatabasesClientWithBaseURI(baseURI string, subscriptionID string, acceptLanguage string) DatabasesClient {
-	return DatabasesClient{NewWithBaseURI(baseURI, subscriptionID, acceptLanguage)}
+func NewDatabasesClientWithBaseURI(baseURI string, subscriptionID string) DatabasesClient {
+	return DatabasesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
 // EnumerateDatabases sends the enumerate databases request.
@@ -104,10 +104,6 @@ func (client DatabasesClient) EnumerateDatabasesPreparer(ctx context.Context, re
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/databases", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -186,10 +182,6 @@ func (client DatabasesClient) GetDatabasePreparer(ctx context.Context, resourceG
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/migrateProjects/{migrateProjectName}/databases/{databaseName}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	if len(client.AcceptLanguage) > 0 {
-		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("Accept-Language", autorest.String(client.AcceptLanguage)))
-	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
