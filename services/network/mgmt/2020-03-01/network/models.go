@@ -15191,6 +15191,8 @@ type FirewallPolicyPropertiesFormat struct {
 	ChildPolicies *[]SubResource `json:"childPolicies,omitempty"`
 	// ThreatIntelMode - The operation mode for Threat Intelligence. Possible values include: 'AzureFirewallThreatIntelModeAlert', 'AzureFirewallThreatIntelModeDeny', 'AzureFirewallThreatIntelModeOff'
 	ThreatIntelMode AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
+	// ThreatIntelWhitelist - ThreatIntel Whitelist for Firewall Policy.
+	ThreatIntelWhitelist *FirewallPolicyThreatIntelWhitelist `json:"threatIntelWhitelist,omitempty"`
 	// IntrusionSystemMode - The operation mode for Intrusion system. Possible values include: 'FirewallPolicyIntrusionSystemModeEnabled', 'FirewallPolicyIntrusionSystemModeDisabled'
 	IntrusionSystemMode FirewallPolicyIntrusionSystemMode `json:"intrusionSystemMode,omitempty"`
 }
@@ -15739,6 +15741,14 @@ func (future *FirewallPolicyRuleGroupsDeleteFuture) Result(client FirewallPolicy
 	}
 	ar.Response = future.Response()
 	return
+}
+
+// FirewallPolicyThreatIntelWhitelist threatIntel Whitelist for Firewall Policy
+type FirewallPolicyThreatIntelWhitelist struct {
+	// IPAddresses - List of IP addresses for the ThreatIntel Whitelist.
+	IPAddresses *[]string `json:"ipAddresses,omitempty"`
+	// Fqdns - List of FQDNs for the ThreatIntel Whitelist.
+	Fqdns *[]string `json:"fqdns,omitempty"`
 }
 
 // FlowLog a flow log resource.
