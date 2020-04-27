@@ -46,7 +46,7 @@ func NewPercentileSourceTargetClientWithBaseURI(baseURI string, subscriptionID s
 // ListMetrics retrieves the metrics determined by the given filter for the given account, source and target region.
 // This url is only for PBS and Replication Latency data
 // Parameters:
-// resourceGroupName - name of an Azure resource group.
+// resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
 // sourceRegion - source region from which data is written. Cosmos DB region, with spaces between words and
 // each word capitalized.
@@ -67,6 +67,8 @@ func (client PercentileSourceTargetClient) ListMetrics(ctx context.Context, reso
 		}()
 	}
 	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
@@ -109,7 +111,7 @@ func (client PercentileSourceTargetClient) ListMetricsPreparer(ctx context.Conte
 		"targetRegion":      autorest.Encode("path", targetRegion),
 	}
 
-	const APIVersion = "2020-03-01"
+	const APIVersion = ""
 	queryParameters := map[string]interface{}{
 		"$filter":     autorest.Encode("query", filter),
 		"api-version": APIVersion,

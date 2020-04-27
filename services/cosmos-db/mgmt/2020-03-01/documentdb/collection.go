@@ -44,7 +44,7 @@ func NewCollectionClientWithBaseURI(baseURI string, subscriptionID string, subsc
 
 // ListMetricDefinitions retrieves metric definitions for the given collection.
 // Parameters:
-// resourceGroupName - name of an Azure resource group.
+// resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
 // databaseRid - cosmos DB database rid.
 // collectionRid - cosmos DB collection rid.
@@ -60,6 +60,8 @@ func (client CollectionClient) ListMetricDefinitions(ctx context.Context, resour
 		}()
 	}
 	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
@@ -102,7 +104,7 @@ func (client CollectionClient) ListMetricDefinitionsPreparer(ctx context.Context
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-03-01"
+	const APIVersion = ""
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -136,7 +138,7 @@ func (client CollectionClient) ListMetricDefinitionsResponder(resp *http.Respons
 
 // ListMetrics retrieves the metrics determined by the given filter for the given database account and collection.
 // Parameters:
-// resourceGroupName - name of an Azure resource group.
+// resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
 // databaseRid - cosmos DB database rid.
 // collectionRid - cosmos DB collection rid.
@@ -155,6 +157,8 @@ func (client CollectionClient) ListMetrics(ctx context.Context, resourceGroupNam
 		}()
 	}
 	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
@@ -197,7 +201,7 @@ func (client CollectionClient) ListMetricsPreparer(ctx context.Context, resource
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-03-01"
+	const APIVersion = ""
 	queryParameters := map[string]interface{}{
 		"$filter":     autorest.Encode("query", filter),
 		"api-version": APIVersion,
@@ -232,7 +236,7 @@ func (client CollectionClient) ListMetricsResponder(resp *http.Response) (result
 
 // ListUsages retrieves the usages (most recent storage data) for the given collection.
 // Parameters:
-// resourceGroupName - name of an Azure resource group.
+// resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
 // databaseRid - cosmos DB database rid.
 // collectionRid - cosmos DB collection rid.
@@ -250,6 +254,8 @@ func (client CollectionClient) ListUsages(ctx context.Context, resourceGroupName
 		}()
 	}
 	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
@@ -292,7 +298,7 @@ func (client CollectionClient) ListUsagesPreparer(ctx context.Context, resourceG
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-03-01"
+	const APIVersion = ""
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

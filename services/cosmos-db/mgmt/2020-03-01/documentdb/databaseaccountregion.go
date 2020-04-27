@@ -45,7 +45,7 @@ func NewDatabaseAccountRegionClientWithBaseURI(baseURI string, subscriptionID st
 
 // ListMetrics retrieves the metrics determined by the given filter for the given database account and region.
 // Parameters:
-// resourceGroupName - name of an Azure resource group.
+// resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
 // region - cosmos DB region, with spaces between words and each word capitalized.
 // filter - an OData filter expression that describes a subset of metrics to return. The parameters that can be
@@ -63,6 +63,8 @@ func (client DatabaseAccountRegionClient) ListMetrics(ctx context.Context, resou
 		}()
 	}
 	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
@@ -104,7 +106,7 @@ func (client DatabaseAccountRegionClient) ListMetricsPreparer(ctx context.Contex
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-03-01"
+	const APIVersion = ""
 	queryParameters := map[string]interface{}{
 		"$filter":     autorest.Encode("query", filter),
 		"api-version": APIVersion,
