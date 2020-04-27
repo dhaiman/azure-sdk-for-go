@@ -13634,6 +13634,7 @@ func (client AppsClient) GetPrivateAccessSlotResponder(resp *http.Response) (res
 // Parameters:
 // resourceGroupName - name of the resource group to which the resource belongs.
 // name - name of the site.
+// privateEndpointConnectionName - name of the private endpoint connection.
 func (client AppsClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string) (result PrivateEndpointConnectionResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.GetPrivateEndpointConnection")

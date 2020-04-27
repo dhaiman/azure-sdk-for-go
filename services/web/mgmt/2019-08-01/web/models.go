@@ -21067,6 +21067,8 @@ type StaticSite struct {
 	RepositoryToken *string `json:"repositoryToken,omitempty"`
 	// BuildProperties - Build properties to configure on the repository.
 	BuildProperties *StaticSiteBuildProperties `json:"buildProperties,omitempty"`
+	// PrivateEndpointConnections - READ-ONLY; Private endpoint connections referencing this resource.
+	PrivateEndpointConnections *[]PrivateEndpointConnectionResource `json:"privateEndpointConnections,omitempty"`
 }
 
 // StaticSiteARMResource static Site ARM resource.

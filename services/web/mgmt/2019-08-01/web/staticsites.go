@@ -1423,7 +1423,7 @@ func (client StaticSitesClient) ListComplete(ctx context.Context) (result Static
 	return
 }
 
-// ListStaticSiteBuildFunctionAppSettings description for Gets the application settings of a static site.
+// ListStaticSiteBuildFunctionAppSettings description for Gets the application settings of a static site build.
 // Parameters:
 // resourceGroupName - name of the resource group to which the resource belongs.
 // name - name of the static site.
