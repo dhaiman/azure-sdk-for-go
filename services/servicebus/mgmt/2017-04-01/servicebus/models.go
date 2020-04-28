@@ -39,13 +39,13 @@ const (
 	Listen AccessRights = "Listen"
 	// Manage ...
 	Manage AccessRights = "Manage"
-	// Send ...
-	Send AccessRights = "Send"
+	// SendEnumValue ...
+	SendEnumValue AccessRights = "Send"
 )
 
 // PossibleAccessRightsValues returns an array of possible values for the AccessRights const type.
 func PossibleAccessRightsValues() []AccessRights {
-	return []AccessRights{Listen, Manage, Send}
+	return []AccessRights{Listen, Manage, SendEnumValue}
 }
 
 // DefaultAction enumerates the values for default action.
@@ -2359,6 +2359,16 @@ type SBAuthorizationRuleProperties struct {
 	Rights *[]AccessRights `json:"rights,omitempty"`
 }
 
+// SBClientAffineProperties ...
+type SBClientAffineProperties struct {
+	// ClientID - Indicates the Client ID of the application that created the client-affine subscription.
+	ClientID *string `json:"clientId,omitempty"`
+	// IsDurable - For client-affine subscriptions, this value indicates whether the subscription is durable or not.
+	IsDurable *bool `json:"isDurable,omitempty"`
+	// IsShared - For client-affine subscriptions, this value indicates whether the subscription is shared or not.
+	IsShared *bool `json:"isShared,omitempty"`
+}
+
 // SBNamespace description of a namespace resource.
 type SBNamespace struct {
 	autorest.Response `json:"-"`
@@ -3284,6 +3294,10 @@ type SBSubscriptionProperties struct {
 	ForwardTo *string `json:"forwardTo,omitempty"`
 	// ForwardDeadLetteredMessagesTo - Queue/Topic name to forward the Dead Letter message
 	ForwardDeadLetteredMessagesTo *string `json:"forwardDeadLetteredMessagesTo,omitempty"`
+	// IsClientAffine - Value that indicates whether the subscription has an affinity to the client id.
+	IsClientAffine *bool `json:"isClientAffine,omitempty"`
+	// ClientAffineProperties - Properties specific to client affine subscriptions.
+	ClientAffineProperties *SBClientAffineProperties `json:"clientAffineProperties,omitempty"`
 }
 
 // SBTopic description of topic resource.
