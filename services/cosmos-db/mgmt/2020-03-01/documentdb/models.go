@@ -750,6 +750,122 @@ func (future *CassandraResourcesDeleteCassandraTableFuture) Result(client Cassan
 	return
 }
 
+// CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture an abstraction for monitoring and retrieving
+// the results of a long-running operation.
+type CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture) Result(client CassandraResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateCassandraKeyspaceToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraKeyspaceToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture an abstraction for monitoring and
+// retrieving the results of a long-running operation.
+type CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture) Result(client CassandraResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateCassandraKeyspaceToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraKeyspaceToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// CassandraResourcesMigrateCassandraTableToAutoscaleFuture an abstraction for monitoring and retrieving
+// the results of a long-running operation.
+type CassandraResourcesMigrateCassandraTableToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CassandraResourcesMigrateCassandraTableToAutoscaleFuture) Result(client CassandraResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraTableToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.CassandraResourcesMigrateCassandraTableToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateCassandraTableToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraTableToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// CassandraResourcesMigrateCassandraTableToManualThroughputFuture an abstraction for monitoring and
+// retrieving the results of a long-running operation.
+type CassandraResourcesMigrateCassandraTableToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *CassandraResourcesMigrateCassandraTableToManualThroughputFuture) Result(client CassandraResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraTableToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.CassandraResourcesMigrateCassandraTableToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateCassandraTableToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.CassandraResourcesMigrateCassandraTableToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // CassandraResourcesUpdateCassandraKeyspaceThroughputFuture an abstraction for monitoring and retrieving
 // the results of a long-running operation.
 type CassandraResourcesUpdateCassandraKeyspaceThroughputFuture struct {
@@ -2456,6 +2572,122 @@ func (future *GremlinResourcesDeleteGremlinGraphFuture) Result(client GremlinRes
 	return
 }
 
+// GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture) Result(client GremlinResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateGremlinDatabaseToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinDatabaseToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture an abstraction for monitoring and
+// retrieving the results of a long-running operation.
+type GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture) Result(client GremlinResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateGremlinDatabaseToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinDatabaseToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// GremlinResourcesMigrateGremlinGraphToAutoscaleFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type GremlinResourcesMigrateGremlinGraphToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *GremlinResourcesMigrateGremlinGraphToAutoscaleFuture) Result(client GremlinResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinGraphToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.GremlinResourcesMigrateGremlinGraphToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateGremlinGraphToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinGraphToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// GremlinResourcesMigrateGremlinGraphToManualThroughputFuture an abstraction for monitoring and retrieving
+// the results of a long-running operation.
+type GremlinResourcesMigrateGremlinGraphToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *GremlinResourcesMigrateGremlinGraphToManualThroughputFuture) Result(client GremlinResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinGraphToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.GremlinResourcesMigrateGremlinGraphToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateGremlinGraphToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.GremlinResourcesMigrateGremlinGraphToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // GremlinResourcesUpdateGremlinDatabaseThroughputFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type GremlinResourcesUpdateGremlinDatabaseThroughputFuture struct {
@@ -3269,6 +3501,122 @@ func (future *MongoDBResourcesDeleteMongoDBDatabaseFuture) Result(client MongoDB
 		return
 	}
 	ar.Response = future.Response()
+	return
+}
+
+// MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture an abstraction for monitoring and retrieving
+// the results of a long-running operation.
+type MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture) Result(client MongoDBResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateMongoDBCollectionToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBCollectionToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture an abstraction for monitoring and
+// retrieving the results of a long-running operation.
+type MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture) Result(client MongoDBResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateMongoDBCollectionToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBCollectionToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture) Result(client MongoDBResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateMongoDBDatabaseToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture an abstraction for monitoring and
+// retrieving the results of a long-running operation.
+type MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture) Result(client MongoDBResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateMongoDBDatabaseToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
 	return
 }
 
@@ -4902,6 +5250,122 @@ func (future *SQLResourcesDeleteSQLUserDefinedFunctionFuture) Result(client SQLR
 	return
 }
 
+// SQLResourcesMigrateSQLContainerToAutoscaleFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type SQLResourcesMigrateSQLContainerToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLResourcesMigrateSQLContainerToAutoscaleFuture) Result(client SQLResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLContainerToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.SQLResourcesMigrateSQLContainerToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateSQLContainerToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLContainerToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SQLResourcesMigrateSQLContainerToManualThroughputFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type SQLResourcesMigrateSQLContainerToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLResourcesMigrateSQLContainerToManualThroughputFuture) Result(client SQLResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLContainerToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.SQLResourcesMigrateSQLContainerToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateSQLContainerToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLContainerToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SQLResourcesMigrateSQLDatabaseToAutoscaleFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type SQLResourcesMigrateSQLDatabaseToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLResourcesMigrateSQLDatabaseToAutoscaleFuture) Result(client SQLResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLDatabaseToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.SQLResourcesMigrateSQLDatabaseToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateSQLDatabaseToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLDatabaseToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SQLResourcesMigrateSQLDatabaseToManualThroughputFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type SQLResourcesMigrateSQLDatabaseToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLResourcesMigrateSQLDatabaseToManualThroughputFuture) Result(client SQLResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLDatabaseToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.SQLResourcesMigrateSQLDatabaseToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateSQLDatabaseToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.SQLResourcesMigrateSQLDatabaseToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // SQLResourcesUpdateSQLContainerThroughputFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type SQLResourcesUpdateSQLContainerThroughputFuture struct {
@@ -5989,6 +6453,64 @@ func (future *TableResourcesDeleteTableFuture) Result(client TableResourcesClien
 		return
 	}
 	ar.Response = future.Response()
+	return
+}
+
+// TableResourcesMigrateTableToAutoscaleFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
+type TableResourcesMigrateTableToAutoscaleFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *TableResourcesMigrateTableToAutoscaleFuture) Result(client TableResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.TableResourcesMigrateTableToAutoscaleFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.TableResourcesMigrateTableToAutoscaleFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateTableToAutoscaleResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.TableResourcesMigrateTableToAutoscaleFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// TableResourcesMigrateTableToManualThroughputFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type TableResourcesMigrateTableToManualThroughputFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *TableResourcesMigrateTableToManualThroughputFuture) Result(client TableResourcesClient) (tsgr ThroughputSettingsGetResults, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "documentdb.TableResourcesMigrateTableToManualThroughputFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("documentdb.TableResourcesMigrateTableToManualThroughputFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if tsgr.Response.Response, err = future.GetResult(sender); err == nil && tsgr.Response.Response.StatusCode != http.StatusNoContent {
+		tsgr, err = client.MigrateTableToManualThroughputResponder(tsgr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "documentdb.TableResourcesMigrateTableToManualThroughputFuture", "Result", tsgr.Response.Response, "Failure responding to request")
+		}
+	}
 	return
 }
 
