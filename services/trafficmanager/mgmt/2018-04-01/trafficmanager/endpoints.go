@@ -49,7 +49,7 @@ func NewEndpointsClientWithBaseURI(baseURI string, subscriptionID string) Endpoi
 // endpointType - the type of the Traffic Manager endpoint to be created or updated.
 // endpointName - the name of the Traffic Manager endpoint to be created or updated.
 // parameters - the Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation.
-func (client EndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters Endpoint) (result Endpoint, err error) {
+func (client EndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters EndpointResource) (result EndpointResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/EndpointsClient.CreateOrUpdate")
 		defer func() {
@@ -82,7 +82,7 @@ func (client EndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client EndpointsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters Endpoint) (*http.Request, error) {
+func (client EndpointsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters EndpointResource) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"endpointName":      autorest.Encode("path", endpointName),
 		"endpointType":      autorest.Encode("path", endpointType),
@@ -114,7 +114,7 @@ func (client EndpointsClient) CreateOrUpdateSender(req *http.Request) (*http.Res
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client EndpointsClient) CreateOrUpdateResponder(resp *http.Response) (result Endpoint, err error) {
+func (client EndpointsClient) CreateOrUpdateResponder(resp *http.Response) (result EndpointResource, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -211,7 +211,7 @@ func (client EndpointsClient) DeleteResponder(resp *http.Response) (result Delet
 // profileName - the name of the Traffic Manager profile.
 // endpointType - the type of the Traffic Manager endpoint.
 // endpointName - the name of the Traffic Manager endpoint.
-func (client EndpointsClient) Get(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string) (result Endpoint, err error) {
+func (client EndpointsClient) Get(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string) (result EndpointResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/EndpointsClient.Get")
 		defer func() {
@@ -274,7 +274,7 @@ func (client EndpointsClient) GetSender(req *http.Request) (*http.Response, erro
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client EndpointsClient) GetResponder(resp *http.Response) (result Endpoint, err error) {
+func (client EndpointsClient) GetResponder(resp *http.Response) (result EndpointResource, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -292,7 +292,7 @@ func (client EndpointsClient) GetResponder(resp *http.Response) (result Endpoint
 // endpointType - the type of the Traffic Manager endpoint to be updated.
 // endpointName - the name of the Traffic Manager endpoint to be updated.
 // parameters - the Traffic Manager endpoint parameters supplied to the Update operation.
-func (client EndpointsClient) Update(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters Endpoint) (result Endpoint, err error) {
+func (client EndpointsClient) Update(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters EndpointResource) (result EndpointResource, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/EndpointsClient.Update")
 		defer func() {
@@ -325,7 +325,7 @@ func (client EndpointsClient) Update(ctx context.Context, resourceGroupName stri
 }
 
 // UpdatePreparer prepares the Update request.
-func (client EndpointsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters Endpoint) (*http.Request, error) {
+func (client EndpointsClient) UpdatePreparer(ctx context.Context, resourceGroupName string, profileName string, endpointType string, endpointName string, parameters EndpointResource) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"endpointName":      autorest.Encode("path", endpointName),
 		"endpointType":      autorest.Encode("path", endpointType),
@@ -357,7 +357,7 @@ func (client EndpointsClient) UpdateSender(req *http.Request) (*http.Response, e
 
 // UpdateResponder handles the response to the Update request. The method always
 // closes the http.Response Body.
-func (client EndpointsClient) UpdateResponder(resp *http.Response) (result Endpoint, err error) {
+func (client EndpointsClient) UpdateResponder(resp *http.Response) (result EndpointResource, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

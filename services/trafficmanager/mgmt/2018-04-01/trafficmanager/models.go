@@ -201,15 +201,10 @@ type DNSConfig struct {
 
 // Endpoint class representing a Traffic Manager endpoint.
 type Endpoint struct {
-	autorest.Response `json:"-"`
 	// EndpointProperties - The properties of the Traffic Manager endpoint.
 	*EndpointProperties `json:"properties,omitempty"`
-	// ID - Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
-	ID *string `json:"id,omitempty"`
-	// Name - The name of the resource
+	// Name - The name of the resource.
 	Name *string `json:"name,omitempty"`
-	// Type - The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles.
-	Type *string `json:"type,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Endpoint.
@@ -218,14 +213,8 @@ func (e Endpoint) MarshalJSON() ([]byte, error) {
 	if e.EndpointProperties != nil {
 		objectMap["properties"] = e.EndpointProperties
 	}
-	if e.ID != nil {
-		objectMap["id"] = e.ID
-	}
 	if e.Name != nil {
 		objectMap["name"] = e.Name
-	}
-	if e.Type != nil {
-		objectMap["type"] = e.Type
 	}
 	return json.Marshal(objectMap)
 }
@@ -248,15 +237,6 @@ func (e *Endpoint) UnmarshalJSON(body []byte) error {
 				}
 				e.EndpointProperties = &endpointProperties
 			}
-		case "id":
-			if v != nil {
-				var ID string
-				err = json.Unmarshal(*v, &ID)
-				if err != nil {
-					return err
-				}
-				e.ID = &ID
-			}
 		case "name":
 			if v != nil {
 				var name string
@@ -265,15 +245,6 @@ func (e *Endpoint) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				e.Name = &name
-			}
-		case "type":
-			if v != nil {
-				var typeVar string
-				err = json.Unmarshal(*v, &typeVar)
-				if err != nil {
-					return err
-				}
-				e.Type = &typeVar
 			}
 		}
 	}
@@ -323,6 +294,88 @@ type EndpointPropertiesSubnetsItem struct {
 	Last *string `json:"last,omitempty"`
 	// Scope - Block size (number of leading bits in the subnet mask).
 	Scope *int32 `json:"scope,omitempty"`
+}
+
+// EndpointResource class representing a Traffic Manager endpoint.
+type EndpointResource struct {
+	autorest.Response `json:"-"`
+	// EndpointProperties - The properties of the Traffic Manager endpoint.
+	*EndpointProperties `json:"properties,omitempty"`
+	// ID - Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for EndpointResource.
+func (er EndpointResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if er.EndpointProperties != nil {
+		objectMap["properties"] = er.EndpointProperties
+	}
+	if er.ID != nil {
+		objectMap["id"] = er.ID
+	}
+	if er.Name != nil {
+		objectMap["name"] = er.Name
+	}
+	if er.Type != nil {
+		objectMap["type"] = er.Type
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for EndpointResource struct.
+func (er *EndpointResource) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var endpointProperties EndpointProperties
+				err = json.Unmarshal(*v, &endpointProperties)
+				if err != nil {
+					return err
+				}
+				er.EndpointProperties = &endpointProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				er.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				er.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				er.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // GeographicHierarchy class representing the Geographic hierarchy used with the Geographic traffic routing
