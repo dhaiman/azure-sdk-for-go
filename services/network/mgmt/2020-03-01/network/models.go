@@ -474,13 +474,15 @@ func PossibleAzureFirewallSkuNameValues() []AzureFirewallSkuName {
 type AzureFirewallSkuTier string
 
 const (
+	// Premium ...
+	Premium AzureFirewallSkuTier = "Premium"
 	// Standard ...
 	Standard AzureFirewallSkuTier = "Standard"
 )
 
 // PossibleAzureFirewallSkuTierValues returns an array of possible values for the AzureFirewallSkuTier const type.
 func PossibleAzureFirewallSkuTierValues() []AzureFirewallSkuTier {
-	return []AzureFirewallSkuTier{Standard}
+	return []AzureFirewallSkuTier{Premium, Standard}
 }
 
 // AzureFirewallThreatIntelMode enumerates the values for azure firewall threat intel mode.
@@ -7637,7 +7639,7 @@ func (future *AzureFirewallsDeleteFuture) Result(client AzureFirewallsClient) (a
 type AzureFirewallSku struct {
 	// Name - Name of an Azure Firewall SKU. Possible values include: 'AZFWVNet', 'AZFWHub'
 	Name AzureFirewallSkuName `json:"name,omitempty"`
-	// Tier - Tier of an Azure Firewall. Possible values include: 'Standard'
+	// Tier - Tier of an Azure Firewall. Possible values include: 'Standard', 'Premium'
 	Tier AzureFirewallSkuTier `json:"tier,omitempty"`
 }
 
