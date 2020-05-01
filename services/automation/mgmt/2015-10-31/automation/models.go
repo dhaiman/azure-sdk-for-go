@@ -4860,15 +4860,15 @@ type JobSchedule struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; Resource type
 	Type *string `json:"type,omitempty"`
-	// JobScheduleProperties - Gets or sets the properties of the job schedule.
-	*JobScheduleProperties `json:"properties,omitempty"`
+	// ScheduleProperties - Gets or sets the properties of the job schedule.
+	*ScheduleProperties `json:"properties,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for JobSchedule.
 func (js JobSchedule) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if js.JobScheduleProperties != nil {
-		objectMap["properties"] = js.JobScheduleProperties
+	if js.ScheduleProperties != nil {
+		objectMap["properties"] = js.ScheduleProperties
 	}
 	return json.Marshal(objectMap)
 }
@@ -4911,12 +4911,12 @@ func (js *JobSchedule) UnmarshalJSON(body []byte) error {
 			}
 		case "properties":
 			if v != nil {
-				var jobScheduleProperties JobScheduleProperties
-				err = json.Unmarshal(*v, &jobScheduleProperties)
+				var scheduleProperties ScheduleProperties
+				err = json.Unmarshal(*v, &scheduleProperties)
 				if err != nil {
 					return err
 				}
-				js.JobScheduleProperties = &jobScheduleProperties
+				js.ScheduleProperties = &scheduleProperties
 			}
 		}
 	}
@@ -6957,7 +6957,7 @@ type ScheduleProperties struct {
 	// NextRunOffsetMinutes - Gets or sets the next run time's offset in minutes.
 	NextRunOffsetMinutes *float64 `json:"nextRunOffsetMinutes,omitempty"`
 	// Interval - Gets or sets the interval of the schedule.
-	Interval interface{} `json:"interval,omitempty"`
+	Interval *int32 `json:"interval,omitempty"`
 	// Frequency - Gets or sets the frequency of the schedule. Possible values include: 'OneTime', 'Day', 'Hour', 'Week', 'Month', 'Minute'
 	Frequency ScheduleFrequency `json:"frequency,omitempty"`
 	// TimeZone - Gets or sets the time zone of the schedule.
