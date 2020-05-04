@@ -221,6 +221,14 @@ type DatabaseUsagesClientAPI interface {
 
 var _ DatabaseUsagesClientAPI = (*sql.DatabaseUsagesClient)(nil)
 
+// AgentClientAPI contains the set of methods on the AgentClient type.
+type AgentClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, managedInstanceName string) (result sql.Agent, err error)
+	Put(ctx context.Context, resourceGroupName string, managedInstanceName string, parameters sql.Agent) (result sql.Agent, err error)
+}
+
+var _ AgentClientAPI = (*sql.AgentClient)(nil)
+
 // DatabaseAutomaticTuningClientAPI contains the set of methods on the DatabaseAutomaticTuningClient type.
 type DatabaseAutomaticTuningClientAPI interface {
 	Get(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result sql.DatabaseAutomaticTuning, err error)

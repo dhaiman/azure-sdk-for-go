@@ -32,6 +32,21 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/sql/mgmt/v3.0/sql"
 
+// AgentState enumerates the values for agent state.
+type AgentState string
+
+const (
+	// Disabled ...
+	Disabled AgentState = "Disabled"
+	// Enabled ...
+	Enabled AgentState = "Enabled"
+)
+
+// PossibleAgentStateValues returns an array of possible values for the AgentState const type.
+func PossibleAgentStateValues() []AgentState {
+	return []AgentState{Disabled, Enabled}
+}
+
 // AuthenticationType enumerates the values for authentication type.
 type AuthenticationType string
 
@@ -51,25 +66,25 @@ func PossibleAuthenticationTypeValues() []AuthenticationType {
 type AutomaticTuningDisabledReason string
 
 const (
-	// AutoConfigured ...
-	AutoConfigured AutomaticTuningDisabledReason = "AutoConfigured"
-	// Default ...
-	Default AutomaticTuningDisabledReason = "Default"
-	// Disabled ...
-	Disabled AutomaticTuningDisabledReason = "Disabled"
-	// InheritedFromServer ...
-	InheritedFromServer AutomaticTuningDisabledReason = "InheritedFromServer"
-	// NotSupported ...
-	NotSupported AutomaticTuningDisabledReason = "NotSupported"
-	// QueryStoreOff ...
-	QueryStoreOff AutomaticTuningDisabledReason = "QueryStoreOff"
-	// QueryStoreReadOnly ...
-	QueryStoreReadOnly AutomaticTuningDisabledReason = "QueryStoreReadOnly"
+	// AutomaticTuningDisabledReasonAutoConfigured ...
+	AutomaticTuningDisabledReasonAutoConfigured AutomaticTuningDisabledReason = "AutoConfigured"
+	// AutomaticTuningDisabledReasonDefault ...
+	AutomaticTuningDisabledReasonDefault AutomaticTuningDisabledReason = "Default"
+	// AutomaticTuningDisabledReasonDisabled ...
+	AutomaticTuningDisabledReasonDisabled AutomaticTuningDisabledReason = "Disabled"
+	// AutomaticTuningDisabledReasonInheritedFromServer ...
+	AutomaticTuningDisabledReasonInheritedFromServer AutomaticTuningDisabledReason = "InheritedFromServer"
+	// AutomaticTuningDisabledReasonNotSupported ...
+	AutomaticTuningDisabledReasonNotSupported AutomaticTuningDisabledReason = "NotSupported"
+	// AutomaticTuningDisabledReasonQueryStoreOff ...
+	AutomaticTuningDisabledReasonQueryStoreOff AutomaticTuningDisabledReason = "QueryStoreOff"
+	// AutomaticTuningDisabledReasonQueryStoreReadOnly ...
+	AutomaticTuningDisabledReasonQueryStoreReadOnly AutomaticTuningDisabledReason = "QueryStoreReadOnly"
 )
 
 // PossibleAutomaticTuningDisabledReasonValues returns an array of possible values for the AutomaticTuningDisabledReason const type.
 func PossibleAutomaticTuningDisabledReasonValues() []AutomaticTuningDisabledReason {
-	return []AutomaticTuningDisabledReason{AutoConfigured, Default, Disabled, InheritedFromServer, NotSupported, QueryStoreOff, QueryStoreReadOnly}
+	return []AutomaticTuningDisabledReason{AutomaticTuningDisabledReasonAutoConfigured, AutomaticTuningDisabledReasonDefault, AutomaticTuningDisabledReasonDisabled, AutomaticTuningDisabledReasonInheritedFromServer, AutomaticTuningDisabledReasonNotSupported, AutomaticTuningDisabledReasonQueryStoreOff, AutomaticTuningDisabledReasonQueryStoreReadOnly}
 }
 
 // AutomaticTuningMode enumerates the values for automatic tuning mode.
@@ -246,31 +261,31 @@ func PossibleCheckNameAvailabilityReasonValues() []CheckNameAvailabilityReason {
 type CreateMode string
 
 const (
-	// CreateModeCopy ...
-	CreateModeCopy CreateMode = "Copy"
-	// CreateModeDefault ...
-	CreateModeDefault CreateMode = "Default"
-	// CreateModeOnlineSecondary ...
-	CreateModeOnlineSecondary CreateMode = "OnlineSecondary"
-	// CreateModePointInTimeRestore ...
-	CreateModePointInTimeRestore CreateMode = "PointInTimeRestore"
-	// CreateModeRecovery ...
-	CreateModeRecovery CreateMode = "Recovery"
-	// CreateModeRestore ...
-	CreateModeRestore CreateMode = "Restore"
-	// CreateModeRestoreExternalBackup ...
-	CreateModeRestoreExternalBackup CreateMode = "RestoreExternalBackup"
-	// CreateModeRestoreExternalBackupSecondary ...
-	CreateModeRestoreExternalBackupSecondary CreateMode = "RestoreExternalBackupSecondary"
-	// CreateModeRestoreLongTermRetentionBackup ...
-	CreateModeRestoreLongTermRetentionBackup CreateMode = "RestoreLongTermRetentionBackup"
-	// CreateModeSecondary ...
-	CreateModeSecondary CreateMode = "Secondary"
+	// Copy ...
+	Copy CreateMode = "Copy"
+	// Default ...
+	Default CreateMode = "Default"
+	// OnlineSecondary ...
+	OnlineSecondary CreateMode = "OnlineSecondary"
+	// PointInTimeRestore ...
+	PointInTimeRestore CreateMode = "PointInTimeRestore"
+	// Recovery ...
+	Recovery CreateMode = "Recovery"
+	// Restore ...
+	Restore CreateMode = "Restore"
+	// RestoreExternalBackup ...
+	RestoreExternalBackup CreateMode = "RestoreExternalBackup"
+	// RestoreExternalBackupSecondary ...
+	RestoreExternalBackupSecondary CreateMode = "RestoreExternalBackupSecondary"
+	// RestoreLongTermRetentionBackup ...
+	RestoreLongTermRetentionBackup CreateMode = "RestoreLongTermRetentionBackup"
+	// Secondary ...
+	Secondary CreateMode = "Secondary"
 )
 
 // PossibleCreateModeValues returns an array of possible values for the CreateMode const type.
 func PossibleCreateModeValues() []CreateMode {
-	return []CreateMode{CreateModeCopy, CreateModeDefault, CreateModeOnlineSecondary, CreateModePointInTimeRestore, CreateModeRecovery, CreateModeRestore, CreateModeRestoreExternalBackup, CreateModeRestoreExternalBackupSecondary, CreateModeRestoreLongTermRetentionBackup, CreateModeSecondary}
+	return []CreateMode{Copy, Default, OnlineSecondary, PointInTimeRestore, Recovery, Restore, RestoreExternalBackup, RestoreExternalBackupSecondary, RestoreLongTermRetentionBackup, Secondary}
 }
 
 // DatabaseEdition enumerates the values for database edition.
@@ -607,15 +622,15 @@ func PossibleElasticPoolStateValues() []ElasticPoolState {
 type FailoverGroupReplicationRole string
 
 const (
-	// Primary ...
-	Primary FailoverGroupReplicationRole = "Primary"
-	// Secondary ...
-	Secondary FailoverGroupReplicationRole = "Secondary"
+	// FailoverGroupReplicationRolePrimary ...
+	FailoverGroupReplicationRolePrimary FailoverGroupReplicationRole = "Primary"
+	// FailoverGroupReplicationRoleSecondary ...
+	FailoverGroupReplicationRoleSecondary FailoverGroupReplicationRole = "Secondary"
 )
 
 // PossibleFailoverGroupReplicationRoleValues returns an array of possible values for the FailoverGroupReplicationRole const type.
 func PossibleFailoverGroupReplicationRoleValues() []FailoverGroupReplicationRole {
-	return []FailoverGroupReplicationRole{Primary, Secondary}
+	return []FailoverGroupReplicationRole{FailoverGroupReplicationRolePrimary, FailoverGroupReplicationRoleSecondary}
 }
 
 // GeoBackupPolicyState enumerates the values for geo backup policy state.
@@ -1276,15 +1291,15 @@ func PossibleReplicationStateValues() []ReplicationState {
 type ReplicaType string
 
 const (
-	// ReplicaTypePrimary ...
-	ReplicaTypePrimary ReplicaType = "Primary"
-	// ReplicaTypeReadableSecondary ...
-	ReplicaTypeReadableSecondary ReplicaType = "ReadableSecondary"
+	// Primary ...
+	Primary ReplicaType = "Primary"
+	// ReadableSecondary ...
+	ReadableSecondary ReplicaType = "ReadableSecondary"
 )
 
 // PossibleReplicaTypeValues returns an array of possible values for the ReplicaType const type.
 func PossibleReplicaTypeValues() []ReplicaType {
-	return []ReplicaType{ReplicaTypePrimary, ReplicaTypeReadableSecondary}
+	return []ReplicaType{Primary, ReadableSecondary}
 }
 
 // RestorePointType enumerates the values for restore point type.
@@ -2082,6 +2097,85 @@ type AdministratorProperties struct {
 	AzureADOnlyAuthentication *bool `json:"azureADOnlyAuthentication,omitempty"`
 }
 
+// Agent a management instance sql agent resource.
+type Agent struct {
+	autorest.Response `json:"-"`
+	// AgentProperties - Resource properties.
+	*AgentProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource ID.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Agent.
+func (a Agent) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if a.AgentProperties != nil {
+		objectMap["properties"] = a.AgentProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Agent struct.
+func (a *Agent) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var agentProperties AgentProperties
+				err = json.Unmarshal(*v, &agentProperties)
+				if err != nil {
+					return err
+				}
+				a.AgentProperties = &agentProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				a.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				a.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				a.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// AgentProperties sql agent properties.
+type AgentProperties struct {
+	// State - The state of Sql Agent. Possible values include: 'Enabled', 'Disabled'
+	State AgentState `json:"state,omitempty"`
+}
+
 // AutomaticTuningOptions automatic tuning properties for individual advisors.
 type AutomaticTuningOptions struct {
 	// DesiredState - Automatic tuning option desired state. Possible values include: 'AutomaticTuningOptionModeDesiredOff', 'AutomaticTuningOptionModeDesiredOn', 'AutomaticTuningOptionModeDesiredDefault'
@@ -2090,7 +2184,7 @@ type AutomaticTuningOptions struct {
 	ActualState AutomaticTuningOptionModeActual `json:"actualState,omitempty"`
 	// ReasonCode - READ-ONLY; Reason code if desired and actual state are different.
 	ReasonCode *int32 `json:"reasonCode,omitempty"`
-	// ReasonDesc - READ-ONLY; Reason description if desired and actual state are different. Possible values include: 'Default', 'Disabled', 'AutoConfigured', 'InheritedFromServer', 'QueryStoreOff', 'QueryStoreReadOnly', 'NotSupported'
+	// ReasonDesc - READ-ONLY; Reason description if desired and actual state are different. Possible values include: 'AutomaticTuningDisabledReasonDefault', 'AutomaticTuningDisabledReasonDisabled', 'AutomaticTuningDisabledReasonAutoConfigured', 'AutomaticTuningDisabledReasonInheritedFromServer', 'AutomaticTuningDisabledReasonQueryStoreOff', 'AutomaticTuningDisabledReasonQueryStoreReadOnly', 'AutomaticTuningDisabledReasonNotSupported'
 	ReasonDesc AutomaticTuningDisabledReason `json:"reasonDesc,omitempty"`
 }
 
@@ -3556,7 +3650,7 @@ type DatabaseProperties struct {
 	//
 	// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
 	//
-	// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Possible values include: 'CreateModeDefault', 'CreateModeCopy', 'CreateModeSecondary', 'CreateModePointInTimeRestore', 'CreateModeRestore', 'CreateModeRecovery', 'CreateModeRestoreExternalBackup', 'CreateModeRestoreExternalBackupSecondary', 'CreateModeRestoreLongTermRetentionBackup', 'CreateModeOnlineSecondary'
+	// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Possible values include: 'Default', 'Copy', 'Secondary', 'PointInTimeRestore', 'Restore', 'Recovery', 'RestoreExternalBackup', 'RestoreExternalBackupSecondary', 'RestoreLongTermRetentionBackup', 'OnlineSecondary'
 	CreateMode CreateMode `json:"createMode,omitempty"`
 	// Collation - The collation of the database.
 	Collation *string `json:"collation,omitempty"`
@@ -7082,7 +7176,7 @@ type FailoverGroupProperties struct {
 	ReadWriteEndpoint *FailoverGroupReadWriteEndpoint `json:"readWriteEndpoint,omitempty"`
 	// ReadOnlyEndpoint - Read-only endpoint of the failover group instance.
 	ReadOnlyEndpoint *FailoverGroupReadOnlyEndpoint `json:"readOnlyEndpoint,omitempty"`
-	// ReplicationRole - READ-ONLY; Local replication role of the failover group instance. Possible values include: 'Primary', 'Secondary'
+	// ReplicationRole - READ-ONLY; Local replication role of the failover group instance. Possible values include: 'FailoverGroupReplicationRolePrimary', 'FailoverGroupReplicationRoleSecondary'
 	ReplicationRole FailoverGroupReplicationRole `json:"replicationRole,omitempty"`
 	// ReplicationState - READ-ONLY; Replication state of the failover group instance.
 	ReplicationState *string `json:"replicationState,omitempty"`
@@ -14960,7 +15054,7 @@ type PartnerInfo struct {
 	ID *string `json:"id,omitempty"`
 	// Location - READ-ONLY; Geo location of the partner server.
 	Location *string `json:"location,omitempty"`
-	// ReplicationRole - READ-ONLY; Replication role of the partner server. Possible values include: 'Primary', 'Secondary'
+	// ReplicationRole - READ-ONLY; Replication role of the partner server. Possible values include: 'FailoverGroupReplicationRolePrimary', 'FailoverGroupReplicationRoleSecondary'
 	ReplicationRole FailoverGroupReplicationRole `json:"replicationRole,omitempty"`
 }
 
