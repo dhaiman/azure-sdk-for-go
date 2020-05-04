@@ -3251,6 +3251,8 @@ type ManagementPolicyAction struct {
 	BaseBlob *ManagementPolicyBaseBlob `json:"baseBlob,omitempty"`
 	// Snapshot - The management policy action for snapshot
 	Snapshot *ManagementPolicySnapShot `json:"snapshot,omitempty"`
+	// Version - The management policy action for version
+	Version *ManagementPolicyVersion `json:"version,omitempty"`
 }
 
 // ManagementPolicyBaseBlob management policy action for base blob.
@@ -3312,7 +3314,21 @@ type ManagementPolicySchema struct {
 
 // ManagementPolicySnapShot management policy action for snapshot.
 type ManagementPolicySnapShot struct {
+	// TierToCool - The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier
+	TierToCool *DateAfterCreation `json:"tierToCool,omitempty"`
+	// TierToArchive - The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier
+	TierToArchive *DateAfterCreation `json:"tierToArchive,omitempty"`
 	// Delete - The function to delete the blob snapshot
+	Delete *DateAfterCreation `json:"delete,omitempty"`
+}
+
+// ManagementPolicyVersion management policy action for blob version.
+type ManagementPolicyVersion struct {
+	// TierToCool - The function to tier blob version to cool storage. Support blob version currently at Hot tier
+	TierToCool *DateAfterCreation `json:"tierToCool,omitempty"`
+	// TierToArchive - The function to tier blob version to archive storage. Support blob version currently at Hot or Cool tier
+	TierToArchive *DateAfterCreation `json:"tierToArchive,omitempty"`
+	// Delete - The function to delete the blob version
 	Delete *DateAfterCreation `json:"delete,omitempty"`
 }
 
