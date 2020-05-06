@@ -49,17 +49,29 @@ func PossibleActionRuleStatusValues() []ActionRuleStatus {
 type AlertModificationEvent string
 
 const (
+	// ActionRuleSuppressed ...
+	ActionRuleSuppressed AlertModificationEvent = "ActionRuleSuppressed"
+	// ActionRuleTriggered ...
+	ActionRuleTriggered AlertModificationEvent = "ActionRuleTriggered"
+	// ActionsFailed ...
+	ActionsFailed AlertModificationEvent = "ActionsFailed"
+	// ActionsSuppressed ...
+	ActionsSuppressed AlertModificationEvent = "ActionsSuppressed"
+	// ActionsTriggered ...
+	ActionsTriggered AlertModificationEvent = "ActionsTriggered"
 	// AlertCreated ...
 	AlertCreated AlertModificationEvent = "AlertCreated"
 	// MonitorConditionChange ...
 	MonitorConditionChange AlertModificationEvent = "MonitorConditionChange"
+	// SeverityChange ...
+	SeverityChange AlertModificationEvent = "SeverityChange"
 	// StateChange ...
 	StateChange AlertModificationEvent = "StateChange"
 )
 
 // PossibleAlertModificationEventValues returns an array of possible values for the AlertModificationEvent const type.
 func PossibleAlertModificationEventValues() []AlertModificationEvent {
-	return []AlertModificationEvent{AlertCreated, MonitorConditionChange, StateChange}
+	return []AlertModificationEvent{ActionRuleSuppressed, ActionRuleTriggered, ActionsFailed, ActionsSuppressed, ActionsTriggered, AlertCreated, MonitorConditionChange, SeverityChange, StateChange}
 }
 
 // AlertsSortByFields enumerates the values for alerts sort by fields.
@@ -856,7 +868,7 @@ type AlertModification struct {
 
 // AlertModificationItem alert modification item.
 type AlertModificationItem struct {
-	// ModificationEvent - Reason for the modification. Possible values include: 'AlertCreated', 'StateChange', 'MonitorConditionChange'
+	// ModificationEvent - Reason for the modification. Possible values include: 'AlertCreated', 'StateChange', 'MonitorConditionChange', 'SeverityChange', 'ActionRuleTriggered', 'ActionRuleSuppressed', 'ActionsTriggered', 'ActionsSuppressed', 'ActionsFailed'
 	ModificationEvent AlertModificationEvent `json:"modificationEvent,omitempty"`
 	// OldValue - Old value
 	OldValue *string `json:"oldValue,omitempty"`
