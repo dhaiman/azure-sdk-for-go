@@ -784,6 +784,23 @@ func PossibleJobTypeValues() []JobType {
 	return []JobType{Continuous, Triggered}
 }
 
+// KeyVaultReferenceIdentityType enumerates the values for key vault reference identity type.
+type KeyVaultReferenceIdentityType string
+
+const (
+	// KeyVaultReferenceIdentityTypeNone ...
+	KeyVaultReferenceIdentityTypeNone KeyVaultReferenceIdentityType = "None"
+	// KeyVaultReferenceIdentityTypeSystemAssigned ...
+	KeyVaultReferenceIdentityTypeSystemAssigned KeyVaultReferenceIdentityType = "SystemAssigned"
+	// KeyVaultReferenceIdentityTypeUserAssigned ...
+	KeyVaultReferenceIdentityTypeUserAssigned KeyVaultReferenceIdentityType = "UserAssigned"
+)
+
+// PossibleKeyVaultReferenceIdentityTypeValues returns an array of possible values for the KeyVaultReferenceIdentityType const type.
+func PossibleKeyVaultReferenceIdentityTypeValues() []KeyVaultReferenceIdentityType {
+	return []KeyVaultReferenceIdentityType{KeyVaultReferenceIdentityTypeNone, KeyVaultReferenceIdentityTypeSystemAssigned, KeyVaultReferenceIdentityTypeUserAssigned}
+}
+
 // KeyVaultSecretStatus enumerates the values for key vault secret status.
 type KeyVaultSecretStatus string
 
@@ -861,13 +878,15 @@ const (
 	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
 	// ManagedServiceIdentityTypeSystemAssigned ...
 	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
+	// ManagedServiceIdentityTypeSystemAssignedUserAssigned ...
+	ManagedServiceIdentityTypeSystemAssignedUserAssigned ManagedServiceIdentityType = "SystemAssigned, UserAssigned"
 	// ManagedServiceIdentityTypeUserAssigned ...
 	ManagedServiceIdentityTypeUserAssigned ManagedServiceIdentityType = "UserAssigned"
 )
 
 // PossibleManagedServiceIdentityTypeValues returns an array of possible values for the ManagedServiceIdentityType const type.
 func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
-	return []ManagedServiceIdentityType{ManagedServiceIdentityTypeNone, ManagedServiceIdentityTypeSystemAssigned, ManagedServiceIdentityTypeUserAssigned}
+	return []ManagedServiceIdentityType{ManagedServiceIdentityTypeNone, ManagedServiceIdentityTypeSystemAssigned, ManagedServiceIdentityTypeSystemAssignedUserAssigned, ManagedServiceIdentityTypeUserAssigned}
 }
 
 // MSDeployLogEntryType enumerates the values for ms deploy log entry type.
@@ -1681,9 +1700,9 @@ type APIKVReference struct {
 	VaultName     *string       `json:"vaultName,omitempty"`
 	SecretName    *string       `json:"secretName,omitempty"`
 	SecretVersion *string       `json:"secretVersion,omitempty"`
-	// IdentityType - Possible values include: 'ManagedServiceIdentityTypeNone', 'ManagedServiceIdentityTypeSystemAssigned', 'ManagedServiceIdentityTypeUserAssigned'
-	IdentityType ManagedServiceIdentityType `json:"identityType,omitempty"`
-	Details      *string                    `json:"details,omitempty"`
+	// IdentityType - Possible values include: 'KeyVaultReferenceIdentityTypeNone', 'KeyVaultReferenceIdentityTypeSystemAssigned', 'KeyVaultReferenceIdentityTypeUserAssigned'
+	IdentityType KeyVaultReferenceIdentityType `json:"identityType,omitempty"`
+	Details      *string                       `json:"details,omitempty"`
 	// Source - Possible values include: 'KeyVault'
 	Source ConfigReferenceSource `json:"source,omitempty"`
 	// Location - Possible values include: 'ApplicationSetting'
@@ -12738,7 +12757,7 @@ type LogSpecification struct {
 
 // ManagedServiceIdentity managed service identity.
 type ManagedServiceIdentity struct {
-	// Type - Type of managed service identity. Possible values include: 'ManagedServiceIdentityTypeNone', 'ManagedServiceIdentityTypeSystemAssigned', 'ManagedServiceIdentityTypeUserAssigned'
+	// Type - Type of managed service identity. Possible values include: 'ManagedServiceIdentityTypeNone', 'ManagedServiceIdentityTypeSystemAssigned', 'ManagedServiceIdentityTypeUserAssigned', 'ManagedServiceIdentityTypeSystemAssignedUserAssigned'
 	Type ManagedServiceIdentityType `json:"type,omitempty"`
 	// TenantID - READ-ONLY; Tenant of managed service identity.
 	TenantID *string `json:"tenantId,omitempty"`
