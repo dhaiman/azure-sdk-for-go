@@ -20989,6 +20989,8 @@ type SyncGroupProperties struct {
 	SyncState SyncGroupState `json:"syncState,omitempty"`
 	// Schema - Sync schema of the sync group.
 	Schema *SyncGroupSchema `json:"schema,omitempty"`
+	// UsePrivateLinkConnection - If use private link connection is enabled.
+	UsePrivateLinkConnection *bool `json:"usePrivateLinkConnection,omitempty"`
 }
 
 // SyncGroupSchema properties of sync group schema.
@@ -21348,6 +21350,10 @@ type SyncMemberProperties struct {
 	SyncAgentID *string `json:"syncAgentId,omitempty"`
 	// SQLServerDatabaseID - SQL Server database id of the sync member.
 	SQLServerDatabaseID *uuid.UUID `json:"sqlServerDatabaseId,omitempty"`
+	// SyncMemberAzureDatabaseResourceID - ARM resource id of the sync member logical database, for sync members in Azure.
+	SyncMemberAzureDatabaseResourceID *string `json:"syncMemberAzureDatabaseResourceId,omitempty"`
+	// UsePrivateLinkConnection - Whether to use private link connection.
+	UsePrivateLinkConnection *bool `json:"usePrivateLinkConnection,omitempty"`
 	// ServerName - Server name of the member database in the sync member
 	ServerName *string `json:"serverName,omitempty"`
 	// DatabaseName - Database name of the member database in the sync member.
