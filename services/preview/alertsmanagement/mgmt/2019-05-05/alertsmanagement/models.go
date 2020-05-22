@@ -49,29 +49,17 @@ func PossibleActionRuleStatusValues() []ActionRuleStatus {
 type AlertModificationEvent string
 
 const (
-	// ActionRuleSuppressed ...
-	ActionRuleSuppressed AlertModificationEvent = "ActionRuleSuppressed"
-	// ActionRuleTriggered ...
-	ActionRuleTriggered AlertModificationEvent = "ActionRuleTriggered"
-	// ActionsFailed ...
-	ActionsFailed AlertModificationEvent = "ActionsFailed"
-	// ActionsSuppressed ...
-	ActionsSuppressed AlertModificationEvent = "ActionsSuppressed"
-	// ActionsTriggered ...
-	ActionsTriggered AlertModificationEvent = "ActionsTriggered"
 	// AlertCreated ...
 	AlertCreated AlertModificationEvent = "AlertCreated"
 	// MonitorConditionChange ...
 	MonitorConditionChange AlertModificationEvent = "MonitorConditionChange"
-	// SeverityChange ...
-	SeverityChange AlertModificationEvent = "SeverityChange"
 	// StateChange ...
 	StateChange AlertModificationEvent = "StateChange"
 )
 
 // PossibleAlertModificationEventValues returns an array of possible values for the AlertModificationEvent const type.
 func PossibleAlertModificationEventValues() []AlertModificationEvent {
-	return []AlertModificationEvent{ActionRuleSuppressed, ActionRuleTriggered, ActionsFailed, ActionsSuppressed, ActionsTriggered, AlertCreated, MonitorConditionChange, SeverityChange, StateChange}
+	return []AlertModificationEvent{AlertCreated, MonitorConditionChange, StateChange}
 }
 
 // AlertsSortByFields enumerates the values for alerts sort by fields.
@@ -241,13 +229,11 @@ const (
 	ScopeTypeResource ScopeType = "Resource"
 	// ScopeTypeResourceGroup ...
 	ScopeTypeResourceGroup ScopeType = "ResourceGroup"
-	// ScopeTypeSubscription ...
-	ScopeTypeSubscription ScopeType = "Subscription"
 )
 
 // PossibleScopeTypeValues returns an array of possible values for the ScopeType const type.
 func PossibleScopeTypeValues() []ScopeType {
-	return []ScopeType{ScopeTypeResource, ScopeTypeResourceGroup, ScopeTypeSubscription}
+	return []ScopeType{ScopeTypeResource, ScopeTypeResourceGroup}
 }
 
 // Severity enumerates the values for severity.
@@ -870,7 +856,7 @@ type AlertModification struct {
 
 // AlertModificationItem alert modification item.
 type AlertModificationItem struct {
-	// ModificationEvent - Reason for the modification. Possible values include: 'AlertCreated', 'StateChange', 'MonitorConditionChange', 'SeverityChange', 'ActionRuleTriggered', 'ActionRuleSuppressed', 'ActionsTriggered', 'ActionsSuppressed', 'ActionsFailed'
+	// ModificationEvent - Reason for the modification. Possible values include: 'AlertCreated', 'StateChange', 'MonitorConditionChange'
 	ModificationEvent AlertModificationEvent `json:"modificationEvent,omitempty"`
 	// OldValue - Old value
 	OldValue *string `json:"oldValue,omitempty"`
@@ -1651,7 +1637,7 @@ type Resource struct {
 // Scope target scope for a given action rule. By default scope will be the subscription. User can also
 // provide list of resource groups or list of resources from the scope subscription as well.
 type Scope struct {
-	// ScopeType - type of target scope. Possible values include: 'ScopeTypeResourceGroup', 'ScopeTypeResource', 'ScopeTypeSubscription'
+	// ScopeType - type of target scope. Possible values include: 'ScopeTypeResourceGroup', 'ScopeTypeResource'
 	ScopeType ScopeType `json:"scopeType,omitempty"`
 	// Values - list of ARM IDs of the given scope type which will be the target of the given action rule.
 	Values *[]string `json:"values,omitempty"`
