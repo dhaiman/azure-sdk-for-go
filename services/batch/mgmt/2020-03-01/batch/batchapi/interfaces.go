@@ -107,7 +107,7 @@ type PrivateEndpointConnectionClientAPI interface {
 	Get(ctx context.Context, resourceGroupName string, accountName string, privateEndpointConnectionName string) (result batch.PrivateEndpointConnection, err error)
 	ListByBatchAccount(ctx context.Context, resourceGroupName string, accountName string, maxresults *int32) (result batch.ListPrivateEndpointConnectionsResultPage, err error)
 	ListByBatchAccountComplete(ctx context.Context, resourceGroupName string, accountName string, maxresults *int32) (result batch.ListPrivateEndpointConnectionsResultIterator, err error)
-	Update(ctx context.Context, resourceGroupName string, accountName string, privateEndpointConnectionName string, parameters batch.PrivateEndpointConnection, ifMatch string) (result batch.PrivateEndpointConnection, err error)
+	Update(ctx context.Context, resourceGroupName string, accountName string, privateEndpointConnectionName string, parameters batch.PrivateEndpointConnection, ifMatch string) (result batch.PrivateEndpointConnectionUpdateFuture, err error)
 }
 
 var _ PrivateEndpointConnectionClientAPI = (*batch.PrivateEndpointConnectionClient)(nil)

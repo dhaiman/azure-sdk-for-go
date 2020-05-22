@@ -65,9 +65,9 @@ func (client PrivateLinkResourceClient) Get(ctx context.Context, resourceGroupNa
 				{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil},
 				{Target: "accountName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9]+$`, Chain: nil}}},
 		{TargetValue: privateLinkResourceName,
-			Constraints: []validation.Constraint{{Target: "privateLinkResourceName", Name: validation.MaxLength, Rule: 64, Chain: nil},
+			Constraints: []validation.Constraint{{Target: "privateLinkResourceName", Name: validation.MaxLength, Rule: 101, Chain: nil},
 				{Target: "privateLinkResourceName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "privateLinkResourceName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+$`, Chain: nil}}}}); err != nil {
+				{Target: "privateLinkResourceName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$`, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("batch.PrivateLinkResourceClient", "Get", err.Error())
 	}
 

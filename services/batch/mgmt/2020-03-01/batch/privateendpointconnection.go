@@ -66,9 +66,9 @@ func (client PrivateEndpointConnectionClient) Get(ctx context.Context, resourceG
 				{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil},
 				{Target: "accountName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9]+$`, Chain: nil}}},
 		{TargetValue: privateEndpointConnectionName,
-			Constraints: []validation.Constraint{{Target: "privateEndpointConnectionName", Name: validation.MaxLength, Rule: 64, Chain: nil},
+			Constraints: []validation.Constraint{{Target: "privateEndpointConnectionName", Name: validation.MaxLength, Rule: 101, Chain: nil},
 				{Target: "privateEndpointConnectionName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "privateEndpointConnectionName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+$`, Chain: nil}}}}); err != nil {
+				{Target: "privateEndpointConnectionName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$`, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("batch.PrivateEndpointConnectionClient", "Get", err.Error())
 	}
 
@@ -270,13 +270,13 @@ func (client PrivateEndpointConnectionClient) ListByBatchAccountComplete(ctx con
 // be updated, any property not supplied will be unchanged.
 // ifMatch - the state (ETag) version of the private endpoint connection to update. This value can be omitted
 // or set to "*" to apply the operation unconditionally.
-func (client PrivateEndpointConnectionClient) Update(ctx context.Context, resourceGroupName string, accountName string, privateEndpointConnectionName string, parameters PrivateEndpointConnection, ifMatch string) (result PrivateEndpointConnection, err error) {
+func (client PrivateEndpointConnectionClient) Update(ctx context.Context, resourceGroupName string, accountName string, privateEndpointConnectionName string, parameters PrivateEndpointConnection, ifMatch string) (result PrivateEndpointConnectionUpdateFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PrivateEndpointConnectionClient.Update")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -287,9 +287,9 @@ func (client PrivateEndpointConnectionClient) Update(ctx context.Context, resour
 				{Target: "accountName", Name: validation.MinLength, Rule: 3, Chain: nil},
 				{Target: "accountName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9]+$`, Chain: nil}}},
 		{TargetValue: privateEndpointConnectionName,
-			Constraints: []validation.Constraint{{Target: "privateEndpointConnectionName", Name: validation.MaxLength, Rule: 64, Chain: nil},
+			Constraints: []validation.Constraint{{Target: "privateEndpointConnectionName", Name: validation.MaxLength, Rule: 101, Chain: nil},
 				{Target: "privateEndpointConnectionName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "privateEndpointConnectionName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+$`, Chain: nil}}}}); err != nil {
+				{Target: "privateEndpointConnectionName", Name: validation.Pattern, Rule: `^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$`, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("batch.PrivateEndpointConnectionClient", "Update", err.Error())
 	}
 
@@ -299,16 +299,10 @@ func (client PrivateEndpointConnectionClient) Update(ctx context.Context, resour
 		return
 	}
 
-	resp, err := client.UpdateSender(req)
+	result, err = client.UpdateSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "batch.PrivateEndpointConnectionClient", "Update", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "batch.PrivateEndpointConnectionClient", "Update", result.Response(), "Failure sending request")
 		return
-	}
-
-	result, err = client.UpdateResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "batch.PrivateEndpointConnectionClient", "Update", resp, "Failure responding to request")
 	}
 
 	return
@@ -344,8 +338,14 @@ func (client PrivateEndpointConnectionClient) UpdatePreparer(ctx context.Context
 
 // UpdateSender sends the Update request. The method will close the
 // http.Response Body if it receives an error.
-func (client PrivateEndpointConnectionClient) UpdateSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+func (client PrivateEndpointConnectionClient) UpdateSender(req *http.Request) (future PrivateEndpointConnectionUpdateFuture, err error) {
+	var resp *http.Response
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
 }
 
 // UpdateResponder handles the response to the Update request. The method always
@@ -354,7 +354,7 @@ func (client PrivateEndpointConnectionClient) UpdateResponder(resp *http.Respons
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
