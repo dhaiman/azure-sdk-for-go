@@ -2157,6 +2157,35 @@ type DataConnectionValidationResult struct {
 	ErrorMessage *string `json:"errorMessage,omitempty"`
 }
 
+// DemoClustersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type DemoClustersCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *DemoClustersCreateOrUpdateFuture) Result(client DemoClustersClient) (c Cluster, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "kusto.DemoClustersCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("kusto.DemoClustersCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if c.Response.Response, err = future.GetResult(sender); err == nil && c.Response.Response.StatusCode != http.StatusNoContent {
+		c, err = client.CreateOrUpdateResponder(c.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "kusto.DemoClustersCreateOrUpdateFuture", "Result", c.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // DiagnoseVirtualNetworkResult ...
 type DiagnoseVirtualNetworkResult struct {
 	autorest.Response `json:"-"`

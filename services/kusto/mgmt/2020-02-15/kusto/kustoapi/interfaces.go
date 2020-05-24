@@ -22,6 +22,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/services/kusto/mgmt/2020-02-15/kusto"
 )
 
+// DemoClustersClientAPI contains the set of methods on the DemoClustersClient type.
+type DemoClustersClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, clusterName string, parameters kusto.Cluster) (result kusto.DemoClustersCreateOrUpdateFuture, err error)
+}
+
+var _ DemoClustersClientAPI = (*kusto.DemoClustersClient)(nil)
+
 // ClustersClientAPI contains the set of methods on the ClustersClient type.
 type ClustersClientAPI interface {
 	AddLanguageExtensions(ctx context.Context, resourceGroupName string, clusterName string, languageExtensionsToAdd kusto.LanguageExtensionsList) (result kusto.ClustersAddLanguageExtensionsFuture, err error)
