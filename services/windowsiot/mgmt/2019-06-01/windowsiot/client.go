@@ -1,4 +1,4 @@
-// Package windowsiot implements the Azure ARM Windowsiot service API version 2019-06-01.
+// Package windowsiot implements the Azure ARM Windowsiot service API version 2019-06-02.
 //
 // Use this API to manage the Windows IoT device services in your Azure subscription.
 package windowsiot
