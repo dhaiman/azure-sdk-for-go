@@ -115,25 +115,6 @@ func PossibleDeploymentResourceStatusValues() []DeploymentResourceStatus {
 	return []DeploymentResourceStatus{DeploymentResourceStatusAllocating, DeploymentResourceStatusCompiling, DeploymentResourceStatusFailed, DeploymentResourceStatusRunning, DeploymentResourceStatusStopped, DeploymentResourceStatusUnknown, DeploymentResourceStatusUpgrading}
 }
 
-// ManagedIdentityType enumerates the values for managed identity type.
-type ManagedIdentityType string
-
-const (
-	// None ...
-	None ManagedIdentityType = "None"
-	// SystemAssigned ...
-	SystemAssigned ManagedIdentityType = "SystemAssigned"
-	// SystemAssignedUserAssigned ...
-	SystemAssignedUserAssigned ManagedIdentityType = "SystemAssigned,UserAssigned"
-	// UserAssigned ...
-	UserAssigned ManagedIdentityType = "UserAssigned"
-)
-
-// PossibleManagedIdentityTypeValues returns an array of possible values for the ManagedIdentityType const type.
-func PossibleManagedIdentityTypeValues() []ManagedIdentityType {
-	return []ManagedIdentityType{None, SystemAssigned, SystemAssignedUserAssigned, UserAssigned}
-}
-
 // ProvisioningState enumerates the values for provisioning state.
 type ProvisioningState string
 
@@ -212,17 +193,17 @@ func PossibleRuntimeVersionValues() []RuntimeVersion {
 type SkuScaleType string
 
 const (
-	// SkuScaleTypeAutomatic ...
-	SkuScaleTypeAutomatic SkuScaleType = "Automatic"
-	// SkuScaleTypeManual ...
-	SkuScaleTypeManual SkuScaleType = "Manual"
-	// SkuScaleTypeNone ...
-	SkuScaleTypeNone SkuScaleType = "None"
+	// Automatic ...
+	Automatic SkuScaleType = "Automatic"
+	// Manual ...
+	Manual SkuScaleType = "Manual"
+	// None ...
+	None SkuScaleType = "None"
 )
 
 // PossibleSkuScaleTypeValues returns an array of possible values for the SkuScaleType const type.
 func PossibleSkuScaleTypeValues() []SkuScaleType {
-	return []SkuScaleType{SkuScaleTypeAutomatic, SkuScaleTypeManual, SkuScaleTypeNone}
+	return []SkuScaleType{Automatic, Manual, None}
 }
 
 // TestKeyType enumerates the values for test key type.
@@ -279,8 +260,6 @@ type AppResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the App resource
 	Properties *AppResourceProperties `json:"properties,omitempty"`
-	// Identity - The Managed Identity type of the app resource
-	Identity *ManagedIdentityProperties `json:"identity,omitempty"`
 	// Location - The GEO location of the application, always the same with its parent resource
 	Location *string `json:"location,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource.
@@ -1719,14 +1698,6 @@ type LogSpecification struct {
 	BlobDuration *string `json:"blobDuration,omitempty"`
 }
 
-// ManagedIdentityProperties managed identity properties retrieved from ARM request headers.
-type ManagedIdentityProperties struct {
-	// Type - Possible values include: 'None', 'SystemAssigned', 'UserAssigned', 'SystemAssignedUserAssigned'
-	Type        ManagedIdentityType `json:"type,omitempty"`
-	PrincipalID *string             `json:"principalId,omitempty"`
-	TenantID    *string             `json:"tenantId,omitempty"`
-}
-
 // MetricDimension specifications of the Dimension of metrics
 type MetricDimension struct {
 	// Name - Name of the dimension
@@ -2362,7 +2333,7 @@ type SkuCapacity struct {
 	Maximum *int32 `json:"maximum,omitempty"`
 	// Default - Gets or sets the default.
 	Default *int32 `json:"default,omitempty"`
-	// ScaleType - Gets or sets the type of the scale. Possible values include: 'SkuScaleTypeNone', 'SkuScaleTypeManual', 'SkuScaleTypeAutomatic'
+	// ScaleType - Gets or sets the type of the scale. Possible values include: 'None', 'Manual', 'Automatic'
 	ScaleType SkuScaleType `json:"scaleType,omitempty"`
 }
 
