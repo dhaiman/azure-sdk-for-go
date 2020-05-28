@@ -463,7 +463,7 @@ func (client AvailabilitySetsClient) ListAvailableSizesResponder(resp *http.Resp
 
 // ListBySubscription lists all availability sets in a subscription.
 // Parameters:
-// expand - the expand expression to apply to the operation.
+// expand - the expand expression to apply to the operation. Allowed values are 'instanceView'.
 func (client AvailabilitySetsClient) ListBySubscription(ctx context.Context, expand string) (result AvailabilitySetListResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AvailabilitySetsClient.ListBySubscription")
