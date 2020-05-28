@@ -361,9 +361,10 @@ func (client VirtualMachineScaleSetVMsClient) GetInstanceViewResponder(resp *htt
 // Parameters:
 // resourceGroupName - the name of the resource group.
 // virtualMachineScaleSetName - the name of the VM scale set.
-// filter - the filter to apply to the operation.
-// selectParameter - the list parameters.
-// expand - the expand expression to apply to the operation.
+// filter - the filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code,
+// 'PowerState') eq true', 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'.
+// selectParameter - the list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
+// expand - the expand expression to apply to the operation. Allowed values are 'instanceView'.
 func (client VirtualMachineScaleSetVMsClient) List(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, filter string, selectParameter string, expand string) (result VirtualMachineScaleSetVMListResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VirtualMachineScaleSetVMsClient.List")
