@@ -8736,6 +8736,90 @@ func (client AppsClient) GetAuthSettingsSlotResponder(resp *http.Response) (resu
 	return
 }
 
+// GetAuthSettingsV2 description for Gets site's Authentication / Authorization settings for apps via the V2 format
+// Parameters:
+// resourceGroupName - name of the resource group to which the resource belongs.
+// name - name of the app.
+func (client AppsClient) GetAuthSettingsV2(ctx context.Context, resourceGroupName string, name string) (result SiteAuthSettingsV2, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.GetAuthSettingsV2")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+[^\.]$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("web.AppsClient", "GetAuthSettingsV2", err.Error())
+	}
+
+	req, err := client.GetAuthSettingsV2Preparer(ctx, resourceGroupName, name)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "GetAuthSettingsV2", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetAuthSettingsV2Sender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "GetAuthSettingsV2", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetAuthSettingsV2Responder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "GetAuthSettingsV2", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetAuthSettingsV2Preparer prepares the GetAuthSettingsV2 request.
+func (client AppsClient) GetAuthSettingsV2Preparer(ctx context.Context, resourceGroupName string, name string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"name":              autorest.Encode("path", name),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2019-08-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetAuthSettingsV2Sender sends the GetAuthSettingsV2 request. The method will close the
+// http.Response Body if it receives an error.
+func (client AppsClient) GetAuthSettingsV2Sender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetAuthSettingsV2Responder handles the response to the GetAuthSettingsV2 request. The method always
+// closes the http.Response Body.
+func (client AppsClient) GetAuthSettingsV2Responder(resp *http.Response) (result SiteAuthSettingsV2, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetBackupConfiguration description for Gets the backup configuration of an app.
 // Parameters:
 // resourceGroupName - name of the resource group to which the resource belongs.
@@ -31856,6 +31940,94 @@ func (client AppsClient) UpdateAuthSettingsSlotSender(req *http.Request) (*http.
 // UpdateAuthSettingsSlotResponder handles the response to the UpdateAuthSettingsSlot request. The method always
 // closes the http.Response Body.
 func (client AppsClient) UpdateAuthSettingsSlotResponder(resp *http.Response) (result SiteAuthSettings, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// UpdateAuthSettingsV2 description for Updates site's Authentication / Authorization settings for apps via the V2
+// format
+// Parameters:
+// resourceGroupName - name of the resource group to which the resource belongs.
+// name - name of web app.
+// siteAuthSettingsV2 - auth settings associated with web app.
+func (client AppsClient) UpdateAuthSettingsV2(ctx context.Context, resourceGroupName string, name string, siteAuthSettingsV2 SiteAuthSettingsV2) (result SiteAuthSettingsV2, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.UpdateAuthSettingsV2")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+[^\.]$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("web.AppsClient", "UpdateAuthSettingsV2", err.Error())
+	}
+
+	req, err := client.UpdateAuthSettingsV2Preparer(ctx, resourceGroupName, name, siteAuthSettingsV2)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "UpdateAuthSettingsV2", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.UpdateAuthSettingsV2Sender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "UpdateAuthSettingsV2", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.UpdateAuthSettingsV2Responder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "web.AppsClient", "UpdateAuthSettingsV2", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// UpdateAuthSettingsV2Preparer prepares the UpdateAuthSettingsV2 request.
+func (client AppsClient) UpdateAuthSettingsV2Preparer(ctx context.Context, resourceGroupName string, name string, siteAuthSettingsV2 SiteAuthSettingsV2) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"name":              autorest.Encode("path", name),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2019-08-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2", pathParameters),
+		autorest.WithJSON(siteAuthSettingsV2),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// UpdateAuthSettingsV2Sender sends the UpdateAuthSettingsV2 request. The method will close the
+// http.Response Body if it receives an error.
+func (client AppsClient) UpdateAuthSettingsV2Sender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// UpdateAuthSettingsV2Responder handles the response to the UpdateAuthSettingsV2 request. The method always
+// closes the http.Response Body.
+func (client AppsClient) UpdateAuthSettingsV2Responder(resp *http.Response) (result SiteAuthSettingsV2, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
