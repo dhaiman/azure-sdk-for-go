@@ -17617,26 +17617,8 @@ type TargetRestoreInfo struct {
 	ContainerID *string `json:"containerId,omitempty"`
 	// DatabaseName - Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana
 	DatabaseName *string `json:"databaseName,omitempty"`
-	// TargetDirectoryMapping - This will contain the target folder mapping for the Full/Diff/Log/Incremental pits.
-	TargetDirectoryMapping map[string]*string `json:"targetDirectoryMapping"`
-}
-
-// MarshalJSON is the custom marshaler for TargetRestoreInfo.
-func (tri TargetRestoreInfo) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if tri.OverwriteOption != "" {
-		objectMap["overwriteOption"] = tri.OverwriteOption
-	}
-	if tri.ContainerID != nil {
-		objectMap["containerId"] = tri.ContainerID
-	}
-	if tri.DatabaseName != nil {
-		objectMap["databaseName"] = tri.DatabaseName
-	}
-	if tri.TargetDirectoryMapping != nil {
-		objectMap["targetDirectoryMapping"] = tri.TargetDirectoryMapping
-	}
-	return json.Marshal(objectMap)
+	// TargetDirectoryForFileRestore - Target directory location for restore as files.
+	TargetDirectoryForFileRestore *string `json:"targetDirectoryForFileRestore,omitempty"`
 }
 
 // TokenInformation the token information details.
