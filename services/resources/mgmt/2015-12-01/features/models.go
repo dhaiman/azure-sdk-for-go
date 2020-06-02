@@ -44,6 +44,8 @@ type OperationDisplay struct {
 	Resource *string `json:"resource,omitempty"`
 	// Operation - Operation type: Read, write, delete, etc.
 	Operation *string `json:"operation,omitempty"`
+	// Description - Description of the operation.
+	Description *string `json:"description,omitempty"`
 }
 
 // OperationListResult result of the request to list Microsoft.Features operations. It contains a list of
