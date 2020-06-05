@@ -105,7 +105,6 @@ func (client PropertyClient) GetSender(req *http.Request) (*http.Response, error
 func (client PropertyClient) GetResponder(resp *http.Response) (result Property, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -181,7 +180,6 @@ func (client PropertyClient) UpdateSender(req *http.Request) (*http.Response, er
 func (client PropertyClient) UpdateResponder(resp *http.Response) (result Property, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

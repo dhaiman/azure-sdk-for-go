@@ -109,7 +109,6 @@ func (client PoliciesClient) GetByBillingProfileSender(req *http.Request) (*http
 func (client PoliciesClient) GetByBillingProfileResponder(resp *http.Response) (result Policy, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -185,7 +184,6 @@ func (client PoliciesClient) GetByCustomerSender(req *http.Request) (*http.Respo
 func (client PoliciesClient) GetByCustomerResponder(resp *http.Response) (result CustomerPolicy, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -264,7 +262,6 @@ func (client PoliciesClient) UpdateSender(req *http.Request) (*http.Response, er
 func (client PoliciesClient) UpdateResponder(resp *http.Response) (result Policy, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -343,7 +340,6 @@ func (client PoliciesClient) UpdateCustomerSender(req *http.Request) (*http.Resp
 func (client PoliciesClient) UpdateCustomerResponder(resp *http.Response) (result CustomerPolicy, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

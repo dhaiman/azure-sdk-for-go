@@ -112,7 +112,6 @@ func (client AgreementsClient) GetSender(req *http.Request) (*http.Response, err
 func (client AgreementsClient) GetResponder(resp *http.Response) (result Agreement, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -190,7 +189,6 @@ func (client AgreementsClient) ListByBillingAccountSender(req *http.Request) (*h
 func (client AgreementsClient) ListByBillingAccountResponder(resp *http.Response) (result AgreementListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

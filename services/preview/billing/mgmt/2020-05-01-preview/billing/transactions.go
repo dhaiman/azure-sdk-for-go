@@ -110,7 +110,6 @@ func (client TransactionsClient) ListByInvoiceSender(req *http.Request) (*http.R
 func (client TransactionsClient) ListByInvoiceResponder(resp *http.Response) (result TransactionListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

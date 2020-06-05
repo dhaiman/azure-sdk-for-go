@@ -109,7 +109,6 @@ func (client ProductsClient) GetSender(req *http.Request) (*http.Response, error
 func (client ProductsClient) GetResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -191,7 +190,6 @@ func (client ProductsClient) ListByBillingAccountSender(req *http.Request) (*htt
 func (client ProductsClient) ListByBillingAccountResponder(resp *http.Response) (result ProductsListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -312,7 +310,6 @@ func (client ProductsClient) ListByBillingProfileSender(req *http.Request) (*htt
 func (client ProductsClient) ListByBillingProfileResponder(resp *http.Response) (result ProductsListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -426,7 +423,6 @@ func (client ProductsClient) ListByCustomerSender(req *http.Request) (*http.Resp
 func (client ProductsClient) ListByCustomerResponder(resp *http.Response) (result ProductsListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -548,7 +544,6 @@ func (client ProductsClient) ListByInvoiceSectionSender(req *http.Request) (*htt
 func (client ProductsClient) ListByInvoiceSectionResponder(resp *http.Response) (result ProductsListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -665,7 +660,6 @@ func (client ProductsClient) MoveSender(req *http.Request) (*http.Response, erro
 func (client ProductsClient) MoveResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -744,7 +738,6 @@ func (client ProductsClient) UpdateSender(req *http.Request) (*http.Response, er
 func (client ProductsClient) UpdateResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -798,12 +791,18 @@ func (client ProductsClient) ValidateMovePreparer(ctx context.Context, billingAc
 		"productName":        autorest.Encode("path", productName),
 	}
 
+	const APIVersion = "2020-05-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility", pathParameters),
-		autorest.WithJSON(parameters))
+		autorest.WithJSON(parameters),
+		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -818,7 +817,6 @@ func (client ProductsClient) ValidateMoveSender(req *http.Request) (*http.Respon
 func (client ProductsClient) ValidateMoveResponder(resp *http.Response) (result ValidateProductTransferEligibilityResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

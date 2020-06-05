@@ -113,7 +113,6 @@ func (client CustomersClient) GetSender(req *http.Request) (*http.Response, erro
 func (client CustomersClient) GetResponder(resp *http.Response) (result Customer, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -197,7 +196,6 @@ func (client CustomersClient) ListByBillingAccountSender(req *http.Request) (*ht
 func (client CustomersClient) ListByBillingAccountResponder(resp *http.Response) (result CustomerListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -320,7 +318,6 @@ func (client CustomersClient) ListByBillingProfileSender(req *http.Request) (*ht
 func (client CustomersClient) ListByBillingProfileResponder(resp *http.Response) (result CustomerListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

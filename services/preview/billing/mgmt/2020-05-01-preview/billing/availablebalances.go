@@ -111,7 +111,6 @@ func (client AvailableBalancesClient) GetSender(req *http.Request) (*http.Respon
 func (client AvailableBalancesClient) GetResponder(resp *http.Response) (result AvailableBalance, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

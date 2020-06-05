@@ -109,7 +109,6 @@ func (client InvoicesClient) DownloadBillingSubscriptionInvoiceSender(req *http.
 func (client InvoicesClient) DownloadBillingSubscriptionInvoiceResponder(resp *http.Response) (result DownloadURL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -187,7 +186,6 @@ func (client InvoicesClient) DownloadInvoiceSender(req *http.Request) (future In
 func (client InvoicesClient) DownloadInvoiceResponder(resp *http.Response) (result DownloadURL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -263,7 +261,6 @@ func (client InvoicesClient) GetSender(req *http.Request) (*http.Response, error
 func (client InvoicesClient) GetResponder(resp *http.Response) (result Invoice, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -337,7 +334,6 @@ func (client InvoicesClient) GetByIDSender(req *http.Request) (*http.Response, e
 func (client InvoicesClient) GetByIDResponder(resp *http.Response) (result Invoice, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -411,7 +407,6 @@ func (client InvoicesClient) GetBySubscriptionAndInvoiceIDSender(req *http.Reque
 func (client InvoicesClient) GetBySubscriptionAndInvoiceIDResponder(resp *http.Response) (result Invoice, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -490,7 +485,6 @@ func (client InvoicesClient) ListByBillingAccountSender(req *http.Request) (*htt
 func (client InvoicesClient) ListByBillingAccountResponder(resp *http.Response) (result InvoiceListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -608,7 +602,6 @@ func (client InvoicesClient) ListByBillingProfileSender(req *http.Request) (*htt
 func (client InvoicesClient) ListByBillingProfileResponder(resp *http.Response) (result InvoiceListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -722,7 +715,6 @@ func (client InvoicesClient) ListByBillingSubscriptionSender(req *http.Request) 
 func (client InvoicesClient) ListByBillingSubscriptionResponder(resp *http.Response) (result InvoiceListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
