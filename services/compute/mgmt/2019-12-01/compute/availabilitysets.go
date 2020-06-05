@@ -44,7 +44,7 @@ func NewAvailabilitySetsClientWithBaseURI(baseURI string, subscriptionID string)
 
 // CreateOrUpdate create or update an availability set.
 // Parameters:
-// resourceGroupName - the name of the resource group.
+// resourceGroupName - the name of the target resource group.
 // availabilitySetName - the name of the availability set.
 // parameters - parameters supplied to the Create Availability Set operation.
 func (client AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet) (result AvailabilitySet, err error) {
