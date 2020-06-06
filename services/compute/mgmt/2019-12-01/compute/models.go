@@ -11337,9 +11337,9 @@ type VirtualMachineScaleSetIPConfigurationProperties struct {
 	ApplicationGatewayBackendAddressPools *[]SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
 	// ApplicationSecurityGroups - Specifies an array of references to application security group.
 	ApplicationSecurityGroups *[]SubResource `json:"applicationSecurityGroups,omitempty"`
-	// LoadBalancerBackendAddressPools - Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer.
+	// LoadBalancerBackendAddressPools - Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same load balancer.
 	LoadBalancerBackendAddressPools *[]SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
-	// LoadBalancerInboundNatPools - Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer.
+	// LoadBalancerInboundNatPools - Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same load balancer
 	LoadBalancerInboundNatPools *[]SubResource `json:"loadBalancerInboundNatPools,omitempty"`
 }
 
