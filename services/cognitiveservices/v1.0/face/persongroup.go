@@ -135,7 +135,6 @@ func (client PersonGroupClient) CreateSender(req *http.Request) (*http.Response,
 func (client PersonGroupClient) CreateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -213,7 +212,6 @@ func (client PersonGroupClient) DeleteSender(req *http.Request) (*http.Response,
 func (client PersonGroupClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -301,7 +299,6 @@ func (client PersonGroupClient) GetSender(req *http.Request) (*http.Response, er
 func (client PersonGroupClient) GetResponder(resp *http.Response) (result PersonGroup, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -379,7 +376,6 @@ func (client PersonGroupClient) GetTrainingStatusSender(req *http.Request) (*htt
 func (client PersonGroupClient) GetTrainingStatusResponder(resp *http.Response) (result TrainingStatus, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -487,7 +483,6 @@ func (client PersonGroupClient) ListSender(req *http.Request) (*http.Response, e
 func (client PersonGroupClient) ListResponder(resp *http.Response) (result ListPersonGroup, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -565,7 +560,6 @@ func (client PersonGroupClient) TrainSender(req *http.Request) (*http.Response, 
 func (client PersonGroupClient) TrainResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -646,7 +640,6 @@ func (client PersonGroupClient) UpdateSender(req *http.Request) (*http.Response,
 func (client PersonGroupClient) UpdateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -137,7 +137,6 @@ func (client LargePersonGroupClient) CreateSender(req *http.Request) (*http.Resp
 func (client LargePersonGroupClient) CreateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -215,7 +214,6 @@ func (client LargePersonGroupClient) DeleteSender(req *http.Request) (*http.Resp
 func (client LargePersonGroupClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -305,7 +303,6 @@ func (client LargePersonGroupClient) GetSender(req *http.Request) (*http.Respons
 func (client LargePersonGroupClient) GetResponder(resp *http.Response) (result LargePersonGroup, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -383,7 +380,6 @@ func (client LargePersonGroupClient) GetTrainingStatusSender(req *http.Request) 
 func (client LargePersonGroupClient) GetTrainingStatusResponder(resp *http.Response) (result TrainingStatus, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -491,7 +487,6 @@ func (client LargePersonGroupClient) ListSender(req *http.Request) (*http.Respon
 func (client LargePersonGroupClient) ListResponder(resp *http.Response) (result ListLargePersonGroup, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -569,7 +564,6 @@ func (client LargePersonGroupClient) TrainSender(req *http.Request) (*http.Respo
 func (client LargePersonGroupClient) TrainResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -650,7 +644,6 @@ func (client LargePersonGroupClient) UpdateSender(req *http.Request) (*http.Resp
 func (client LargePersonGroupClient) UpdateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -167,7 +167,6 @@ func (client ListClient) AddFaceFromStreamSender(req *http.Request) (*http.Respo
 func (client ListClient) AddFaceFromStreamResponder(resp *http.Response) (result PersistedFace, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -306,7 +305,6 @@ func (client ListClient) AddFaceFromURLSender(req *http.Request) (*http.Response
 func (client ListClient) AddFaceFromURLResponder(resp *http.Response) (result PersistedFace, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -411,7 +409,6 @@ func (client ListClient) CreateSender(req *http.Request) (*http.Response, error)
 func (client ListClient) CreateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -488,7 +485,6 @@ func (client ListClient) DeleteSender(req *http.Request) (*http.Response, error)
 func (client ListClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -569,7 +565,6 @@ func (client ListClient) DeleteFaceSender(req *http.Request) (*http.Response, er
 func (client ListClient) DeleteFaceResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -656,7 +651,6 @@ func (client ListClient) GetSender(req *http.Request) (*http.Response, error) {
 func (client ListClient) GetResponder(resp *http.Response) (result List, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -734,7 +728,6 @@ func (client ListClient) ListSender(req *http.Request) (*http.Response, error) {
 func (client ListClient) ListResponder(resp *http.Response) (result ListList, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -815,7 +808,6 @@ func (client ListClient) UpdateSender(req *http.Request) (*http.Response, error)
 func (client ListClient) UpdateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
