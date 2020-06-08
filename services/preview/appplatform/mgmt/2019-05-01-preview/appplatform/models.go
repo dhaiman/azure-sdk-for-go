@@ -1080,6 +1080,8 @@ type ClusterResourceProperties struct {
 	Version *int32 `json:"version,omitempty"`
 	// ServiceID - READ-ONLY; ServiceInstanceEntity GUID which uniquely identifies a created resource
 	ServiceID *string `json:"serviceId,omitempty"`
+	// NetworkProfile - Network profile of the Service
+	NetworkProfile *NetworkProfile `json:"networkProfile,omitempty"`
 }
 
 // ConfigServerGitProperty property of git.
@@ -1776,6 +1778,20 @@ type NameAvailabilityParameters struct {
 	Type *string `json:"type,omitempty"`
 	// Name - Name to be checked
 	Name *string `json:"name,omitempty"`
+}
+
+// NetworkProfile service network profile payload
+type NetworkProfile struct {
+	// ServiceRuntimeSubnetID - Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime
+	ServiceRuntimeSubnetID *string `json:"serviceRuntimeSubnetId,omitempty"`
+	// AppSubnetID - Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps
+	AppSubnetID *string `json:"appSubnetId,omitempty"`
+	// ServiceCidr - Azure Spring Cloud service reserved CIDR
+	ServiceCidr *string `json:"serviceCidr,omitempty"`
+	// ServiceRuntimeNetworkResourceGroup - Name of the resource group containing network resources of Azure Spring Cloud Service Runtime
+	ServiceRuntimeNetworkResourceGroup *string `json:"serviceRuntimeNetworkResourceGroup,omitempty"`
+	// AppNetworkResourceGroup - Name of the resource group containing network resources of Azure Spring Cloud Apps
+	AppNetworkResourceGroup *string `json:"appNetworkResourceGroup,omitempty"`
 }
 
 // OperationDetail operation detail payload
