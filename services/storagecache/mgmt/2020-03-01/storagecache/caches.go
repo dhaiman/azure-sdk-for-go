@@ -224,13 +224,12 @@ func (client CachesClient) DeleteSender(req *http.Request) (future CachesDeleteF
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
-func (client CachesClient) DeleteResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -307,13 +306,99 @@ func (client CachesClient) FlushSender(req *http.Request) (future CachesFlushFut
 
 // FlushResponder handles the response to the Flush request. The method always
 // closes the http.Response Body.
-func (client CachesClient) FlushResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) FlushResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
+	return
+}
+
+// ForceGsi forces a GSI to complete on the specified cache.
+// Parameters:
+// resourceGroupName - target resource group.
+// cacheName - name of Cache. Length of name must be not greater than 80 and chars must be in list of
+// [-0-9a-zA-Z_] char class.
+// comment - object containing the properties of the GSI.
+func (client CachesClient) ForceGsi(ctx context.Context, resourceGroupName string, cacheName string, comment *ForceGsiProperties) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/CachesClient.ForceGsi")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: cacheName,
+			Constraints: []validation.Constraint{{Target: "cacheName", Name: validation.Pattern, Rule: `^[-0-9a-zA-Z_]{1,80}$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("storagecache.CachesClient", "ForceGsi", err.Error())
+	}
+
+	req, err := client.ForceGsiPreparer(ctx, resourceGroupName, cacheName, comment)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storagecache.CachesClient", "ForceGsi", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.ForceGsiSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "storagecache.CachesClient", "ForceGsi", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.ForceGsiResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storagecache.CachesClient", "ForceGsi", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// ForceGsiPreparer prepares the ForceGsi request.
+func (client CachesClient) ForceGsiPreparer(ctx context.Context, resourceGroupName string, cacheName string, comment *ForceGsiProperties) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"cacheName":         autorest.Encode("path", cacheName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-03-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/forceGsi", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	if comment != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithJSON(comment))
+	}
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ForceGsiSender sends the ForceGsi request. The method will close the
+// http.Response Body if it receives an error.
+func (client CachesClient) ForceGsiSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// ForceGsiResponder handles the response to the ForceGsi request. The method always
+// closes the http.Response Body.
+func (client CachesClient) ForceGsiResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
+		autorest.ByClosing())
+	result.Response = resp
 	return
 }
 
@@ -690,13 +775,12 @@ func (client CachesClient) StartSender(req *http.Request) (future CachesStartFut
 
 // StartResponder handles the response to the Start request. The method always
 // closes the http.Response Body.
-func (client CachesClient) StartResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) StartResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -772,13 +856,12 @@ func (client CachesClient) StopSender(req *http.Request) (future CachesStopFutur
 
 // StopResponder handles the response to the Stop request. The method always
 // closes the http.Response Body.
-func (client CachesClient) StopResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) StopResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -946,12 +1029,11 @@ func (client CachesClient) UpgradeFirmwareSender(req *http.Request) (future Cach
 
 // UpgradeFirmwareResponder handles the response to the UpgradeFirmware request. The method always
 // closes the http.Response Body.
-func (client CachesClient) UpgradeFirmwareResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) UpgradeFirmwareResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }

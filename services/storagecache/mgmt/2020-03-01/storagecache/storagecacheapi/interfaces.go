@@ -20,6 +20,7 @@ package storagecacheapi
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/services/storagecache/mgmt/2020-03-01/storagecache"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // OperationsClientAPI contains the set of methods on the OperationsClient type.
@@ -58,6 +59,7 @@ type CachesClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, cacheName string, cache *storagecache.Cache) (result storagecache.CachesCreateOrUpdateFuture, err error)
 	Delete(ctx context.Context, resourceGroupName string, cacheName string) (result storagecache.CachesDeleteFuture, err error)
 	Flush(ctx context.Context, resourceGroupName string, cacheName string) (result storagecache.CachesFlushFuture, err error)
+	ForceGsi(ctx context.Context, resourceGroupName string, cacheName string, comment *storagecache.ForceGsiProperties) (result autorest.Response, err error)
 	Get(ctx context.Context, resourceGroupName string, cacheName string) (result storagecache.Cache, err error)
 	List(ctx context.Context) (result storagecache.CachesListResultPage, err error)
 	ListComplete(ctx context.Context) (result storagecache.CachesListResultIterator, err error)
