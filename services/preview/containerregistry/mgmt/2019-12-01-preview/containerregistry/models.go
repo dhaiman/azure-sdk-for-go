@@ -129,6 +129,25 @@ func PossibleConnectionStatusValues() []ConnectionStatus {
 	return []ConnectionStatus{Approved, Disconnected, Pending, Rejected}
 }
 
+// CreatedByType enumerates the values for created by type.
+type CreatedByType string
+
+const (
+	// Application ...
+	Application CreatedByType = "Application"
+	// Key ...
+	Key CreatedByType = "Key"
+	// ManagedIdentity ...
+	ManagedIdentity CreatedByType = "ManagedIdentity"
+	// User ...
+	User CreatedByType = "User"
+)
+
+// PossibleCreatedByTypeValues returns an array of possible values for the CreatedByType const type.
+func PossibleCreatedByTypeValues() []CreatedByType {
+	return []CreatedByType{Application, Key, ManagedIdentity, User}
+}
+
 // DefaultAction enumerates the values for default action.
 type DefaultAction string
 
@@ -755,6 +774,8 @@ type AgentPool struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for AgentPool.
@@ -834,6 +855,15 @@ func (ap *AgentPool) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				ap.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				ap.SystemData = &systemData
 			}
 		}
 	}
@@ -4496,6 +4526,8 @@ type Registry struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Registry.
@@ -4599,6 +4631,15 @@ func (r *Registry) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				r.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				r.SystemData = &systemData
 			}
 		}
 	}
@@ -4949,6 +4990,8 @@ type Replication struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Replication.
@@ -5028,6 +5071,15 @@ func (r *Replication) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				r.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				r.SystemData = &systemData
 			}
 		}
 	}
@@ -5357,6 +5409,8 @@ type Resource struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Resource.
@@ -6351,6 +6405,22 @@ type StorageAccountProperties struct {
 	ID *string `json:"id,omitempty"`
 }
 
+// SystemData metadata pertaining to creation and last modification of the resource.
+type SystemData struct {
+	// CreatedBy - The identity that created the resource.
+	CreatedBy *string `json:"createdBy,omitempty"`
+	// CreatedByType - The type of identity that created the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	CreatedByType CreatedByType `json:"createdByType,omitempty"`
+	// CreatedAt - The timestamp of resource creation (UTC).
+	CreatedAt *date.Time `json:"createdAt,omitempty"`
+	// LastModifiedBy - The identity that last modified the resource.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
+	// LastModifiedByType - The type of identity that last modified the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	LastModifiedByType CreatedByType `json:"lastModifiedByType,omitempty"`
+	// LastModifiedAt - The type of identity that last modified the resource.
+	LastModifiedAt *date.Time `json:"lastModifiedAt,omitempty"`
+}
+
 // Target the target of the event.
 type Target struct {
 	// MediaType - The MIME type of the referenced object.
@@ -6391,6 +6461,8 @@ type Task struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Task.
@@ -6482,6 +6554,15 @@ func (t *Task) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				t.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				t.SystemData = &systemData
 			}
 		}
 	}
@@ -6887,6 +6968,8 @@ type TaskRun struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for TaskRun.
@@ -6978,6 +7061,15 @@ func (tr *TaskRun) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				tr.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				tr.SystemData = &systemData
 			}
 		}
 	}
@@ -8281,6 +8373,8 @@ type Webhook struct {
 	Location *string `json:"location,omitempty"`
 	// Tags - The tags of the resource.
 	Tags map[string]*string `json:"tags"`
+	// SystemData - READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Webhook.
@@ -8360,6 +8454,15 @@ func (w *Webhook) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				w.Tags = tags
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				w.SystemData = &systemData
 			}
 		}
 	}
