@@ -702,6 +702,8 @@ type ClusterCreateProperties struct {
 	StorageProfile *StorageProfile `json:"storageProfile,omitempty"`
 	// DiskEncryptionProperties - The disk encryption properties.
 	DiskEncryptionProperties *DiskEncryptionProperties `json:"diskEncryptionProperties,omitempty"`
+	// EncryptionInTransitProperties - The encryption-in-transit properties.
+	EncryptionInTransitProperties *EncryptionInTransitProperties `json:"encryptionInTransitProperties,omitempty"`
 	// MinSupportedTLSVersion - The minimal supported tls version.
 	MinSupportedTLSVersion *string `json:"minSupportedTlsVersion,omitempty"`
 }
@@ -776,6 +778,8 @@ type ClusterGetProperties struct {
 	ConnectivityEndpoints *[]ConnectivityEndpoint `json:"connectivityEndpoints,omitempty"`
 	// DiskEncryptionProperties - The disk encryption properties.
 	DiskEncryptionProperties *DiskEncryptionProperties `json:"diskEncryptionProperties,omitempty"`
+	// EncryptionInTransitProperties - The encryption-in-transit properties.
+	EncryptionInTransitProperties *EncryptionInTransitProperties `json:"encryptionInTransitProperties,omitempty"`
 	// MinSupportedTLSVersion - The minimal supported tls version.
 	MinSupportedTLSVersion *string `json:"minSupportedTlsVersion,omitempty"`
 }
@@ -1229,6 +1233,14 @@ type DiskEncryptionProperties struct {
 	EncryptionAlgorithm JSONWebKeyEncryptionAlgorithm `json:"encryptionAlgorithm,omitempty"`
 	// MsiResourceID - Resource ID of Managed Identity that is used to access the key vault.
 	MsiResourceID *string `json:"msiResourceId,omitempty"`
+	// EncryptionAtHost - Indicates whether or not resource disk encryption is enabled.
+	EncryptionAtHost *bool `json:"encryptionAtHost,omitempty"`
+}
+
+// EncryptionInTransitProperties the encryption-in-transit properties.
+type EncryptionInTransitProperties struct {
+	// IsEncryptionInTransitEnabled - Indicates whether or not inter cluster node communication is encrypted in transit.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty"`
 }
 
 // ErrorResponse describes the format of Error response.
