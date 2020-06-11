@@ -414,7 +414,7 @@ func (client DatabaseAccountsClient) FailoverPriorityChangeResponder(resp *http.
 	return
 }
 
-// Get retrieves the properties of an existing Azure Cosmos DB database account.
+// Get retrieves the properties of a existing Azure Cosmos DB database account.
 // Parameters:
 // resourceGroupName - the name of the resource group. The name is case insensitive.
 // accountName - cosmos DB database account name.
