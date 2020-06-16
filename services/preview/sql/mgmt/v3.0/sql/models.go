@@ -3618,6 +3618,8 @@ type DatabaseProperties struct {
 	PausedDate *date.Time `json:"pausedDate,omitempty"`
 	// ResumedDate - READ-ONLY; The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused.
 	ResumedDate *date.Time `json:"resumedDate,omitempty"`
+	// MaintenanceConfigurationID - Maintenance configuration id assigned to the database
+	MaintenanceConfigurationID *string `json:"maintenanceConfigurationId,omitempty"`
 }
 
 // DatabasesCreateImportOperationFuture an abstraction for monitoring and retrieving the results of a
@@ -5661,6 +5663,8 @@ type ElasticPoolProperties struct {
 	ZoneRedundant *bool `json:"zoneRedundant,omitempty"`
 	// LicenseType - The license type to apply for this elastic pool. Possible values include: 'ElasticPoolLicenseTypeLicenseIncluded', 'ElasticPoolLicenseTypeBasePrice'
 	LicenseType ElasticPoolLicenseType `json:"licenseType,omitempty"`
+	// MaintenanceConfigurationID - Maintenance configuration id assigned to the elastic pool.
+	MaintenanceConfigurationID *string `json:"maintenanceConfigurationId,omitempty"`
 }
 
 // ElasticPoolsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -5843,6 +5847,8 @@ type ElasticPoolUpdateProperties struct {
 	ZoneRedundant *bool `json:"zoneRedundant,omitempty"`
 	// LicenseType - The license type to apply for this elastic pool. Possible values include: 'ElasticPoolLicenseTypeLicenseIncluded', 'ElasticPoolLicenseTypeBasePrice'
 	LicenseType ElasticPoolLicenseType `json:"licenseType,omitempty"`
+	// MaintenanceConfigurationID - Maintenance configuration id assigned to the elastic pool.
+	MaintenanceConfigurationID *string `json:"maintenanceConfigurationId,omitempty"`
 }
 
 // EncryptionProtector the server encryption protector.
