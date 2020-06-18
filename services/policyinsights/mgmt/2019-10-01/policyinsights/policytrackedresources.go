@@ -32,15 +32,15 @@ type PolicyTrackedResourcesClient struct {
 }
 
 // NewPolicyTrackedResourcesClient creates an instance of the PolicyTrackedResourcesClient client.
-func NewPolicyTrackedResourcesClient() PolicyTrackedResourcesClient {
-	return NewPolicyTrackedResourcesClientWithBaseURI(DefaultBaseURI)
+func NewPolicyTrackedResourcesClient(subscriptionID2 string) PolicyTrackedResourcesClient {
+	return NewPolicyTrackedResourcesClientWithBaseURI(DefaultBaseURI, subscriptionID2)
 }
 
 // NewPolicyTrackedResourcesClientWithBaseURI creates an instance of the PolicyTrackedResourcesClient client using a
 // custom endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds,
 // Azure stack).
-func NewPolicyTrackedResourcesClientWithBaseURI(baseURI string) PolicyTrackedResourcesClient {
-	return PolicyTrackedResourcesClient{NewWithBaseURI(baseURI)}
+func NewPolicyTrackedResourcesClientWithBaseURI(baseURI string, subscriptionID2 string) PolicyTrackedResourcesClient {
+	return PolicyTrackedResourcesClient{NewWithBaseURI(baseURI, subscriptionID2)}
 }
 
 // ListQueryResultsForManagementGroup queries policy tracked resources under the management group.
@@ -126,7 +126,6 @@ func (client PolicyTrackedResourcesClient) ListQueryResultsForManagementGroupSen
 func (client PolicyTrackedResourcesClient) ListQueryResultsForManagementGroupResponder(resp *http.Response) (result PolicyTrackedResourcesQueryResults, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -253,7 +252,6 @@ func (client PolicyTrackedResourcesClient) ListQueryResultsForResourceSender(req
 func (client PolicyTrackedResourcesClient) ListQueryResultsForResourceResponder(resp *http.Response) (result PolicyTrackedResourcesQueryResults, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -382,7 +380,6 @@ func (client PolicyTrackedResourcesClient) ListQueryResultsForResourceGroupSende
 func (client PolicyTrackedResourcesClient) ListQueryResultsForResourceGroupResponder(resp *http.Response) (result PolicyTrackedResourcesQueryResults, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -509,7 +506,6 @@ func (client PolicyTrackedResourcesClient) ListQueryResultsForSubscriptionSender
 func (client PolicyTrackedResourcesClient) ListQueryResultsForSubscriptionResponder(resp *http.Response) (result PolicyTrackedResourcesQueryResults, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

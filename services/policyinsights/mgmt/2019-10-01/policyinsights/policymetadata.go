@@ -32,14 +32,14 @@ type PolicyMetadataClient struct {
 }
 
 // NewPolicyMetadataClient creates an instance of the PolicyMetadataClient client.
-func NewPolicyMetadataClient() PolicyMetadataClient {
-	return NewPolicyMetadataClientWithBaseURI(DefaultBaseURI)
+func NewPolicyMetadataClient(subscriptionID2 string) PolicyMetadataClient {
+	return NewPolicyMetadataClientWithBaseURI(DefaultBaseURI, subscriptionID2)
 }
 
 // NewPolicyMetadataClientWithBaseURI creates an instance of the PolicyMetadataClient client using a custom endpoint.
 // Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewPolicyMetadataClientWithBaseURI(baseURI string) PolicyMetadataClient {
-	return PolicyMetadataClient{NewWithBaseURI(baseURI)}
+func NewPolicyMetadataClientWithBaseURI(baseURI string, subscriptionID2 string) PolicyMetadataClient {
+	return PolicyMetadataClient{NewWithBaseURI(baseURI, subscriptionID2)}
 }
 
 // GetResource get policy metadata resource.
@@ -107,7 +107,6 @@ func (client PolicyMetadataClient) GetResourceSender(req *http.Request) (*http.R
 func (client PolicyMetadataClient) GetResourceResponder(resp *http.Response) (result PolicyMetadata, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -187,7 +186,6 @@ func (client PolicyMetadataClient) ListSender(req *http.Request) (*http.Response
 func (client PolicyMetadataClient) ListResponder(resp *http.Response) (result PolicyMetadataCollection, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

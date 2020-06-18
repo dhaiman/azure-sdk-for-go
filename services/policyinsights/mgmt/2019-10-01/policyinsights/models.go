@@ -31,6 +31,42 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/policyinsights/mgmt/2019-10-01/policyinsights"
 
+// ComplianceState enumerates the values for compliance state.
+type ComplianceState string
+
+const (
+	// Compliant The resource is in compliance with the policy.
+	Compliant ComplianceState = "Compliant"
+	// NonCompliant The resource is not in compliance with the policy.
+	NonCompliant ComplianceState = "NonCompliant"
+	// Unknown The compliance state of the resource is not known.
+	Unknown ComplianceState = "Unknown"
+)
+
+// PossibleComplianceStateValues returns an array of possible values for the ComplianceState const type.
+func PossibleComplianceStateValues() []ComplianceState {
+	return []ComplianceState{Compliant, NonCompliant, Unknown}
+}
+
+// CreatedByType enumerates the values for created by type.
+type CreatedByType string
+
+const (
+	// Application ...
+	Application CreatedByType = "Application"
+	// Key ...
+	Key CreatedByType = "Key"
+	// ManagedIdentity ...
+	ManagedIdentity CreatedByType = "ManagedIdentity"
+	// User ...
+	User CreatedByType = "User"
+)
+
+// PossibleCreatedByTypeValues returns an array of possible values for the CreatedByType const type.
+func PossibleCreatedByTypeValues() []CreatedByType {
+	return []CreatedByType{Application, Key, ManagedIdentity, User}
+}
+
 // PolicyStatesResource enumerates the values for policy states resource.
 type PolicyStatesResource string
 
@@ -60,6 +96,365 @@ const (
 // PossibleResourceDiscoveryModeValues returns an array of possible values for the ResourceDiscoveryMode const type.
 func PossibleResourceDiscoveryModeValues() []ResourceDiscoveryMode {
 	return []ResourceDiscoveryMode{ExistingNonCompliant, ReEvaluateCompliance}
+}
+
+// Attestation an attestation resource.
+type Attestation struct {
+	autorest.Response `json:"-"`
+	// AttestationProperties - Properties for the attestation.
+	*AttestationProperties `json:"properties,omitempty"`
+	// SystemData - READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData `json:"systemData,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Attestation.
+func (a Attestation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if a.AttestationProperties != nil {
+		objectMap["properties"] = a.AttestationProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Attestation struct.
+func (a *Attestation) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var attestationProperties AttestationProperties
+				err = json.Unmarshal(*v, &attestationProperties)
+				if err != nil {
+					return err
+				}
+				a.AttestationProperties = &attestationProperties
+			}
+		case "systemData":
+			if v != nil {
+				var systemData SystemData
+				err = json.Unmarshal(*v, &systemData)
+				if err != nil {
+					return err
+				}
+				a.SystemData = &systemData
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				a.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				a.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				a.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// AttestationEvidence a piece of evidence supporting the compliance state set in the attestation.
+type AttestationEvidence struct {
+	// Description - The description for this piece of evidence.
+	Description *string `json:"description,omitempty"`
+	// SourceURI - The URI location of the evidence.
+	SourceURI *string `json:"sourceUri,omitempty"`
+}
+
+// AttestationListResult list of attestations.
+type AttestationListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; Array of attestation definitions.
+	Value *[]Attestation `json:"value,omitempty"`
+	// NextLink - READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// AttestationListResultIterator provides access to a complete listing of Attestation values.
+type AttestationListResultIterator struct {
+	i    int
+	page AttestationListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *AttestationListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AttestationListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *AttestationListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter AttestationListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter AttestationListResultIterator) Response() AttestationListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter AttestationListResultIterator) Value() Attestation {
+	if !iter.page.NotDone() {
+		return Attestation{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the AttestationListResultIterator type.
+func NewAttestationListResultIterator(page AttestationListResultPage) AttestationListResultIterator {
+	return AttestationListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (alr AttestationListResult) IsEmpty() bool {
+	return alr.Value == nil || len(*alr.Value) == 0
+}
+
+// attestationListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (alr AttestationListResult) attestationListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if alr.NextLink == nil || len(to.String(alr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(alr.NextLink)))
+}
+
+// AttestationListResultPage contains a page of Attestation values.
+type AttestationListResultPage struct {
+	fn  func(context.Context, AttestationListResult) (AttestationListResult, error)
+	alr AttestationListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *AttestationListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AttestationListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.alr)
+	if err != nil {
+		return err
+	}
+	page.alr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *AttestationListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page AttestationListResultPage) NotDone() bool {
+	return !page.alr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page AttestationListResultPage) Response() AttestationListResult {
+	return page.alr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page AttestationListResultPage) Values() []Attestation {
+	if page.alr.IsEmpty() {
+		return nil
+	}
+	return *page.alr.Value
+}
+
+// Creates a new instance of the AttestationListResultPage type.
+func NewAttestationListResultPage(getNextPage func(context.Context, AttestationListResult) (AttestationListResult, error)) AttestationListResultPage {
+	return AttestationListResultPage{fn: getNextPage}
+}
+
+// AttestationProperties the properties of an attestation resource.
+type AttestationProperties struct {
+	// PolicyAssignmentID - The resource ID of the policy assignment that the attestation is setting the state for.
+	PolicyAssignmentID *string `json:"policyAssignmentId,omitempty"`
+	// PolicyDefinitionReferenceID - The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition.
+	PolicyDefinitionReferenceID *string `json:"policyDefinitionReferenceId,omitempty"`
+	// ComplianceState - The compliance state that should be set on the resource. Possible values include: 'Compliant', 'NonCompliant', 'Unknown'
+	ComplianceState ComplianceState `json:"complianceState,omitempty"`
+	// ExpiresOn - The time the compliance state should expire.
+	ExpiresOn *date.Time `json:"expiresOn,omitempty"`
+	// Owner - The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID.
+	Owner *string `json:"owner,omitempty"`
+	// Comments - Comments describing why this attestation was created.
+	Comments *string `json:"comments,omitempty"`
+	// Evidence - The evidence supporting the compliance state set in this attestation.
+	Evidence *[]AttestationEvidence `json:"evidence,omitempty"`
+	// ProvisioningState - READ-ONLY; The status of the attestation.
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+	// LastComplianceStateChangeAt - READ-ONLY; The time the compliance state was last changed in this attestation.
+	LastComplianceStateChangeAt *date.Time `json:"lastComplianceStateChangeAt,omitempty"`
+}
+
+// AttestationsCreateOrUpdateAtResourceFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type AttestationsCreateOrUpdateAtResourceFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *AttestationsCreateOrUpdateAtResourceFuture) Result(client AttestationsClient) (a Attestation, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtResourceFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("policyinsights.AttestationsCreateOrUpdateAtResourceFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if a.Response.Response, err = future.GetResult(sender); err == nil && a.Response.Response.StatusCode != http.StatusNoContent {
+		a, err = client.CreateOrUpdateAtResourceResponder(a.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtResourceFuture", "Result", a.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// AttestationsCreateOrUpdateAtResourceGroupFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type AttestationsCreateOrUpdateAtResourceGroupFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *AttestationsCreateOrUpdateAtResourceGroupFuture) Result(client AttestationsClient) (a Attestation, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtResourceGroupFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("policyinsights.AttestationsCreateOrUpdateAtResourceGroupFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if a.Response.Response, err = future.GetResult(sender); err == nil && a.Response.Response.StatusCode != http.StatusNoContent {
+		a, err = client.CreateOrUpdateAtResourceGroupResponder(a.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtResourceGroupFuture", "Result", a.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// AttestationsCreateOrUpdateAtSubscriptionFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type AttestationsCreateOrUpdateAtSubscriptionFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *AttestationsCreateOrUpdateAtSubscriptionFuture) Result(client AttestationsClient) (a Attestation, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtSubscriptionFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("policyinsights.AttestationsCreateOrUpdateAtSubscriptionFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if a.Response.Response, err = future.GetResult(sender); err == nil && a.Response.Response.StatusCode != http.StatusNoContent {
+		a, err = client.CreateOrUpdateAtSubscriptionResponder(a.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "policyinsights.AttestationsCreateOrUpdateAtSubscriptionFuture", "Result", a.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// AzureEntityResource the resource model definition for a Azure Resource Manager resource with an etag.
+type AzureEntityResource struct {
+	// Etag - READ-ONLY; Resource Etag.
+	Etag *string `json:"etag,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
 }
 
 // ComplianceDetail the compliance state rollup.
@@ -2203,6 +2598,17 @@ func NewPolicyTrackedResourcesQueryResultsPage(getNextPage func(context.Context,
 	return PolicyTrackedResourcesQueryResultsPage{fn: getNextPage}
 }
 
+// ProxyResource the resource model definition for a ARM proxy resource. It will have everything other than
+// required location and tags
+type ProxyResource struct {
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
 // QueryFailure error response.
 type QueryFailure struct {
 	// Error - Error definition.
@@ -2638,6 +3044,16 @@ type RemediationProperties struct {
 	DeploymentStatus *RemediationDeploymentSummary `json:"deploymentStatus,omitempty"`
 }
 
+// Resource ...
+type Resource struct {
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
 // SlimPolicyMetadata slim version of policy metadata resource definition, excluding properties with large
 // strings
 type SlimPolicyMetadata struct {
@@ -2748,6 +3164,48 @@ type SummaryResults struct {
 	PolicyDetails *[]ComplianceDetail `json:"policyDetails,omitempty"`
 	// PolicyGroupDetails - The policy definition group summary at this level.
 	PolicyGroupDetails *[]ComplianceDetail `json:"policyGroupDetails,omitempty"`
+}
+
+// SystemData metadata pertaining to creation and last modification of the resource.
+type SystemData struct {
+	// CreatedBy - The identity that created the resource.
+	CreatedBy *string `json:"createdBy,omitempty"`
+	// CreatedByType - The type of identity that created the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	CreatedByType CreatedByType `json:"createdByType,omitempty"`
+	// CreatedAt - The timestamp of resource creation (UTC).
+	CreatedAt *date.Time `json:"createdAt,omitempty"`
+	// LastModifiedBy - The identity that last modified the resource.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
+	// LastModifiedByType - The type of identity that last modified the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	LastModifiedByType CreatedByType `json:"lastModifiedByType,omitempty"`
+	// LastModifiedAt - The type of identity that last modified the resource.
+	LastModifiedAt *date.Time `json:"lastModifiedAt,omitempty"`
+}
+
+// TrackedResource the resource model definition for a ARM tracked top level resource
+type TrackedResource struct {
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+	// Location - The geo-location where the resource lives
+	Location *string `json:"location,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for TrackedResource.
+func (tr TrackedResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if tr.Tags != nil {
+		objectMap["tags"] = tr.Tags
+	}
+	if tr.Location != nil {
+		objectMap["location"] = tr.Location
+	}
+	return json.Marshal(objectMap)
 }
 
 // TrackedResourceModificationDetails the details of the policy triggered deployment that created or
