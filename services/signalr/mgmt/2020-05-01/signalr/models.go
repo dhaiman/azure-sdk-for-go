@@ -77,6 +77,23 @@ func PossibleKeyTypeValues() []KeyType {
 	return []KeyType{Primary, Secondary}
 }
 
+// ManagedIdentityType enumerates the values for managed identity type.
+type ManagedIdentityType string
+
+const (
+	// None ...
+	None ManagedIdentityType = "None"
+	// SystemAssigned ...
+	SystemAssigned ManagedIdentityType = "SystemAssigned"
+	// UserAssigned ...
+	UserAssigned ManagedIdentityType = "UserAssigned"
+)
+
+// PossibleManagedIdentityTypeValues returns an array of possible values for the ManagedIdentityType const type.
+func PossibleManagedIdentityTypeValues() []ManagedIdentityType {
+	return []ManagedIdentityType{None, SystemAssigned, UserAssigned}
+}
+
 // PrivateLinkServiceConnectionStatus enumerates the values for private link service connection status.
 type PrivateLinkServiceConnectionStatus string
 
@@ -174,6 +191,21 @@ const (
 // PossibleSkuTierValues returns an array of possible values for the SkuTier const type.
 func PossibleSkuTierValues() []SkuTier {
 	return []SkuTier{Basic, Free, Premium, Standard}
+}
+
+// UpstreamAuthType enumerates the values for upstream auth type.
+type UpstreamAuthType string
+
+const (
+	// UpstreamAuthTypeManagedIdentity ...
+	UpstreamAuthTypeManagedIdentity UpstreamAuthType = "ManagedIdentity"
+	// UpstreamAuthTypeNone ...
+	UpstreamAuthTypeNone UpstreamAuthType = "None"
+)
+
+// PossibleUpstreamAuthTypeValues returns an array of possible values for the UpstreamAuthType const type.
+func PossibleUpstreamAuthTypeValues() []UpstreamAuthType {
+	return []UpstreamAuthType{UpstreamAuthTypeManagedIdentity, UpstreamAuthTypeNone}
 }
 
 // CorsSettings cross-Origin Resource Sharing (CORS) settings.
@@ -330,6 +362,39 @@ type LogSpecification struct {
 	Name *string `json:"name,omitempty"`
 	// DisplayName - Localized friendly display name of the log.
 	DisplayName *string `json:"displayName,omitempty"`
+}
+
+// ManagedIdentityParameters a class represent managed identities used for request and response
+type ManagedIdentityParameters struct {
+	// Type - Represent the identity type: systemAssigned, userAssigned, None. Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
+	Type ManagedIdentityType `json:"type,omitempty"`
+	// UserAssignedIdentities - Get or set the user assigned identities
+	UserAssignedIdentities map[string]*UserAssignedIdentityProperty `json:"userAssignedIdentities"`
+	// PrincipalID - READ-ONLY; Get the principal id for the system assigned identity.
+	// Only be used in response.
+	PrincipalID *string `json:"principalId,omitempty"`
+	// TenantID - READ-ONLY; Get the tenant id for the system assigned identity.
+	// Only be used in response
+	TenantID *string `json:"tenantId,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ManagedIdentityParameters.
+func (mip ManagedIdentityParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if mip.Type != "" {
+		objectMap["type"] = mip.Type
+	}
+	if mip.UserAssignedIdentities != nil {
+		objectMap["userAssignedIdentities"] = mip.UserAssignedIdentities
+	}
+	return json.Marshal(objectMap)
+}
+
+// ManagedIdentitySettings managed identity settings for upstream.
+type ManagedIdentitySettings struct {
+	// Resource - The Resource indicating the App ID URI of the target resource.
+	// It also appears in the aud (audience) claim of the issued token.
+	Resource *string `json:"resource,omitempty"`
 }
 
 // MetricSpecification specifications of the Metrics for Azure Monitoring.
@@ -950,6 +1015,8 @@ type Properties struct {
 	Version *string `json:"version,omitempty"`
 	// PrivateEndpointConnections - READ-ONLY; Private endpoint connections to the SignalR resource.
 	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+	// TLS - TLS settings.
+	TLS *TLSSettings `json:"tls,omitempty"`
 	// HostNamePrefix - Prefix for the hostName of the SignalR service. Retained for future use.
 	// The hostname will be of format: &lt;hostNamePrefix&gt;.service.signalr.net.
 	HostNamePrefix *string `json:"hostNamePrefix,omitempty"`
@@ -1202,6 +1269,8 @@ type ResourceType struct {
 	*Properties `json:"properties,omitempty"`
 	// Kind - The kind of the service - e.g. "SignalR", or "RawWebSockets" for "Microsoft.SignalRService/SignalR". Possible values include: 'SignalR', 'RawWebSockets'
 	Kind ServiceKind `json:"kind,omitempty"`
+	// Identity - The managed identity response
+	Identity *ManagedIdentityParameters `json:"identity,omitempty"`
 	// Location - The GEO location of the SignalR service. e.g. West US | East US | North Central US | South Central US.
 	Location *string `json:"location,omitempty"`
 	// Tags - Tags of the service which is a list of key value pairs that describe the resource.
@@ -1225,6 +1294,9 @@ func (rt ResourceType) MarshalJSON() ([]byte, error) {
 	}
 	if rt.Kind != "" {
 		objectMap["kind"] = rt.Kind
+	}
+	if rt.Identity != nil {
+		objectMap["identity"] = rt.Identity
 	}
 	if rt.Location != nil {
 		objectMap["location"] = rt.Location
@@ -1270,6 +1342,15 @@ func (rt *ResourceType) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				rt.Kind = kind
+			}
+		case "identity":
+			if v != nil {
+				var identity ManagedIdentityParameters
+				err = json.Unmarshal(*v, &identity)
+				if err != nil {
+					return err
+				}
+				rt.Identity = &identity
 			}
 		case "location":
 			if v != nil {
@@ -1358,6 +1439,12 @@ type ServiceSpecification struct {
 	LogSpecifications *[]LogSpecification `json:"logSpecifications,omitempty"`
 }
 
+// TLSSettings TLS settings for SignalR
+type TLSSettings struct {
+	// ClientCertEnabled - Request client certificate during TLS handshake if enabled
+	ClientCertEnabled *bool `json:"clientCertEnabled,omitempty"`
+}
+
 // TrackedResource the resource model definition for a ARM tracked top level resource.
 type TrackedResource struct {
 	// Location - The GEO location of the SignalR service. e.g. West US | East US | North Central US | South Central US.
@@ -1412,6 +1499,14 @@ func (future *UpdateFuture) Result(client Client) (rt ResourceType, err error) {
 	return
 }
 
+// UpstreamAuthSettings upstream auth settings.
+type UpstreamAuthSettings struct {
+	// Type - Gets or sets the type of auth. None or ManagedIdentity is supported now. Possible values include: 'UpstreamAuthTypeNone', 'UpstreamAuthTypeManagedIdentity'
+	Type UpstreamAuthType `json:"type,omitempty"`
+	// ManagedIdentity - Gets or sets the managed identity settings. It's required if the auth type is set to ManagedIdentity.
+	ManagedIdentity *ManagedIdentitySettings `json:"managedIdentity,omitempty"`
+}
+
 // UpstreamTemplate upstream template item settings. It defines the Upstream URL of the incoming requests.
 // The template defines the pattern of the event, the hub or the category of the incoming request that
 // matches current URL template.
@@ -1437,6 +1532,8 @@ type UpstreamTemplate struct {
 	// URLTemplate - Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
 	// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
 	URLTemplate *string `json:"urlTemplate,omitempty"`
+	// Auth - Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages.
+	Auth *UpstreamAuthSettings `json:"auth,omitempty"`
 }
 
 // Usage object that describes a specific usage of SignalR resources.
@@ -1606,4 +1703,12 @@ type UsageName struct {
 	Value *string `json:"value,omitempty"`
 	// LocalizedValue - Localized name of the usage.
 	LocalizedValue *string `json:"localizedValue,omitempty"`
+}
+
+// UserAssignedIdentityProperty properties of user assigned identity.
+type UserAssignedIdentityProperty struct {
+	// PrincipalID - READ-ONLY; Get the principal id for the user assigned identity
+	PrincipalID *string `json:"principalId,omitempty"`
+	// ClientID - READ-ONLY; Get the client id for the user assigned identity
+	ClientID *string `json:"clientId,omitempty"`
 }
