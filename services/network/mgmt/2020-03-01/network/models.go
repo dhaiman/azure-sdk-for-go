@@ -13086,15 +13086,15 @@ func (future *ExpressRouteCrossConnectionPeeringsDeleteFuture) Result(client Exp
 
 // ExpressRouteCrossConnectionProperties properties of ExpressRouteCrossConnection.
 type ExpressRouteCrossConnectionProperties struct {
-	// PrimaryAzurePort - READ-ONLY; The name of the primary port.
+	// PrimaryAzurePort - The name of the primary port.
 	PrimaryAzurePort *string `json:"primaryAzurePort,omitempty"`
-	// SecondaryAzurePort - READ-ONLY; The name of the secondary port.
+	// SecondaryAzurePort - The name of the secondary port.
 	SecondaryAzurePort *string `json:"secondaryAzurePort,omitempty"`
 	// STag - READ-ONLY; The identifier of the circuit traffic.
 	STag *int32 `json:"sTag,omitempty"`
-	// PeeringLocation - The peering location of the ExpressRoute circuit.
+	// PeeringLocation - READ-ONLY; The peering location of the ExpressRoute circuit.
 	PeeringLocation *string `json:"peeringLocation,omitempty"`
-	// BandwidthInMbps - The circuit bandwidth In Mbps.
+	// BandwidthInMbps - READ-ONLY; The circuit bandwidth In Mbps.
 	BandwidthInMbps *int32 `json:"bandwidthInMbps,omitempty"`
 	// ExpressRouteCircuit - The ExpressRouteCircuit.
 	ExpressRouteCircuit *ExpressRouteCircuitReference `json:"expressRouteCircuit,omitempty"`
