@@ -2374,6 +2374,8 @@ type FileServicePropertiesProperties struct {
 	Cors *CorsRules `json:"cors,omitempty"`
 	// ShareDeleteRetentionPolicy - The file service properties for share soft delete.
 	ShareDeleteRetentionPolicy *DeleteRetentionPolicy `json:"shareDeleteRetentionPolicy,omitempty"`
+	// ProtocolSettings - Protocol settings for file service
+	ProtocolSettings *ProtocolSettings `json:"protocolSettings,omitempty"`
 }
 
 // FileShare properties of the file share, including Id, resource name, resource type, Etag.
@@ -3783,6 +3785,12 @@ type MetricSpecification struct {
 	ResourceIDDimensionNameOverride *string `json:"resourceIdDimensionNameOverride,omitempty"`
 }
 
+// Multichannel ...
+type Multichannel struct {
+	// Enabled - Indicates whether multichannel is enabled
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
 // NetworkRuleSet network rule set
 type NetworkRuleSet struct {
 	// Bypass - Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. Possible values include: 'None', 'Logging', 'Metrics', 'AzureServices'
@@ -4216,6 +4224,12 @@ type PrivateLinkServiceConnectionState struct {
 	ActionRequired *string `json:"actionRequired,omitempty"`
 }
 
+// ProtocolSettings ...
+type ProtocolSettings struct {
+	// Smb - Setting for SMB protocol
+	Smb *SmbSetting `json:"smb,omitempty"`
+}
+
 // ProxyResource the resource model definition for a ARM proxy resource. It will have everything other than
 // required location and tags
 type ProxyResource struct {
@@ -4523,6 +4537,12 @@ type SkuListResult struct {
 	autorest.Response `json:"-"`
 	// Value - READ-ONLY; Get the list result of storage SKUs and their properties.
 	Value *[]SkuInformation `json:"value,omitempty"`
+}
+
+// SmbSetting ...
+type SmbSetting struct {
+	// Multichannel - Multichannel setting. Applies to Premium FileStorage only.
+	Multichannel *Multichannel `json:"multichannel,omitempty"`
 }
 
 // Table properties of the table, including Id, resource name, resource type.
