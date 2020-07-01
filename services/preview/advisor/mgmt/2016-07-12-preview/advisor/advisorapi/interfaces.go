@@ -52,3 +52,11 @@ type SuppressionsClientAPI interface {
 }
 
 var _ SuppressionsClientAPI = (*advisor.SuppressionsClient)(nil)
+
+// ScoresClientAPI contains the set of methods on the ScoresClient type.
+type ScoresClientAPI interface {
+	Get(ctx context.Context, name string) (result advisor.ScoreType, err error)
+	List(ctx context.Context) (result advisor.ListScoreType, err error)
+}
+
+var _ ScoresClientAPI = (*advisor.ScoresClient)(nil)

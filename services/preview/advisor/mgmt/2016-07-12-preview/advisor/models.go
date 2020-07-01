@@ -31,6 +31,23 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/advisor/mgmt/2016-07-12-preview/advisor"
 
+// AggregationLevel enumerates the values for aggregation level.
+type AggregationLevel string
+
+const (
+	// Daily ...
+	Daily AggregationLevel = "daily"
+	// Monthly ...
+	Monthly AggregationLevel = "monthly"
+	// Weekly ...
+	Weekly AggregationLevel = "weekly"
+)
+
+// PossibleAggregationLevelValues returns an array of possible values for the AggregationLevel const type.
+func PossibleAggregationLevelValues() []AggregationLevel {
+	return []AggregationLevel{Daily, Monthly, Weekly}
+}
+
 // Category enumerates the values for category.
 type Category string
 
@@ -82,6 +99,12 @@ const (
 // PossibleRiskValues returns an array of possible values for the Risk const type.
 func PossibleRiskValues() []Risk {
 	return []Risk{Error, None, Warning}
+}
+
+// ListScoreType ...
+type ListScoreType struct {
+	autorest.Response `json:"-"`
+	Value             *[]ScoreType `json:"value,omitempty"`
 }
 
 // ListSuppressionContract ...
@@ -580,6 +603,39 @@ func NewResourceRecommendationBaseListResultPage(getNextPage func(context.Contex
 	return ResourceRecommendationBaseListResultPage{fn: getNextPage}
 }
 
+// Score the details of Advisor Score
+type Score struct {
+	// Date - The date score is applied.
+	Date *string `json:"date,omitempty"`
+	// Score - The score.
+	Score *float64 `json:"score,omitempty"`
+	// ConsumptionUnits - The consumption units for the score.
+	ConsumptionUnits *float64 `json:"consumptionUnits,omitempty"`
+	// ImpactedResourceCount - The number of impacted resources.
+	ImpactedResourceCount *float64 `json:"impactedResourceCount,omitempty"`
+}
+
+// ScoreProperties the Advisor score data.
+type ScoreProperties struct {
+	// LastRefreshedScore - The latest score for the category.
+	LastRefreshedScore *Score `json:"lastRefreshedScore,omitempty"`
+	// TimeSeries - The historic data for the score.
+	TimeSeries *[]TimeSeriesItem `json:"timeSeries,omitempty"`
+}
+
+// ScoreType the details of Advisor score for a single category.
+type ScoreType struct {
+	autorest.Response `json:"-"`
+	// ID - The ID of the resource.
+	ID *string `json:"id,omitempty"`
+	// Name - The category.
+	Name *string `json:"name,omitempty"`
+	// Type - The type of resource.
+	Type *string `json:"type,omitempty"`
+	// Properties - The Advisor score data.
+	Properties *ScoreProperties `json:"properties,omitempty"`
+}
+
 // ShortDescription a summary of the recommendation.
 type ShortDescription struct {
 	// Problem - The issue or opportunity identified by the recommendation.
@@ -592,10 +648,7 @@ type ShortDescription struct {
 // GUID associated with the rule.
 type SuppressionContract struct {
 	autorest.Response `json:"-"`
-	// SuppressionID - The GUID of the suppression.
-	SuppressionID *string `json:"suppressionId,omitempty"`
-	// TTL - The duration for which the suppression is valid.
-	TTL *string `json:"ttl,omitempty"`
+	Properties        *SuppressionContractProperties `json:"properties,omitempty"`
 	// ID - READ-ONLY; The resource ID.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource.
@@ -611,11 +664,8 @@ type SuppressionContract struct {
 // MarshalJSON is the custom marshaler for SuppressionContract.
 func (sc SuppressionContract) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if sc.SuppressionID != nil {
-		objectMap["suppressionId"] = sc.SuppressionID
-	}
-	if sc.TTL != nil {
-		objectMap["ttl"] = sc.TTL
+	if sc.Properties != nil {
+		objectMap["properties"] = sc.Properties
 	}
 	if sc.Location != nil {
 		objectMap["location"] = sc.Location
@@ -624,4 +674,20 @@ func (sc SuppressionContract) MarshalJSON() ([]byte, error) {
 		objectMap["tags"] = sc.Tags
 	}
 	return json.Marshal(objectMap)
+}
+
+// SuppressionContractProperties ...
+type SuppressionContractProperties struct {
+	// SuppressionID - The GUID of the suppression.
+	SuppressionID *string `json:"suppressionId,omitempty"`
+	// TTL - The duration for which the suppression is valid.
+	TTL *string `json:"ttl,omitempty"`
+}
+
+// TimeSeriesItem the data from different aggregation levels.
+type TimeSeriesItem struct {
+	// AggregationLevel - The aggregation level of the score. Possible values include: 'Weekly', 'Daily', 'Monthly'
+	AggregationLevel AggregationLevel `json:"aggregationLevel,omitempty"`
+	// Data - The past score data
+	Data *[]Score `json:"data,omitempty"`
 }
