@@ -32,21 +32,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/sql/mgmt/v3.0/sql"
 
-// AuthenticationType enumerates the values for authentication type.
-type AuthenticationType string
-
-const (
-	// ADPassword ...
-	ADPassword AuthenticationType = "ADPassword"
-	// SQL ...
-	SQL AuthenticationType = "SQL"
-)
-
-// PossibleAuthenticationTypeValues returns an array of possible values for the AuthenticationType const type.
-func PossibleAuthenticationTypeValues() []AuthenticationType {
-	return []AuthenticationType{ADPassword, SQL}
-}
-
 // AutomaticTuningDisabledReason enumerates the values for automatic tuning disabled reason.
 type AutomaticTuningDisabledReason string
 
@@ -271,45 +256,6 @@ const (
 // PossibleCreateModeValues returns an array of possible values for the CreateMode const type.
 func PossibleCreateModeValues() []CreateMode {
 	return []CreateMode{CreateModeCopy, CreateModeDefault, CreateModeOnlineSecondary, CreateModePointInTimeRestore, CreateModeRecovery, CreateModeRestore, CreateModeRestoreExternalBackup, CreateModeRestoreExternalBackupSecondary, CreateModeRestoreLongTermRetentionBackup, CreateModeSecondary}
-}
-
-// DatabaseEdition enumerates the values for database edition.
-type DatabaseEdition string
-
-const (
-	// Basic ...
-	Basic DatabaseEdition = "Basic"
-	// Business ...
-	Business DatabaseEdition = "Business"
-	// BusinessCritical ...
-	BusinessCritical DatabaseEdition = "BusinessCritical"
-	// DataWarehouse ...
-	DataWarehouse DatabaseEdition = "DataWarehouse"
-	// Free ...
-	Free DatabaseEdition = "Free"
-	// GeneralPurpose ...
-	GeneralPurpose DatabaseEdition = "GeneralPurpose"
-	// Hyperscale ...
-	Hyperscale DatabaseEdition = "Hyperscale"
-	// Premium ...
-	Premium DatabaseEdition = "Premium"
-	// PremiumRS ...
-	PremiumRS DatabaseEdition = "PremiumRS"
-	// Standard ...
-	Standard DatabaseEdition = "Standard"
-	// Stretch ...
-	Stretch DatabaseEdition = "Stretch"
-	// System ...
-	System DatabaseEdition = "System"
-	// System2 ...
-	System2 DatabaseEdition = "System2"
-	// Web ...
-	Web DatabaseEdition = "Web"
-)
-
-// PossibleDatabaseEditionValues returns an array of possible values for the DatabaseEdition const type.
-func PossibleDatabaseEditionValues() []DatabaseEdition {
-	return []DatabaseEdition{Basic, Business, BusinessCritical, DataWarehouse, Free, GeneralPurpose, Hyperscale, Premium, PremiumRS, Standard, Stretch, System, System2, Web}
 }
 
 // DatabaseLicenseType enumerates the values for database license type.
@@ -554,21 +500,21 @@ func PossibleDataMaskingStateValues() []DataMaskingState {
 type ElasticPoolEdition string
 
 const (
-	// ElasticPoolEditionBasic ...
-	ElasticPoolEditionBasic ElasticPoolEdition = "Basic"
-	// ElasticPoolEditionBusinessCritical ...
-	ElasticPoolEditionBusinessCritical ElasticPoolEdition = "BusinessCritical"
-	// ElasticPoolEditionGeneralPurpose ...
-	ElasticPoolEditionGeneralPurpose ElasticPoolEdition = "GeneralPurpose"
-	// ElasticPoolEditionPremium ...
-	ElasticPoolEditionPremium ElasticPoolEdition = "Premium"
-	// ElasticPoolEditionStandard ...
-	ElasticPoolEditionStandard ElasticPoolEdition = "Standard"
+	// Basic ...
+	Basic ElasticPoolEdition = "Basic"
+	// BusinessCritical ...
+	BusinessCritical ElasticPoolEdition = "BusinessCritical"
+	// GeneralPurpose ...
+	GeneralPurpose ElasticPoolEdition = "GeneralPurpose"
+	// Premium ...
+	Premium ElasticPoolEdition = "Premium"
+	// Standard ...
+	Standard ElasticPoolEdition = "Standard"
 )
 
 // PossibleElasticPoolEditionValues returns an array of possible values for the ElasticPoolEdition const type.
 func PossibleElasticPoolEditionValues() []ElasticPoolEdition {
-	return []ElasticPoolEdition{ElasticPoolEditionBasic, ElasticPoolEditionBusinessCritical, ElasticPoolEditionGeneralPurpose, ElasticPoolEditionPremium, ElasticPoolEditionStandard}
+	return []ElasticPoolEdition{Basic, BusinessCritical, GeneralPurpose, Premium, Standard}
 }
 
 // ElasticPoolLicenseType enumerates the values for elastic pool license type.
@@ -995,15 +941,15 @@ func PossibleMaxSizeUnitValues() []MaxSizeUnit {
 type OperationOrigin string
 
 const (
-	// OperationOriginSystem ...
-	OperationOriginSystem OperationOrigin = "system"
-	// OperationOriginUser ...
-	OperationOriginUser OperationOrigin = "user"
+	// System ...
+	System OperationOrigin = "system"
+	// User ...
+	User OperationOrigin = "user"
 )
 
 // PossibleOperationOriginValues returns an array of possible values for the OperationOrigin const type.
 func PossibleOperationOriginValues() []OperationOrigin {
-	return []OperationOrigin{OperationOriginSystem, OperationOriginUser}
+	return []OperationOrigin{System, User}
 }
 
 // PauseDelayTimeUnit enumerates the values for pause delay time unit.
@@ -3628,7 +3574,7 @@ type DatabasesCreateImportOperationFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *DatabasesCreateImportOperationFuture) Result(client DatabasesClient) (ier ImportExportResponse, err error) {
+func (future *DatabasesCreateImportOperationFuture) Result(client DatabasesClient) (ieor ImportExportOperationResult, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -3640,10 +3586,10 @@ func (future *DatabasesCreateImportOperationFuture) Result(client DatabasesClien
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if ier.Response.Response, err = future.GetResult(sender); err == nil && ier.Response.Response.StatusCode != http.StatusNoContent {
-		ier, err = client.CreateImportOperationResponder(ier.Response.Response)
+	if ieor.Response.Response, err = future.GetResult(sender); err == nil && ieor.Response.Response.StatusCode != http.StatusNoContent {
+		ieor, err = client.CreateImportOperationResponder(ieor.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "sql.DatabasesCreateImportOperationFuture", "Result", ier.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "sql.DatabasesCreateImportOperationFuture", "Result", ieor.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -3827,7 +3773,7 @@ type DatabasesExportFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *DatabasesExportFuture) Result(client DatabasesClient) (ier ImportExportResponse, err error) {
+func (future *DatabasesExportFuture) Result(client DatabasesClient) (ieor ImportExportOperationResult, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -3839,10 +3785,10 @@ func (future *DatabasesExportFuture) Result(client DatabasesClient) (ier ImportE
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if ier.Response.Response, err = future.GetResult(sender); err == nil && ier.Response.Response.StatusCode != http.StatusNoContent {
-		ier, err = client.ExportResponder(ier.Response.Response)
+	if ieor.Response.Response, err = future.GetResult(sender); err == nil && ieor.Response.Response.StatusCode != http.StatusNoContent {
+		ieor, err = client.ExportResponder(ieor.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "sql.DatabasesExportFuture", "Result", ier.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "sql.DatabasesExportFuture", "Result", ieor.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -3879,7 +3825,7 @@ type DatabasesImportFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *DatabasesImportFuture) Result(client DatabasesClient) (ier ImportExportResponse, err error) {
+func (future *DatabasesImportFuture) Result(client DatabasesClient) (ieor ImportExportOperationResult, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -3891,10 +3837,10 @@ func (future *DatabasesImportFuture) Result(client DatabasesClient) (ier ImportE
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if ier.Response.Response, err = future.GetResult(sender); err == nil && ier.Response.Response.StatusCode != http.StatusNoContent {
-		ier, err = client.ImportResponder(ier.Response.Response)
+	if ieor.Response.Response, err = future.GetResult(sender); err == nil && ieor.Response.Response.StatusCode != http.StatusNoContent {
+		ieor, err = client.ImportResponder(ieor.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "sql.DatabasesImportFuture", "Result", ier.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "sql.DatabasesImportFuture", "Result", ieor.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -6153,22 +6099,6 @@ func (future *EncryptionProtectorsRevalidateFuture) Result(client EncryptionProt
 	return
 }
 
-// ExportRequest export database parameters.
-type ExportRequest struct {
-	// StorageKeyType - The type of the storage key to use. Possible values include: 'StorageAccessKey', 'SharedAccessKey'
-	StorageKeyType StorageKeyType `json:"storageKeyType,omitempty"`
-	// StorageKey - The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?."
-	StorageKey *string `json:"storageKey,omitempty"`
-	// StorageURI - The storage uri to use.
-	StorageURI *string `json:"storageUri,omitempty"`
-	// AdministratorLogin - The name of the SQL administrator.
-	AdministratorLogin *string `json:"administratorLogin,omitempty"`
-	// AdministratorLoginPassword - The password of the SQL administrator.
-	AdministratorLoginPassword *string `json:"administratorLoginPassword,omitempty"`
-	// AuthenticationType - The authentication type. Possible values include: 'SQL', 'ADPassword'
-	AuthenticationType AuthenticationType `json:"authenticationType,omitempty"`
-}
-
 // ExtendedDatabaseBlobAuditingPolicy an extended database blob auditing policy.
 type ExtendedDatabaseBlobAuditingPolicy struct {
 	autorest.Response `json:"-"`
@@ -7528,11 +7458,37 @@ type GeoBackupPolicyProperties struct {
 	StorageType *string `json:"storageType,omitempty"`
 }
 
-// ImportExportResponse response for Import/Export Get operation.
-type ImportExportResponse struct {
+// ImportExportDatabaseDefinition contains the information necessary to perform import/export operation.
+type ImportExportDatabaseDefinition struct {
+	// DatabaseName - Name of the import database.
+	DatabaseName *string `json:"databaseName,omitempty"`
+	// Edition - Edition of the import database.
+	Edition *string `json:"edition,omitempty"`
+	// ServiceObjectiveName - Service level objective name of the import database.
+	ServiceObjectiveName *string `json:"serviceObjectiveName,omitempty"`
+	// MaxSizeBytes - Max size in bytes for the import database.
+	MaxSizeBytes *string `json:"maxSizeBytes,omitempty"`
+	// StorageKeyType - Storage key type. Possible values include: 'SharedAccessKey', 'StorageAccessKey'
+	StorageKeyType StorageKeyType `json:"storageKeyType,omitempty"`
+	// StorageKey - Storage key.
+	StorageKey *string `json:"storageKey,omitempty"`
+	// StorageURI - Storage Uri.
+	StorageURI *string `json:"storageUri,omitempty"`
+	// AdministratorLogin - Administrator login name.
+	AdministratorLogin *string `json:"administratorLogin,omitempty"`
+	// AdministratorLoginPassword - Administrator login password.
+	AdministratorLoginPassword *string `json:"administratorLoginPassword,omitempty"`
+	// AuthenticationType - Authentication type.
+	AuthenticationType *string `json:"authenticationType,omitempty"`
+	// NetworkIsolation - Optional resource information to enable network isolation for request.
+	NetworkIsolation *NetworkIsolationSettings `json:"networkIsolation,omitempty"`
+}
+
+// ImportExportOperationResult an ImportExport operation result resource.
+type ImportExportOperationResult struct {
 	autorest.Response `json:"-"`
-	// ImportExportResponseProperties - The import/export operation properties.
-	*ImportExportResponseProperties `json:"properties,omitempty"`
+	// ImportExportOperationResultProperties - Resource properties.
+	*ImportExportOperationResultProperties `json:"properties,omitempty"`
 	// ID - READ-ONLY; Resource ID.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name.
@@ -7541,17 +7497,17 @@ type ImportExportResponse struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ImportExportResponse.
-func (ier ImportExportResponse) MarshalJSON() ([]byte, error) {
+// MarshalJSON is the custom marshaler for ImportExportOperationResult.
+func (ieor ImportExportOperationResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if ier.ImportExportResponseProperties != nil {
-		objectMap["properties"] = ier.ImportExportResponseProperties
+	if ieor.ImportExportOperationResultProperties != nil {
+		objectMap["properties"] = ieor.ImportExportOperationResultProperties
 	}
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON is the custom unmarshaler for ImportExportResponse struct.
-func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
+// UnmarshalJSON is the custom unmarshaler for ImportExportOperationResult struct.
+func (ieor *ImportExportOperationResult) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
 	err := json.Unmarshal(body, &m)
 	if err != nil {
@@ -7561,12 +7517,12 @@ func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
 		switch k {
 		case "properties":
 			if v != nil {
-				var importExportResponseProperties ImportExportResponseProperties
-				err = json.Unmarshal(*v, &importExportResponseProperties)
+				var importExportOperationResultProperties ImportExportOperationResultProperties
+				err = json.Unmarshal(*v, &importExportOperationResultProperties)
 				if err != nil {
 					return err
 				}
-				ier.ImportExportResponseProperties = &importExportResponseProperties
+				ieor.ImportExportOperationResultProperties = &importExportOperationResultProperties
 			}
 		case "id":
 			if v != nil {
@@ -7575,7 +7531,7 @@ func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
 				if err != nil {
 					return err
 				}
-				ier.ID = &ID
+				ieor.ID = &ID
 			}
 		case "name":
 			if v != nil {
@@ -7584,7 +7540,7 @@ func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
 				if err != nil {
 					return err
 				}
-				ier.Name = &name
+				ieor.Name = &name
 			}
 		case "type":
 			if v != nil {
@@ -7593,7 +7549,7 @@ func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
 				if err != nil {
 					return err
 				}
-				ier.Type = &typeVar
+				ieor.Type = &typeVar
 			}
 		}
 	}
@@ -7601,146 +7557,29 @@ func (ier *ImportExportResponse) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// ImportExportResponseProperties response for Import/Export Status operation.
-type ImportExportResponseProperties struct {
-	// RequestType - READ-ONLY; The request type of the operation.
-	RequestType *string `json:"requestType,omitempty"`
-	// RequestID - READ-ONLY; The request type of the operation.
+// ImportExportOperationResultProperties contains the operation result properties for import/export
+// operation.
+type ImportExportOperationResultProperties struct {
+	// RequestID - READ-ONLY; Request Id.
 	RequestID *uuid.UUID `json:"requestId,omitempty"`
-	// ServerName - READ-ONLY; The name of the server.
-	ServerName *string `json:"serverName,omitempty"`
-	// DatabaseName - READ-ONLY; The name of the database.
-	DatabaseName *string `json:"databaseName,omitempty"`
-	// Status - READ-ONLY; The status message returned from the server.
-	Status *string `json:"status,omitempty"`
-	// LastModifiedTime - READ-ONLY; The operation status last modified time.
-	LastModifiedTime *string `json:"lastModifiedTime,omitempty"`
-	// QueuedTime - READ-ONLY; The operation queued time.
+	// RequestType - READ-ONLY; Request type.
+	RequestType *string `json:"requestType,omitempty"`
+	// QueuedTime - READ-ONLY; Queued time.
 	QueuedTime *string `json:"queuedTime,omitempty"`
-	// BlobURI - READ-ONLY; The blob uri.
+	// LastModifiedTime - READ-ONLY; Last modified time.
+	LastModifiedTime *string `json:"lastModifiedTime,omitempty"`
+	// BlobURI - READ-ONLY; Blob Uri.
 	BlobURI *string `json:"blobUri,omitempty"`
-	// ErrorMessage - READ-ONLY; The error message returned from the server.
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-}
-
-// ImportExtensionProperties represents the properties for an import operation
-type ImportExtensionProperties struct {
-	// OperationMode - The type of import operation being performed. This is always Import.
-	OperationMode *string `json:"operationMode,omitempty"`
-	// StorageKeyType - The type of the storage key to use. Possible values include: 'StorageAccessKey', 'SharedAccessKey'
-	StorageKeyType StorageKeyType `json:"storageKeyType,omitempty"`
-	// StorageKey - The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?."
-	StorageKey *string `json:"storageKey,omitempty"`
-	// StorageURI - The storage uri to use.
-	StorageURI *string `json:"storageUri,omitempty"`
-	// AdministratorLogin - The name of the SQL administrator.
-	AdministratorLogin *string `json:"administratorLogin,omitempty"`
-	// AdministratorLoginPassword - The password of the SQL administrator.
-	AdministratorLoginPassword *string `json:"administratorLoginPassword,omitempty"`
-	// AuthenticationType - The authentication type. Possible values include: 'SQL', 'ADPassword'
-	AuthenticationType AuthenticationType `json:"authenticationType,omitempty"`
-}
-
-// ImportExtensionRequest import database parameters.
-type ImportExtensionRequest struct {
-	// Name - The name of the extension.
-	Name *string `json:"name,omitempty"`
-	// Type - The type of the extension.
-	Type *string `json:"type,omitempty"`
-	// ImportExtensionProperties - Represents the properties of the resource.
-	*ImportExtensionProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for ImportExtensionRequest.
-func (ier ImportExtensionRequest) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ier.Name != nil {
-		objectMap["name"] = ier.Name
-	}
-	if ier.Type != nil {
-		objectMap["type"] = ier.Type
-	}
-	if ier.ImportExtensionProperties != nil {
-		objectMap["properties"] = ier.ImportExtensionProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON is the custom unmarshaler for ImportExtensionRequest struct.
-func (ier *ImportExtensionRequest) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "name":
-			if v != nil {
-				var name string
-				err = json.Unmarshal(*v, &name)
-				if err != nil {
-					return err
-				}
-				ier.Name = &name
-			}
-		case "type":
-			if v != nil {
-				var typeVar string
-				err = json.Unmarshal(*v, &typeVar)
-				if err != nil {
-					return err
-				}
-				ier.Type = &typeVar
-			}
-		case "properties":
-			if v != nil {
-				var importExtensionProperties ImportExtensionProperties
-				err = json.Unmarshal(*v, &importExtensionProperties)
-				if err != nil {
-					return err
-				}
-				ier.ImportExtensionProperties = &importExtensionProperties
-			}
-		}
-	}
-
-	return nil
-}
-
-// ImportRequest import database parameters.
-type ImportRequest struct {
-	// DatabaseName - The name of the database to import.
+	// ServerName - READ-ONLY; Server name.
+	ServerName *string `json:"serverName,omitempty"`
+	// DatabaseName - READ-ONLY; Database name.
 	DatabaseName *string `json:"databaseName,omitempty"`
-	// Edition - The edition for the database being created.
-	//
-	// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or one of the following commands:
-	//
-	// ```azurecli
-	// az sql db list-editions -l <location> -o table
-	// ````
-	//
-	// ```powershell
-	// Get-AzSqlServerServiceObjective -Location <location>
-	// ````
-	// . Possible values include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'PremiumRS', 'Free', 'Stretch', 'DataWarehouse', 'System', 'System2', 'GeneralPurpose', 'BusinessCritical', 'Hyperscale'
-	Edition DatabaseEdition `json:"edition,omitempty"`
-	// ServiceObjectiveName - The name of the service objective to assign to the database. Possible values include: 'ServiceObjectiveNameSystem', 'ServiceObjectiveNameSystem0', 'ServiceObjectiveNameSystem1', 'ServiceObjectiveNameSystem2', 'ServiceObjectiveNameSystem3', 'ServiceObjectiveNameSystem4', 'ServiceObjectiveNameSystem2L', 'ServiceObjectiveNameSystem3L', 'ServiceObjectiveNameSystem4L', 'ServiceObjectiveNameFree', 'ServiceObjectiveNameBasic', 'ServiceObjectiveNameS0', 'ServiceObjectiveNameS1', 'ServiceObjectiveNameS2', 'ServiceObjectiveNameS3', 'ServiceObjectiveNameS4', 'ServiceObjectiveNameS6', 'ServiceObjectiveNameS7', 'ServiceObjectiveNameS9', 'ServiceObjectiveNameS12', 'ServiceObjectiveNameP1', 'ServiceObjectiveNameP2', 'ServiceObjectiveNameP3', 'ServiceObjectiveNameP4', 'ServiceObjectiveNameP6', 'ServiceObjectiveNameP11', 'ServiceObjectiveNameP15', 'ServiceObjectiveNamePRS1', 'ServiceObjectiveNamePRS2', 'ServiceObjectiveNamePRS4', 'ServiceObjectiveNamePRS6', 'ServiceObjectiveNameDW100', 'ServiceObjectiveNameDW200', 'ServiceObjectiveNameDW300', 'ServiceObjectiveNameDW400', 'ServiceObjectiveNameDW500', 'ServiceObjectiveNameDW600', 'ServiceObjectiveNameDW1000', 'ServiceObjectiveNameDW1200', 'ServiceObjectiveNameDW1000c', 'ServiceObjectiveNameDW1500', 'ServiceObjectiveNameDW1500c', 'ServiceObjectiveNameDW2000', 'ServiceObjectiveNameDW2000c', 'ServiceObjectiveNameDW3000', 'ServiceObjectiveNameDW2500c', 'ServiceObjectiveNameDW3000c', 'ServiceObjectiveNameDW6000', 'ServiceObjectiveNameDW5000c', 'ServiceObjectiveNameDW6000c', 'ServiceObjectiveNameDW7500c', 'ServiceObjectiveNameDW10000c', 'ServiceObjectiveNameDW15000c', 'ServiceObjectiveNameDW30000c', 'ServiceObjectiveNameDS100', 'ServiceObjectiveNameDS200', 'ServiceObjectiveNameDS300', 'ServiceObjectiveNameDS400', 'ServiceObjectiveNameDS500', 'ServiceObjectiveNameDS600', 'ServiceObjectiveNameDS1000', 'ServiceObjectiveNameDS1200', 'ServiceObjectiveNameDS1500', 'ServiceObjectiveNameDS2000', 'ServiceObjectiveNameElasticPool'
-	ServiceObjectiveName ServiceObjectiveName `json:"serviceObjectiveName,omitempty"`
-	// MaxSizeBytes - The maximum size for the newly imported database.
-	MaxSizeBytes *string `json:"maxSizeBytes,omitempty"`
-	// StorageKeyType - The type of the storage key to use. Possible values include: 'StorageAccessKey', 'SharedAccessKey'
-	StorageKeyType StorageKeyType `json:"storageKeyType,omitempty"`
-	// StorageKey - The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?."
-	StorageKey *string `json:"storageKey,omitempty"`
-	// StorageURI - The storage uri to use.
-	StorageURI *string `json:"storageUri,omitempty"`
-	// AdministratorLogin - The name of the SQL administrator.
-	AdministratorLogin *string `json:"administratorLogin,omitempty"`
-	// AdministratorLoginPassword - The password of the SQL administrator.
-	AdministratorLoginPassword *string `json:"administratorLoginPassword,omitempty"`
-	// AuthenticationType - The authentication type. Possible values include: 'SQL', 'ADPassword'
-	AuthenticationType AuthenticationType `json:"authenticationType,omitempty"`
+	// Status - READ-ONLY; Operation status.
+	Status *string `json:"status,omitempty"`
+	// ErrorMessage - READ-ONLY; Error message.
+	ErrorMessage *string `json:"errorMessage,omitempty"`
+	// PrivateEndpointConnections - READ-ONLY; Gets the status of private endpoints associated with this request.
+	PrivateEndpointConnections *[]PrivateEndpointConnectionRequestStatus `json:"privateEndpointConnections,omitempty"`
 }
 
 // InstanceFailoverGroup an instance failover group.
@@ -14791,13 +14630,21 @@ type Name struct {
 	LocalizedValue *string `json:"localizedValue,omitempty"`
 }
 
+// NetworkIsolationSettings contains the ARM resources for which to create private endpoint connection.
+type NetworkIsolationSettings struct {
+	// StorageAccountResourceID - The resource id for the storage account used to store BACPAC file. If set, private endpoint connection will be created for the storage account. Must match storage account used for StorageUri parameter.
+	StorageAccountResourceID *string `json:"storageAccountResourceId,omitempty"`
+	// SQLServerResourceID - The resource id for the SQL server which is the target of this request. If set, private endpoint connection will be created for the SQL server. Must match server which is target of the operation.
+	SQLServerResourceID *string `json:"sqlServerResourceId,omitempty"`
+}
+
 // Operation SQL REST API operation definition.
 type Operation struct {
 	// Name - READ-ONLY; The name of the operation being performed on this particular object.
 	Name *string `json:"name,omitempty"`
 	// Display - READ-ONLY; The localized display information for this particular operation / action.
 	Display *OperationDisplay `json:"display,omitempty"`
-	// Origin - READ-ONLY; The intended executor of the operation. Possible values include: 'OperationOriginUser', 'OperationOriginSystem'
+	// Origin - READ-ONLY; The intended executor of the operation. Possible values include: 'User', 'System'
 	Origin OperationOrigin `json:"origin,omitempty"`
 	// Properties - READ-ONLY; Additional descriptions for the operation.
 	Properties map[string]interface{} `json:"properties"`
@@ -15235,6 +15082,16 @@ type PrivateEndpointConnectionProperties struct {
 	ProvisioningState PrivateEndpointProvisioningState `json:"provisioningState,omitempty"`
 }
 
+// PrivateEndpointConnectionRequestStatus contains the private endpoint connection requests status.
+type PrivateEndpointConnectionRequestStatus struct {
+	// PrivateLinkServiceID - READ-ONLY; Resource id for which the private endpoint is created.
+	PrivateLinkServiceID *string `json:"privateLinkServiceId,omitempty"`
+	// PrivateEndpointConnectionName - READ-ONLY; The connection name for the private endpoint.
+	PrivateEndpointConnectionName *string `json:"privateEndpointConnectionName,omitempty"`
+	// Status - READ-ONLY; Status of this private endpoint connection.
+	Status *string `json:"status,omitempty"`
+}
+
 // PrivateEndpointConnectionsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type PrivateEndpointConnectionsCreateOrUpdateFuture struct {
@@ -15591,7 +15448,7 @@ type RecommendedElasticPoolMetric struct {
 
 // RecommendedElasticPoolProperties represents the properties of a recommended elastic pool.
 type RecommendedElasticPoolProperties struct {
-	// DatabaseEdition - READ-ONLY; The edition of the recommended elastic pool. The ElasticPoolEdition enumeration contains all the valid editions. Possible values include: 'ElasticPoolEditionBasic', 'ElasticPoolEditionStandard', 'ElasticPoolEditionPremium', 'ElasticPoolEditionGeneralPurpose', 'ElasticPoolEditionBusinessCritical'
+	// DatabaseEdition - READ-ONLY; The edition of the recommended elastic pool. The ElasticPoolEdition enumeration contains all the valid editions. Possible values include: 'Basic', 'Standard', 'Premium', 'GeneralPurpose', 'BusinessCritical'
 	DatabaseEdition ElasticPoolEdition `json:"databaseEdition,omitempty"`
 	// Dtu - The DTU for the recommended elastic pool.
 	Dtu *float64 `json:"dtu,omitempty"`

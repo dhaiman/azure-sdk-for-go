@@ -44,15 +44,14 @@ func NewDatabasesClientWithBaseURI(baseURI string, subscriptionID string) Databa
 	return DatabasesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
-// CreateImportOperation creates an import operation that imports a bacpac into an existing database. The existing
-// database must be empty.
+// CreateImportOperation imports a bacpac into a new database.
 // Parameters:
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serverName - the name of the server.
-// databaseName - the name of the database to import into
-// parameters - the required parameters for importing a Bacpac into a database.
-func (client DatabasesClient) CreateImportOperation(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExtensionRequest) (result DatabasesCreateImportOperationFuture, err error) {
+// databaseName - the name of the database.
+// parameters - the database import request parameters.
+func (client DatabasesClient) CreateImportOperation(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExportDatabaseDefinition) (result DatabasesCreateImportOperationFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatabasesClient.CreateImportOperation")
 		defer func() {
@@ -65,8 +64,10 @@ func (client DatabasesClient) CreateImportOperation(ctx context.Context, resourc
 	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
-			Constraints: []validation.Constraint{{Target: "parameters.ImportExtensionProperties", Name: validation.Null, Rule: false,
-				Chain: []validation.Constraint{{Target: "parameters.ImportExtensionProperties.OperationMode", Name: validation.Null, Rule: true, Chain: nil}}}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "parameters.StorageKey", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.StorageURI", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.AdministratorLogin", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.AdministratorLoginPassword", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("sql.DatabasesClient", "CreateImportOperation", err.Error())
 	}
 
@@ -86,25 +87,24 @@ func (client DatabasesClient) CreateImportOperation(ctx context.Context, resourc
 }
 
 // CreateImportOperationPreparer prepares the CreateImportOperation request.
-func (client DatabasesClient) CreateImportOperationPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExtensionRequest) (*http.Request, error) {
+func (client DatabasesClient) CreateImportOperationPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExportDatabaseDefinition) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"databaseName":      autorest.Encode("path", databaseName),
-		"extensionName":     autorest.Encode("path", "import"),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
 		"serverName":        autorest.Encode("path", serverName),
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2014-04-01"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
 
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
+		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions/{extensionName}", pathParameters),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/import", pathParameters),
 		autorest.WithJSON(parameters),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
@@ -124,10 +124,10 @@ func (client DatabasesClient) CreateImportOperationSender(req *http.Request) (fu
 
 // CreateImportOperationResponder handles the response to the CreateImportOperation request. The method always
 // closes the http.Response Body.
-func (client DatabasesClient) CreateImportOperationResponder(resp *http.Response) (result ImportExportResponse, err error) {
+func (client DatabasesClient) CreateImportOperationResponder(resp *http.Response) (result ImportExportOperationResult, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -305,14 +305,14 @@ func (client DatabasesClient) DeleteResponder(resp *http.Response) (result autor
 	return
 }
 
-// Export exports a database to a bacpac.
+// Export exports a database.
 // Parameters:
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serverName - the name of the server.
-// databaseName - the name of the database to be exported.
-// parameters - the required parameters for exporting a database.
-func (client DatabasesClient) Export(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ExportRequest) (result DatabasesExportFuture, err error) {
+// databaseName - the name of the database.
+// parameters - the database export request parameters.
+func (client DatabasesClient) Export(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExportDatabaseDefinition) (result DatabasesExportFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatabasesClient.Export")
 		defer func() {
@@ -348,7 +348,7 @@ func (client DatabasesClient) Export(ctx context.Context, resourceGroupName stri
 }
 
 // ExportPreparer prepares the Export request.
-func (client DatabasesClient) ExportPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ExportRequest) (*http.Request, error) {
+func (client DatabasesClient) ExportPreparer(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters ImportExportDatabaseDefinition) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"databaseName":      autorest.Encode("path", databaseName),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -356,7 +356,7 @@ func (client DatabasesClient) ExportPreparer(ctx context.Context, resourceGroupN
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2014-04-01"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -385,7 +385,7 @@ func (client DatabasesClient) ExportSender(req *http.Request) (future DatabasesE
 
 // ExportResponder handles the response to the Export request. The method always
 // closes the http.Response Body.
-func (client DatabasesClient) ExportResponder(resp *http.Response) (result ImportExportResponse, err error) {
+func (client DatabasesClient) ExportResponder(resp *http.Response) (result ImportExportOperationResult, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
@@ -559,8 +559,8 @@ func (client DatabasesClient) GetResponder(resp *http.Response) (result Database
 // resourceGroupName - the name of the resource group that contains the resource. You can obtain this value
 // from the Azure Resource Manager API or the portal.
 // serverName - the name of the server.
-// parameters - the required parameters for importing a Bacpac into a database.
-func (client DatabasesClient) Import(ctx context.Context, resourceGroupName string, serverName string, parameters ImportRequest) (result DatabasesImportFuture, err error) {
+// parameters - the database import request parameters.
+func (client DatabasesClient) Import(ctx context.Context, resourceGroupName string, serverName string, parameters ImportExportDatabaseDefinition) (result DatabasesImportFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatabasesClient.Import")
 		defer func() {
@@ -573,8 +573,10 @@ func (client DatabasesClient) Import(ctx context.Context, resourceGroupName stri
 	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
-			Constraints: []validation.Constraint{{Target: "parameters.DatabaseName", Name: validation.Null, Rule: true, Chain: nil},
-				{Target: "parameters.MaxSizeBytes", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "parameters.StorageKey", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.StorageURI", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.AdministratorLogin", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "parameters.AdministratorLoginPassword", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("sql.DatabasesClient", "Import", err.Error())
 	}
 
@@ -594,14 +596,14 @@ func (client DatabasesClient) Import(ctx context.Context, resourceGroupName stri
 }
 
 // ImportPreparer prepares the Import request.
-func (client DatabasesClient) ImportPreparer(ctx context.Context, resourceGroupName string, serverName string, parameters ImportRequest) (*http.Request, error) {
+func (client DatabasesClient) ImportPreparer(ctx context.Context, resourceGroupName string, serverName string, parameters ImportExportDatabaseDefinition) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
 		"serverName":        autorest.Encode("path", serverName),
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2014-04-01"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -630,7 +632,7 @@ func (client DatabasesClient) ImportSender(req *http.Request) (future DatabasesI
 
 // ImportResponder handles the response to the Import request. The method always
 // closes the http.Response Body.
-func (client DatabasesClient) ImportResponder(resp *http.Response) (result ImportExportResponse, err error) {
+func (client DatabasesClient) ImportResponder(resp *http.Response) (result ImportExportOperationResult, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),

@@ -94,13 +94,13 @@ var _ GeoBackupPoliciesClientAPI = (*sql.GeoBackupPoliciesClient)(nil)
 
 // DatabasesClientAPI contains the set of methods on the DatabasesClient type.
 type DatabasesClientAPI interface {
-	CreateImportOperation(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters sql.ImportExtensionRequest) (result sql.DatabasesCreateImportOperationFuture, err error)
+	CreateImportOperation(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters sql.ImportExportDatabaseDefinition) (result sql.DatabasesCreateImportOperationFuture, err error)
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters sql.Database) (result sql.DatabasesCreateOrUpdateFuture, err error)
 	Delete(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result sql.DatabasesDeleteFuture, err error)
-	Export(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters sql.ExportRequest) (result sql.DatabasesExportFuture, err error)
+	Export(ctx context.Context, resourceGroupName string, serverName string, databaseName string, parameters sql.ImportExportDatabaseDefinition) (result sql.DatabasesExportFuture, err error)
 	Failover(ctx context.Context, resourceGroupName string, serverName string, databaseName string, replicaType sql.ReplicaType) (result sql.DatabasesFailoverFuture, err error)
 	Get(ctx context.Context, resourceGroupName string, serverName string, databaseName string) (result sql.Database, err error)
-	Import(ctx context.Context, resourceGroupName string, serverName string, parameters sql.ImportRequest) (result sql.DatabasesImportFuture, err error)
+	Import(ctx context.Context, resourceGroupName string, serverName string, parameters sql.ImportExportDatabaseDefinition) (result sql.DatabasesImportFuture, err error)
 	ListByElasticPool(ctx context.Context, resourceGroupName string, serverName string, elasticPoolName string) (result sql.DatabaseListResultPage, err error)
 	ListByElasticPoolComplete(ctx context.Context, resourceGroupName string, serverName string, elasticPoolName string) (result sql.DatabaseListResultIterator, err error)
 	ListByServer(ctx context.Context, resourceGroupName string, serverName string) (result sql.DatabaseListResultPage, err error)
