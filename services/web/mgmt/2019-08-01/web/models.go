@@ -366,6 +366,21 @@ func PossibleCheckNameResourceTypesValues() []CheckNameResourceTypes {
 	return []CheckNameResourceTypes{CheckNameResourceTypesHostingEnvironment, CheckNameResourceTypesMicrosoftWebhostingEnvironments, CheckNameResourceTypesMicrosoftWebpublishingUsers, CheckNameResourceTypesMicrosoftWebsites, CheckNameResourceTypesMicrosoftWebsitesslots, CheckNameResourceTypesPublishingUser, CheckNameResourceTypesSite, CheckNameResourceTypesSlot}
 }
 
+// ClientCertMode enumerates the values for client cert mode.
+type ClientCertMode string
+
+const (
+	// Optional ...
+	Optional ClientCertMode = "Optional"
+	// Required ...
+	Required ClientCertMode = "Required"
+)
+
+// PossibleClientCertModeValues returns an array of possible values for the ClientCertMode const type.
+func PossibleClientCertModeValues() []ClientCertMode {
+	return []ClientCertMode{Optional, Required}
+}
+
 // CloneAbilityResult enumerates the values for clone ability result.
 type CloneAbilityResult string
 
@@ -733,13 +748,15 @@ type IPFilterTag string
 const (
 	// Default ...
 	Default IPFilterTag = "Default"
+	// ServiceTag ...
+	ServiceTag IPFilterTag = "ServiceTag"
 	// XffProxy ...
 	XffProxy IPFilterTag = "XffProxy"
 )
 
 // PossibleIPFilterTagValues returns an array of possible values for the IPFilterTag const type.
 func PossibleIPFilterTagValues() []IPFilterTag {
-	return []IPFilterTag{Default, XffProxy}
+	return []IPFilterTag{Default, ServiceTag, XffProxy}
 }
 
 // IssueType enumerates the values for issue type.
@@ -12380,7 +12397,7 @@ type IPSecurityRestriction struct {
 	SubnetTrafficTag *int32 `json:"subnetTrafficTag,omitempty"`
 	// Action - Allow or Deny access for this IP range.
 	Action *string `json:"action,omitempty"`
-	// Tag - Defines what this IP filter will be used for. This is to support IP filtering on proxies. Possible values include: 'Default', 'XffProxy'
+	// Tag - Defines what this IP filter will be used for. This is to support IP filtering on proxies. Possible values include: 'Default', 'XffProxy', 'ServiceTag'
 	Tag IPFilterTag `json:"tag,omitempty"`
 	// Priority - Priority of IP restriction rule.
 	Priority *int32 `json:"priority,omitempty"`
@@ -12388,6 +12405,60 @@ type IPSecurityRestriction struct {
 	Name *string `json:"name,omitempty"`
 	// Description - IP restriction rule description.
 	Description *string `json:"description,omitempty"`
+	// Headers - IP restriction rule headers.
+	// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
+	// The matching logic is ..
+	// - If the property is null or empty (default), all hosts(or lack of) are allowed.
+	// - A value is compared using ordinal-ignore-case (excluding port number).
+	// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
+	//  but not the root domain contoso.com or multi-level foo.bar.contoso.com
+	// - Unicode host names are allowed but are converted to Punycode for matching.
+	// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
+	// The matching logic is ..
+	// - If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.
+	// - If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.
+	// X-Azure-FDID and X-FD-HealthProbe.
+	// The matching logic is exact match.
+	Headers map[string][]string `json:"headers"`
+}
+
+// MarshalJSON is the custom marshaler for IPSecurityRestriction.
+func (isr IPSecurityRestriction) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if isr.IPAddress != nil {
+		objectMap["ipAddress"] = isr.IPAddress
+	}
+	if isr.SubnetMask != nil {
+		objectMap["subnetMask"] = isr.SubnetMask
+	}
+	if isr.VnetSubnetResourceID != nil {
+		objectMap["vnetSubnetResourceId"] = isr.VnetSubnetResourceID
+	}
+	if isr.VnetTrafficTag != nil {
+		objectMap["vnetTrafficTag"] = isr.VnetTrafficTag
+	}
+	if isr.SubnetTrafficTag != nil {
+		objectMap["subnetTrafficTag"] = isr.SubnetTrafficTag
+	}
+	if isr.Action != nil {
+		objectMap["action"] = isr.Action
+	}
+	if isr.Tag != "" {
+		objectMap["tag"] = isr.Tag
+	}
+	if isr.Priority != nil {
+		objectMap["priority"] = isr.Priority
+	}
+	if isr.Name != nil {
+		objectMap["name"] = isr.Name
+	}
+	if isr.Description != nil {
+		objectMap["description"] = isr.Description
+	}
+	if isr.Headers != nil {
+		objectMap["headers"] = isr.Headers
+	}
+	return json.Marshal(objectMap)
 }
 
 // Job web Job Information.
@@ -19523,6 +19594,11 @@ type SitePatchResourceProperties struct {
 	ClientAffinityEnabled *bool `json:"clientAffinityEnabled,omitempty"`
 	// ClientCertEnabled - <code>true</code> to enable client certificate authentication (TLS mutual authentication); otherwise, <code>false</code>. Default is <code>false</code>.
 	ClientCertEnabled *bool `json:"clientCertEnabled,omitempty"`
+	// ClientCertMode - This composes with ClientCertEnabled setting.
+	// - ClientCertEnabled: false means ClientCert is ignored.
+	// - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
+	// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted. Possible values include: 'Required', 'Optional'
+	ClientCertMode ClientCertMode `json:"clientCertMode,omitempty"`
 	// ClientCertExclusionPaths - client certificate authentication comma-separated exclusion paths
 	ClientCertExclusionPaths *string `json:"clientCertExclusionPaths,omitempty"`
 	// HostNamesDisabled - <code>true</code> to disable the public hostnames of the app; otherwise, <code>false</code>.
@@ -19702,6 +19778,11 @@ type SiteProperties struct {
 	ClientAffinityEnabled *bool `json:"clientAffinityEnabled,omitempty"`
 	// ClientCertEnabled - <code>true</code> to enable client certificate authentication (TLS mutual authentication); otherwise, <code>false</code>. Default is <code>false</code>.
 	ClientCertEnabled *bool `json:"clientCertEnabled,omitempty"`
+	// ClientCertMode - This composes with ClientCertEnabled setting.
+	// - ClientCertEnabled: false means ClientCert is ignored.
+	// - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
+	// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted. Possible values include: 'Required', 'Optional'
+	ClientCertMode ClientCertMode `json:"clientCertMode,omitempty"`
 	// ClientCertExclusionPaths - client certificate authentication comma-separated exclusion paths
 	ClientCertExclusionPaths *string `json:"clientCertExclusionPaths,omitempty"`
 	// HostNamesDisabled - <code>true</code> to disable the public hostnames of the app; otherwise, <code>false</code>.
