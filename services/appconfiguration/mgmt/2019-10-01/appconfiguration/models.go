@@ -691,10 +691,6 @@ type ListKeyValueParameters struct {
 // NameAvailabilityStatus the result of a request to check the availability of a resource name.
 type NameAvailabilityStatus struct {
 	autorest.Response `json:"-"`
-	// NameAvailable - READ-ONLY; The value indicating whether the resource name is available.
-	NameAvailable *bool `json:"nameAvailable,omitempty"`
-	// Message - READ-ONLY; If any, the error message that provides more detail for the reason that the name is not available.
-	Message *string `json:"message,omitempty"`
 	// Reason - READ-ONLY; If any, the reason that the name is not available.
 	Reason *string `json:"reason,omitempty"`
 }
