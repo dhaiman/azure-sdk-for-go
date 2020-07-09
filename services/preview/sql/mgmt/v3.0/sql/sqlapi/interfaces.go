@@ -818,23 +818,6 @@ type UsagesClientAPI interface {
 
 var _ UsagesClientAPI = (*sql.UsagesClient)(nil)
 
-// ManagedInstancesClientAPI contains the set of methods on the ManagedInstancesClient type.
-type ManagedInstancesClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, managedInstanceName string, parameters sql.ManagedInstance) (result sql.ManagedInstancesCreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, managedInstanceName string) (result sql.ManagedInstancesDeleteFuture, err error)
-	Failover(ctx context.Context, resourceGroupName string, managedInstanceName string, replicaType sql.ReplicaType) (result sql.ManagedInstancesFailoverFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, managedInstanceName string) (result sql.ManagedInstance, err error)
-	List(ctx context.Context) (result sql.ManagedInstanceListResultPage, err error)
-	ListComplete(ctx context.Context) (result sql.ManagedInstanceListResultIterator, err error)
-	ListByInstancePool(ctx context.Context, resourceGroupName string, instancePoolName string) (result sql.ManagedInstanceListResultPage, err error)
-	ListByInstancePoolComplete(ctx context.Context, resourceGroupName string, instancePoolName string) (result sql.ManagedInstanceListResultIterator, err error)
-	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result sql.ManagedInstanceListResultPage, err error)
-	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result sql.ManagedInstanceListResultIterator, err error)
-	Update(ctx context.Context, resourceGroupName string, managedInstanceName string, parameters sql.ManagedInstanceUpdate) (result sql.ManagedInstancesUpdateFuture, err error)
-}
-
-var _ ManagedInstancesClientAPI = (*sql.ManagedInstancesClient)(nil)
-
 // PrivateEndpointConnectionsClientAPI contains the set of methods on the PrivateEndpointConnectionsClient type.
 type PrivateEndpointConnectionsClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, privateEndpointConnectionName string, parameters sql.PrivateEndpointConnection) (result sql.PrivateEndpointConnectionsCreateOrUpdateFuture, err error)
@@ -1010,3 +993,20 @@ type SyncMembersClientAPI interface {
 }
 
 var _ SyncMembersClientAPI = (*sql.SyncMembersClient)(nil)
+
+// ManagedInstancesClientAPI contains the set of methods on the ManagedInstancesClient type.
+type ManagedInstancesClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, managedInstanceName string, parameters sql.ManagedInstance) (result sql.ManagedInstancesCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, managedInstanceName string) (result sql.ManagedInstancesDeleteFuture, err error)
+	Failover(ctx context.Context, resourceGroupName string, managedInstanceName string, replicaType sql.ReplicaType) (result sql.ManagedInstancesFailoverFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, managedInstanceName string) (result sql.ManagedInstance, err error)
+	List(ctx context.Context) (result sql.ManagedInstanceListResultPage, err error)
+	ListComplete(ctx context.Context) (result sql.ManagedInstanceListResultIterator, err error)
+	ListByInstancePool(ctx context.Context, resourceGroupName string, instancePoolName string) (result sql.ManagedInstanceListResultPage, err error)
+	ListByInstancePoolComplete(ctx context.Context, resourceGroupName string, instancePoolName string) (result sql.ManagedInstanceListResultIterator, err error)
+	ListByResourceGroup(ctx context.Context, resourceGroupName string) (result sql.ManagedInstanceListResultPage, err error)
+	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result sql.ManagedInstanceListResultIterator, err error)
+	Update(ctx context.Context, resourceGroupName string, managedInstanceName string, parameters sql.ManagedInstanceUpdate) (result sql.ManagedInstancesUpdateFuture, err error)
+}
+
+var _ ManagedInstancesClientAPI = (*sql.ManagedInstancesClient)(nil)

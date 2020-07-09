@@ -65,7 +65,11 @@ func (client ManagedInstancesClient) CreateOrUpdate(ctx context.Context, resourc
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
 			Constraints: []validation.Constraint{{Target: "parameters.Sku", Name: validation.Null, Rule: false,
-				Chain: []validation.Constraint{{Target: "parameters.Sku.Name", Name: validation.Null, Rule: true, Chain: nil}}}}}}); err != nil {
+				Chain: []validation.Constraint{{Target: "parameters.Sku.Name", Name: validation.Null, Rule: true, Chain: nil}}},
+				{Target: "parameters.ManagedInstanceProperties", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "parameters.ManagedInstanceProperties.MaintenanceWindowSettings", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.ManagedInstanceProperties.MaintenanceWindowSettings.CustomerTimeZone", Name: validation.Null, Rule: true, Chain: nil}}},
+					}}}}}); err != nil {
 		return result, validation.NewError("sql.ManagedInstancesClient", "CreateOrUpdate", err.Error())
 	}
 
@@ -92,7 +96,7 @@ func (client ManagedInstancesClient) CreateOrUpdatePreparer(ctx context.Context,
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -170,7 +174,7 @@ func (client ManagedInstancesClient) DeletePreparer(ctx context.Context, resourc
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -337,7 +341,7 @@ func (client ManagedInstancesClient) GetPreparer(ctx context.Context, resourceGr
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -408,7 +412,7 @@ func (client ManagedInstancesClient) ListPreparer(ctx context.Context) (*http.Re
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -522,7 +526,7 @@ func (client ManagedInstancesClient) ListByInstancePoolPreparer(ctx context.Cont
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -634,7 +638,7 @@ func (client ManagedInstancesClient) ListByResourceGroupPreparer(ctx context.Con
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -742,7 +746,7 @@ func (client ManagedInstancesClient) UpdatePreparer(ctx context.Context, resourc
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2018-06-01-preview"
+	const APIVersion = "2020-02-02-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

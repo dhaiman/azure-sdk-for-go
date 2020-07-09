@@ -856,6 +856,25 @@ func PossibleLongTermRetentionDatabaseStateValues() []LongTermRetentionDatabaseS
 	return []LongTermRetentionDatabaseState{LongTermRetentionDatabaseStateAll, LongTermRetentionDatabaseStateDeleted, LongTermRetentionDatabaseStateLive}
 }
 
+// MaintenanceWindowFrequency enumerates the values for maintenance window frequency.
+type MaintenanceWindowFrequency string
+
+const (
+	// Flexible ...
+	Flexible MaintenanceWindowFrequency = "Flexible"
+	// Monthly ...
+	Monthly MaintenanceWindowFrequency = "Monthly"
+	// NonRecurrent ...
+	NonRecurrent MaintenanceWindowFrequency = "NonRecurrent"
+	// Weekly ...
+	Weekly MaintenanceWindowFrequency = "Weekly"
+)
+
+// PossibleMaintenanceWindowFrequencyValues returns an array of possible values for the MaintenanceWindowFrequency const type.
+func PossibleMaintenanceWindowFrequencyValues() []MaintenanceWindowFrequency {
+	return []MaintenanceWindowFrequency{Flexible, Monthly, NonRecurrent, Weekly}
+}
+
 // ManagedDatabaseCreateMode enumerates the values for managed database create mode.
 type ManagedDatabaseCreateMode string
 
@@ -1131,6 +1150,29 @@ const (
 // PossibleProvisioningStateValues returns an array of possible values for the ProvisioningState const type.
 func PossibleProvisioningStateValues() []ProvisioningState {
 	return []ProvisioningState{ProvisioningStateCanceled, ProvisioningStateCreated, ProvisioningStateFailed, ProvisioningStateInProgress, ProvisioningStateSucceeded}
+}
+
+// ProvisioningState1 enumerates the values for provisioning state 1.
+type ProvisioningState1 string
+
+const (
+	// ProvisioningState1Creating ...
+	ProvisioningState1Creating ProvisioningState1 = "Creating"
+	// ProvisioningState1Deleting ...
+	ProvisioningState1Deleting ProvisioningState1 = "Deleting"
+	// ProvisioningState1Failed ...
+	ProvisioningState1Failed ProvisioningState1 = "Failed"
+	// ProvisioningState1Succeeded ...
+	ProvisioningState1Succeeded ProvisioningState1 = "Succeeded"
+	// ProvisioningState1Unknown ...
+	ProvisioningState1Unknown ProvisioningState1 = "Unknown"
+	// ProvisioningState1Updating ...
+	ProvisioningState1Updating ProvisioningState1 = "Updating"
+)
+
+// PossibleProvisioningState1Values returns an array of possible values for the ProvisioningState1 const type.
+func PossibleProvisioningState1Values() []ProvisioningState1 {
+	return []ProvisioningState1{ProvisioningState1Creating, ProvisioningState1Deleting, ProvisioningState1Failed, ProvisioningState1Succeeded, ProvisioningState1Unknown, ProvisioningState1Updating}
 }
 
 // ReadOnlyEndpointFailoverPolicy enumerates the values for read only endpoint failover policy.
@@ -10885,6 +10927,29 @@ type LongTermRetentionPolicyProperties struct {
 	WeekOfYear *int32 `json:"weekOfYear,omitempty"`
 }
 
+// MaintenanceWindowSettings the properties of managed instance maintenance window.
+type MaintenanceWindowSettings struct {
+	// TimeOfUpgrade - Specifies time of upgrade for maintenance window of managed instance.
+	TimeOfUpgrade *string `json:"timeOfUpgrade,omitempty"`
+	// Dates - Specifies days of the month when maintenance window is to be opened.
+	Dates *[]int32 `json:"dates,omitempty"`
+	// ScheduledDays - Specifies days in a week when maintenance window is to be opened.
+	ScheduledDays *[]string `json:"scheduledDays,omitempty"`
+	// ScheduledWeeks - Specifies weeks on which the maintenance window should be opened. E.g. if '1,3' is provided and for ScheduledDays Sunday is provided,
+	//         that means that window is to be opened on Sunday every first and third week.
+	ScheduledWeeks *[]int32 `json:"scheduledWeeks,omitempty"`
+	// OneOffStartTime - Specifies one off start time for a maintenance window. This is the time when window will be opened for the first time.
+	OneOffStartTime *date.Time `json:"oneOffStartTime,omitempty"`
+	// Frequency - Specifies frequency of a maintenance window.
+	//             None - No recurring pattern,
+	//             Daily - Daily window; specified by days of week,
+	//             Monthly - Monthly window; specified by dates in a month,
+	//             Flexible - Flexible window; specified by week numbers and days of week. Possible values include: 'NonRecurrent', 'Weekly', 'Monthly', 'Flexible'
+	Frequency MaintenanceWindowFrequency `json:"frequency,omitempty"`
+	// CustomerTimeZone - Specifies the timezone for which the window will be set. See reference for TimezoneId of ManagedInstance.
+	CustomerTimeZone *string `json:"customerTimeZone,omitempty"`
+}
+
 // ManagedBackupShortTermRetentionPoliciesCreateOrUpdateFuture an abstraction for monitoring and retrieving
 // the results of a long-running operation.
 type ManagedBackupShortTermRetentionPoliciesCreateOrUpdateFuture struct {
@@ -13896,6 +13961,8 @@ type ManagedInstancePairInfo struct {
 
 // ManagedInstanceProperties the properties of a managed instance.
 type ManagedInstanceProperties struct {
+	// ProvisioningState - READ-ONLY; Possible values include: 'ProvisioningState1Creating', 'ProvisioningState1Deleting', 'ProvisioningState1Updating', 'ProvisioningState1Unknown', 'ProvisioningState1Succeeded', 'ProvisioningState1Failed'
+	ProvisioningState ProvisioningState1 `json:"provisioningState,omitempty"`
 	// ManagedInstanceCreateMode - Specifies the mode of database creation.
 	//
 	// Default: Regular instance creation.
@@ -13941,8 +14008,8 @@ type ManagedInstanceProperties struct {
 	TimezoneID *string `json:"timezoneId,omitempty"`
 	// InstancePoolID - The Id of the instance pool this managed server belongs to.
 	InstancePoolID *string `json:"instancePoolId,omitempty"`
-	// MaintenanceConfigurationID - Specifies maintenance configuration id to apply to this managed instance.
-	MaintenanceConfigurationID *string `json:"maintenanceConfigurationId,omitempty"`
+	// MaintenanceWindowSettings - Specifies maintenance window settings for a managed instance.
+	MaintenanceWindowSettings *MaintenanceWindowSettings `json:"maintenanceWindowSettings,omitempty"`
 	// MinimalTLSVersion - Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
 	MinimalTLSVersion *string `json:"minimalTlsVersion,omitempty"`
 }
