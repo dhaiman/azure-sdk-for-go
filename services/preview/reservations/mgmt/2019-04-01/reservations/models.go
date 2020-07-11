@@ -235,12 +235,34 @@ func PossibleReservationTermValues() []ReservationTerm {
 type ReservedResourceType string
 
 const (
+	// AppService ...
+	AppService ReservedResourceType = "AppService"
+	// AzureDataExplorer ...
+	AzureDataExplorer ReservedResourceType = "AzureDataExplorer"
+	// BlockBlob ...
+	BlockBlob ReservedResourceType = "BlockBlob"
 	// CosmosDb ...
 	CosmosDb ReservedResourceType = "CosmosDb"
+	// Databricks ...
+	Databricks ReservedResourceType = "Databricks"
+	// DedicatedHost ...
+	DedicatedHost ReservedResourceType = "DedicatedHost"
+	// ManagedDisk ...
+	ManagedDisk ReservedResourceType = "ManagedDisk"
+	// MariaDb ...
+	MariaDb ReservedResourceType = "MariaDb"
+	// MySQL ...
+	MySQL ReservedResourceType = "MySql"
+	// PostgreSQL ...
+	PostgreSQL ReservedResourceType = "PostgreSql"
 	// RedHat ...
 	RedHat ReservedResourceType = "RedHat"
 	// RedHatOsa ...
 	RedHatOsa ReservedResourceType = "RedHatOsa"
+	// RedisCache ...
+	RedisCache ReservedResourceType = "RedisCache"
+	// SapHana ...
+	SapHana ReservedResourceType = "SapHana"
 	// SQLDatabases ...
 	SQLDatabases ReservedResourceType = "SqlDatabases"
 	// SQLDataWarehouse ...
@@ -255,7 +277,7 @@ const (
 
 // PossibleReservedResourceTypeValues returns an array of possible values for the ReservedResourceType const type.
 func PossibleReservedResourceTypeValues() []ReservedResourceType {
-	return []ReservedResourceType{CosmosDb, RedHat, RedHatOsa, SQLDatabases, SQLDataWarehouse, SuseLinux, VirtualMachines, VMwareCloudSimple}
+	return []ReservedResourceType{AppService, AzureDataExplorer, BlockBlob, CosmosDb, Databricks, DedicatedHost, ManagedDisk, MariaDb, MySQL, PostgreSQL, RedHat, RedHatOsa, RedisCache, SapHana, SQLDatabases, SQLDataWarehouse, SuseLinux, VirtualMachines, VMwareCloudSimple}
 }
 
 // StatusCode enumerates the values for status code.
@@ -1203,7 +1225,7 @@ type Properties struct {
 
 // PropertiesType ...
 type PropertiesType struct {
-	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySQL', 'MariaDb', 'PostgreSQL', 'DedicatedHost', 'SapHana'
 	ReservedResourceType ReservedResourceType `json:"reservedResourceType,omitempty"`
 	// InstanceFlexibility - Possible values include: 'On', 'Off'
 	InstanceFlexibility InstanceFlexibility `json:"instanceFlexibility,omitempty"`
@@ -1306,7 +1328,7 @@ func (pr *PurchaseRequest) UnmarshalJSON(body []byte) error {
 
 // PurchaseRequestProperties ...
 type PurchaseRequestProperties struct {
-	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySQL', 'MariaDb', 'PostgreSQL', 'DedicatedHost', 'SapHana'
 	ReservedResourceType ReservedResourceType `json:"reservedResourceType,omitempty"`
 	BillingScopeID       *string              `json:"billingScopeId,omitempty"`
 	// Term - Possible values include: 'P1Y', 'P3Y'
