@@ -2707,7 +2707,7 @@ type FileShareProperties struct {
 	// Deleted - READ-ONLY; Indicates whether the share was deleted.
 	Deleted *bool `json:"deleted,omitempty"`
 	// DeletedTime - READ-ONLY; The deleted time if the share was deleted.
-	DeletedTime *date.Time `json:"deletedTime,omitempty"`
+	DeletedTime *date.TimeRFC1123 `json:"deletedTime,omitempty"`
 	// RemainingRetentionDays - READ-ONLY; Remaining retention days for share that was soft deleted.
 	RemainingRetentionDays *int32 `json:"remainingRetentionDays,omitempty"`
 	// AccessTier - Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Possible values include: 'ShareAccessTierTransactionOptimized', 'ShareAccessTierHot', 'ShareAccessTierCool', 'ShareAccessTierPremium'
