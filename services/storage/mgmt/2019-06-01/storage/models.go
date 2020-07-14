@@ -3786,7 +3786,8 @@ type MetricSpecification struct {
 // NetworkRuleSet network rule set
 type NetworkRuleSet struct {
 	// Bypass - Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. Possible values include: 'None', 'Logging', 'Metrics', 'AzureServices'
-	Bypass Bypass `json:"bypass,omitempty"`
+	Bypass              Bypass                `json:"bypass,omitempty"`
+	ResourceAccessRules *[]ResourceAccessRule `json:"resourceAccessRules,omitempty"`
 	// VirtualNetworkRules - Sets the virtual network rules
 	VirtualNetworkRules *[]VirtualNetworkRule `json:"virtualNetworkRules,omitempty"`
 	// IPRules - Sets the IP ACL rules
@@ -4404,6 +4405,14 @@ type Resource struct {
 	Name *string `json:"name,omitempty"`
 	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty"`
+}
+
+// ResourceAccessRule resource Access Rule.
+type ResourceAccessRule struct {
+	// TenantID - Tenant Id
+	TenantID *string `json:"tenantId,omitempty"`
+	// ResourceID - Resource Id
+	ResourceID *string `json:"resourceId,omitempty"`
 }
 
 // RestorePolicyProperties the blob service properties for blob restore policy
