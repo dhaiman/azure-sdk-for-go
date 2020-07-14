@@ -10840,6 +10840,8 @@ type VirtualMachineExtensionProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 	// AutoUpgradeMinorVersion - Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
+	// EnableAutomaticUpgrade - Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+	EnableAutomaticUpgrade *bool `json:"enableAutomaticUpgrade,omitempty"`
 	// Settings - Json formatted public settings for the extension.
 	Settings interface{} `json:"settings,omitempty"`
 	// ProtectedSettings - The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
@@ -11002,6 +11004,8 @@ type VirtualMachineExtensionUpdateProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 	// AutoUpgradeMinorVersion - Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
+	// EnableAutomaticUpgrade - Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+	EnableAutomaticUpgrade *bool `json:"enableAutomaticUpgrade,omitempty"`
 	// Settings - Json formatted public settings for the extension.
 	Settings interface{} `json:"settings,omitempty"`
 	// ProtectedSettings - The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
@@ -11208,6 +11212,8 @@ type VirtualMachineInstanceView struct {
 	Disks *[]DiskInstanceView `json:"disks,omitempty"`
 	// Extensions - The extensions information.
 	Extensions *[]VirtualMachineExtensionInstanceView `json:"extensions,omitempty"`
+	// VMHealth - READ-ONLY; The health status for the VM.
+	VMHealth *VirtualMachineHealthStatus `json:"vmHealth,omitempty"`
 	// BootDiagnostics - Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br> You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from the hypervisor.
 	BootDiagnostics *BootDiagnosticsInstanceView `json:"bootDiagnostics,omitempty"`
 	// AssignedHost - READ-ONLY; Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. <br><br>Minimum api-version: 2020-06-01.
@@ -11863,6 +11869,8 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 	// AutoUpgradeMinorVersion - Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
+	// EnableAutomaticUpgrade - Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+	EnableAutomaticUpgrade *bool `json:"enableAutomaticUpgrade,omitempty"`
 	// Settings - Json formatted public settings for the extension.
 	Settings interface{} `json:"settings,omitempty"`
 	// ProtectedSettings - The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
