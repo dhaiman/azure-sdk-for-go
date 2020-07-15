@@ -372,6 +372,27 @@ type Blur struct {
 	Value *float64 `json:"value,omitempty"`
 }
 
+// CompareFaceToFaceRequest request body for face to face comparison.
+type CompareFaceToFaceRequest struct {
+	// SourceImageURL - Publicly reachable URL of the source image
+	SourceImageURL *string `json:"sourceImageUrl,omitempty"`
+	// TargetImageURL - Publicly reachable URL of the target image
+	TargetImageURL *string `json:"targetImageUrl,omitempty"`
+}
+
+// CompareResult result of the compare operation.
+type CompareResult struct {
+	autorest.Response `json:"-"`
+	// TargetImageFace - The face used for comparison from source image. along with confidence and isIdentical flag.
+	TargetImageFace *TargetImageFace `json:"targetImageFace,omitempty"`
+	// SourceImageFace - The face used for comparison from target image.
+	SourceImageFace *SourceImageFace `json:"sourceImageFace,omitempty"`
+	// DetectionModel - A number indicates the similarity confidence of whether two faces belong to the same person, or whether the face belongs to the person. By default, isIdentical is set to True if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to override "isIdentical" and fine-tune the result on their own data. Possible values include: 'Detection01', 'Detection02'
+	DetectionModel DetectionModel `json:"detectionModel,omitempty"`
+	// RecognitionModel - A number indicates the similarity confidence of whether two faces belong to the same person, or whether the face belongs to the person. By default, isIdentical is set to True if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to override "isIdentical" and fine-tune the result on their own data. Possible values include: 'Recognition01', 'Recognition02', 'Recognition03'
+	RecognitionModel RecognitionModel `json:"recognitionModel,omitempty"`
+}
+
 // Coordinate coordinates within an image
 type Coordinate struct {
 	// X - The horizontal component, in pixels.
@@ -786,6 +807,11 @@ type Snapshot struct {
 	LastUpdateTime *date.Time `json:"lastUpdateTime,omitempty"`
 }
 
+// SourceImageFace the face used for comparison from source image.
+type SourceImageFace struct {
+	FaceRectangle *Rectangle `json:"faceRectangle,omitempty"`
+}
+
 // TakeSnapshotRequest request body for taking snapshot operation.
 type TakeSnapshotRequest struct {
 	// Type - User specified type for the source object to take snapshot from. Currently FaceList, PersonGroup, LargeFaceList and LargePersonGroup are supported. Possible values include: 'SnapshotObjectTypeFaceList', 'SnapshotObjectTypeLargeFaceList', 'SnapshotObjectTypeLargePersonGroup', 'SnapshotObjectTypePersonGroup'
@@ -796,6 +822,15 @@ type TakeSnapshotRequest struct {
 	ApplyScope *[]uuid.UUID `json:"applyScope,omitempty"`
 	// UserData - User specified data about the snapshot for any purpose. Length should not exceed 16KB.
 	UserData *string `json:"userData,omitempty"`
+}
+
+// TargetImageFace the face used for comparison from target image.
+type TargetImageFace struct {
+	FaceRectangle *Rectangle `json:"faceRectangle,omitempty"`
+	// Confidence - A number indicates the similarity confidence two faces. By default, isIdentical is set to True if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to override "isIdentical" and fine-tune the result on their own data.
+	Confidence *float64 `json:"confidence,omitempty"`
+	// IsIdentical - True if the two faces belong to the same person, otherwise false.
+	IsIdentical *bool `json:"isIdentical,omitempty"`
 }
 
 // TrainingStatus training status object.

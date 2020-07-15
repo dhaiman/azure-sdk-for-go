@@ -27,6 +27,8 @@ import (
 
 // ClientAPI contains the set of methods on the Client type.
 type ClientAPI interface {
+	CompareWithStream(ctx context.Context, source io.ReadCloser, target io.ReadCloser, detectionModel face.DetectionModel, recognitionModel face.RecognitionModel) (result face.CompareResult, err error)
+	CompareWithURL(ctx context.Context, body face.CompareFaceToFaceRequest, detectionModel face.DetectionModel, recognitionModel face.RecognitionModel) (result face.CompareResult, err error)
 	DetectWithStream(ctx context.Context, imageParameter io.ReadCloser, returnFaceID *bool, returnFaceLandmarks *bool, returnFaceAttributes []face.AttributeType, recognitionModel face.RecognitionModel, returnRecognitionModel *bool, detectionModel face.DetectionModel) (result face.ListDetectedFace, err error)
 	DetectWithURL(ctx context.Context, imageURL face.ImageURL, returnFaceID *bool, returnFaceLandmarks *bool, returnFaceAttributes []face.AttributeType, recognitionModel face.RecognitionModel, returnRecognitionModel *bool, detectionModel face.DetectionModel) (result face.ListDetectedFace, err error)
 	FindSimilar(ctx context.Context, body face.FindSimilarRequest) (result face.ListSimilarFace, err error)

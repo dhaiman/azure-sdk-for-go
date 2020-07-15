@@ -37,6 +37,194 @@ func NewClient(endpoint string) Client {
 	return Client{New(endpoint)}
 }
 
+// CompareWithStream compare faces from two image streams based on similarity.
+// <br/>
+// Remarks:<br />
+// * Higher face image quality means better identification precision. Please consider high-quality faces: frontal,
+// clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
+// * For the scenarios that are sensitive to accuracy please make your own judgment.
+// Parameters:
+// source - source image files for face to face comparison.
+// target - target image files for face to face comparison.
+// detectionModel - name of detection model. Detection model is used to detect faces in the submitted image.
+// recognitionModel - name of recognition model.
+func (client Client) CompareWithStream(ctx context.Context, source io.ReadCloser, target io.ReadCloser, detectionModel DetectionModel, recognitionModel RecognitionModel) (result CompareResult, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/Client.CompareWithStream")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.CompareWithStreamPreparer(ctx, source, target, detectionModel, recognitionModel)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithStream", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.CompareWithStreamSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithStream", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.CompareWithStreamResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithStream", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// CompareWithStreamPreparer prepares the CompareWithStream request.
+func (client Client) CompareWithStreamPreparer(ctx context.Context, source io.ReadCloser, target io.ReadCloser, detectionModel DetectionModel, recognitionModel RecognitionModel) (*http.Request, error) {
+	urlParameters := map[string]interface{}{
+		"Endpoint": client.Endpoint,
+	}
+
+	queryParameters := map[string]interface{}{}
+	if len(string(detectionModel)) > 0 {
+		queryParameters["detectionModel"] = autorest.Encode("query", detectionModel)
+	} else {
+		queryParameters["detectionModel"] = autorest.Encode("query", "detection_02")
+	}
+	if len(string(recognitionModel)) > 0 {
+		queryParameters["recognitionModel"] = autorest.Encode("query", recognitionModel)
+	} else {
+		queryParameters["recognitionModel"] = autorest.Encode("query", "recognition_03")
+	}
+
+	formDataParameters := map[string]interface{}{
+		"source": source,
+		"target": target,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithCustomBaseURL("{Endpoint}/face/v1.0", urlParameters),
+		autorest.WithPath("/compare"),
+		autorest.WithQueryParameters(queryParameters),
+		autorest.WithMultiPartFormData(formDataParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// CompareWithStreamSender sends the CompareWithStream request. The method will close the
+// http.Response Body if it receives an error.
+func (client Client) CompareWithStreamSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// CompareWithStreamResponder handles the response to the CompareWithStream request. The method always
+// closes the http.Response Body.
+func (client Client) CompareWithStreamResponder(resp *http.Response) (result CompareResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// CompareWithURL compare faces from two image URLs based on similarity.
+// <br/>
+// Remarks:<br />
+// * Higher face image quality means better identification precision. Please consider high-quality faces: frontal,
+// clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
+// * For the scenarios that are sensitive to accuracy please make your own judgment.
+// Parameters:
+// body - request body for face to face comparison.
+// detectionModel - name of detection model. Detection model is used to detect faces in the submitted image.
+// recognitionModel - name of recognition model.
+func (client Client) CompareWithURL(ctx context.Context, body CompareFaceToFaceRequest, detectionModel DetectionModel, recognitionModel RecognitionModel) (result CompareResult, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/Client.CompareWithURL")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: body,
+			Constraints: []validation.Constraint{{Target: "body.SourceImageURL", Name: validation.Null, Rule: true, Chain: nil},
+				{Target: "body.TargetImageURL", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("face.Client", "CompareWithURL", err.Error())
+	}
+
+	req, err := client.CompareWithURLPreparer(ctx, body, detectionModel, recognitionModel)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithURL", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.CompareWithURLSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithURL", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.CompareWithURLResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "face.Client", "CompareWithURL", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// CompareWithURLPreparer prepares the CompareWithURL request.
+func (client Client) CompareWithURLPreparer(ctx context.Context, body CompareFaceToFaceRequest, detectionModel DetectionModel, recognitionModel RecognitionModel) (*http.Request, error) {
+	urlParameters := map[string]interface{}{
+		"Endpoint": client.Endpoint,
+	}
+
+	queryParameters := map[string]interface{}{}
+	if len(string(detectionModel)) > 0 {
+		queryParameters["detectionModel"] = autorest.Encode("query", detectionModel)
+	} else {
+		queryParameters["detectionModel"] = autorest.Encode("query", "detection_02")
+	}
+	if len(string(recognitionModel)) > 0 {
+		queryParameters["recognitionModel"] = autorest.Encode("query", recognitionModel)
+	} else {
+		queryParameters["recognitionModel"] = autorest.Encode("query", "recognition_03")
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPost(),
+		autorest.WithCustomBaseURL("{Endpoint}/face/v1.0", urlParameters),
+		autorest.WithPath("/compare"),
+		autorest.WithJSON(body),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// CompareWithURLSender sends the CompareWithURL request. The method will close the
+// http.Response Body if it receives an error.
+func (client Client) CompareWithURLSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// CompareWithURLResponder handles the response to the CompareWithURL request. The method always
+// closes the http.Response Body.
+func (client Client) CompareWithURLResponder(resp *http.Response) (result CompareResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // DetectWithStream detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and
 // attributes.<br />
 // * No image will be stored. Only the extracted face feature will be stored on server. The faceId is an identifier of
