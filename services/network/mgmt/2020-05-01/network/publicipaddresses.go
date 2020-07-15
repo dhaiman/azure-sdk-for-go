@@ -592,6 +592,119 @@ func (client PublicIPAddressesClient) ListAllComplete(ctx context.Context) (resu
 	return
 }
 
+// ListCloudServicePublicIPAddresses gets information about all public IP addresses on a cloud service level.
+// Parameters:
+// resourceGroupName - the name of the resource group.
+// cloudServiceName - the name of the cloud service.
+func (client PublicIPAddressesClient) ListCloudServicePublicIPAddresses(ctx context.Context, resourceGroupName string, cloudServiceName string) (result PublicIPAddressListResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PublicIPAddressesClient.ListCloudServicePublicIPAddresses")
+		defer func() {
+			sc := -1
+			if result.pialr.Response.Response != nil {
+				sc = result.pialr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = client.listCloudServicePublicIPAddressesNextResults
+	req, err := client.ListCloudServicePublicIPAddressesPreparer(ctx, resourceGroupName, cloudServiceName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "ListCloudServicePublicIPAddresses", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.ListCloudServicePublicIPAddressesSender(req)
+	if err != nil {
+		result.pialr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "ListCloudServicePublicIPAddresses", resp, "Failure sending request")
+		return
+	}
+
+	result.pialr, err = client.ListCloudServicePublicIPAddressesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "ListCloudServicePublicIPAddresses", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// ListCloudServicePublicIPAddressesPreparer prepares the ListCloudServicePublicIPAddresses request.
+func (client PublicIPAddressesClient) ListCloudServicePublicIPAddressesPreparer(ctx context.Context, resourceGroupName string, cloudServiceName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"cloudServiceName":  autorest.Encode("path", cloudServiceName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-05-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/publicipaddresses", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ListCloudServicePublicIPAddressesSender sends the ListCloudServicePublicIPAddresses request. The method will close the
+// http.Response Body if it receives an error.
+func (client PublicIPAddressesClient) ListCloudServicePublicIPAddressesSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// ListCloudServicePublicIPAddressesResponder handles the response to the ListCloudServicePublicIPAddresses request. The method always
+// closes the http.Response Body.
+func (client PublicIPAddressesClient) ListCloudServicePublicIPAddressesResponder(resp *http.Response) (result PublicIPAddressListResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// listCloudServicePublicIPAddressesNextResults retrieves the next set of results, if any.
+func (client PublicIPAddressesClient) listCloudServicePublicIPAddressesNextResults(ctx context.Context, lastResults PublicIPAddressListResult) (result PublicIPAddressListResult, err error) {
+	req, err := lastResults.publicIPAddressListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "listCloudServicePublicIPAddressesNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListCloudServicePublicIPAddressesSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "listCloudServicePublicIPAddressesNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListCloudServicePublicIPAddressesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.PublicIPAddressesClient", "listCloudServicePublicIPAddressesNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// ListCloudServicePublicIPAddressesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PublicIPAddressesClient) ListCloudServicePublicIPAddressesComplete(ctx context.Context, resourceGroupName string, cloudServiceName string) (result PublicIPAddressListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PublicIPAddressesClient.ListCloudServicePublicIPAddresses")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.ListCloudServicePublicIPAddresses(ctx, resourceGroupName, cloudServiceName)
+	return
+}
+
 // ListVirtualMachineScaleSetPublicIPAddresses gets information about all public IP addresses on a virtual machine
 // scale set level.
 // Parameters:

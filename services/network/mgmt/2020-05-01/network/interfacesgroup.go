@@ -273,6 +273,89 @@ func (client InterfacesClient) GetResponder(resp *http.Response) (result Interfa
 	return
 }
 
+// GetCloudServiceNetworkInterface get the specified network interface in a cloud service.
+// Parameters:
+// resourceGroupName - the name of the resource group.
+// cloudServiceName - the name of the cloud service.
+// roleInstanceName - the name of role instance
+// networkInterfaceName - the name of the network interface.
+// expand - expands referenced resources.
+func (client InterfacesClient) GetCloudServiceNetworkInterface(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, expand string) (result Interface, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/InterfacesClient.GetCloudServiceNetworkInterface")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetCloudServiceNetworkInterfacePreparer(ctx, resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, expand)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "GetCloudServiceNetworkInterface", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetCloudServiceNetworkInterfaceSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "GetCloudServiceNetworkInterface", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetCloudServiceNetworkInterfaceResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "GetCloudServiceNetworkInterface", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetCloudServiceNetworkInterfacePreparer prepares the GetCloudServiceNetworkInterface request.
+func (client InterfacesClient) GetCloudServiceNetworkInterfacePreparer(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, expand string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"cloudServiceName":     autorest.Encode("path", cloudServiceName),
+		"networkInterfaceName": autorest.Encode("path", networkInterfaceName),
+		"resourceGroupName":    autorest.Encode("path", resourceGroupName),
+		"roleInstanceName":     autorest.Encode("path", roleInstanceName),
+		"subscriptionId":       autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-05-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+	if len(expand) > 0 {
+		queryParameters["$expand"] = autorest.Encode("query", expand)
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetCloudServiceNetworkInterfaceSender sends the GetCloudServiceNetworkInterface request. The method will close the
+// http.Response Body if it receives an error.
+func (client InterfacesClient) GetCloudServiceNetworkInterfaceSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetCloudServiceNetworkInterfaceResponder handles the response to the GetCloudServiceNetworkInterface request. The method always
+// closes the http.Response Body.
+func (client InterfacesClient) GetCloudServiceNetworkInterfaceResponder(resp *http.Response) (result Interface, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetEffectiveRouteTable gets all route tables applied to a network interface.
 // Parameters:
 // resourceGroupName - the name of the resource group.
@@ -733,6 +816,119 @@ func (client InterfacesClient) ListAllComplete(ctx context.Context) (result Inte
 		}()
 	}
 	result.page, err = client.ListAll(ctx)
+	return
+}
+
+// ListCloudServiceNetworkInterfaces gets all network interfaces in a cloud service.
+// Parameters:
+// resourceGroupName - the name of the resource group.
+// cloudServiceName - the name of the cloud service.
+func (client InterfacesClient) ListCloudServiceNetworkInterfaces(ctx context.Context, resourceGroupName string, cloudServiceName string) (result InterfaceListResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/InterfacesClient.ListCloudServiceNetworkInterfaces")
+		defer func() {
+			sc := -1
+			if result.ilr.Response.Response != nil {
+				sc = result.ilr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = client.listCloudServiceNetworkInterfacesNextResults
+	req, err := client.ListCloudServiceNetworkInterfacesPreparer(ctx, resourceGroupName, cloudServiceName)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "ListCloudServiceNetworkInterfaces", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.ListCloudServiceNetworkInterfacesSender(req)
+	if err != nil {
+		result.ilr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "ListCloudServiceNetworkInterfaces", resp, "Failure sending request")
+		return
+	}
+
+	result.ilr, err = client.ListCloudServiceNetworkInterfacesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "ListCloudServiceNetworkInterfaces", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// ListCloudServiceNetworkInterfacesPreparer prepares the ListCloudServiceNetworkInterfaces request.
+func (client InterfacesClient) ListCloudServiceNetworkInterfacesPreparer(ctx context.Context, resourceGroupName string, cloudServiceName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"cloudServiceName":  autorest.Encode("path", cloudServiceName),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-05-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/networkInterfaces", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ListCloudServiceNetworkInterfacesSender sends the ListCloudServiceNetworkInterfaces request. The method will close the
+// http.Response Body if it receives an error.
+func (client InterfacesClient) ListCloudServiceNetworkInterfacesSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// ListCloudServiceNetworkInterfacesResponder handles the response to the ListCloudServiceNetworkInterfaces request. The method always
+// closes the http.Response Body.
+func (client InterfacesClient) ListCloudServiceNetworkInterfacesResponder(resp *http.Response) (result InterfaceListResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// listCloudServiceNetworkInterfacesNextResults retrieves the next set of results, if any.
+func (client InterfacesClient) listCloudServiceNetworkInterfacesNextResults(ctx context.Context, lastResults InterfaceListResult) (result InterfaceListResult, err error) {
+	req, err := lastResults.interfaceListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "network.InterfacesClient", "listCloudServiceNetworkInterfacesNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListCloudServiceNetworkInterfacesSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "network.InterfacesClient", "listCloudServiceNetworkInterfacesNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListCloudServiceNetworkInterfacesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InterfacesClient", "listCloudServiceNetworkInterfacesNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// ListCloudServiceNetworkInterfacesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client InterfacesClient) ListCloudServiceNetworkInterfacesComplete(ctx context.Context, resourceGroupName string, cloudServiceName string) (result InterfaceListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/InterfacesClient.ListCloudServiceNetworkInterfaces")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.ListCloudServiceNetworkInterfaces(ctx, resourceGroupName, cloudServiceName)
 	return
 }
 
