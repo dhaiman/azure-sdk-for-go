@@ -1004,6 +1004,21 @@ func PossibleFirewallPolicyFilterRuleActionTypeValues() []FirewallPolicyFilterRu
 	return []FirewallPolicyFilterRuleActionType{FirewallPolicyFilterRuleActionTypeAllow, FirewallPolicyFilterRuleActionTypeDeny}
 }
 
+// FirewallPolicyIntrusionSystemMode enumerates the values for firewall policy intrusion system mode.
+type FirewallPolicyIntrusionSystemMode string
+
+const (
+	// FirewallPolicyIntrusionSystemModeDisabled ...
+	FirewallPolicyIntrusionSystemModeDisabled FirewallPolicyIntrusionSystemMode = "Disabled"
+	// FirewallPolicyIntrusionSystemModeEnabled ...
+	FirewallPolicyIntrusionSystemModeEnabled FirewallPolicyIntrusionSystemMode = "Enabled"
+)
+
+// PossibleFirewallPolicyIntrusionSystemModeValues returns an array of possible values for the FirewallPolicyIntrusionSystemMode const type.
+func PossibleFirewallPolicyIntrusionSystemModeValues() []FirewallPolicyIntrusionSystemMode {
+	return []FirewallPolicyIntrusionSystemMode{FirewallPolicyIntrusionSystemModeDisabled, FirewallPolicyIntrusionSystemModeEnabled}
+}
+
 // FirewallPolicyNatRuleActionType enumerates the values for firewall policy nat rule action type.
 type FirewallPolicyNatRuleActionType string
 
@@ -15176,6 +15191,8 @@ type FirewallPolicyPropertiesFormat struct {
 	ChildPolicies *[]SubResource `json:"childPolicies,omitempty"`
 	// ThreatIntelMode - The operation mode for Threat Intelligence. Possible values include: 'AzureFirewallThreatIntelModeAlert', 'AzureFirewallThreatIntelModeDeny', 'AzureFirewallThreatIntelModeOff'
 	ThreatIntelMode AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
+	// IntrusionSystemMode - The operation mode for Intrusion system. Possible values include: 'FirewallPolicyIntrusionSystemModeEnabled', 'FirewallPolicyIntrusionSystemModeDisabled'
+	IntrusionSystemMode FirewallPolicyIntrusionSystemMode `json:"intrusionSystemMode,omitempty"`
 }
 
 // BasicFirewallPolicyRule properties of the rule.
@@ -25789,64 +25806,6 @@ type PrivateLinkServicePropertiesAutoApproval struct {
 type PrivateLinkServicePropertiesVisibility struct {
 	// Subscriptions - The list of subscriptions.
 	Subscriptions *[]string `json:"subscriptions,omitempty"`
-}
-
-// PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture an abstraction for monitoring
-// and retrieving the results of a long-running operation.
-type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture struct {
-	azure.Future
-}
-
-// Result returns the result of the asynchronous operation.
-// If the operation has not completed it will return an error.
-func (future *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture) Result(client PrivateLinkServicesClient) (plsv PrivateLinkServiceVisibility, err error) {
-	var done bool
-	done, err = future.DoneWithContext(context.Background(), client)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture", "Result", future.Response(), "Polling failure")
-		return
-	}
-	if !done {
-		err = azure.NewAsyncOpIncompleteError("network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture")
-		return
-	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if plsv.Response.Response, err = future.GetResult(sender); err == nil && plsv.Response.Response.StatusCode != http.StatusNoContent {
-		plsv, err = client.CheckPrivateLinkServiceVisibilityByResourceGroupResponder(plsv.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupFuture", "Result", plsv.Response.Response, "Failure responding to request")
-		}
-	}
-	return
-}
-
-// PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture an abstraction for monitoring and retrieving
-// the results of a long-running operation.
-type PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture struct {
-	azure.Future
-}
-
-// Result returns the result of the asynchronous operation.
-// If the operation has not completed it will return an error.
-func (future *PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture) Result(client PrivateLinkServicesClient) (plsv PrivateLinkServiceVisibility, err error) {
-	var done bool
-	done, err = future.DoneWithContext(context.Background(), client)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture", "Result", future.Response(), "Polling failure")
-		return
-	}
-	if !done {
-		err = azure.NewAsyncOpIncompleteError("network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture")
-		return
-	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if plsv.Response.Response, err = future.GetResult(sender); err == nil && plsv.Response.Response.StatusCode != http.StatusNoContent {
-		plsv, err = client.CheckPrivateLinkServiceVisibilityResponder(plsv.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "network.PrivateLinkServicesCheckPrivateLinkServiceVisibilityFuture", "Result", plsv.Response.Response, "Failure responding to request")
-		}
-	}
-	return
 }
 
 // PrivateLinkServicesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
