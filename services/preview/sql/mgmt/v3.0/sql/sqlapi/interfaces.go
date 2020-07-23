@@ -931,18 +931,6 @@ type WorkloadClassifiersClientAPI interface {
 
 var _ WorkloadClassifiersClientAPI = (*sql.WorkloadClassifiersClient)(nil)
 
-// ServerAzureADAdministratorsClientAPI contains the set of methods on the ServerAzureADAdministratorsClient type.
-type ServerAzureADAdministratorsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, parameters sql.ServerAzureADAdministrator) (result sql.ServerAzureADAdministratorsCreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADAdministratorsDeleteFuture, err error)
-	DisableAzureADOnlyAuthentication(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADAdministrator, err error)
-	ListByServer(ctx context.Context, resourceGroupName string, serverName string) (result sql.AdministratorListResultPage, err error)
-	ListByServerComplete(ctx context.Context, resourceGroupName string, serverName string) (result sql.AdministratorListResultIterator, err error)
-}
-
-var _ ServerAzureADAdministratorsClientAPI = (*sql.ServerAzureADAdministratorsClient)(nil)
-
 // ManagedInstanceOperationsClientAPI contains the set of methods on the ManagedInstanceOperationsClient type.
 type ManagedInstanceOperationsClientAPI interface {
 	Cancel(ctx context.Context, resourceGroupName string, managedInstanceName string, operationID uuid.UUID) (result autorest.Response, err error)
@@ -952,6 +940,17 @@ type ManagedInstanceOperationsClientAPI interface {
 }
 
 var _ ManagedInstanceOperationsClientAPI = (*sql.ManagedInstanceOperationsClient)(nil)
+
+// ServerAzureADAdministratorsClientAPI contains the set of methods on the ServerAzureADAdministratorsClient type.
+type ServerAzureADAdministratorsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, parameters sql.ServerAzureADAdministrator) (result sql.ServerAzureADAdministratorsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADAdministratorsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADAdministrator, err error)
+	ListByServer(ctx context.Context, resourceGroupName string, serverName string) (result sql.AdministratorListResultPage, err error)
+	ListByServerComplete(ctx context.Context, resourceGroupName string, serverName string) (result sql.AdministratorListResultIterator, err error)
+}
+
+var _ ServerAzureADAdministratorsClientAPI = (*sql.ServerAzureADAdministratorsClient)(nil)
 
 // SyncGroupsClientAPI contains the set of methods on the SyncGroupsClient type.
 type SyncGroupsClientAPI interface {
@@ -1010,3 +1009,14 @@ type ManagedDatabasesClientAPI interface {
 }
 
 var _ ManagedDatabasesClientAPI = (*sql.ManagedDatabasesClient)(nil)
+
+// ServerAzureADOnlyAuthenticationsClientAPI contains the set of methods on the ServerAzureADOnlyAuthenticationsClient type.
+type ServerAzureADOnlyAuthenticationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, serverName string, parameters sql.ServerAzureADOnlyAuthentication) (result sql.ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADOnlyAuthenticationsDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, serverName string) (result sql.ServerAzureADOnlyAuthentication, err error)
+	ListByServer(ctx context.Context, resourceGroupName string, serverName string) (result sql.AzureADOnlyAuthListResultPage, err error)
+	ListByServerComplete(ctx context.Context, resourceGroupName string, serverName string) (result sql.AzureADOnlyAuthListResultIterator, err error)
+}
+
+var _ ServerAzureADOnlyAuthenticationsClientAPI = (*sql.ServerAzureADOnlyAuthenticationsClient)(nil)

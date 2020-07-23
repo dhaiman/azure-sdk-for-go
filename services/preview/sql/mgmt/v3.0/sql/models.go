@@ -2101,7 +2101,7 @@ type AdministratorProperties struct {
 	Sid *uuid.UUID `json:"sid,omitempty"`
 	// TenantID - Tenant ID of the administrator.
 	TenantID *uuid.UUID `json:"tenantId,omitempty"`
-	// AzureADOnlyAuthentication - Azure Active Directory only Authentication enabled.
+	// AzureADOnlyAuthentication - READ-ONLY; Azure Active Directory only Authentication enabled.
 	AzureADOnlyAuthentication *bool `json:"azureADOnlyAuthentication,omitempty"`
 }
 
@@ -2165,6 +2165,159 @@ type AutoPauseDelayTimeRange struct {
 	Unit PauseDelayTimeUnit `json:"unit,omitempty"`
 	// DoNotPauseValue - READ-ONLY; Value that is used to not pause (infinite delay before pause)
 	DoNotPauseValue *int32 `json:"doNotPauseValue,omitempty"`
+}
+
+// AzureADOnlyAuthListResult a list of active directory only authentications.
+type AzureADOnlyAuthListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; Array of results.
+	Value *[]ServerAzureADOnlyAuthentication `json:"value,omitempty"`
+	// NextLink - READ-ONLY; Link to retrieve next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// AzureADOnlyAuthListResultIterator provides access to a complete listing of
+// ServerAzureADOnlyAuthentication values.
+type AzureADOnlyAuthListResultIterator struct {
+	i    int
+	page AzureADOnlyAuthListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *AzureADOnlyAuthListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AzureADOnlyAuthListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *AzureADOnlyAuthListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter AzureADOnlyAuthListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter AzureADOnlyAuthListResultIterator) Response() AzureADOnlyAuthListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter AzureADOnlyAuthListResultIterator) Value() ServerAzureADOnlyAuthentication {
+	if !iter.page.NotDone() {
+		return ServerAzureADOnlyAuthentication{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the AzureADOnlyAuthListResultIterator type.
+func NewAzureADOnlyAuthListResultIterator(page AzureADOnlyAuthListResultPage) AzureADOnlyAuthListResultIterator {
+	return AzureADOnlyAuthListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (aaoalr AzureADOnlyAuthListResult) IsEmpty() bool {
+	return aaoalr.Value == nil || len(*aaoalr.Value) == 0
+}
+
+// azureADOnlyAuthListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (aaoalr AzureADOnlyAuthListResult) azureADOnlyAuthListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if aaoalr.NextLink == nil || len(to.String(aaoalr.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(aaoalr.NextLink)))
+}
+
+// AzureADOnlyAuthListResultPage contains a page of ServerAzureADOnlyAuthentication values.
+type AzureADOnlyAuthListResultPage struct {
+	fn     func(context.Context, AzureADOnlyAuthListResult) (AzureADOnlyAuthListResult, error)
+	aaoalr AzureADOnlyAuthListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *AzureADOnlyAuthListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AzureADOnlyAuthListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.aaoalr)
+	if err != nil {
+		return err
+	}
+	page.aaoalr = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *AzureADOnlyAuthListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page AzureADOnlyAuthListResultPage) NotDone() bool {
+	return !page.aaoalr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page AzureADOnlyAuthListResultPage) Response() AzureADOnlyAuthListResult {
+	return page.aaoalr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page AzureADOnlyAuthListResultPage) Values() []ServerAzureADOnlyAuthentication {
+	if page.aaoalr.IsEmpty() {
+		return nil
+	}
+	return *page.aaoalr.Value
+}
+
+// Creates a new instance of the AzureADOnlyAuthListResultPage type.
+func NewAzureADOnlyAuthListResultPage(getNextPage func(context.Context, AzureADOnlyAuthListResult) (AzureADOnlyAuthListResult, error)) AzureADOnlyAuthListResultPage {
+	return AzureADOnlyAuthListResultPage{fn: getNextPage}
+}
+
+// AzureADOnlyAuthProperties properties of a active directory only authentication.
+type AzureADOnlyAuthProperties struct {
+	// AzureADOnlyAuthentication - Azure Active Directory only Authentication enabled.
+	AzureADOnlyAuthentication *bool `json:"azureADOnlyAuthentication,omitempty"`
 }
 
 // BackupLongTermRetentionPoliciesCreateOrUpdateFuture an abstraction for monitoring and retrieving the
@@ -17374,32 +17527,128 @@ func (future *ServerAzureADAdministratorsDeleteFuture) Result(client ServerAzure
 	return
 }
 
-// ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture an abstraction for monitoring and
-// retrieving the results of a long-running operation.
-type ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture struct {
+// ServerAzureADOnlyAuthentication azure Active Directory only authentication.
+type ServerAzureADOnlyAuthentication struct {
+	autorest.Response `json:"-"`
+	// AzureADOnlyAuthProperties - Resource properties.
+	*AzureADOnlyAuthProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource ID.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ServerAzureADOnlyAuthentication.
+func (saaoa ServerAzureADOnlyAuthentication) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if saaoa.AzureADOnlyAuthProperties != nil {
+		objectMap["properties"] = saaoa.AzureADOnlyAuthProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ServerAzureADOnlyAuthentication struct.
+func (saaoa *ServerAzureADOnlyAuthentication) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var azureADOnlyAuthProperties AzureADOnlyAuthProperties
+				err = json.Unmarshal(*v, &azureADOnlyAuthProperties)
+				if err != nil {
+					return err
+				}
+				saaoa.AzureADOnlyAuthProperties = &azureADOnlyAuthProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				saaoa.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				saaoa.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				saaoa.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
+type ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture struct {
 	azure.Future
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture) Result(client ServerAzureADAdministratorsClient) (saaa ServerAzureADAdministrator, err error) {
+func (future *ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture) Result(client ServerAzureADOnlyAuthenticationsClient) (saaoa ServerAzureADOnlyAuthentication, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "sql.ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture", "Result", future.Response(), "Polling failure")
+		err = autorest.NewErrorWithError(err, "sql.ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
 		return
 	}
 	if !done {
-		err = azure.NewAsyncOpIncompleteError("sql.ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture")
+		err = azure.NewAsyncOpIncompleteError("sql.ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture")
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if saaa.Response.Response, err = future.GetResult(sender); err == nil && saaa.Response.Response.StatusCode != http.StatusNoContent {
-		saaa, err = client.DisableAzureADOnlyAuthenticationResponder(saaa.Response.Response)
+	if saaoa.Response.Response, err = future.GetResult(sender); err == nil && saaoa.Response.Response.StatusCode != http.StatusNoContent {
+		saaoa, err = client.CreateOrUpdateResponder(saaoa.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "sql.ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationFuture", "Result", saaa.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "sql.ServerAzureADOnlyAuthenticationsCreateOrUpdateFuture", "Result", saaoa.Response.Response, "Failure responding to request")
 		}
 	}
+	return
+}
+
+// ServerAzureADOnlyAuthenticationsDeleteFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
+type ServerAzureADOnlyAuthenticationsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *ServerAzureADOnlyAuthenticationsDeleteFuture) Result(client ServerAzureADOnlyAuthenticationsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "sql.ServerAzureADOnlyAuthenticationsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("sql.ServerAzureADOnlyAuthenticationsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
 	return
 }
 
