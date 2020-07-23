@@ -73,17 +73,17 @@ func PossibleClusterSkuNameEnumValues() []ClusterSkuNameEnum {
 type DataIngestionStatus string
 
 const (
-	// ApproachingQuota 80% of daily cap quota reached.
+	// ApproachingQuota 80% of the daily cap quota reached.
 	ApproachingQuota DataIngestionStatus = "ApproachingQuota"
 	// ForceOff Ingestion stopped following service setting change.
 	ForceOff DataIngestionStatus = "ForceOff"
 	// ForceOn Ingestion started following service setting change.
 	ForceOn DataIngestionStatus = "ForceOn"
-	// OverQuota Reached daily cap quota, ingestion stopped.
+	// OverQuota Stopped ingestion following daily cap quota reach.
 	OverQuota DataIngestionStatus = "OverQuota"
-	// RespectQuota Ingestion enabled following daily cap quota reset, or subscription enablement.
+	// RespectQuota Renewed ingestion following daily cap quota reset, or subscription activation.
 	RespectQuota DataIngestionStatus = "RespectQuota"
-	// SubscriptionSuspended Ingestion stopped following suspended subscription.
+	// SubscriptionSuspended Stopped ingestion following subscription getting into suspended state.
 	SubscriptionSuspended DataIngestionStatus = "SubscriptionSuspended"
 )
 
