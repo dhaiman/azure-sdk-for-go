@@ -59,7 +59,7 @@ type ServicesClientAPI interface {
 	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string, clientRequestID *uuid.UUID) (result search.ServiceListResultIterator, err error)
 	ListBySubscription(ctx context.Context, clientRequestID *uuid.UUID) (result search.ServiceListResultPage, err error)
 	ListBySubscriptionComplete(ctx context.Context, clientRequestID *uuid.UUID) (result search.ServiceListResultIterator, err error)
-	Update(ctx context.Context, resourceGroupName string, searchServiceName string, service search.Service, clientRequestID *uuid.UUID) (result search.Service, err error)
+	Update(ctx context.Context, resourceGroupName string, searchServiceName string, service search.ServiceUpdate, clientRequestID *uuid.UUID) (result search.Service, err error)
 }
 
 var _ ServicesClientAPI = (*search.ServicesClient)(nil)

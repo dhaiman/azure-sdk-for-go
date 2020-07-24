@@ -253,6 +253,9 @@ func (client PrivateEndpointConnectionsClient) ListByService(ctx context.Context
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "search.PrivateEndpointConnectionsClient", "ListByService", resp, "Failure responding to request")
 	}
+	if result.peclr.hasNextLink() && result.peclr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -394,9 +397,6 @@ func (client PrivateEndpointConnectionsClient) UpdatePreparer(ctx context.Contex
 		"api-version": APIVersion,
 	}
 
-	privateEndpointConnection.ID = nil
-	privateEndpointConnection.Name = nil
-	privateEndpointConnection.Type = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),

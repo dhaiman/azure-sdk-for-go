@@ -102,9 +102,6 @@ func (client SharedPrivateLinkResourcesClient) CreateOrUpdatePreparer(ctx contex
 		"api-version": APIVersion,
 	}
 
-	sharedPrivateLinkResource.Name = nil
-	sharedPrivateLinkResource.ID = nil
-	sharedPrivateLinkResource.Type = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -344,6 +341,9 @@ func (client SharedPrivateLinkResourcesClient) ListByService(ctx context.Context
 	result.splrlr, err = client.ListByServiceResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "search.SharedPrivateLinkResourcesClient", "ListByService", resp, "Failure responding to request")
+	}
+	if result.splrlr.hasNextLink() && result.splrlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
