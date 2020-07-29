@@ -161,6 +161,8 @@ type SQLResourcesClientAPI interface {
 	ListSQLStoredProcedures(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLStoredProcedureListResult, err error)
 	ListSQLTriggers(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLTriggerListResult, err error)
 	ListSQLUserDefinedFunctions(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLUserDefinedFunctionListResult, err error)
+	MigrateToAutoscaleSQLDatabase(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.SQLResourcesMigrateToAutoscaleSQLDatabaseFuture, err error)
+	MigrateToManualThroughputSQLDatabase(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.SQLResourcesMigrateToManualThroughputSQLDatabaseFuture, err error)
 	UpdateSQLContainerThroughput(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, updateThroughputParameters documentdb.ThroughputSettingsUpdateParameters) (result documentdb.SQLResourcesUpdateSQLContainerThroughputFuture, err error)
 	UpdateSQLDatabaseThroughput(ctx context.Context, resourceGroupName string, accountName string, databaseName string, updateThroughputParameters documentdb.ThroughputSettingsUpdateParameters) (result documentdb.SQLResourcesUpdateSQLDatabaseThroughputFuture, err error)
 }
