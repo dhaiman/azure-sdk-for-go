@@ -70,7 +70,7 @@ type ManagedClustersClientAPI interface {
 	ListByResourceGroupComplete(ctx context.Context, resourceGroupName string) (result containerservice.ManagedClusterListResultIterator, err error)
 	ListClusterAdminCredentials(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.CredentialResults, err error)
 	ListClusterMonitoringUserCredentials(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.CredentialResults, err error)
-	ListClusterUserCredentials(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.CredentialResults, err error)
+	ListClusterUserCredentials(ctx context.Context, resourceGroupName string, resourceName string, formatParameter containerservice.Format, login containerservice.Login) (result containerservice.CredentialResults, err error)
 	ResetAADProfile(ctx context.Context, resourceGroupName string, resourceName string, parameters containerservice.ManagedClusterAADProfile) (result containerservice.ManagedClustersResetAADProfileFuture, err error)
 	ResetServicePrincipalProfile(ctx context.Context, resourceGroupName string, resourceName string, parameters containerservice.ManagedClusterServicePrincipalProfile) (result containerservice.ManagedClustersResetServicePrincipalProfileFuture, err error)
 	RotateClusterCertificates(ctx context.Context, resourceGroupName string, resourceName string) (result containerservice.ManagedClustersRotateClusterCertificatesFuture, err error)
