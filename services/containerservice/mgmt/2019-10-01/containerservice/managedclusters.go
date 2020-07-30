@@ -542,6 +542,9 @@ func (client ManagedClustersClient) List(ctx context.Context) (result ManagedClu
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "containerservice.ManagedClustersClient", "List", resp, "Failure responding to request")
 	}
+	if result.mclr.hasNextLink() && result.mclr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -658,6 +661,9 @@ func (client ManagedClustersClient) ListByResourceGroup(ctx context.Context, res
 	result.mclr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "containerservice.ManagedClustersClient", "ListByResourceGroup", resp, "Failure responding to request")
+	}
+	if result.mclr.hasNextLink() && result.mclr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -915,7 +921,9 @@ func (client ManagedClustersClient) ListClusterMonitoringUserCredentialsResponde
 // Parameters:
 // resourceGroupName - the name of the resource group.
 // resourceName - the name of the managed cluster resource.
-func (client ManagedClustersClient) ListClusterUserCredentials(ctx context.Context, resourceGroupName string, resourceName string) (result CredentialResults, err error) {
+// formatParameter - credential Format. Possible values: azure, exec
+// login - credential Format. Possible values: devicecode, spn, msi
+func (client ManagedClustersClient) ListClusterUserCredentials(ctx context.Context, resourceGroupName string, resourceName string, formatParameter Format, login Login) (result CredentialResults, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ManagedClustersClient.ListClusterUserCredentials")
 		defer func() {
@@ -936,7 +944,7 @@ func (client ManagedClustersClient) ListClusterUserCredentials(ctx context.Conte
 		return result, validation.NewError("containerservice.ManagedClustersClient", "ListClusterUserCredentials", err.Error())
 	}
 
-	req, err := client.ListClusterUserCredentialsPreparer(ctx, resourceGroupName, resourceName)
+	req, err := client.ListClusterUserCredentialsPreparer(ctx, resourceGroupName, resourceName, formatParameter, login)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "containerservice.ManagedClustersClient", "ListClusterUserCredentials", nil, "Failure preparing request")
 		return
@@ -958,7 +966,7 @@ func (client ManagedClustersClient) ListClusterUserCredentials(ctx context.Conte
 }
 
 // ListClusterUserCredentialsPreparer prepares the ListClusterUserCredentials request.
-func (client ManagedClustersClient) ListClusterUserCredentialsPreparer(ctx context.Context, resourceGroupName string, resourceName string) (*http.Request, error) {
+func (client ManagedClustersClient) ListClusterUserCredentialsPreparer(ctx context.Context, resourceGroupName string, resourceName string, formatParameter Format, login Login) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
 		"resourceName":      autorest.Encode("path", resourceName),
@@ -968,6 +976,16 @@ func (client ManagedClustersClient) ListClusterUserCredentialsPreparer(ctx conte
 	const APIVersion = "2019-10-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
+	}
+	if len(string(formatParameter)) > 0 {
+		queryParameters["format"] = autorest.Encode("query", formatParameter)
+	} else {
+		queryParameters["format"] = autorest.Encode("query", "azure")
+	}
+	if len(string(login)) > 0 {
+		queryParameters["login"] = autorest.Encode("query", login)
+	} else {
+		queryParameters["login"] = autorest.Encode("query", "devicecode")
 	}
 
 	preparer := autorest.CreatePreparer(
