@@ -264,6 +264,9 @@ func (client ServerSecurityAlertPoliciesClient) ListByServer(ctx context.Context
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "postgresql.ServerSecurityAlertPoliciesClient", "ListByServer", resp, "Failure responding to request")
 	}
+	if result.lssaplr.hasNextLink() && result.lssaplr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
