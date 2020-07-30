@@ -95,7 +95,7 @@ func (client DedicatedHostsClient) CreateOrUpdatePreparer(ctx context.Context, r
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -174,7 +174,7 @@ func (client DedicatedHostsClient) DeletePreparer(ctx context.Context, resourceG
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -257,7 +257,7 @@ func (client DedicatedHostsClient) GetPreparer(ctx context.Context, resourceGrou
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -325,6 +325,9 @@ func (client DedicatedHostsClient) ListByHostGroup(ctx context.Context, resource
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.DedicatedHostsClient", "ListByHostGroup", resp, "Failure responding to request")
 	}
+	if result.dhlr.hasNextLink() && result.dhlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -337,7 +340,7 @@ func (client DedicatedHostsClient) ListByHostGroupPreparer(ctx context.Context, 
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -446,7 +449,7 @@ func (client DedicatedHostsClient) UpdatePreparer(ctx context.Context, resourceG
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

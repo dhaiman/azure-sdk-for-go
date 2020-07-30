@@ -87,7 +87,7 @@ func (client AvailabilitySetsClient) CreateOrUpdatePreparer(ctx context.Context,
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -164,7 +164,7 @@ func (client AvailabilitySetsClient) DeletePreparer(ctx context.Context, resourc
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -238,7 +238,7 @@ func (client AvailabilitySetsClient) GetPreparer(ctx context.Context, resourceGr
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -301,6 +301,9 @@ func (client AvailabilitySetsClient) List(ctx context.Context, resourceGroupName
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.AvailabilitySetsClient", "List", resp, "Failure responding to request")
 	}
+	if result.aslr.hasNextLink() && result.aslr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -312,7 +315,7 @@ func (client AvailabilitySetsClient) ListPreparer(ctx context.Context, resourceG
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -425,7 +428,7 @@ func (client AvailabilitySetsClient) ListAvailableSizesPreparer(ctx context.Cont
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -488,6 +491,9 @@ func (client AvailabilitySetsClient) ListBySubscription(ctx context.Context, exp
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.AvailabilitySetsClient", "ListBySubscription", resp, "Failure responding to request")
 	}
+	if result.aslr.hasNextLink() && result.aslr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -498,7 +504,7 @@ func (client AvailabilitySetsClient) ListBySubscriptionPreparer(ctx context.Cont
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -614,7 +620,7 @@ func (client AvailabilitySetsClient) UpdatePreparer(ctx context.Context, resourc
 		"subscriptionId":      autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

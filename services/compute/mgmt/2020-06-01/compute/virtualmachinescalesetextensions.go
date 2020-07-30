@@ -83,7 +83,7 @@ func (client VirtualMachineScaleSetExtensionsClient) CreateOrUpdatePreparer(ctx 
 		"vmssExtensionName": autorest.Encode("path", vmssExtensionName),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -163,7 +163,7 @@ func (client VirtualMachineScaleSetExtensionsClient) DeletePreparer(ctx context.
 		"vmssExtensionName": autorest.Encode("path", vmssExtensionName),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -246,7 +246,7 @@ func (client VirtualMachineScaleSetExtensionsClient) GetPreparer(ctx context.Con
 		"vmssExtensionName": autorest.Encode("path", vmssExtensionName),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -313,6 +313,9 @@ func (client VirtualMachineScaleSetExtensionsClient) List(ctx context.Context, r
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetExtensionsClient", "List", resp, "Failure responding to request")
 	}
+	if result.vmsselr.hasNextLink() && result.vmsselr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -325,7 +328,7 @@ func (client VirtualMachineScaleSetExtensionsClient) ListPreparer(ctx context.Co
 		"vmScaleSetName":    autorest.Encode("path", VMScaleSetName),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -434,7 +437,7 @@ func (client VirtualMachineScaleSetExtensionsClient) UpdatePreparer(ctx context.
 		"vmssExtensionName": autorest.Encode("path", vmssExtensionName),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

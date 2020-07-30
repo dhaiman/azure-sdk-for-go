@@ -80,7 +80,7 @@ func (client ImagesClient) CreateOrUpdatePreparer(ctx context.Context, resourceG
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -157,7 +157,7 @@ func (client ImagesClient) DeletePreparer(ctx context.Context, resourceGroupName
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -238,7 +238,7 @@ func (client ImagesClient) GetPreparer(ctx context.Context, resourceGroupName st
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -303,6 +303,9 @@ func (client ImagesClient) List(ctx context.Context) (result ImageListResultPage
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "List", resp, "Failure responding to request")
 	}
+	if result.ilr.hasNextLink() && result.ilr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -313,7 +316,7 @@ func (client ImagesClient) ListPreparer(ctx context.Context) (*http.Request, err
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -413,6 +416,9 @@ func (client ImagesClient) ListByResourceGroup(ctx context.Context, resourceGrou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
+	if result.ilr.hasNextLink() && result.ilr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -424,7 +430,7 @@ func (client ImagesClient) ListByResourceGroupPreparer(ctx context.Context, reso
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -531,7 +537,7 @@ func (client ImagesClient) UpdatePreparer(ctx context.Context, resourceGroupName
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

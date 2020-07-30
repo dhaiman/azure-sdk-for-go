@@ -87,7 +87,7 @@ func (client ProximityPlacementGroupsClient) CreateOrUpdatePreparer(ctx context.
 		"subscriptionId":              autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -164,7 +164,7 @@ func (client ProximityPlacementGroupsClient) DeletePreparer(ctx context.Context,
 		"subscriptionId":              autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -240,7 +240,7 @@ func (client ProximityPlacementGroupsClient) GetPreparer(ctx context.Context, re
 		"subscriptionId":              autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -306,6 +306,9 @@ func (client ProximityPlacementGroupsClient) ListByResourceGroup(ctx context.Con
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.ProximityPlacementGroupsClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
+	if result.ppglr.hasNextLink() && result.ppglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -317,7 +320,7 @@ func (client ProximityPlacementGroupsClient) ListByResourceGroupPreparer(ctx con
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -415,6 +418,9 @@ func (client ProximityPlacementGroupsClient) ListBySubscription(ctx context.Cont
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.ProximityPlacementGroupsClient", "ListBySubscription", resp, "Failure responding to request")
 	}
+	if result.ppglr.hasNextLink() && result.ppglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -425,7 +431,7 @@ func (client ProximityPlacementGroupsClient) ListBySubscriptionPreparer(ctx cont
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -538,7 +544,7 @@ func (client ProximityPlacementGroupsClient) UpdatePreparer(ctx context.Context,
 		"subscriptionId":              autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

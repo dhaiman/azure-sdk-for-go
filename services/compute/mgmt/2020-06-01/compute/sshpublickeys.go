@@ -86,7 +86,7 @@ func (client SSHPublicKeysClient) CreatePreparer(ctx context.Context, resourceGr
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -163,7 +163,7 @@ func (client SSHPublicKeysClient) DeletePreparer(ctx context.Context, resourceGr
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -239,7 +239,7 @@ func (client SSHPublicKeysClient) GenerateKeyPairPreparer(ctx context.Context, r
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -314,7 +314,7 @@ func (client SSHPublicKeysClient) GetPreparer(ctx context.Context, resourceGroup
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -378,6 +378,9 @@ func (client SSHPublicKeysClient) ListByResourceGroup(ctx context.Context, resou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.SSHPublicKeysClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
+	if result.spkglr.hasNextLink() && result.spkglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -389,7 +392,7 @@ func (client SSHPublicKeysClient) ListByResourceGroupPreparer(ctx context.Contex
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -488,6 +491,9 @@ func (client SSHPublicKeysClient) ListBySubscription(ctx context.Context) (resul
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.SSHPublicKeysClient", "ListBySubscription", resp, "Failure responding to request")
 	}
+	if result.spkglr.hasNextLink() && result.spkglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -498,7 +504,7 @@ func (client SSHPublicKeysClient) ListBySubscriptionPreparer(ctx context.Context
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -611,7 +617,7 @@ func (client SSHPublicKeysClient) UpdatePreparer(ctx context.Context, resourceGr
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

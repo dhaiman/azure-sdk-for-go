@@ -100,7 +100,7 @@ func (client DedicatedHostGroupsClient) CreateOrUpdatePreparer(ctx context.Conte
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -177,7 +177,7 @@ func (client DedicatedHostGroupsClient) DeletePreparer(ctx context.Context, reso
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -253,7 +253,7 @@ func (client DedicatedHostGroupsClient) GetPreparer(ctx context.Context, resourc
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -320,6 +320,9 @@ func (client DedicatedHostGroupsClient) ListByResourceGroup(ctx context.Context,
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.DedicatedHostGroupsClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
+	if result.dhglr.hasNextLink() && result.dhglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -331,7 +334,7 @@ func (client DedicatedHostGroupsClient) ListByResourceGroupPreparer(ctx context.
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -430,6 +433,9 @@ func (client DedicatedHostGroupsClient) ListBySubscription(ctx context.Context) 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "compute.DedicatedHostGroupsClient", "ListBySubscription", resp, "Failure responding to request")
 	}
+	if result.dhglr.hasNextLink() && result.dhglr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -440,7 +446,7 @@ func (client DedicatedHostGroupsClient) ListBySubscriptionPreparer(ctx context.C
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -553,7 +559,7 @@ func (client DedicatedHostGroupsClient) UpdatePreparer(ctx context.Context, reso
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-06-19"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
