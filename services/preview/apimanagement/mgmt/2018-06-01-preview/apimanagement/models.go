@@ -3163,6 +3163,10 @@ type ConnectivityStatusContract struct {
 	LastUpdated *date.Time `json:"lastUpdated,omitempty"`
 	// LastStatusChange - The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
 	LastStatusChange *date.Time `json:"lastStatusChange,omitempty"`
+	// ResourceType - Resource Type.
+	ResourceType *string `json:"resourceType,omitempty"`
+	// IsOptional - Whether this is optional.
+	IsOptional *bool `json:"isOptional,omitempty"`
 }
 
 // CurrentUserIdentity ...
