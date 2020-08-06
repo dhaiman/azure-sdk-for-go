@@ -21,6 +21,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/services/preview/personalizer/v1.0/personalizer"
 	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/date"
 )
 
 // BaseClientAPI contains the set of methods on the BaseClient type.
@@ -73,6 +74,13 @@ type LogClientAPI interface {
 
 var _ LogClientAPI = (*personalizer.LogClient)(nil)
 
+// LearningMetricsClientAPI contains the set of methods on the LearningMetricsClient type.
+type LearningMetricsClientAPI interface {
+	Get(ctx context.Context, startDate *date.Time, endDate *date.Time, aggregationInterval string, numberOfRecentEvents *int64, aggregationEventCount *int64) (result personalizer.ListListMetric, err error)
+}
+
+var _ LearningMetricsClientAPI = (*personalizer.LearningMetricsClient)(nil)
+
 // ModelClientAPI contains the set of methods on the ModelClient type.
 type ModelClientAPI interface {
 	Get(ctx context.Context) (result personalizer.ReadCloser, err error)
@@ -81,3 +89,14 @@ type ModelClientAPI interface {
 }
 
 var _ ModelClientAPI = (*personalizer.ModelClient)(nil)
+
+// StagedModelClientAPI contains the set of methods on the StagedModelClient type.
+type StagedModelClientAPI interface {
+	GetByID(ctx context.Context, ID string) (result personalizer.ReadCloser, err error)
+	List(ctx context.Context) (result personalizer.ListModelMetadata, err error)
+	Publish(ctx context.Context, ID string) (result autorest.Response, err error)
+	ResetByID(ctx context.Context, ID string) (result autorest.Response, err error)
+	UpdateMetadataByID(ctx context.Context, metadata personalizer.ModelMetadata, ID string) (result personalizer.ModelMetadata, err error)
+}
+
+var _ StagedModelClientAPI = (*personalizer.StagedModelClient)(nil)

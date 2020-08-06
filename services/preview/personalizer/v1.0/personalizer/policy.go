@@ -40,7 +40,7 @@ func NewPolicyClient(endpoint string) PolicyClient {
 	return PolicyClient{New(endpoint)}
 }
 
-// Get get the Learning settings currently used by the Personalizer service.
+// Get get the learning settings currently used by the Personalizer service.
 func (client PolicyClient) Get(ctx context.Context) (result PolicyContract, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolicyClient.Get")
@@ -89,8 +89,7 @@ func (client PolicyClient) GetPreparer(ctx context.Context) (*http.Request, erro
 // GetSender sends the Get request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolicyClient) GetSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetResponder handles the response to the Get request. The method always
@@ -98,7 +97,6 @@ func (client PolicyClient) GetSender(req *http.Request) (*http.Response, error) 
 func (client PolicyClient) GetResponder(resp *http.Response) (result PolicyContract, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -106,7 +104,7 @@ func (client PolicyClient) GetResponder(resp *http.Response) (result PolicyContr
 	return
 }
 
-// Reset resets the Learning settings of the Personalizer service to default.
+// Reset resets the learning settings of the Personalizer service to default.
 func (client PolicyClient) Reset(ctx context.Context) (result PolicyContract, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolicyClient.Reset")
@@ -155,8 +153,7 @@ func (client PolicyClient) ResetPreparer(ctx context.Context) (*http.Request, er
 // ResetSender sends the Reset request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolicyClient) ResetSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResetResponder handles the response to the Reset request. The method always
@@ -164,7 +161,6 @@ func (client PolicyClient) ResetSender(req *http.Request) (*http.Response, error
 func (client PolicyClient) ResetResponder(resp *http.Response) (result PolicyContract, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -172,9 +168,9 @@ func (client PolicyClient) ResetResponder(resp *http.Response) (result PolicyCon
 	return
 }
 
-// Update update the Learning settings that the Personalizer service will use to train models.
+// Update update the learning settings that the Personalizer service will use to train models.
 // Parameters:
-// policy - the Learning settings.
+// policy - the learning settings.
 func (client PolicyClient) Update(ctx context.Context, policy PolicyContract) (result PolicyContract, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolicyClient.Update")
@@ -234,8 +230,7 @@ func (client PolicyClient) UpdatePreparer(ctx context.Context, policy PolicyCont
 // UpdateSender sends the Update request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolicyClient) UpdateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // UpdateResponder handles the response to the Update request. The method always
@@ -243,7 +238,6 @@ func (client PolicyClient) UpdateSender(req *http.Request) (*http.Response, erro
 func (client PolicyClient) UpdateResponder(resp *http.Response) (result PolicyContract, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
