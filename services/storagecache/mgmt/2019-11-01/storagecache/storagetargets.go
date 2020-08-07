@@ -108,9 +108,6 @@ func (client StorageTargetsClient) CreateOrUpdatePreparer(ctx context.Context, r
 		"api-version": APIVersion,
 	}
 
-	storagetarget.Name = nil
-	storagetarget.ID = nil
-	storagetarget.Type = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -359,6 +356,9 @@ func (client StorageTargetsClient) ListByCache(ctx context.Context, resourceGrou
 	result.str, err = client.ListByCacheResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storagecache.StorageTargetsClient", "ListByCache", resp, "Failure responding to request")
+	}
+	if result.str.hasNextLink() && result.str.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return

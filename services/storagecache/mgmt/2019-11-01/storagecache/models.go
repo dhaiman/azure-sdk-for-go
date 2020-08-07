@@ -31,101 +31,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/storagecache/mgmt/2019-11-01/storagecache"
 
-// FirmwareStatusType enumerates the values for firmware status type.
-type FirmwareStatusType string
-
-const (
-	// Available ...
-	Available FirmwareStatusType = "available"
-	// Unavailable ...
-	Unavailable FirmwareStatusType = "unavailable"
-)
-
-// PossibleFirmwareStatusTypeValues returns an array of possible values for the FirmwareStatusType const type.
-func PossibleFirmwareStatusTypeValues() []FirmwareStatusType {
-	return []FirmwareStatusType{Available, Unavailable}
-}
-
-// HealthStateType enumerates the values for health state type.
-type HealthStateType string
-
-const (
-	// Degraded ...
-	Degraded HealthStateType = "Degraded"
-	// Down ...
-	Down HealthStateType = "Down"
-	// Flushing ...
-	Flushing HealthStateType = "Flushing"
-	// Healthy ...
-	Healthy HealthStateType = "Healthy"
-	// Stopped ...
-	Stopped HealthStateType = "Stopped"
-	// Stopping ...
-	Stopping HealthStateType = "Stopping"
-	// Transitioning ...
-	Transitioning HealthStateType = "Transitioning"
-	// Unknown ...
-	Unknown HealthStateType = "Unknown"
-	// Upgrading ...
-	Upgrading HealthStateType = "Upgrading"
-)
-
-// PossibleHealthStateTypeValues returns an array of possible values for the HealthStateType const type.
-func PossibleHealthStateTypeValues() []HealthStateType {
-	return []HealthStateType{Degraded, Down, Flushing, Healthy, Stopped, Stopping, Transitioning, Unknown, Upgrading}
-}
-
-// ProvisioningStateType enumerates the values for provisioning state type.
-type ProvisioningStateType string
-
-const (
-	// Cancelled ...
-	Cancelled ProvisioningStateType = "Cancelled"
-	// Creating ...
-	Creating ProvisioningStateType = "Creating"
-	// Deleting ...
-	Deleting ProvisioningStateType = "Deleting"
-	// Failed ...
-	Failed ProvisioningStateType = "Failed"
-	// Succeeded ...
-	Succeeded ProvisioningStateType = "Succeeded"
-	// Updating ...
-	Updating ProvisioningStateType = "Updating"
-)
-
-// PossibleProvisioningStateTypeValues returns an array of possible values for the ProvisioningStateType const type.
-func PossibleProvisioningStateTypeValues() []ProvisioningStateType {
-	return []ProvisioningStateType{Cancelled, Creating, Deleting, Failed, Succeeded, Updating}
-}
-
-// ReasonCode enumerates the values for reason code.
-type ReasonCode string
-
-const (
-	// NotAvailableForSubscription ...
-	NotAvailableForSubscription ReasonCode = "NotAvailableForSubscription"
-	// QuotaID ...
-	QuotaID ReasonCode = "QuotaId"
-)
-
-// PossibleReasonCodeValues returns an array of possible values for the ReasonCode const type.
-func PossibleReasonCodeValues() []ReasonCode {
-	return []ReasonCode{NotAvailableForSubscription, QuotaID}
-}
-
-// TargetType enumerates the values for target type.
-type TargetType string
-
-const (
-	// TargetTypeStorageTargetProperties ...
-	TargetTypeStorageTargetProperties TargetType = "StorageTarget_properties"
-)
-
-// PossibleTargetTypeValues returns an array of possible values for the TargetType const type.
-func PossibleTargetTypeValues() []TargetType {
-	return []TargetType{TargetTypeStorageTargetProperties}
-}
-
 // APIOperation REST API operation description: see
 // https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r3023-operationsapiimplementation
 type APIOperation struct {
@@ -223,10 +128,15 @@ func (aolr APIOperationListResult) IsEmpty() bool {
 	return aolr.Value == nil || len(*aolr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (aolr APIOperationListResult) hasNextLink() bool {
+	return aolr.NextLink != nil && len(*aolr.NextLink) != 0
+}
+
 // aPIOperationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (aolr APIOperationListResult) aPIOperationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if aolr.NextLink == nil || len(to.String(aolr.NextLink)) < 1 {
+	if !aolr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -254,11 +164,16 @@ func (page *APIOperationListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.aolr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.aolr)
+		if err != nil {
+			return err
+		}
+		page.aolr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.aolr = next
 	return nil
 }
 
@@ -433,6 +348,24 @@ type CacheProperties struct {
 	UpgradeStatus *CacheUpgradeStatus `json:"upgradeStatus,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for CacheProperties.
+func (c CacheProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if c.CacheSizeGB != nil {
+		objectMap["cacheSizeGB"] = c.CacheSizeGB
+	}
+	if c.ProvisioningState != "" {
+		objectMap["provisioningState"] = c.ProvisioningState
+	}
+	if c.Subnet != nil {
+		objectMap["subnet"] = c.Subnet
+	}
+	if c.UpgradeStatus != nil {
+		objectMap["upgradeStatus"] = c.UpgradeStatus
+	}
+	return json.Marshal(objectMap)
+}
+
 // CachesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type CachesCreateOrUpdateFuture struct {
@@ -524,8 +457,8 @@ type CacheSku struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// CachesListResult result of the request to list Caches. It contains a list of Caches and a URL link to
-// get the next set of results.
+// CachesListResult result of the request to list Caches. It contains a list of Caches and a URL link to get
+// the next set of results.
 type CachesListResult struct {
 	autorest.Response `json:"-"`
 	// NextLink - URL to get the next set of Cache list results, if there are any.
@@ -602,10 +535,15 @@ func (clr CachesListResult) IsEmpty() bool {
 	return clr.Value == nil || len(*clr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (clr CachesListResult) hasNextLink() bool {
+	return clr.NextLink != nil && len(*clr.NextLink) != 0
+}
+
 // cachesListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (clr CachesListResult) cachesListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if clr.NextLink == nil || len(to.String(clr.NextLink)) < 1 {
+	if !clr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -633,11 +571,16 @@ func (page *CachesListResultPage) NextWithContext(ctx context.Context) (err erro
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.clr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.clr)
+		if err != nil {
+			return err
+		}
+		page.clr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.clr = next
 	return nil
 }
 
@@ -776,6 +719,72 @@ type ClfsTarget struct {
 	Target *string `json:"target,omitempty"`
 }
 
+// ClfsTargetProperties storage container for use as a CLFS Storage Target.
+type ClfsTargetProperties struct {
+	// Junctions - List of Cache namespace junctions to target for namespace associations.
+	Junctions *[]NamespaceJunction `json:"junctions,omitempty"`
+	// ProvisioningState - ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting', 'Updating'
+	ProvisioningState ProvisioningStateType `json:"provisioningState,omitempty"`
+	// Nfs3 - Properties when targetType is nfs3.
+	Nfs3 *Nfs3Target `json:"nfs3,omitempty"`
+	// Clfs - Properties when targetType is clfs.
+	Clfs *ClfsTarget `json:"clfs,omitempty"`
+	// Unknown - Properties when targetType is unknown.
+	Unknown *UnknownTarget `json:"unknown,omitempty"`
+	// TargetType - Possible values include: 'TargetTypeStorageTargetProperties', 'TargetTypeNfs3', 'TargetTypeClfs', 'TargetTypeUnknown'
+	TargetType TargetType `json:"targetType,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) MarshalJSON() ([]byte, error) {
+	ctp.TargetType = TargetTypeClfs
+	objectMap := make(map[string]interface{})
+	if ctp.Junctions != nil {
+		objectMap["junctions"] = ctp.Junctions
+	}
+	if ctp.ProvisioningState != "" {
+		objectMap["provisioningState"] = ctp.ProvisioningState
+	}
+	if ctp.Nfs3 != nil {
+		objectMap["nfs3"] = ctp.Nfs3
+	}
+	if ctp.Clfs != nil {
+		objectMap["clfs"] = ctp.Clfs
+	}
+	if ctp.Unknown != nil {
+		objectMap["unknown"] = ctp.Unknown
+	}
+	if ctp.TargetType != "" {
+		objectMap["targetType"] = ctp.TargetType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsNfs3TargetProperties is the BasicStorageTargetProperties implementation for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) AsNfs3TargetProperties() (*Nfs3TargetProperties, bool) {
+	return nil, false
+}
+
+// AsClfsTargetProperties is the BasicStorageTargetProperties implementation for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) AsClfsTargetProperties() (*ClfsTargetProperties, bool) {
+	return &ctp, true
+}
+
+// AsUnknownTargetProperties is the BasicStorageTargetProperties implementation for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) AsUnknownTargetProperties() (*UnknownTargetProperties, bool) {
+	return nil, false
+}
+
+// AsStorageTargetProperties is the BasicStorageTargetProperties implementation for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) AsStorageTargetProperties() (*StorageTargetProperties, bool) {
+	return nil, false
+}
+
+// AsBasicStorageTargetProperties is the BasicStorageTargetProperties implementation for ClfsTargetProperties.
+func (ctp ClfsTargetProperties) AsBasicStorageTargetProperties() (BasicStorageTargetProperties, bool) {
+	return &ctp, true
+}
+
 // CloudError an error response.
 type CloudError struct {
 	// Error - The body of the error.
@@ -812,6 +821,72 @@ type Nfs3Target struct {
 	UsageModel *string `json:"usageModel,omitempty"`
 }
 
+// Nfs3TargetProperties an NFSv3 mount point for use as a Storage Target.
+type Nfs3TargetProperties struct {
+	// Junctions - List of Cache namespace junctions to target for namespace associations.
+	Junctions *[]NamespaceJunction `json:"junctions,omitempty"`
+	// ProvisioningState - ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting', 'Updating'
+	ProvisioningState ProvisioningStateType `json:"provisioningState,omitempty"`
+	// Nfs3 - Properties when targetType is nfs3.
+	Nfs3 *Nfs3Target `json:"nfs3,omitempty"`
+	// Clfs - Properties when targetType is clfs.
+	Clfs *ClfsTarget `json:"clfs,omitempty"`
+	// Unknown - Properties when targetType is unknown.
+	Unknown *UnknownTarget `json:"unknown,omitempty"`
+	// TargetType - Possible values include: 'TargetTypeStorageTargetProperties', 'TargetTypeNfs3', 'TargetTypeClfs', 'TargetTypeUnknown'
+	TargetType TargetType `json:"targetType,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) MarshalJSON() ([]byte, error) {
+	n3tp.TargetType = TargetTypeNfs3
+	objectMap := make(map[string]interface{})
+	if n3tp.Junctions != nil {
+		objectMap["junctions"] = n3tp.Junctions
+	}
+	if n3tp.ProvisioningState != "" {
+		objectMap["provisioningState"] = n3tp.ProvisioningState
+	}
+	if n3tp.Nfs3 != nil {
+		objectMap["nfs3"] = n3tp.Nfs3
+	}
+	if n3tp.Clfs != nil {
+		objectMap["clfs"] = n3tp.Clfs
+	}
+	if n3tp.Unknown != nil {
+		objectMap["unknown"] = n3tp.Unknown
+	}
+	if n3tp.TargetType != "" {
+		objectMap["targetType"] = n3tp.TargetType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsNfs3TargetProperties is the BasicStorageTargetProperties implementation for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) AsNfs3TargetProperties() (*Nfs3TargetProperties, bool) {
+	return &n3tp, true
+}
+
+// AsClfsTargetProperties is the BasicStorageTargetProperties implementation for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) AsClfsTargetProperties() (*ClfsTargetProperties, bool) {
+	return nil, false
+}
+
+// AsUnknownTargetProperties is the BasicStorageTargetProperties implementation for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) AsUnknownTargetProperties() (*UnknownTargetProperties, bool) {
+	return nil, false
+}
+
+// AsStorageTargetProperties is the BasicStorageTargetProperties implementation for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) AsStorageTargetProperties() (*StorageTargetProperties, bool) {
+	return nil, false
+}
+
+// AsBasicStorageTargetProperties is the BasicStorageTargetProperties implementation for Nfs3TargetProperties.
+func (n3tp Nfs3TargetProperties) AsBasicStorageTargetProperties() (BasicStorageTargetProperties, bool) {
+	return &n3tp, true
+}
+
 // ResourceSku a resource SKU.
 type ResourceSku struct {
 	// ResourceType - READ-ONLY; The type of resource the SKU applies to.
@@ -826,6 +901,24 @@ type ResourceSku struct {
 	Name *string `json:"name,omitempty"`
 	// Restrictions - The restrictions preventing this SKU from being used. This is empty if there are no restrictions.
 	Restrictions *[]Restriction `json:"restrictions,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ResourceSku.
+func (rs ResourceSku) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if rs.Capabilities != nil {
+		objectMap["capabilities"] = rs.Capabilities
+	}
+	if rs.LocationInfo != nil {
+		objectMap["locationInfo"] = rs.LocationInfo
+	}
+	if rs.Name != nil {
+		objectMap["name"] = rs.Name
+	}
+	if rs.Restrictions != nil {
+		objectMap["restrictions"] = rs.Restrictions
+	}
+	return json.Marshal(objectMap)
 }
 
 // ResourceSkuCapabilities a resource SKU capability.
@@ -851,6 +944,15 @@ type ResourceSkusResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 	// Value - READ-ONLY; The list of SKUs available for the subscription.
 	Value *[]ResourceSku `json:"value,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ResourceSkusResult.
+func (rsr ResourceSkusResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if rsr.NextLink != nil {
+		objectMap["nextLink"] = rsr.NextLink
+	}
+	return json.Marshal(objectMap)
 }
 
 // ResourceSkusResultIterator provides access to a complete listing of ResourceSku values.
@@ -921,10 +1023,15 @@ func (rsr ResourceSkusResult) IsEmpty() bool {
 	return rsr.Value == nil || len(*rsr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (rsr ResourceSkusResult) hasNextLink() bool {
+	return rsr.NextLink != nil && len(*rsr.NextLink) != 0
+}
+
 // resourceSkusResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rsr ResourceSkusResult) resourceSkusResultPreparer(ctx context.Context) (*http.Request, error) {
-	if rsr.NextLink == nil || len(to.String(rsr.NextLink)) < 1 {
+	if !rsr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -952,11 +1059,16 @@ func (page *ResourceSkusResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.rsr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.rsr)
+		if err != nil {
+			return err
+		}
+		page.rsr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.rsr = next
 	return nil
 }
 
@@ -1000,6 +1112,15 @@ type Restriction struct {
 	ReasonCode ReasonCode `json:"reasonCode,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for Restriction.
+func (r Restriction) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.ReasonCode != "" {
+		objectMap["reasonCode"] = r.ReasonCode
+	}
+	return json.Marshal(objectMap)
+}
+
 // SetObject ...
 type SetObject struct {
 	autorest.Response `json:"-"`
@@ -1009,14 +1130,14 @@ type SetObject struct {
 // StorageTarget a storage system being cached by a Cache.
 type StorageTarget struct {
 	autorest.Response `json:"-"`
+	// BasicStorageTargetProperties - StorageTarget properties
+	BasicStorageTargetProperties `json:"properties,omitempty"`
 	// Name - READ-ONLY; Name of the Storage Target.
 	Name *string `json:"name,omitempty"`
 	// ID - READ-ONLY; Resource ID of the Storage Target.
 	ID *string `json:"id,omitempty"`
 	// Type - READ-ONLY; Type of the Storage Target; Microsoft.StorageCache/Cache/StorageTarget
 	Type *string `json:"type,omitempty"`
-	// BasicStorageTargetProperties - Properties of the Storage Target.
-	BasicStorageTargetProperties `json:"properties,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for StorageTarget.
@@ -1035,6 +1156,14 @@ func (st *StorageTarget) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "properties":
+			if v != nil {
+				basicStorageTargetProperties, err := unmarshalBasicStorageTargetProperties(*v)
+				if err != nil {
+					return err
+				}
+				st.BasicStorageTargetProperties = basicStorageTargetProperties
+			}
 		case "name":
 			if v != nil {
 				var name string
@@ -1062,14 +1191,6 @@ func (st *StorageTarget) UnmarshalJSON(body []byte) error {
 				}
 				st.Type = &typeVar
 			}
-		case "properties":
-			if v != nil {
-				basicStorageTargetProperties, err := unmarshalBasicStorageTargetProperties(*v)
-				if err != nil {
-					return err
-				}
-				st.BasicStorageTargetProperties = basicStorageTargetProperties
-			}
 		}
 	}
 
@@ -1078,6 +1199,9 @@ func (st *StorageTarget) UnmarshalJSON(body []byte) error {
 
 // BasicStorageTargetProperties properties of the Storage Target.
 type BasicStorageTargetProperties interface {
+	AsNfs3TargetProperties() (*Nfs3TargetProperties, bool)
+	AsClfsTargetProperties() (*ClfsTargetProperties, bool)
+	AsUnknownTargetProperties() (*UnknownTargetProperties, bool)
 	AsStorageTargetProperties() (*StorageTargetProperties, bool)
 }
 
@@ -1093,7 +1217,7 @@ type StorageTargetProperties struct {
 	Clfs *ClfsTarget `json:"clfs,omitempty"`
 	// Unknown - Properties when targetType is unknown.
 	Unknown *UnknownTarget `json:"unknown,omitempty"`
-	// TargetType - Possible values include: 'TargetTypeStorageTargetProperties'
+	// TargetType - Possible values include: 'TargetTypeStorageTargetProperties', 'TargetTypeNfs3', 'TargetTypeClfs', 'TargetTypeUnknown'
 	TargetType TargetType `json:"targetType,omitempty"`
 }
 
@@ -1105,10 +1229,22 @@ func unmarshalBasicStorageTargetProperties(body []byte) (BasicStorageTargetPrope
 	}
 
 	switch m["targetType"] {
+	case string(TargetTypeNfs3):
+		var n3tp Nfs3TargetProperties
+		err := json.Unmarshal(body, &n3tp)
+		return n3tp, err
+	case string(TargetTypeClfs):
+		var ctp ClfsTargetProperties
+		err := json.Unmarshal(body, &ctp)
+		return ctp, err
+	case string(TargetTypeUnknown):
+		var utp UnknownTargetProperties
+		err := json.Unmarshal(body, &utp)
+		return utp, err
 	default:
-		var st StorageTargetProperties
-		err := json.Unmarshal(body, &st)
-		return st, err
+		var stp StorageTargetProperties
+		err := json.Unmarshal(body, &stp)
+		return stp, err
 	}
 }
 func unmarshalBasicStorageTargetPropertiesArray(body []byte) ([]BasicStorageTargetProperties, error) {
@@ -1118,51 +1254,76 @@ func unmarshalBasicStorageTargetPropertiesArray(body []byte) ([]BasicStorageTarg
 		return nil, err
 	}
 
-	stArray := make([]BasicStorageTargetProperties, len(rawMessages))
+	stpArray := make([]BasicStorageTargetProperties, len(rawMessages))
 
 	for index, rawMessage := range rawMessages {
-		st, err := unmarshalBasicStorageTargetProperties(*rawMessage)
+		stp, err := unmarshalBasicStorageTargetProperties(*rawMessage)
 		if err != nil {
 			return nil, err
 		}
-		stArray[index] = st
+		stpArray[index] = stp
 	}
-	return stArray, nil
+	return stpArray, nil
 }
 
 // MarshalJSON is the custom marshaler for StorageTargetProperties.
-func (st StorageTargetProperties) MarshalJSON() ([]byte, error) {
-	st.TargetType = TargetTypeStorageTargetProperties
+func (stp StorageTargetProperties) MarshalJSON() ([]byte, error) {
+	stp.TargetType = TargetTypeStorageTargetProperties
 	objectMap := make(map[string]interface{})
-	if st.Junctions != nil {
-		objectMap["junctions"] = st.Junctions
+	if stp.Junctions != nil {
+		objectMap["junctions"] = stp.Junctions
 	}
-	if st.ProvisioningState != "" {
-		objectMap["provisioningState"] = st.ProvisioningState
+	if stp.ProvisioningState != "" {
+		objectMap["provisioningState"] = stp.ProvisioningState
 	}
-	if st.Nfs3 != nil {
-		objectMap["nfs3"] = st.Nfs3
+	if stp.Nfs3 != nil {
+		objectMap["nfs3"] = stp.Nfs3
 	}
-	if st.Clfs != nil {
-		objectMap["clfs"] = st.Clfs
+	if stp.Clfs != nil {
+		objectMap["clfs"] = stp.Clfs
 	}
-	if st.Unknown != nil {
-		objectMap["unknown"] = st.Unknown
+	if stp.Unknown != nil {
+		objectMap["unknown"] = stp.Unknown
 	}
-	if st.TargetType != "" {
-		objectMap["targetType"] = st.TargetType
+	if stp.TargetType != "" {
+		objectMap["targetType"] = stp.TargetType
 	}
 	return json.Marshal(objectMap)
 }
 
+// AsNfs3TargetProperties is the BasicStorageTargetProperties implementation for StorageTargetProperties.
+func (stp StorageTargetProperties) AsNfs3TargetProperties() (*Nfs3TargetProperties, bool) {
+	return nil, false
+}
+
+// AsClfsTargetProperties is the BasicStorageTargetProperties implementation for StorageTargetProperties.
+func (stp StorageTargetProperties) AsClfsTargetProperties() (*ClfsTargetProperties, bool) {
+	return nil, false
+}
+
+// AsUnknownTargetProperties is the BasicStorageTargetProperties implementation for StorageTargetProperties.
+func (stp StorageTargetProperties) AsUnknownTargetProperties() (*UnknownTargetProperties, bool) {
+	return nil, false
+}
+
 // AsStorageTargetProperties is the BasicStorageTargetProperties implementation for StorageTargetProperties.
-func (st StorageTargetProperties) AsStorageTargetProperties() (*StorageTargetProperties, bool) {
-	return &st, true
+func (stp StorageTargetProperties) AsStorageTargetProperties() (*StorageTargetProperties, bool) {
+	return &stp, true
 }
 
 // AsBasicStorageTargetProperties is the BasicStorageTargetProperties implementation for StorageTargetProperties.
-func (st StorageTargetProperties) AsBasicStorageTargetProperties() (BasicStorageTargetProperties, bool) {
-	return &st, true
+func (stp StorageTargetProperties) AsBasicStorageTargetProperties() (BasicStorageTargetProperties, bool) {
+	return &stp, true
+}
+
+// StorageTargetResource resource used by a Cache.
+type StorageTargetResource struct {
+	// Name - READ-ONLY; Name of the Storage Target.
+	Name *string `json:"name,omitempty"`
+	// ID - READ-ONLY; Resource ID of the Storage Target.
+	ID *string `json:"id,omitempty"`
+	// Type - READ-ONLY; Type of the Storage Target; Microsoft.StorageCache/Cache/StorageTarget
+	Type *string `json:"type,omitempty"`
 }
 
 // StorageTargetsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -1300,10 +1461,15 @@ func (str StorageTargetsResult) IsEmpty() bool {
 	return str.Value == nil || len(*str.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (str StorageTargetsResult) hasNextLink() bool {
+	return str.NextLink != nil && len(*str.NextLink) != 0
+}
+
 // storageTargetsResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (str StorageTargetsResult) storageTargetsResultPreparer(ctx context.Context) (*http.Request, error) {
-	if str.NextLink == nil || len(to.String(str.NextLink)) < 1 {
+	if !str.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1331,11 +1497,16 @@ func (page *StorageTargetsResultPage) NextWithContext(ctx context.Context) (err 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.str)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.str)
+		if err != nil {
+			return err
+		}
+		page.str = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.str = next
 	return nil
 }
 
@@ -1382,6 +1553,72 @@ func (ut UnknownTarget) MarshalJSON() ([]byte, error) {
 		objectMap["unknownMap"] = ut.UnknownMap
 	}
 	return json.Marshal(objectMap)
+}
+
+// UnknownTargetProperties storage container for use as an Unknown Storage Target.
+type UnknownTargetProperties struct {
+	// Junctions - List of Cache namespace junctions to target for namespace associations.
+	Junctions *[]NamespaceJunction `json:"junctions,omitempty"`
+	// ProvisioningState - ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting', 'Updating'
+	ProvisioningState ProvisioningStateType `json:"provisioningState,omitempty"`
+	// Nfs3 - Properties when targetType is nfs3.
+	Nfs3 *Nfs3Target `json:"nfs3,omitempty"`
+	// Clfs - Properties when targetType is clfs.
+	Clfs *ClfsTarget `json:"clfs,omitempty"`
+	// Unknown - Properties when targetType is unknown.
+	Unknown *UnknownTarget `json:"unknown,omitempty"`
+	// TargetType - Possible values include: 'TargetTypeStorageTargetProperties', 'TargetTypeNfs3', 'TargetTypeClfs', 'TargetTypeUnknown'
+	TargetType TargetType `json:"targetType,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for UnknownTargetProperties.
+func (utp UnknownTargetProperties) MarshalJSON() ([]byte, error) {
+	utp.TargetType = TargetTypeUnknown
+	objectMap := make(map[string]interface{})
+	if utp.Junctions != nil {
+		objectMap["junctions"] = utp.Junctions
+	}
+	if utp.ProvisioningState != "" {
+		objectMap["provisioningState"] = utp.ProvisioningState
+	}
+	if utp.Nfs3 != nil {
+		objectMap["nfs3"] = utp.Nfs3
+	}
+	if utp.Clfs != nil {
+		objectMap["clfs"] = utp.Clfs
+	}
+	if utp.Unknown != nil {
+		objectMap["unknown"] = utp.Unknown
+	}
+	if utp.TargetType != "" {
+		objectMap["targetType"] = utp.TargetType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsNfs3TargetProperties is the BasicStorageTargetProperties implementation for UnknownTargetProperties.
+func (utp UnknownTargetProperties) AsNfs3TargetProperties() (*Nfs3TargetProperties, bool) {
+	return nil, false
+}
+
+// AsClfsTargetProperties is the BasicStorageTargetProperties implementation for UnknownTargetProperties.
+func (utp UnknownTargetProperties) AsClfsTargetProperties() (*ClfsTargetProperties, bool) {
+	return nil, false
+}
+
+// AsUnknownTargetProperties is the BasicStorageTargetProperties implementation for UnknownTargetProperties.
+func (utp UnknownTargetProperties) AsUnknownTargetProperties() (*UnknownTargetProperties, bool) {
+	return &utp, true
+}
+
+// AsStorageTargetProperties is the BasicStorageTargetProperties implementation for UnknownTargetProperties.
+func (utp UnknownTargetProperties) AsStorageTargetProperties() (*StorageTargetProperties, bool) {
+	return nil, false
+}
+
+// AsBasicStorageTargetProperties is the BasicStorageTargetProperties implementation for UnknownTargetProperties.
+func (utp UnknownTargetProperties) AsBasicStorageTargetProperties() (BasicStorageTargetProperties, bool) {
+	return &utp, true
 }
 
 // UsageModel a usage model.
@@ -1477,10 +1714,15 @@ func (umr UsageModelsResult) IsEmpty() bool {
 	return umr.Value == nil || len(*umr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (umr UsageModelsResult) hasNextLink() bool {
+	return umr.NextLink != nil && len(*umr.NextLink) != 0
+}
+
 // usageModelsResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (umr UsageModelsResult) usageModelsResultPreparer(ctx context.Context) (*http.Request, error) {
-	if umr.NextLink == nil || len(to.String(umr.NextLink)) < 1 {
+	if !umr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1508,11 +1750,16 @@ func (page *UsageModelsResultPage) NextWithContext(ctx context.Context) (err err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.umr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.umr)
+		if err != nil {
+			return err
+		}
+		page.umr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.umr = next
 	return nil
 }
 
