@@ -72,9 +72,6 @@ func (client ClassicAdministratorsClient) List(ctx context.Context) (result Clas
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.ClassicAdministratorsClient", "List", resp, "Failure responding to request")
 	}
-	if result.calr.hasNextLink() && result.calr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

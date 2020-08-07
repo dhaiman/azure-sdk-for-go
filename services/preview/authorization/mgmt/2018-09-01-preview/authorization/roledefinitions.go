@@ -378,9 +378,6 @@ func (client RoleDefinitionsClient) List(ctx context.Context, scope string, filt
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.RoleDefinitionsClient", "List", resp, "Failure responding to request")
 	}
-	if result.rdlr.hasNextLink() && result.rdlr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
