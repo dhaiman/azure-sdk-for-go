@@ -554,9 +554,6 @@ func (client RoleAssignmentsClient) List(ctx context.Context, filter string) (re
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.RoleAssignmentsClient", "List", resp, "Failure responding to request")
 	}
-	if result.ralr.hasNextLink() && result.ralr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -676,9 +673,6 @@ func (client RoleAssignmentsClient) ListForResource(ctx context.Context, resourc
 	result.ralr, err = client.ListForResourceResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.RoleAssignmentsClient", "ListForResource", resp, "Failure responding to request")
-	}
-	if result.ralr.hasNextLink() && result.ralr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -801,9 +795,6 @@ func (client RoleAssignmentsClient) ListForResourceGroup(ctx context.Context, re
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.RoleAssignmentsClient", "ListForResourceGroup", resp, "Failure responding to request")
 	}
-	if result.ralr.hasNextLink() && result.ralr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -920,9 +911,6 @@ func (client RoleAssignmentsClient) ListForScope(ctx context.Context, scope stri
 	result.ralr, err = client.ListForScopeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "authorization.RoleAssignmentsClient", "ListForScope", resp, "Failure responding to request")
-	}
-	if result.ralr.hasNextLink() && result.ralr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
