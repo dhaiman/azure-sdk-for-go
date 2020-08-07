@@ -72,9 +72,6 @@ func (client UsageModelsClient) List(ctx context.Context) (result UsageModelsRes
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storagecache.UsageModelsClient", "List", resp, "Failure responding to request")
 	}
-	if result.umr.hasNextLink() && result.umr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
