@@ -408,9 +408,6 @@ func (client CachesClient) List(ctx context.Context) (result CachesListResultPag
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storagecache.CachesClient", "List", resp, "Failure responding to request")
 	}
-	if result.clr.hasNextLink() && result.clr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -520,9 +517,6 @@ func (client CachesClient) ListByResourceGroup(ctx context.Context, resourceGrou
 	result.clr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storagecache.CachesClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.clr.hasNextLink() && result.clr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
