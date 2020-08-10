@@ -311,9 +311,6 @@ func (client ExpressRouteCircuitAuthorizationsClient) List(ctx context.Context, 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.ExpressRouteCircuitAuthorizationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.alr.hasNextLink() && result.alr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
