@@ -76,9 +76,6 @@ func (client AvailableResourceGroupDelegationsClient) List(ctx context.Context, 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AvailableResourceGroupDelegationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.adr.hasNextLink() && result.adr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

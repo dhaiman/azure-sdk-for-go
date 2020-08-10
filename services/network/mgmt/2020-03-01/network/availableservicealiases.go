@@ -74,9 +74,6 @@ func (client AvailableServiceAliasesClient) List(ctx context.Context, location s
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AvailableServiceAliasesClient", "List", resp, "Failure responding to request")
 	}
-	if result.asar.hasNextLink() && result.asar.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -188,9 +185,6 @@ func (client AvailableServiceAliasesClient) ListByResourceGroup(ctx context.Cont
 	result.asar, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AvailableServiceAliasesClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.asar.hasNextLink() && result.asar.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return

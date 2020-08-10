@@ -300,9 +300,6 @@ func (client SecurityPartnerProvidersClient) List(ctx context.Context) (result S
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.SecurityPartnerProvidersClient", "List", resp, "Failure responding to request")
 	}
-	if result.spplr.hasNextLink() && result.spplr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -412,9 +409,6 @@ func (client SecurityPartnerProvidersClient) ListByResourceGroup(ctx context.Con
 	result.spplr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.SecurityPartnerProvidersClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.spplr.hasNextLink() && result.spplr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
