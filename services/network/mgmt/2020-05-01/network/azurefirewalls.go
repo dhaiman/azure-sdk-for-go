@@ -309,9 +309,6 @@ func (client AzureFirewallsClient) List(ctx context.Context, resourceGroupName s
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AzureFirewallsClient", "List", resp, "Failure responding to request")
 	}
-	if result.aflr.hasNextLink() && result.aflr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -420,9 +417,6 @@ func (client AzureFirewallsClient) ListAll(ctx context.Context) (result AzureFir
 	result.aflr, err = client.ListAllResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AzureFirewallsClient", "ListAll", resp, "Failure responding to request")
-	}
-	if result.aflr.hasNextLink() && result.aflr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
