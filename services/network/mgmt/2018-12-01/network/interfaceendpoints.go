@@ -305,9 +305,6 @@ func (client InterfaceEndpointsClient) List(ctx context.Context, resourceGroupNa
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.InterfaceEndpointsClient", "List", resp, "Failure responding to request")
 	}
-	if result.ielr.hasNextLink() && result.ielr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -416,9 +413,6 @@ func (client InterfaceEndpointsClient) ListBySubscription(ctx context.Context) (
 	result.ielr, err = client.ListBySubscriptionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.InterfaceEndpointsClient", "ListBySubscription", resp, "Failure responding to request")
-	}
-	if result.ielr.hasNextLink() && result.ielr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
