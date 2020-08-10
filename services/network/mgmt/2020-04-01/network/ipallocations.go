@@ -303,9 +303,6 @@ func (client IPAllocationsClient) List(ctx context.Context) (result IPAllocation
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.IPAllocationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.ialr.hasNextLink() && result.ialr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -415,9 +412,6 @@ func (client IPAllocationsClient) ListByResourceGroup(ctx context.Context, resou
 	result.ialr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.IPAllocationsClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.ialr.hasNextLink() && result.ialr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
