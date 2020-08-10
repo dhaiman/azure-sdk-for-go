@@ -487,3 +487,14 @@ type ConnectorsClientAPI interface {
 }
 
 var _ ConnectorsClientAPI = (*security.ConnectorsClient)(nil)
+
+// IotDefenderSettingsClientAPI contains the set of methods on the IotDefenderSettingsClient type.
+type IotDefenderSettingsClientAPI interface {
+	CreateOrUpdate(ctx context.Context) (result security.IotDefenderSettingsModel, err error)
+	Delete(ctx context.Context) (result autorest.Response, err error)
+	DownloadOnPremiseActivation(ctx context.Context) (result autorest.Response, err error)
+	Get(ctx context.Context) (result security.IotDefenderSettingsModel, err error)
+	List(ctx context.Context) (result security.IotDefenderSettingsList, err error)
+}
+
+var _ IotDefenderSettingsClientAPI = (*security.IotDefenderSettingsClient)(nil)
