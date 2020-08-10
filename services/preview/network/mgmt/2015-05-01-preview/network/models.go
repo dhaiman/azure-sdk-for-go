@@ -30,6 +30,430 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/network/mgmt/2015-05-01-preview/network"
 
+// ApplicationGatewayCookieBasedAffinity enumerates the values for application gateway cookie based affinity.
+type ApplicationGatewayCookieBasedAffinity string
+
+const (
+	// Disabled ...
+	Disabled ApplicationGatewayCookieBasedAffinity = "Disabled"
+	// Enabled ...
+	Enabled ApplicationGatewayCookieBasedAffinity = "Enabled"
+)
+
+// PossibleApplicationGatewayCookieBasedAffinityValues returns an array of possible values for the ApplicationGatewayCookieBasedAffinity const type.
+func PossibleApplicationGatewayCookieBasedAffinityValues() []ApplicationGatewayCookieBasedAffinity {
+	return []ApplicationGatewayCookieBasedAffinity{Disabled, Enabled}
+}
+
+// ApplicationGatewayOperationalState enumerates the values for application gateway operational state.
+type ApplicationGatewayOperationalState string
+
+const (
+	// Running ...
+	Running ApplicationGatewayOperationalState = "Running"
+	// Starting ...
+	Starting ApplicationGatewayOperationalState = "Starting"
+	// Stopped ...
+	Stopped ApplicationGatewayOperationalState = "Stopped"
+	// Stopping ...
+	Stopping ApplicationGatewayOperationalState = "Stopping"
+)
+
+// PossibleApplicationGatewayOperationalStateValues returns an array of possible values for the ApplicationGatewayOperationalState const type.
+func PossibleApplicationGatewayOperationalStateValues() []ApplicationGatewayOperationalState {
+	return []ApplicationGatewayOperationalState{Running, Starting, Stopped, Stopping}
+}
+
+// ApplicationGatewayProtocol enumerates the values for application gateway protocol.
+type ApplicationGatewayProtocol string
+
+const (
+	// HTTP ...
+	HTTP ApplicationGatewayProtocol = "Http"
+	// HTTPS ...
+	HTTPS ApplicationGatewayProtocol = "Https"
+)
+
+// PossibleApplicationGatewayProtocolValues returns an array of possible values for the ApplicationGatewayProtocol const type.
+func PossibleApplicationGatewayProtocolValues() []ApplicationGatewayProtocol {
+	return []ApplicationGatewayProtocol{HTTP, HTTPS}
+}
+
+// ApplicationGatewayRequestRoutingRuleType enumerates the values for application gateway request routing rule
+// type.
+type ApplicationGatewayRequestRoutingRuleType string
+
+const (
+	// Basic ...
+	Basic ApplicationGatewayRequestRoutingRuleType = "Basic"
+)
+
+// PossibleApplicationGatewayRequestRoutingRuleTypeValues returns an array of possible values for the ApplicationGatewayRequestRoutingRuleType const type.
+func PossibleApplicationGatewayRequestRoutingRuleTypeValues() []ApplicationGatewayRequestRoutingRuleType {
+	return []ApplicationGatewayRequestRoutingRuleType{Basic}
+}
+
+// ApplicationGatewaySkuName enumerates the values for application gateway sku name.
+type ApplicationGatewaySkuName string
+
+const (
+	// StandardLarge ...
+	StandardLarge ApplicationGatewaySkuName = "Standard_Large"
+	// StandardMedium ...
+	StandardMedium ApplicationGatewaySkuName = "Standard_Medium"
+	// StandardSmall ...
+	StandardSmall ApplicationGatewaySkuName = "Standard_Small"
+)
+
+// PossibleApplicationGatewaySkuNameValues returns an array of possible values for the ApplicationGatewaySkuName const type.
+func PossibleApplicationGatewaySkuNameValues() []ApplicationGatewaySkuName {
+	return []ApplicationGatewaySkuName{StandardLarge, StandardMedium, StandardSmall}
+}
+
+// ApplicationGatewayTier enumerates the values for application gateway tier.
+type ApplicationGatewayTier string
+
+const (
+	// Standard ...
+	Standard ApplicationGatewayTier = "Standard"
+)
+
+// PossibleApplicationGatewayTierValues returns an array of possible values for the ApplicationGatewayTier const type.
+func PossibleApplicationGatewayTierValues() []ApplicationGatewayTier {
+	return []ApplicationGatewayTier{Standard}
+}
+
+// AuthorizationUseStatus enumerates the values for authorization use status.
+type AuthorizationUseStatus string
+
+const (
+	// Available ...
+	Available AuthorizationUseStatus = "Available"
+	// InUse ...
+	InUse AuthorizationUseStatus = "InUse"
+)
+
+// PossibleAuthorizationUseStatusValues returns an array of possible values for the AuthorizationUseStatus const type.
+func PossibleAuthorizationUseStatusValues() []AuthorizationUseStatus {
+	return []AuthorizationUseStatus{Available, InUse}
+}
+
+// ExpressRouteCircuitPeeringAdvertisedPublicPrefixState enumerates the values for express route circuit
+// peering advertised public prefix state.
+type ExpressRouteCircuitPeeringAdvertisedPublicPrefixState string
+
+const (
+	// Configured ...
+	Configured ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "Configured"
+	// Configuring ...
+	Configuring ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "Configuring"
+	// NotConfigured ...
+	NotConfigured ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "NotConfigured"
+	// ValidationNeeded ...
+	ValidationNeeded ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "ValidationNeeded"
+)
+
+// PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues returns an array of possible values for the ExpressRouteCircuitPeeringAdvertisedPublicPrefixState const type.
+func PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues() []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState {
+	return []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState{Configured, Configuring, NotConfigured, ValidationNeeded}
+}
+
+// ExpressRouteCircuitPeeringState enumerates the values for express route circuit peering state.
+type ExpressRouteCircuitPeeringState string
+
+const (
+	// ExpressRouteCircuitPeeringStateDisabled ...
+	ExpressRouteCircuitPeeringStateDisabled ExpressRouteCircuitPeeringState = "Disabled"
+	// ExpressRouteCircuitPeeringStateEnabled ...
+	ExpressRouteCircuitPeeringStateEnabled ExpressRouteCircuitPeeringState = "Enabled"
+)
+
+// PossibleExpressRouteCircuitPeeringStateValues returns an array of possible values for the ExpressRouteCircuitPeeringState const type.
+func PossibleExpressRouteCircuitPeeringStateValues() []ExpressRouteCircuitPeeringState {
+	return []ExpressRouteCircuitPeeringState{ExpressRouteCircuitPeeringStateDisabled, ExpressRouteCircuitPeeringStateEnabled}
+}
+
+// ExpressRouteCircuitPeeringType enumerates the values for express route circuit peering type.
+type ExpressRouteCircuitPeeringType string
+
+const (
+	// AzurePrivatePeering ...
+	AzurePrivatePeering ExpressRouteCircuitPeeringType = "AzurePrivatePeering"
+	// AzurePublicPeering ...
+	AzurePublicPeering ExpressRouteCircuitPeeringType = "AzurePublicPeering"
+	// MicrosoftPeering ...
+	MicrosoftPeering ExpressRouteCircuitPeeringType = "MicrosoftPeering"
+)
+
+// PossibleExpressRouteCircuitPeeringTypeValues returns an array of possible values for the ExpressRouteCircuitPeeringType const type.
+func PossibleExpressRouteCircuitPeeringTypeValues() []ExpressRouteCircuitPeeringType {
+	return []ExpressRouteCircuitPeeringType{AzurePrivatePeering, AzurePublicPeering, MicrosoftPeering}
+}
+
+// ExpressRouteCircuitSkuFamily enumerates the values for express route circuit sku family.
+type ExpressRouteCircuitSkuFamily string
+
+const (
+	// MeteredData ...
+	MeteredData ExpressRouteCircuitSkuFamily = "MeteredData"
+	// UnlimitedData ...
+	UnlimitedData ExpressRouteCircuitSkuFamily = "UnlimitedData"
+)
+
+// PossibleExpressRouteCircuitSkuFamilyValues returns an array of possible values for the ExpressRouteCircuitSkuFamily const type.
+func PossibleExpressRouteCircuitSkuFamilyValues() []ExpressRouteCircuitSkuFamily {
+	return []ExpressRouteCircuitSkuFamily{MeteredData, UnlimitedData}
+}
+
+// ExpressRouteCircuitSkuTier enumerates the values for express route circuit sku tier.
+type ExpressRouteCircuitSkuTier string
+
+const (
+	// ExpressRouteCircuitSkuTierPremium ...
+	ExpressRouteCircuitSkuTierPremium ExpressRouteCircuitSkuTier = "Premium"
+	// ExpressRouteCircuitSkuTierStandard ...
+	ExpressRouteCircuitSkuTierStandard ExpressRouteCircuitSkuTier = "Standard"
+)
+
+// PossibleExpressRouteCircuitSkuTierValues returns an array of possible values for the ExpressRouteCircuitSkuTier const type.
+func PossibleExpressRouteCircuitSkuTierValues() []ExpressRouteCircuitSkuTier {
+	return []ExpressRouteCircuitSkuTier{ExpressRouteCircuitSkuTierPremium, ExpressRouteCircuitSkuTierStandard}
+}
+
+// IPAllocationMethod enumerates the values for ip allocation method.
+type IPAllocationMethod string
+
+const (
+	// Dynamic ...
+	Dynamic IPAllocationMethod = "Dynamic"
+	// Static ...
+	Static IPAllocationMethod = "Static"
+)
+
+// PossibleIPAllocationMethodValues returns an array of possible values for the IPAllocationMethod const type.
+func PossibleIPAllocationMethodValues() []IPAllocationMethod {
+	return []IPAllocationMethod{Dynamic, Static}
+}
+
+// LoadDistribution enumerates the values for load distribution.
+type LoadDistribution string
+
+const (
+	// Default ...
+	Default LoadDistribution = "Default"
+	// SourceIP ...
+	SourceIP LoadDistribution = "SourceIP"
+	// SourceIPProtocol ...
+	SourceIPProtocol LoadDistribution = "SourceIPProtocol"
+)
+
+// PossibleLoadDistributionValues returns an array of possible values for the LoadDistribution const type.
+func PossibleLoadDistributionValues() []LoadDistribution {
+	return []LoadDistribution{Default, SourceIP, SourceIPProtocol}
+}
+
+// OperationStatus enumerates the values for operation status.
+type OperationStatus string
+
+const (
+	// Failed ...
+	Failed OperationStatus = "Failed"
+	// InProgress ...
+	InProgress OperationStatus = "InProgress"
+	// Succeeded ...
+	Succeeded OperationStatus = "Succeeded"
+)
+
+// PossibleOperationStatusValues returns an array of possible values for the OperationStatus const type.
+func PossibleOperationStatusValues() []OperationStatus {
+	return []OperationStatus{Failed, InProgress, Succeeded}
+}
+
+// ProbeProtocol enumerates the values for probe protocol.
+type ProbeProtocol string
+
+const (
+	// ProbeProtocolHTTP ...
+	ProbeProtocolHTTP ProbeProtocol = "Http"
+	// ProbeProtocolTCP ...
+	ProbeProtocolTCP ProbeProtocol = "Tcp"
+)
+
+// PossibleProbeProtocolValues returns an array of possible values for the ProbeProtocol const type.
+func PossibleProbeProtocolValues() []ProbeProtocol {
+	return []ProbeProtocol{ProbeProtocolHTTP, ProbeProtocolTCP}
+}
+
+// RouteNextHopType enumerates the values for route next hop type.
+type RouteNextHopType string
+
+const (
+	// RouteNextHopTypeInternet ...
+	RouteNextHopTypeInternet RouteNextHopType = "Internet"
+	// RouteNextHopTypeNone ...
+	RouteNextHopTypeNone RouteNextHopType = "None"
+	// RouteNextHopTypeVirtualAppliance ...
+	RouteNextHopTypeVirtualAppliance RouteNextHopType = "VirtualAppliance"
+	// RouteNextHopTypeVirtualNetworkGateway ...
+	RouteNextHopTypeVirtualNetworkGateway RouteNextHopType = "VirtualNetworkGateway"
+	// RouteNextHopTypeVnetLocal ...
+	RouteNextHopTypeVnetLocal RouteNextHopType = "VnetLocal"
+)
+
+// PossibleRouteNextHopTypeValues returns an array of possible values for the RouteNextHopType const type.
+func PossibleRouteNextHopTypeValues() []RouteNextHopType {
+	return []RouteNextHopType{RouteNextHopTypeInternet, RouteNextHopTypeNone, RouteNextHopTypeVirtualAppliance, RouteNextHopTypeVirtualNetworkGateway, RouteNextHopTypeVnetLocal}
+}
+
+// SecurityRuleAccess enumerates the values for security rule access.
+type SecurityRuleAccess string
+
+const (
+	// Allow ...
+	Allow SecurityRuleAccess = "Allow"
+	// Deny ...
+	Deny SecurityRuleAccess = "Deny"
+)
+
+// PossibleSecurityRuleAccessValues returns an array of possible values for the SecurityRuleAccess const type.
+func PossibleSecurityRuleAccessValues() []SecurityRuleAccess {
+	return []SecurityRuleAccess{Allow, Deny}
+}
+
+// SecurityRuleDirection enumerates the values for security rule direction.
+type SecurityRuleDirection string
+
+const (
+	// Inbound ...
+	Inbound SecurityRuleDirection = "Inbound"
+	// Outbound ...
+	Outbound SecurityRuleDirection = "Outbound"
+)
+
+// PossibleSecurityRuleDirectionValues returns an array of possible values for the SecurityRuleDirection const type.
+func PossibleSecurityRuleDirectionValues() []SecurityRuleDirection {
+	return []SecurityRuleDirection{Inbound, Outbound}
+}
+
+// SecurityRuleProtocol enumerates the values for security rule protocol.
+type SecurityRuleProtocol string
+
+const (
+	// Asterisk ...
+	Asterisk SecurityRuleProtocol = "*"
+	// TCP ...
+	TCP SecurityRuleProtocol = "Tcp"
+	// UDP ...
+	UDP SecurityRuleProtocol = "Udp"
+)
+
+// PossibleSecurityRuleProtocolValues returns an array of possible values for the SecurityRuleProtocol const type.
+func PossibleSecurityRuleProtocolValues() []SecurityRuleProtocol {
+	return []SecurityRuleProtocol{Asterisk, TCP, UDP}
+}
+
+// ServiceProviderProvisioningState enumerates the values for service provider provisioning state.
+type ServiceProviderProvisioningState string
+
+const (
+	// Deprovisioning ...
+	Deprovisioning ServiceProviderProvisioningState = "Deprovisioning"
+	// NotProvisioned ...
+	NotProvisioned ServiceProviderProvisioningState = "NotProvisioned"
+	// Provisioned ...
+	Provisioned ServiceProviderProvisioningState = "Provisioned"
+	// Provisioning ...
+	Provisioning ServiceProviderProvisioningState = "Provisioning"
+)
+
+// PossibleServiceProviderProvisioningStateValues returns an array of possible values for the ServiceProviderProvisioningState const type.
+func PossibleServiceProviderProvisioningStateValues() []ServiceProviderProvisioningState {
+	return []ServiceProviderProvisioningState{Deprovisioning, NotProvisioned, Provisioned, Provisioning}
+}
+
+// TransportProtocol enumerates the values for transport protocol.
+type TransportProtocol string
+
+const (
+	// TransportProtocolTCP ...
+	TransportProtocolTCP TransportProtocol = "Tcp"
+	// TransportProtocolUDP ...
+	TransportProtocolUDP TransportProtocol = "Udp"
+)
+
+// PossibleTransportProtocolValues returns an array of possible values for the TransportProtocol const type.
+func PossibleTransportProtocolValues() []TransportProtocol {
+	return []TransportProtocol{TransportProtocolTCP, TransportProtocolUDP}
+}
+
+// VirtualNetworkGatewayConnectionStatus enumerates the values for virtual network gateway connection status.
+type VirtualNetworkGatewayConnectionStatus string
+
+const (
+	// Connected ...
+	Connected VirtualNetworkGatewayConnectionStatus = "Connected"
+	// Connecting ...
+	Connecting VirtualNetworkGatewayConnectionStatus = "Connecting"
+	// NotConnected ...
+	NotConnected VirtualNetworkGatewayConnectionStatus = "NotConnected"
+	// Unknown ...
+	Unknown VirtualNetworkGatewayConnectionStatus = "Unknown"
+)
+
+// PossibleVirtualNetworkGatewayConnectionStatusValues returns an array of possible values for the VirtualNetworkGatewayConnectionStatus const type.
+func PossibleVirtualNetworkGatewayConnectionStatusValues() []VirtualNetworkGatewayConnectionStatus {
+	return []VirtualNetworkGatewayConnectionStatus{Connected, Connecting, NotConnected, Unknown}
+}
+
+// VirtualNetworkGatewayConnectionType enumerates the values for virtual network gateway connection type.
+type VirtualNetworkGatewayConnectionType string
+
+const (
+	// ExpressRoute ...
+	ExpressRoute VirtualNetworkGatewayConnectionType = "ExpressRoute"
+	// IPsec ...
+	IPsec VirtualNetworkGatewayConnectionType = "IPsec"
+	// Vnet2Vnet ...
+	Vnet2Vnet VirtualNetworkGatewayConnectionType = "Vnet2Vnet"
+	// VPNClient ...
+	VPNClient VirtualNetworkGatewayConnectionType = "VPNClient"
+)
+
+// PossibleVirtualNetworkGatewayConnectionTypeValues returns an array of possible values for the VirtualNetworkGatewayConnectionType const type.
+func PossibleVirtualNetworkGatewayConnectionTypeValues() []VirtualNetworkGatewayConnectionType {
+	return []VirtualNetworkGatewayConnectionType{ExpressRoute, IPsec, Vnet2Vnet, VPNClient}
+}
+
+// VirtualNetworkGatewayType enumerates the values for virtual network gateway type.
+type VirtualNetworkGatewayType string
+
+const (
+	// VirtualNetworkGatewayTypeExpressRoute ...
+	VirtualNetworkGatewayTypeExpressRoute VirtualNetworkGatewayType = "ExpressRoute"
+	// VirtualNetworkGatewayTypeVpn ...
+	VirtualNetworkGatewayTypeVpn VirtualNetworkGatewayType = "Vpn"
+)
+
+// PossibleVirtualNetworkGatewayTypeValues returns an array of possible values for the VirtualNetworkGatewayType const type.
+func PossibleVirtualNetworkGatewayTypeValues() []VirtualNetworkGatewayType {
+	return []VirtualNetworkGatewayType{VirtualNetworkGatewayTypeExpressRoute, VirtualNetworkGatewayTypeVpn}
+}
+
+// VpnType enumerates the values for vpn type.
+type VpnType string
+
+const (
+	// PolicyBased ...
+	PolicyBased VpnType = "PolicyBased"
+	// RouteBased ...
+	RouteBased VpnType = "RouteBased"
+)
+
+// PossibleVpnTypeValues returns an array of possible values for the VpnType const type.
+func PossibleVpnTypeValues() []VpnType {
+	return []VpnType{PolicyBased, RouteBased}
+}
+
 // AddressSpace addressSpace contains an array of IP address ranges that can be used by subnets
 type AddressSpace struct {
 	// AddressPrefixes - Gets or sets List of address blocks reserved for this virtual network in CIDR notation
@@ -784,15 +1208,10 @@ func (aglr ApplicationGatewayListResult) IsEmpty() bool {
 	return aglr.Value == nil || len(*aglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (aglr ApplicationGatewayListResult) hasNextLink() bool {
-	return aglr.NextLink != nil && len(*aglr.NextLink) != 0
-}
-
 // applicationGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (aglr ApplicationGatewayListResult) applicationGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !aglr.hasNextLink() {
+	if aglr.NextLink == nil || len(to.String(aglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -820,16 +1239,11 @@ func (page *ApplicationGatewayListResultPage) NextWithContext(ctx context.Contex
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.aglr)
-		if err != nil {
-			return err
-		}
-		page.aglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.aglr)
+	if err != nil {
+		return err
 	}
+	page.aglr = next
 	return nil
 }
 
@@ -889,45 +1303,6 @@ type ApplicationGatewayPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty"`
 	// ProvisioningState - Gets or sets Provisioning state of the ApplicationGateway resource Updating/Deleting/Failed
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for ApplicationGatewayPropertiesFormat.
-func (agpf ApplicationGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if agpf.Sku != nil {
-		objectMap["sku"] = agpf.Sku
-	}
-	if agpf.GatewayIPConfigurations != nil {
-		objectMap["gatewayIPConfigurations"] = agpf.GatewayIPConfigurations
-	}
-	if agpf.SslCertificates != nil {
-		objectMap["sslCertificates"] = agpf.SslCertificates
-	}
-	if agpf.FrontendIPConfigurations != nil {
-		objectMap["frontendIPConfigurations"] = agpf.FrontendIPConfigurations
-	}
-	if agpf.FrontendPorts != nil {
-		objectMap["frontendPorts"] = agpf.FrontendPorts
-	}
-	if agpf.BackendAddressPools != nil {
-		objectMap["backendAddressPools"] = agpf.BackendAddressPools
-	}
-	if agpf.BackendHTTPSettingsCollection != nil {
-		objectMap["backendHttpSettingsCollection"] = agpf.BackendHTTPSettingsCollection
-	}
-	if agpf.HTTPListeners != nil {
-		objectMap["httpListeners"] = agpf.HTTPListeners
-	}
-	if agpf.RequestRoutingRules != nil {
-		objectMap["requestRoutingRules"] = agpf.RequestRoutingRules
-	}
-	if agpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = agpf.ResourceGUID
-	}
-	if agpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = agpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayRequestRoutingRule request routing rule of application gateway
@@ -1054,8 +1429,8 @@ func (future *ApplicationGatewaysCreateOrUpdateFuture) Result(client Application
 	return
 }
 
-// ApplicationGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ApplicationGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ApplicationGatewaysDeleteFuture struct {
 	azure.Future
 }
@@ -1179,8 +1554,8 @@ type ApplicationGatewaySslCertificatePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// ApplicationGatewaysStartFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ApplicationGatewaysStartFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ApplicationGatewaysStartFuture struct {
 	azure.Future
 }
@@ -1225,8 +1600,8 @@ func (future *ApplicationGatewaysStopFuture) Result(client ApplicationGatewaysCl
 	return
 }
 
-// AuthorizationListResult response for ListAuthorizations Api service callRetrieves all authorizations that
-// belongs to an ExpressRouteCircuit
+// AuthorizationListResult response for ListAuthorizations Api service callRetrieves all authorizations
+// that belongs to an ExpressRouteCircuit
 type AuthorizationListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets the authorizations in an ExpressRoute Circuit
@@ -1235,8 +1610,8 @@ type AuthorizationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// AuthorizationListResultIterator provides access to a complete listing of ExpressRouteCircuitAuthorization
-// values.
+// AuthorizationListResultIterator provides access to a complete listing of
+// ExpressRouteCircuitAuthorization values.
 type AuthorizationListResultIterator struct {
 	i    int
 	page AuthorizationListResultPage
@@ -1304,15 +1679,10 @@ func (alr AuthorizationListResult) IsEmpty() bool {
 	return alr.Value == nil || len(*alr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (alr AuthorizationListResult) hasNextLink() bool {
-	return alr.NextLink != nil && len(*alr.NextLink) != 0
-}
-
 // authorizationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (alr AuthorizationListResult) authorizationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !alr.hasNextLink() {
+	if alr.NextLink == nil || len(to.String(alr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1340,16 +1710,11 @@ func (page *AuthorizationListResultPage) NextWithContext(ctx context.Context) (e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.alr)
-		if err != nil {
-			return err
-		}
-		page.alr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.alr)
+	if err != nil {
+		return err
 	}
+	page.alr = next
 	return nil
 }
 
@@ -1394,11 +1759,11 @@ type AuthorizationPropertiesFormat struct {
 }
 
 // AzureAsyncOperationResult the response body contains the status of the specified asynchronous operation,
-// indicating whether it has succeeded, is in progress, or has failed. Note that this status is distinct from
-// the HTTP status code returned for the Get Operation Status operation itself. If the asynchronous operation
-// succeeded, the response body includes the HTTP status code for the successful request. If the asynchronous
-// operation failed, the response body includes the HTTP status code for the failed request and error
-// information regarding the failure.
+// indicating whether it has succeeded, is in progress, or has failed. Note that this status is distinct
+// from the HTTP status code returned for the Get Operation Status operation itself. If the asynchronous
+// operation succeeded, the response body includes the HTTP status code for the successful request. If the
+// asynchronous operation failed, the response body includes the HTTP status code for the failed request
+// and error information regarding the failure.
 type AzureAsyncOperationResult struct {
 	// Status - Status of the AzureAsyncOperation. Possible values include: 'InProgress', 'Succeeded', 'Failed'
 	Status OperationStatus `json:"status,omitempty"`
@@ -1787,8 +2152,8 @@ func (future *ExpressRouteCircuitAuthorizationsCreateOrUpdateFuture) Result(clie
 	return
 }
 
-// ExpressRouteCircuitAuthorizationsDeleteFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// ExpressRouteCircuitAuthorizationsDeleteFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type ExpressRouteCircuitAuthorizationsDeleteFuture struct {
 	azure.Future
 }
@@ -1819,7 +2184,8 @@ type ExpressRouteCircuitListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// ExpressRouteCircuitListResultIterator provides access to a complete listing of ExpressRouteCircuit values.
+// ExpressRouteCircuitListResultIterator provides access to a complete listing of ExpressRouteCircuit
+// values.
 type ExpressRouteCircuitListResultIterator struct {
 	i    int
 	page ExpressRouteCircuitListResultPage
@@ -1887,15 +2253,10 @@ func (erclr ExpressRouteCircuitListResult) IsEmpty() bool {
 	return erclr.Value == nil || len(*erclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (erclr ExpressRouteCircuitListResult) hasNextLink() bool {
-	return erclr.NextLink != nil && len(*erclr.NextLink) != 0
-}
-
 // expressRouteCircuitListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (erclr ExpressRouteCircuitListResult) expressRouteCircuitListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !erclr.hasNextLink() {
+	if erclr.NextLink == nil || len(to.String(erclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1923,16 +2284,11 @@ func (page *ExpressRouteCircuitListResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.erclr)
-		if err != nil {
-			return err
-		}
-		page.erclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.erclr)
+	if err != nil {
+		return err
 	}
+	page.erclr = next
 	return nil
 }
 
@@ -2059,8 +2415,8 @@ type ExpressRouteCircuitPeeringConfig struct {
 	RoutingRegistryName *string `json:"routingRegistryName,omitempty"`
 }
 
-// ExpressRouteCircuitPeeringListResult response for ListPeering Api service callRetrieves all Peerings that
-// belongs to an ExpressRouteCircuit
+// ExpressRouteCircuitPeeringListResult response for ListPeering Api service callRetrieves all Peerings
+// that belongs to an ExpressRouteCircuit
 type ExpressRouteCircuitPeeringListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets the peerings in an express route circuit
@@ -2138,15 +2494,10 @@ func (ercplr ExpressRouteCircuitPeeringListResult) IsEmpty() bool {
 	return ercplr.Value == nil || len(*ercplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ercplr ExpressRouteCircuitPeeringListResult) hasNextLink() bool {
-	return ercplr.NextLink != nil && len(*ercplr.NextLink) != 0
-}
-
 // expressRouteCircuitPeeringListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ercplr ExpressRouteCircuitPeeringListResult) expressRouteCircuitPeeringListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ercplr.hasNextLink() {
+	if ercplr.NextLink == nil || len(to.String(ercplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2174,16 +2525,11 @@ func (page *ExpressRouteCircuitPeeringListResultPage) NextWithContext(ctx contex
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ercplr)
-		if err != nil {
-			return err
-		}
-		page.ercplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ercplr)
+	if err != nil {
+		return err
 	}
+	page.ercplr = next
 	return nil
 }
 
@@ -2247,8 +2593,8 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// ExpressRouteCircuitPeeringsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// ExpressRouteCircuitPeeringsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type ExpressRouteCircuitPeeringsCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -2331,8 +2677,8 @@ type ExpressRouteCircuitRoutesTable struct {
 	AsPath *string `json:"asPath,omitempty"`
 }
 
-// ExpressRouteCircuitsArpTableListResult response for ListArpTable associated with the Express Route Circuits
-// Api
+// ExpressRouteCircuitsArpTableListResult response for ListArpTable associated with the Express Route
+// Circuits Api
 type ExpressRouteCircuitsArpTableListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets List of ArpTable
@@ -2410,15 +2756,10 @@ func (ercatlr ExpressRouteCircuitsArpTableListResult) IsEmpty() bool {
 	return ercatlr.Value == nil || len(*ercatlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ercatlr ExpressRouteCircuitsArpTableListResult) hasNextLink() bool {
-	return ercatlr.NextLink != nil && len(*ercatlr.NextLink) != 0
-}
-
 // expressRouteCircuitsArpTableListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ercatlr ExpressRouteCircuitsArpTableListResult) expressRouteCircuitsArpTableListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ercatlr.hasNextLink() {
+	if ercatlr.NextLink == nil || len(to.String(ercatlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2446,16 +2787,11 @@ func (page *ExpressRouteCircuitsArpTableListResultPage) NextWithContext(ctx cont
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ercatlr)
-		if err != nil {
-			return err
-		}
-		page.ercatlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ercatlr)
+	if err != nil {
+		return err
 	}
+	page.ercatlr = next
 	return nil
 }
 
@@ -2518,8 +2854,8 @@ func (future *ExpressRouteCircuitsCreateOrUpdateFuture) Result(client ExpressRou
 	return
 }
 
-// ExpressRouteCircuitsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ExpressRouteCircuitsDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ExpressRouteCircuitsDeleteFuture struct {
 	azure.Future
 }
@@ -2541,7 +2877,8 @@ func (future *ExpressRouteCircuitsDeleteFuture) Result(client ExpressRouteCircui
 	return
 }
 
-// ExpressRouteCircuitServiceProviderProperties contains ServiceProviderProperties in an ExpressRouteCircuit
+// ExpressRouteCircuitServiceProviderProperties contains ServiceProviderProperties in an
+// ExpressRouteCircuit
 type ExpressRouteCircuitServiceProviderProperties struct {
 	// ServiceProviderName - Gets or sets serviceProviderName.
 	ServiceProviderName *string `json:"serviceProviderName,omitempty"`
@@ -2640,15 +2977,10 @@ func (ercrtlr ExpressRouteCircuitsRoutesTableListResult) IsEmpty() bool {
 	return ercrtlr.Value == nil || len(*ercrtlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ercrtlr ExpressRouteCircuitsRoutesTableListResult) hasNextLink() bool {
-	return ercrtlr.NextLink != nil && len(*ercrtlr.NextLink) != 0
-}
-
 // expressRouteCircuitsRoutesTableListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ercrtlr ExpressRouteCircuitsRoutesTableListResult) expressRouteCircuitsRoutesTableListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ercrtlr.hasNextLink() {
+	if ercrtlr.NextLink == nil || len(to.String(ercrtlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2676,16 +3008,11 @@ func (page *ExpressRouteCircuitsRoutesTableListResultPage) NextWithContext(ctx c
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ercrtlr)
-		if err != nil {
-			return err
-		}
-		page.ercrtlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ercrtlr)
+	if err != nil {
+		return err
 	}
+	page.ercrtlr = next
 	return nil
 }
 
@@ -2797,15 +3124,10 @@ func (ercslr ExpressRouteCircuitsStatsListResult) IsEmpty() bool {
 	return ercslr.Value == nil || len(*ercslr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ercslr ExpressRouteCircuitsStatsListResult) hasNextLink() bool {
-	return ercslr.NextLink != nil && len(*ercslr.NextLink) != 0
-}
-
 // expressRouteCircuitsStatsListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ercslr ExpressRouteCircuitsStatsListResult) expressRouteCircuitsStatsListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ercslr.hasNextLink() {
+	if ercslr.NextLink == nil || len(to.String(ercslr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2833,16 +3155,11 @@ func (page *ExpressRouteCircuitsStatsListResultPage) NextWithContext(ctx context
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ercslr)
-		if err != nil {
-			return err
-		}
-		page.ercslr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ercslr)
+	if err != nil {
+		return err
 	}
+	page.ercslr = next
 	return nil
 }
 
@@ -2981,15 +3298,10 @@ func (ersplr ExpressRouteServiceProviderListResult) IsEmpty() bool {
 	return ersplr.Value == nil || len(*ersplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ersplr ExpressRouteServiceProviderListResult) hasNextLink() bool {
-	return ersplr.NextLink != nil && len(*ersplr.NextLink) != 0
-}
-
 // expressRouteServiceProviderListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ersplr ExpressRouteServiceProviderListResult) expressRouteServiceProviderListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ersplr.hasNextLink() {
+	if ersplr.NextLink == nil || len(to.String(ersplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3017,16 +3329,11 @@ func (page *ExpressRouteServiceProviderListResultPage) NextWithContext(ctx conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ersplr)
-		if err != nil {
-			return err
-		}
-		page.ersplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ersplr)
+	if err != nil {
+		return err
 	}
+	page.ersplr = next
 	return nil
 }
 
@@ -3669,15 +3976,10 @@ func (ilr InterfaceListResult) IsEmpty() bool {
 	return ilr.Value == nil || len(*ilr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilr InterfaceListResult) hasNextLink() bool {
-	return ilr.NextLink != nil && len(*ilr.NextLink) != 0
-}
-
 // interfaceListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilr InterfaceListResult) interfaceListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilr.hasNextLink() {
+	if ilr.NextLink == nil || len(to.String(ilr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3705,16 +4007,11 @@ func (page *InterfaceListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilr)
-		if err != nil {
-			return err
-		}
-		page.ilr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilr)
+	if err != nil {
+		return err
 	}
+	page.ilr = next
 	return nil
 }
 
@@ -3770,8 +4067,8 @@ type InterfacePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// InterfacesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// InterfacesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type InterfacesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -3799,7 +4096,8 @@ func (future *InterfacesCreateOrUpdateFuture) Result(client InterfacesClient) (i
 	return
 }
 
-// InterfacesDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// InterfacesDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type InterfacesDeleteFuture struct {
 	azure.Future
 }
@@ -4012,15 +4310,10 @@ func (lblr LoadBalancerListResult) IsEmpty() bool {
 	return lblr.Value == nil || len(*lblr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lblr LoadBalancerListResult) hasNextLink() bool {
-	return lblr.NextLink != nil && len(*lblr.NextLink) != 0
-}
-
 // loadBalancerListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lblr LoadBalancerListResult) loadBalancerListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lblr.hasNextLink() {
+	if lblr.NextLink == nil || len(to.String(lblr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4048,16 +4341,11 @@ func (page *LoadBalancerListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lblr)
-		if err != nil {
-			return err
-		}
-		page.lblr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lblr)
+	if err != nil {
+		return err
 	}
+	page.lblr = next
 	return nil
 }
 
@@ -4113,8 +4401,8 @@ type LoadBalancerPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// LoadBalancersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LoadBalancersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LoadBalancersCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -4392,7 +4680,8 @@ type LocalNetworkGatewayListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// LocalNetworkGatewayListResultIterator provides access to a complete listing of LocalNetworkGateway values.
+// LocalNetworkGatewayListResultIterator provides access to a complete listing of LocalNetworkGateway
+// values.
 type LocalNetworkGatewayListResultIterator struct {
 	i    int
 	page LocalNetworkGatewayListResultPage
@@ -4460,15 +4749,10 @@ func (lnglr LocalNetworkGatewayListResult) IsEmpty() bool {
 	return lnglr.Value == nil || len(*lnglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lnglr LocalNetworkGatewayListResult) hasNextLink() bool {
-	return lnglr.NextLink != nil && len(*lnglr.NextLink) != 0
-}
-
 // localNetworkGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lnglr LocalNetworkGatewayListResult) localNetworkGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lnglr.hasNextLink() {
+	if lnglr.NextLink == nil || len(to.String(lnglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4496,16 +4780,11 @@ func (page *LocalNetworkGatewayListResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lnglr)
-		if err != nil {
-			return err
-		}
-		page.lnglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lnglr)
+	if err != nil {
+		return err
 	}
+	page.lnglr = next
 	return nil
 }
 
@@ -4580,8 +4859,8 @@ func (future *LocalNetworkGatewaysCreateOrUpdateFuture) Result(client LocalNetwo
 	return
 }
 
-// LocalNetworkGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LocalNetworkGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LocalNetworkGatewaysDeleteFuture struct {
 	azure.Future
 }
@@ -5046,15 +5325,10 @@ func (pialr PublicIPAddressListResult) IsEmpty() bool {
 	return pialr.Value == nil || len(*pialr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (pialr PublicIPAddressListResult) hasNextLink() bool {
-	return pialr.NextLink != nil && len(*pialr.NextLink) != 0
-}
-
 // publicIPAddressListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (pialr PublicIPAddressListResult) publicIPAddressListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !pialr.hasNextLink() {
+	if pialr.NextLink == nil || len(to.String(pialr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5082,16 +5356,11 @@ func (page *PublicIPAddressListResultPage) NextWithContext(ctx context.Context) 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.pialr)
-		if err != nil {
-			return err
-		}
-		page.pialr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.pialr)
+	if err != nil {
+		return err
 	}
+	page.pialr = next
 	return nil
 }
 
@@ -5327,15 +5596,10 @@ func (rlr RouteListResult) IsEmpty() bool {
 	return rlr.Value == nil || len(*rlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rlr RouteListResult) hasNextLink() bool {
-	return rlr.NextLink != nil && len(*rlr.NextLink) != 0
-}
-
 // routeListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rlr RouteListResult) routeListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rlr.hasNextLink() {
+	if rlr.NextLink == nil || len(to.String(rlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5363,16 +5627,11 @@ func (page *RouteListResultPage) NextWithContext(ctx context.Context) (err error
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rlr)
-		if err != nil {
-			return err
-		}
-		page.rlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rlr)
+	if err != nil {
+		return err
 	}
+	page.rlr = next
 	return nil
 }
 
@@ -5660,15 +5919,10 @@ func (rtlr RouteTableListResult) IsEmpty() bool {
 	return rtlr.Value == nil || len(*rtlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rtlr RouteTableListResult) hasNextLink() bool {
-	return rtlr.NextLink != nil && len(*rtlr.NextLink) != 0
-}
-
 // routeTableListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rtlr RouteTableListResult) routeTableListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rtlr.hasNextLink() {
+	if rtlr.NextLink == nil || len(to.String(rtlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5696,16 +5950,11 @@ func (page *RouteTableListResultPage) NextWithContext(ctx context.Context) (err 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rtlr)
-		if err != nil {
-			return err
-		}
-		page.rtlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rtlr)
+	if err != nil {
+		return err
 	}
+	page.rtlr = next
 	return nil
 }
 
@@ -5749,8 +5998,8 @@ type RouteTablePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// RouteTablesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// RouteTablesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type RouteTablesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -5992,15 +6241,10 @@ func (sglr SecurityGroupListResult) IsEmpty() bool {
 	return sglr.Value == nil || len(*sglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (sglr SecurityGroupListResult) hasNextLink() bool {
-	return sglr.NextLink != nil && len(*sglr.NextLink) != 0
-}
-
 // securityGroupListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (sglr SecurityGroupListResult) securityGroupListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !sglr.hasNextLink() {
+	if sglr.NextLink == nil || len(to.String(sglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6028,16 +6272,11 @@ func (page *SecurityGroupListResultPage) NextWithContext(ctx context.Context) (e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.sglr)
-		if err != nil {
-			return err
-		}
-		page.sglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.sglr)
+	if err != nil {
+		return err
 	}
+	page.sglr = next
 	return nil
 }
 
@@ -6298,15 +6537,10 @@ func (srlr SecurityRuleListResult) IsEmpty() bool {
 	return srlr.Value == nil || len(*srlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (srlr SecurityRuleListResult) hasNextLink() bool {
-	return srlr.NextLink != nil && len(*srlr.NextLink) != 0
-}
-
 // securityRuleListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (srlr SecurityRuleListResult) securityRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !srlr.hasNextLink() {
+	if srlr.NextLink == nil || len(to.String(srlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6334,16 +6568,11 @@ func (page *SecurityRuleListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.srlr)
-		if err != nil {
-			return err
-		}
-		page.srlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.srlr)
+	if err != nil {
+		return err
 	}
+	page.srlr = next
 	return nil
 }
 
@@ -6401,8 +6630,8 @@ type SecurityRulePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// SecurityRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// SecurityRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type SecurityRulesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -6612,15 +6841,10 @@ func (slr SubnetListResult) IsEmpty() bool {
 	return slr.Value == nil || len(*slr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (slr SubnetListResult) hasNextLink() bool {
-	return slr.NextLink != nil && len(*slr.NextLink) != 0
-}
-
 // subnetListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (slr SubnetListResult) subnetListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !slr.hasNextLink() {
+	if slr.NextLink == nil || len(to.String(slr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6648,16 +6872,11 @@ func (page *SubnetListResultPage) NextWithContext(ctx context.Context) (err erro
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.slr)
-		if err != nil {
-			return err
-		}
-		page.slr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.slr)
+	if err != nil {
+		return err
 	}
+	page.slr = next
 	return nil
 }
 
@@ -6734,7 +6953,8 @@ func (future *SubnetsCreateOrUpdateFuture) Result(client SubnetsClient) (s Subne
 	return
 }
 
-// SubnetsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// SubnetsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type SubnetsDeleteFuture struct {
 	azure.Future
 }
@@ -6859,15 +7079,10 @@ func (ulr UsagesListResult) IsEmpty() bool {
 	return ulr.Value == nil || len(*ulr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ulr UsagesListResult) hasNextLink() bool {
-	return ulr.NextLink != nil && len(*ulr.NextLink) != 0
-}
-
 // usagesListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ulr UsagesListResult) usagesListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ulr.hasNextLink() {
+	if ulr.NextLink == nil || len(to.String(ulr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6895,16 +7110,11 @@ func (page *UsagesListResultPage) NextWithContext(ctx context.Context) (err erro
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ulr)
-		if err != nil {
-			return err
-		}
-		page.ulr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ulr)
+	if err != nil {
+		return err
 	}
+	page.ulr = next
 	return nil
 }
 
@@ -7280,7 +7490,8 @@ func (vngc *VirtualNetworkGatewayConnection) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// VirtualNetworkGatewayConnectionListResult response for ListVirtualNetworkGatewayConnections Api service call
+// VirtualNetworkGatewayConnectionListResult response for ListVirtualNetworkGatewayConnections Api service
+// call
 type VirtualNetworkGatewayConnectionListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets List of VirtualNetworkGatewayConnections that exists in a resource group
@@ -7358,15 +7569,10 @@ func (vngclr VirtualNetworkGatewayConnectionListResult) IsEmpty() bool {
 	return vngclr.Value == nil || len(*vngclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vngclr VirtualNetworkGatewayConnectionListResult) hasNextLink() bool {
-	return vngclr.NextLink != nil && len(*vngclr.NextLink) != 0
-}
-
 // virtualNetworkGatewayConnectionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vngclr VirtualNetworkGatewayConnectionListResult) virtualNetworkGatewayConnectionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vngclr.hasNextLink() {
+	if vngclr.NextLink == nil || len(to.String(vngclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7394,16 +7600,11 @@ func (page *VirtualNetworkGatewayConnectionListResultPage) NextWithContext(ctx c
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vngclr)
-		if err != nil {
-			return err
-		}
-		page.vngclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vngclr)
+	if err != nil {
+		return err
 	}
+	page.vngclr = next
 	return nil
 }
 
@@ -7491,8 +7692,8 @@ func (future *VirtualNetworkGatewayConnectionsCreateOrUpdateFuture) Result(clien
 	return
 }
 
-// VirtualNetworkGatewayConnectionsDeleteFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// VirtualNetworkGatewayConnectionsDeleteFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type VirtualNetworkGatewayConnectionsDeleteFuture struct {
 	azure.Future
 }
@@ -7543,8 +7744,8 @@ func (future *VirtualNetworkGatewayConnectionsResetSharedKeyFuture) Result(clien
 	return
 }
 
-// VirtualNetworkGatewayConnectionsSetSharedKeyFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// VirtualNetworkGatewayConnectionsSetSharedKeyFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type VirtualNetworkGatewayConnectionsSetSharedKeyFuture struct {
 	azure.Future
 }
@@ -7744,15 +7945,10 @@ func (vnglr VirtualNetworkGatewayListResult) IsEmpty() bool {
 	return vnglr.Value == nil || len(*vnglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnglr VirtualNetworkGatewayListResult) hasNextLink() bool {
-	return vnglr.NextLink != nil && len(*vnglr.NextLink) != 0
-}
-
 // virtualNetworkGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnglr VirtualNetworkGatewayListResult) virtualNetworkGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnglr.hasNextLink() {
+	if vnglr.NextLink == nil || len(to.String(vnglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7780,16 +7976,11 @@ func (page *VirtualNetworkGatewayListResultPage) NextWithContext(ctx context.Con
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnglr)
-		if err != nil {
-			return err
-		}
-		page.vnglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnglr)
+	if err != nil {
+		return err
 	}
+	page.vnglr = next
 	return nil
 }
 
@@ -7893,8 +8084,8 @@ func (future *VirtualNetworkGatewaysDeleteFuture) Result(client VirtualNetworkGa
 	return
 }
 
-// VirtualNetworkGatewaysResetFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// VirtualNetworkGatewaysResetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type VirtualNetworkGatewaysResetFuture struct {
 	azure.Future
 }
@@ -7999,15 +8190,10 @@ func (vnlr VirtualNetworkListResult) IsEmpty() bool {
 	return vnlr.Value == nil || len(*vnlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnlr VirtualNetworkListResult) hasNextLink() bool {
-	return vnlr.NextLink != nil && len(*vnlr.NextLink) != 0
-}
-
 // virtualNetworkListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnlr VirtualNetworkListResult) virtualNetworkListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnlr.hasNextLink() {
+	if vnlr.NextLink == nil || len(to.String(vnlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -8035,16 +8221,11 @@ func (page *VirtualNetworkListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnlr)
-		if err != nil {
-			return err
-		}
-		page.vnlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnlr)
+	if err != nil {
+		return err
 	}
+	page.vnlr = next
 	return nil
 }
 
