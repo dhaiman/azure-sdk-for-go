@@ -25,8 +25,7 @@ import (
 	"net/http"
 )
 
-// OperationsClient is the use these APIs to create Source Control Configuration resources through ARM, for Kubernetes
-// Clusters.
+// OperationsClient is the kubernetesConfiguration Client
 type OperationsClient struct {
 	BaseClient
 }
@@ -72,6 +71,9 @@ func (client OperationsClient) List(ctx context.Context) (result ResourceProvide
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "kubernetesconfiguration.OperationsClient", "List", resp, "Failure responding to request")
 	}
+	if result.rpol.hasNextLink() && result.rpol.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -102,7 +104,6 @@ func (client OperationsClient) ListSender(req *http.Request) (*http.Response, er
 func (client OperationsClient) ListResponder(resp *http.Response) (result ResourceProviderOperationList, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
