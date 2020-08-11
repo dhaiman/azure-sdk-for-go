@@ -31,8 +31,1226 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/network/mgmt/2017-08-01/network"
 
-// AddressSpace addressSpace contains an array of IP address ranges that can be used by subnets of the virtual
-// network.
+// Access enumerates the values for access.
+type Access string
+
+const (
+	// Allow ...
+	Allow Access = "Allow"
+	// Deny ...
+	Deny Access = "Deny"
+)
+
+// PossibleAccessValues returns an array of possible values for the Access const type.
+func PossibleAccessValues() []Access {
+	return []Access{Allow, Deny}
+}
+
+// ApplicationGatewayBackendHealthServerHealth enumerates the values for application gateway backend health
+// server health.
+type ApplicationGatewayBackendHealthServerHealth string
+
+const (
+	// Down ...
+	Down ApplicationGatewayBackendHealthServerHealth = "Down"
+	// Draining ...
+	Draining ApplicationGatewayBackendHealthServerHealth = "Draining"
+	// Partial ...
+	Partial ApplicationGatewayBackendHealthServerHealth = "Partial"
+	// Unknown ...
+	Unknown ApplicationGatewayBackendHealthServerHealth = "Unknown"
+	// Up ...
+	Up ApplicationGatewayBackendHealthServerHealth = "Up"
+)
+
+// PossibleApplicationGatewayBackendHealthServerHealthValues returns an array of possible values for the ApplicationGatewayBackendHealthServerHealth const type.
+func PossibleApplicationGatewayBackendHealthServerHealthValues() []ApplicationGatewayBackendHealthServerHealth {
+	return []ApplicationGatewayBackendHealthServerHealth{Down, Draining, Partial, Unknown, Up}
+}
+
+// ApplicationGatewayCookieBasedAffinity enumerates the values for application gateway cookie based affinity.
+type ApplicationGatewayCookieBasedAffinity string
+
+const (
+	// Disabled ...
+	Disabled ApplicationGatewayCookieBasedAffinity = "Disabled"
+	// Enabled ...
+	Enabled ApplicationGatewayCookieBasedAffinity = "Enabled"
+)
+
+// PossibleApplicationGatewayCookieBasedAffinityValues returns an array of possible values for the ApplicationGatewayCookieBasedAffinity const type.
+func PossibleApplicationGatewayCookieBasedAffinityValues() []ApplicationGatewayCookieBasedAffinity {
+	return []ApplicationGatewayCookieBasedAffinity{Disabled, Enabled}
+}
+
+// ApplicationGatewayFirewallMode enumerates the values for application gateway firewall mode.
+type ApplicationGatewayFirewallMode string
+
+const (
+	// Detection ...
+	Detection ApplicationGatewayFirewallMode = "Detection"
+	// Prevention ...
+	Prevention ApplicationGatewayFirewallMode = "Prevention"
+)
+
+// PossibleApplicationGatewayFirewallModeValues returns an array of possible values for the ApplicationGatewayFirewallMode const type.
+func PossibleApplicationGatewayFirewallModeValues() []ApplicationGatewayFirewallMode {
+	return []ApplicationGatewayFirewallMode{Detection, Prevention}
+}
+
+// ApplicationGatewayOperationalState enumerates the values for application gateway operational state.
+type ApplicationGatewayOperationalState string
+
+const (
+	// Running ...
+	Running ApplicationGatewayOperationalState = "Running"
+	// Starting ...
+	Starting ApplicationGatewayOperationalState = "Starting"
+	// Stopped ...
+	Stopped ApplicationGatewayOperationalState = "Stopped"
+	// Stopping ...
+	Stopping ApplicationGatewayOperationalState = "Stopping"
+)
+
+// PossibleApplicationGatewayOperationalStateValues returns an array of possible values for the ApplicationGatewayOperationalState const type.
+func PossibleApplicationGatewayOperationalStateValues() []ApplicationGatewayOperationalState {
+	return []ApplicationGatewayOperationalState{Running, Starting, Stopped, Stopping}
+}
+
+// ApplicationGatewayProtocol enumerates the values for application gateway protocol.
+type ApplicationGatewayProtocol string
+
+const (
+	// HTTP ...
+	HTTP ApplicationGatewayProtocol = "Http"
+	// HTTPS ...
+	HTTPS ApplicationGatewayProtocol = "Https"
+)
+
+// PossibleApplicationGatewayProtocolValues returns an array of possible values for the ApplicationGatewayProtocol const type.
+func PossibleApplicationGatewayProtocolValues() []ApplicationGatewayProtocol {
+	return []ApplicationGatewayProtocol{HTTP, HTTPS}
+}
+
+// ApplicationGatewayRedirectType enumerates the values for application gateway redirect type.
+type ApplicationGatewayRedirectType string
+
+const (
+	// Found ...
+	Found ApplicationGatewayRedirectType = "Found"
+	// Permanent ...
+	Permanent ApplicationGatewayRedirectType = "Permanent"
+	// SeeOther ...
+	SeeOther ApplicationGatewayRedirectType = "SeeOther"
+	// Temporary ...
+	Temporary ApplicationGatewayRedirectType = "Temporary"
+)
+
+// PossibleApplicationGatewayRedirectTypeValues returns an array of possible values for the ApplicationGatewayRedirectType const type.
+func PossibleApplicationGatewayRedirectTypeValues() []ApplicationGatewayRedirectType {
+	return []ApplicationGatewayRedirectType{Found, Permanent, SeeOther, Temporary}
+}
+
+// ApplicationGatewayRequestRoutingRuleType enumerates the values for application gateway request routing rule
+// type.
+type ApplicationGatewayRequestRoutingRuleType string
+
+const (
+	// Basic ...
+	Basic ApplicationGatewayRequestRoutingRuleType = "Basic"
+	// PathBasedRouting ...
+	PathBasedRouting ApplicationGatewayRequestRoutingRuleType = "PathBasedRouting"
+)
+
+// PossibleApplicationGatewayRequestRoutingRuleTypeValues returns an array of possible values for the ApplicationGatewayRequestRoutingRuleType const type.
+func PossibleApplicationGatewayRequestRoutingRuleTypeValues() []ApplicationGatewayRequestRoutingRuleType {
+	return []ApplicationGatewayRequestRoutingRuleType{Basic, PathBasedRouting}
+}
+
+// ApplicationGatewaySkuName enumerates the values for application gateway sku name.
+type ApplicationGatewaySkuName string
+
+const (
+	// StandardLarge ...
+	StandardLarge ApplicationGatewaySkuName = "Standard_Large"
+	// StandardMedium ...
+	StandardMedium ApplicationGatewaySkuName = "Standard_Medium"
+	// StandardSmall ...
+	StandardSmall ApplicationGatewaySkuName = "Standard_Small"
+	// WAFLarge ...
+	WAFLarge ApplicationGatewaySkuName = "WAF_Large"
+	// WAFMedium ...
+	WAFMedium ApplicationGatewaySkuName = "WAF_Medium"
+)
+
+// PossibleApplicationGatewaySkuNameValues returns an array of possible values for the ApplicationGatewaySkuName const type.
+func PossibleApplicationGatewaySkuNameValues() []ApplicationGatewaySkuName {
+	return []ApplicationGatewaySkuName{StandardLarge, StandardMedium, StandardSmall, WAFLarge, WAFMedium}
+}
+
+// ApplicationGatewaySslCipherSuite enumerates the values for application gateway ssl cipher suite.
+type ApplicationGatewaySslCipherSuite string
+
+const (
+	// TLSDHEDSSWITH3DESEDECBCSHA ...
+	TLSDHEDSSWITH3DESEDECBCSHA ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
+	// TLSDHEDSSWITHAES128CBCSHA ...
+	TLSDHEDSSWITHAES128CBCSHA ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
+	// TLSDHEDSSWITHAES128CBCSHA256 ...
+	TLSDHEDSSWITHAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
+	// TLSDHEDSSWITHAES256CBCSHA ...
+	TLSDHEDSSWITHAES256CBCSHA ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
+	// TLSDHEDSSWITHAES256CBCSHA256 ...
+	TLSDHEDSSWITHAES256CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
+	// TLSDHERSAWITHAES128CBCSHA ...
+	TLSDHERSAWITHAES128CBCSHA ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+	// TLSDHERSAWITHAES128GCMSHA256 ...
+	TLSDHERSAWITHAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+	// TLSDHERSAWITHAES256CBCSHA ...
+	TLSDHERSAWITHAES256CBCSHA ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+	// TLSDHERSAWITHAES256GCMSHA384 ...
+	TLSDHERSAWITHAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+	// TLSECDHEECDSAWITHAES128CBCSHA ...
+	TLSECDHEECDSAWITHAES128CBCSHA ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+	// TLSECDHEECDSAWITHAES128CBCSHA256 ...
+	TLSECDHEECDSAWITHAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
+	// TLSECDHEECDSAWITHAES128GCMSHA256 ...
+	TLSECDHEECDSAWITHAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+	// TLSECDHEECDSAWITHAES256CBCSHA ...
+	TLSECDHEECDSAWITHAES256CBCSHA ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+	// TLSECDHEECDSAWITHAES256CBCSHA384 ...
+	TLSECDHEECDSAWITHAES256CBCSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
+	// TLSECDHEECDSAWITHAES256GCMSHA384 ...
+	TLSECDHEECDSAWITHAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+	// TLSECDHERSAWITHAES128CBCSHA ...
+	TLSECDHERSAWITHAES128CBCSHA ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+	// TLSECDHERSAWITHAES128CBCSHA256 ...
+	TLSECDHERSAWITHAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+	// TLSECDHERSAWITHAES128GCMSHA256 ...
+	TLSECDHERSAWITHAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+	// TLSECDHERSAWITHAES256CBCSHA ...
+	TLSECDHERSAWITHAES256CBCSHA ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+	// TLSECDHERSAWITHAES256CBCSHA384 ...
+	TLSECDHERSAWITHAES256CBCSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
+	// TLSECDHERSAWITHAES256GCMSHA384 ...
+	TLSECDHERSAWITHAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+	// TLSRSAWITH3DESEDECBCSHA ...
+	TLSRSAWITH3DESEDECBCSHA ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+	// TLSRSAWITHAES128CBCSHA ...
+	TLSRSAWITHAES128CBCSHA ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
+	// TLSRSAWITHAES128CBCSHA256 ...
+	TLSRSAWITHAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
+	// TLSRSAWITHAES128GCMSHA256 ...
+	TLSRSAWITHAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
+	// TLSRSAWITHAES256CBCSHA ...
+	TLSRSAWITHAES256CBCSHA ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
+	// TLSRSAWITHAES256CBCSHA256 ...
+	TLSRSAWITHAES256CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
+	// TLSRSAWITHAES256GCMSHA384 ...
+	TLSRSAWITHAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
+)
+
+// PossibleApplicationGatewaySslCipherSuiteValues returns an array of possible values for the ApplicationGatewaySslCipherSuite const type.
+func PossibleApplicationGatewaySslCipherSuiteValues() []ApplicationGatewaySslCipherSuite {
+	return []ApplicationGatewaySslCipherSuite{TLSDHEDSSWITH3DESEDECBCSHA, TLSDHEDSSWITHAES128CBCSHA, TLSDHEDSSWITHAES128CBCSHA256, TLSDHEDSSWITHAES256CBCSHA, TLSDHEDSSWITHAES256CBCSHA256, TLSDHERSAWITHAES128CBCSHA, TLSDHERSAWITHAES128GCMSHA256, TLSDHERSAWITHAES256CBCSHA, TLSDHERSAWITHAES256GCMSHA384, TLSECDHEECDSAWITHAES128CBCSHA, TLSECDHEECDSAWITHAES128CBCSHA256, TLSECDHEECDSAWITHAES128GCMSHA256, TLSECDHEECDSAWITHAES256CBCSHA, TLSECDHEECDSAWITHAES256CBCSHA384, TLSECDHEECDSAWITHAES256GCMSHA384, TLSECDHERSAWITHAES128CBCSHA, TLSECDHERSAWITHAES128CBCSHA256, TLSECDHERSAWITHAES128GCMSHA256, TLSECDHERSAWITHAES256CBCSHA, TLSECDHERSAWITHAES256CBCSHA384, TLSECDHERSAWITHAES256GCMSHA384, TLSRSAWITH3DESEDECBCSHA, TLSRSAWITHAES128CBCSHA, TLSRSAWITHAES128CBCSHA256, TLSRSAWITHAES128GCMSHA256, TLSRSAWITHAES256CBCSHA, TLSRSAWITHAES256CBCSHA256, TLSRSAWITHAES256GCMSHA384}
+}
+
+// ApplicationGatewaySslPolicyName enumerates the values for application gateway ssl policy name.
+type ApplicationGatewaySslPolicyName string
+
+const (
+	// AppGwSslPolicy20150501 ...
+	AppGwSslPolicy20150501 ApplicationGatewaySslPolicyName = "AppGwSslPolicy20150501"
+	// AppGwSslPolicy20170401 ...
+	AppGwSslPolicy20170401 ApplicationGatewaySslPolicyName = "AppGwSslPolicy20170401"
+	// AppGwSslPolicy20170401S ...
+	AppGwSslPolicy20170401S ApplicationGatewaySslPolicyName = "AppGwSslPolicy20170401S"
+)
+
+// PossibleApplicationGatewaySslPolicyNameValues returns an array of possible values for the ApplicationGatewaySslPolicyName const type.
+func PossibleApplicationGatewaySslPolicyNameValues() []ApplicationGatewaySslPolicyName {
+	return []ApplicationGatewaySslPolicyName{AppGwSslPolicy20150501, AppGwSslPolicy20170401, AppGwSslPolicy20170401S}
+}
+
+// ApplicationGatewaySslPolicyType enumerates the values for application gateway ssl policy type.
+type ApplicationGatewaySslPolicyType string
+
+const (
+	// Custom ...
+	Custom ApplicationGatewaySslPolicyType = "Custom"
+	// Predefined ...
+	Predefined ApplicationGatewaySslPolicyType = "Predefined"
+)
+
+// PossibleApplicationGatewaySslPolicyTypeValues returns an array of possible values for the ApplicationGatewaySslPolicyType const type.
+func PossibleApplicationGatewaySslPolicyTypeValues() []ApplicationGatewaySslPolicyType {
+	return []ApplicationGatewaySslPolicyType{Custom, Predefined}
+}
+
+// ApplicationGatewaySslProtocol enumerates the values for application gateway ssl protocol.
+type ApplicationGatewaySslProtocol string
+
+const (
+	// TLSv10 ...
+	TLSv10 ApplicationGatewaySslProtocol = "TLSv1_0"
+	// TLSv11 ...
+	TLSv11 ApplicationGatewaySslProtocol = "TLSv1_1"
+	// TLSv12 ...
+	TLSv12 ApplicationGatewaySslProtocol = "TLSv1_2"
+)
+
+// PossibleApplicationGatewaySslProtocolValues returns an array of possible values for the ApplicationGatewaySslProtocol const type.
+func PossibleApplicationGatewaySslProtocolValues() []ApplicationGatewaySslProtocol {
+	return []ApplicationGatewaySslProtocol{TLSv10, TLSv11, TLSv12}
+}
+
+// ApplicationGatewayTier enumerates the values for application gateway tier.
+type ApplicationGatewayTier string
+
+const (
+	// Standard ...
+	Standard ApplicationGatewayTier = "Standard"
+	// WAF ...
+	WAF ApplicationGatewayTier = "WAF"
+)
+
+// PossibleApplicationGatewayTierValues returns an array of possible values for the ApplicationGatewayTier const type.
+func PossibleApplicationGatewayTierValues() []ApplicationGatewayTier {
+	return []ApplicationGatewayTier{Standard, WAF}
+}
+
+// AssociationType enumerates the values for association type.
+type AssociationType string
+
+const (
+	// Associated ...
+	Associated AssociationType = "Associated"
+	// Contains ...
+	Contains AssociationType = "Contains"
+)
+
+// PossibleAssociationTypeValues returns an array of possible values for the AssociationType const type.
+func PossibleAssociationTypeValues() []AssociationType {
+	return []AssociationType{Associated, Contains}
+}
+
+// AuthenticationMethod enumerates the values for authentication method.
+type AuthenticationMethod string
+
+const (
+	// EAPMSCHAPv2 ...
+	EAPMSCHAPv2 AuthenticationMethod = "EAPMSCHAPv2"
+	// EAPTLS ...
+	EAPTLS AuthenticationMethod = "EAPTLS"
+)
+
+// PossibleAuthenticationMethodValues returns an array of possible values for the AuthenticationMethod const type.
+func PossibleAuthenticationMethodValues() []AuthenticationMethod {
+	return []AuthenticationMethod{EAPMSCHAPv2, EAPTLS}
+}
+
+// AuthorizationUseStatus enumerates the values for authorization use status.
+type AuthorizationUseStatus string
+
+const (
+	// Available ...
+	Available AuthorizationUseStatus = "Available"
+	// InUse ...
+	InUse AuthorizationUseStatus = "InUse"
+)
+
+// PossibleAuthorizationUseStatusValues returns an array of possible values for the AuthorizationUseStatus const type.
+func PossibleAuthorizationUseStatusValues() []AuthorizationUseStatus {
+	return []AuthorizationUseStatus{Available, InUse}
+}
+
+// BgpPeerState enumerates the values for bgp peer state.
+type BgpPeerState string
+
+const (
+	// BgpPeerStateConnected ...
+	BgpPeerStateConnected BgpPeerState = "Connected"
+	// BgpPeerStateConnecting ...
+	BgpPeerStateConnecting BgpPeerState = "Connecting"
+	// BgpPeerStateIdle ...
+	BgpPeerStateIdle BgpPeerState = "Idle"
+	// BgpPeerStateStopped ...
+	BgpPeerStateStopped BgpPeerState = "Stopped"
+	// BgpPeerStateUnknown ...
+	BgpPeerStateUnknown BgpPeerState = "Unknown"
+)
+
+// PossibleBgpPeerStateValues returns an array of possible values for the BgpPeerState const type.
+func PossibleBgpPeerStateValues() []BgpPeerState {
+	return []BgpPeerState{BgpPeerStateConnected, BgpPeerStateConnecting, BgpPeerStateIdle, BgpPeerStateStopped, BgpPeerStateUnknown}
+}
+
+// ConnectionStatus enumerates the values for connection status.
+type ConnectionStatus string
+
+const (
+	// ConnectionStatusConnected ...
+	ConnectionStatusConnected ConnectionStatus = "Connected"
+	// ConnectionStatusDegraded ...
+	ConnectionStatusDegraded ConnectionStatus = "Degraded"
+	// ConnectionStatusDisconnected ...
+	ConnectionStatusDisconnected ConnectionStatus = "Disconnected"
+	// ConnectionStatusUnknown ...
+	ConnectionStatusUnknown ConnectionStatus = "Unknown"
+)
+
+// PossibleConnectionStatusValues returns an array of possible values for the ConnectionStatus const type.
+func PossibleConnectionStatusValues() []ConnectionStatus {
+	return []ConnectionStatus{ConnectionStatusConnected, ConnectionStatusDegraded, ConnectionStatusDisconnected, ConnectionStatusUnknown}
+}
+
+// DhGroup enumerates the values for dh group.
+type DhGroup string
+
+const (
+	// DHGroup1 ...
+	DHGroup1 DhGroup = "DHGroup1"
+	// DHGroup14 ...
+	DHGroup14 DhGroup = "DHGroup14"
+	// DHGroup2 ...
+	DHGroup2 DhGroup = "DHGroup2"
+	// DHGroup2048 ...
+	DHGroup2048 DhGroup = "DHGroup2048"
+	// DHGroup24 ...
+	DHGroup24 DhGroup = "DHGroup24"
+	// ECP256 ...
+	ECP256 DhGroup = "ECP256"
+	// ECP384 ...
+	ECP384 DhGroup = "ECP384"
+	// None ...
+	None DhGroup = "None"
+)
+
+// PossibleDhGroupValues returns an array of possible values for the DhGroup const type.
+func PossibleDhGroupValues() []DhGroup {
+	return []DhGroup{DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None}
+}
+
+// Direction enumerates the values for direction.
+type Direction string
+
+const (
+	// Inbound ...
+	Inbound Direction = "Inbound"
+	// Outbound ...
+	Outbound Direction = "Outbound"
+)
+
+// PossibleDirectionValues returns an array of possible values for the Direction const type.
+func PossibleDirectionValues() []Direction {
+	return []Direction{Inbound, Outbound}
+}
+
+// EffectiveRouteSource enumerates the values for effective route source.
+type EffectiveRouteSource string
+
+const (
+	// EffectiveRouteSourceDefault ...
+	EffectiveRouteSourceDefault EffectiveRouteSource = "Default"
+	// EffectiveRouteSourceUnknown ...
+	EffectiveRouteSourceUnknown EffectiveRouteSource = "Unknown"
+	// EffectiveRouteSourceUser ...
+	EffectiveRouteSourceUser EffectiveRouteSource = "User"
+	// EffectiveRouteSourceVirtualNetworkGateway ...
+	EffectiveRouteSourceVirtualNetworkGateway EffectiveRouteSource = "VirtualNetworkGateway"
+)
+
+// PossibleEffectiveRouteSourceValues returns an array of possible values for the EffectiveRouteSource const type.
+func PossibleEffectiveRouteSourceValues() []EffectiveRouteSource {
+	return []EffectiveRouteSource{EffectiveRouteSourceDefault, EffectiveRouteSourceUnknown, EffectiveRouteSourceUser, EffectiveRouteSourceVirtualNetworkGateway}
+}
+
+// EffectiveRouteState enumerates the values for effective route state.
+type EffectiveRouteState string
+
+const (
+	// Active ...
+	Active EffectiveRouteState = "Active"
+	// Invalid ...
+	Invalid EffectiveRouteState = "Invalid"
+)
+
+// PossibleEffectiveRouteStateValues returns an array of possible values for the EffectiveRouteState const type.
+func PossibleEffectiveRouteStateValues() []EffectiveRouteState {
+	return []EffectiveRouteState{Active, Invalid}
+}
+
+// EffectiveSecurityRuleProtocol enumerates the values for effective security rule protocol.
+type EffectiveSecurityRuleProtocol string
+
+const (
+	// All ...
+	All EffectiveSecurityRuleProtocol = "All"
+	// TCP ...
+	TCP EffectiveSecurityRuleProtocol = "Tcp"
+	// UDP ...
+	UDP EffectiveSecurityRuleProtocol = "Udp"
+)
+
+// PossibleEffectiveSecurityRuleProtocolValues returns an array of possible values for the EffectiveSecurityRuleProtocol const type.
+func PossibleEffectiveSecurityRuleProtocolValues() []EffectiveSecurityRuleProtocol {
+	return []EffectiveSecurityRuleProtocol{All, TCP, UDP}
+}
+
+// ExpressRouteCircuitPeeringAdvertisedPublicPrefixState enumerates the values for express route circuit
+// peering advertised public prefix state.
+type ExpressRouteCircuitPeeringAdvertisedPublicPrefixState string
+
+const (
+	// Configured ...
+	Configured ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "Configured"
+	// Configuring ...
+	Configuring ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "Configuring"
+	// NotConfigured ...
+	NotConfigured ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "NotConfigured"
+	// ValidationNeeded ...
+	ValidationNeeded ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "ValidationNeeded"
+)
+
+// PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues returns an array of possible values for the ExpressRouteCircuitPeeringAdvertisedPublicPrefixState const type.
+func PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues() []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState {
+	return []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState{Configured, Configuring, NotConfigured, ValidationNeeded}
+}
+
+// ExpressRouteCircuitPeeringState enumerates the values for express route circuit peering state.
+type ExpressRouteCircuitPeeringState string
+
+const (
+	// ExpressRouteCircuitPeeringStateDisabled ...
+	ExpressRouteCircuitPeeringStateDisabled ExpressRouteCircuitPeeringState = "Disabled"
+	// ExpressRouteCircuitPeeringStateEnabled ...
+	ExpressRouteCircuitPeeringStateEnabled ExpressRouteCircuitPeeringState = "Enabled"
+)
+
+// PossibleExpressRouteCircuitPeeringStateValues returns an array of possible values for the ExpressRouteCircuitPeeringState const type.
+func PossibleExpressRouteCircuitPeeringStateValues() []ExpressRouteCircuitPeeringState {
+	return []ExpressRouteCircuitPeeringState{ExpressRouteCircuitPeeringStateDisabled, ExpressRouteCircuitPeeringStateEnabled}
+}
+
+// ExpressRouteCircuitPeeringType enumerates the values for express route circuit peering type.
+type ExpressRouteCircuitPeeringType string
+
+const (
+	// AzurePrivatePeering ...
+	AzurePrivatePeering ExpressRouteCircuitPeeringType = "AzurePrivatePeering"
+	// AzurePublicPeering ...
+	AzurePublicPeering ExpressRouteCircuitPeeringType = "AzurePublicPeering"
+	// MicrosoftPeering ...
+	MicrosoftPeering ExpressRouteCircuitPeeringType = "MicrosoftPeering"
+)
+
+// PossibleExpressRouteCircuitPeeringTypeValues returns an array of possible values for the ExpressRouteCircuitPeeringType const type.
+func PossibleExpressRouteCircuitPeeringTypeValues() []ExpressRouteCircuitPeeringType {
+	return []ExpressRouteCircuitPeeringType{AzurePrivatePeering, AzurePublicPeering, MicrosoftPeering}
+}
+
+// ExpressRouteCircuitSkuFamily enumerates the values for express route circuit sku family.
+type ExpressRouteCircuitSkuFamily string
+
+const (
+	// MeteredData ...
+	MeteredData ExpressRouteCircuitSkuFamily = "MeteredData"
+	// UnlimitedData ...
+	UnlimitedData ExpressRouteCircuitSkuFamily = "UnlimitedData"
+)
+
+// PossibleExpressRouteCircuitSkuFamilyValues returns an array of possible values for the ExpressRouteCircuitSkuFamily const type.
+func PossibleExpressRouteCircuitSkuFamilyValues() []ExpressRouteCircuitSkuFamily {
+	return []ExpressRouteCircuitSkuFamily{MeteredData, UnlimitedData}
+}
+
+// ExpressRouteCircuitSkuTier enumerates the values for express route circuit sku tier.
+type ExpressRouteCircuitSkuTier string
+
+const (
+	// ExpressRouteCircuitSkuTierPremium ...
+	ExpressRouteCircuitSkuTierPremium ExpressRouteCircuitSkuTier = "Premium"
+	// ExpressRouteCircuitSkuTierStandard ...
+	ExpressRouteCircuitSkuTierStandard ExpressRouteCircuitSkuTier = "Standard"
+)
+
+// PossibleExpressRouteCircuitSkuTierValues returns an array of possible values for the ExpressRouteCircuitSkuTier const type.
+func PossibleExpressRouteCircuitSkuTierValues() []ExpressRouteCircuitSkuTier {
+	return []ExpressRouteCircuitSkuTier{ExpressRouteCircuitSkuTierPremium, ExpressRouteCircuitSkuTierStandard}
+}
+
+// IkeEncryption enumerates the values for ike encryption.
+type IkeEncryption string
+
+const (
+	// AES128 ...
+	AES128 IkeEncryption = "AES128"
+	// AES192 ...
+	AES192 IkeEncryption = "AES192"
+	// AES256 ...
+	AES256 IkeEncryption = "AES256"
+	// DES ...
+	DES IkeEncryption = "DES"
+	// DES3 ...
+	DES3 IkeEncryption = "DES3"
+)
+
+// PossibleIkeEncryptionValues returns an array of possible values for the IkeEncryption const type.
+func PossibleIkeEncryptionValues() []IkeEncryption {
+	return []IkeEncryption{AES128, AES192, AES256, DES, DES3}
+}
+
+// IkeIntegrity enumerates the values for ike integrity.
+type IkeIntegrity string
+
+const (
+	// MD5 ...
+	MD5 IkeIntegrity = "MD5"
+	// SHA1 ...
+	SHA1 IkeIntegrity = "SHA1"
+	// SHA256 ...
+	SHA256 IkeIntegrity = "SHA256"
+	// SHA384 ...
+	SHA384 IkeIntegrity = "SHA384"
+)
+
+// PossibleIkeIntegrityValues returns an array of possible values for the IkeIntegrity const type.
+func PossibleIkeIntegrityValues() []IkeIntegrity {
+	return []IkeIntegrity{MD5, SHA1, SHA256, SHA384}
+}
+
+// IPAllocationMethod enumerates the values for ip allocation method.
+type IPAllocationMethod string
+
+const (
+	// Dynamic ...
+	Dynamic IPAllocationMethod = "Dynamic"
+	// Static ...
+	Static IPAllocationMethod = "Static"
+)
+
+// PossibleIPAllocationMethodValues returns an array of possible values for the IPAllocationMethod const type.
+func PossibleIPAllocationMethodValues() []IPAllocationMethod {
+	return []IPAllocationMethod{Dynamic, Static}
+}
+
+// IpsecEncryption enumerates the values for ipsec encryption.
+type IpsecEncryption string
+
+const (
+	// IpsecEncryptionAES128 ...
+	IpsecEncryptionAES128 IpsecEncryption = "AES128"
+	// IpsecEncryptionAES192 ...
+	IpsecEncryptionAES192 IpsecEncryption = "AES192"
+	// IpsecEncryptionAES256 ...
+	IpsecEncryptionAES256 IpsecEncryption = "AES256"
+	// IpsecEncryptionDES ...
+	IpsecEncryptionDES IpsecEncryption = "DES"
+	// IpsecEncryptionDES3 ...
+	IpsecEncryptionDES3 IpsecEncryption = "DES3"
+	// IpsecEncryptionGCMAES128 ...
+	IpsecEncryptionGCMAES128 IpsecEncryption = "GCMAES128"
+	// IpsecEncryptionGCMAES192 ...
+	IpsecEncryptionGCMAES192 IpsecEncryption = "GCMAES192"
+	// IpsecEncryptionGCMAES256 ...
+	IpsecEncryptionGCMAES256 IpsecEncryption = "GCMAES256"
+	// IpsecEncryptionNone ...
+	IpsecEncryptionNone IpsecEncryption = "None"
+)
+
+// PossibleIpsecEncryptionValues returns an array of possible values for the IpsecEncryption const type.
+func PossibleIpsecEncryptionValues() []IpsecEncryption {
+	return []IpsecEncryption{IpsecEncryptionAES128, IpsecEncryptionAES192, IpsecEncryptionAES256, IpsecEncryptionDES, IpsecEncryptionDES3, IpsecEncryptionGCMAES128, IpsecEncryptionGCMAES192, IpsecEncryptionGCMAES256, IpsecEncryptionNone}
+}
+
+// IpsecIntegrity enumerates the values for ipsec integrity.
+type IpsecIntegrity string
+
+const (
+	// IpsecIntegrityGCMAES128 ...
+	IpsecIntegrityGCMAES128 IpsecIntegrity = "GCMAES128"
+	// IpsecIntegrityGCMAES192 ...
+	IpsecIntegrityGCMAES192 IpsecIntegrity = "GCMAES192"
+	// IpsecIntegrityGCMAES256 ...
+	IpsecIntegrityGCMAES256 IpsecIntegrity = "GCMAES256"
+	// IpsecIntegrityMD5 ...
+	IpsecIntegrityMD5 IpsecIntegrity = "MD5"
+	// IpsecIntegritySHA1 ...
+	IpsecIntegritySHA1 IpsecIntegrity = "SHA1"
+	// IpsecIntegritySHA256 ...
+	IpsecIntegritySHA256 IpsecIntegrity = "SHA256"
+)
+
+// PossibleIpsecIntegrityValues returns an array of possible values for the IpsecIntegrity const type.
+func PossibleIpsecIntegrityValues() []IpsecIntegrity {
+	return []IpsecIntegrity{IpsecIntegrityGCMAES128, IpsecIntegrityGCMAES192, IpsecIntegrityGCMAES256, IpsecIntegrityMD5, IpsecIntegritySHA1, IpsecIntegritySHA256}
+}
+
+// IPVersion enumerates the values for ip version.
+type IPVersion string
+
+const (
+	// IPv4 ...
+	IPv4 IPVersion = "IPv4"
+	// IPv6 ...
+	IPv6 IPVersion = "IPv6"
+)
+
+// PossibleIPVersionValues returns an array of possible values for the IPVersion const type.
+func PossibleIPVersionValues() []IPVersion {
+	return []IPVersion{IPv4, IPv6}
+}
+
+// IssueType enumerates the values for issue type.
+type IssueType string
+
+const (
+	// IssueTypeAgentStopped ...
+	IssueTypeAgentStopped IssueType = "AgentStopped"
+	// IssueTypeDNSResolution ...
+	IssueTypeDNSResolution IssueType = "DnsResolution"
+	// IssueTypeGuestFirewall ...
+	IssueTypeGuestFirewall IssueType = "GuestFirewall"
+	// IssueTypeNetworkSecurityRule ...
+	IssueTypeNetworkSecurityRule IssueType = "NetworkSecurityRule"
+	// IssueTypePlatform ...
+	IssueTypePlatform IssueType = "Platform"
+	// IssueTypePortThrottled ...
+	IssueTypePortThrottled IssueType = "PortThrottled"
+	// IssueTypeSocketBind ...
+	IssueTypeSocketBind IssueType = "SocketBind"
+	// IssueTypeUnknown ...
+	IssueTypeUnknown IssueType = "Unknown"
+	// IssueTypeUserDefinedRoute ...
+	IssueTypeUserDefinedRoute IssueType = "UserDefinedRoute"
+)
+
+// PossibleIssueTypeValues returns an array of possible values for the IssueType const type.
+func PossibleIssueTypeValues() []IssueType {
+	return []IssueType{IssueTypeAgentStopped, IssueTypeDNSResolution, IssueTypeGuestFirewall, IssueTypeNetworkSecurityRule, IssueTypePlatform, IssueTypePortThrottled, IssueTypeSocketBind, IssueTypeUnknown, IssueTypeUserDefinedRoute}
+}
+
+// LoadBalancerSkuName enumerates the values for load balancer sku name.
+type LoadBalancerSkuName string
+
+const (
+	// LoadBalancerSkuNameBasic ...
+	LoadBalancerSkuNameBasic LoadBalancerSkuName = "Basic"
+	// LoadBalancerSkuNameStandard ...
+	LoadBalancerSkuNameStandard LoadBalancerSkuName = "Standard"
+)
+
+// PossibleLoadBalancerSkuNameValues returns an array of possible values for the LoadBalancerSkuName const type.
+func PossibleLoadBalancerSkuNameValues() []LoadBalancerSkuName {
+	return []LoadBalancerSkuName{LoadBalancerSkuNameBasic, LoadBalancerSkuNameStandard}
+}
+
+// LoadDistribution enumerates the values for load distribution.
+type LoadDistribution string
+
+const (
+	// Default ...
+	Default LoadDistribution = "Default"
+	// SourceIP ...
+	SourceIP LoadDistribution = "SourceIP"
+	// SourceIPProtocol ...
+	SourceIPProtocol LoadDistribution = "SourceIPProtocol"
+)
+
+// PossibleLoadDistributionValues returns an array of possible values for the LoadDistribution const type.
+func PossibleLoadDistributionValues() []LoadDistribution {
+	return []LoadDistribution{Default, SourceIP, SourceIPProtocol}
+}
+
+// NextHopType enumerates the values for next hop type.
+type NextHopType string
+
+const (
+	// NextHopTypeHyperNetGateway ...
+	NextHopTypeHyperNetGateway NextHopType = "HyperNetGateway"
+	// NextHopTypeInternet ...
+	NextHopTypeInternet NextHopType = "Internet"
+	// NextHopTypeNone ...
+	NextHopTypeNone NextHopType = "None"
+	// NextHopTypeVirtualAppliance ...
+	NextHopTypeVirtualAppliance NextHopType = "VirtualAppliance"
+	// NextHopTypeVirtualNetworkGateway ...
+	NextHopTypeVirtualNetworkGateway NextHopType = "VirtualNetworkGateway"
+	// NextHopTypeVnetLocal ...
+	NextHopTypeVnetLocal NextHopType = "VnetLocal"
+)
+
+// PossibleNextHopTypeValues returns an array of possible values for the NextHopType const type.
+func PossibleNextHopTypeValues() []NextHopType {
+	return []NextHopType{NextHopTypeHyperNetGateway, NextHopTypeInternet, NextHopTypeNone, NextHopTypeVirtualAppliance, NextHopTypeVirtualNetworkGateway, NextHopTypeVnetLocal}
+}
+
+// OperationStatus enumerates the values for operation status.
+type OperationStatus string
+
+const (
+	// Failed ...
+	Failed OperationStatus = "Failed"
+	// InProgress ...
+	InProgress OperationStatus = "InProgress"
+	// Succeeded ...
+	Succeeded OperationStatus = "Succeeded"
+)
+
+// PossibleOperationStatusValues returns an array of possible values for the OperationStatus const type.
+func PossibleOperationStatusValues() []OperationStatus {
+	return []OperationStatus{Failed, InProgress, Succeeded}
+}
+
+// Origin enumerates the values for origin.
+type Origin string
+
+const (
+	// OriginInbound ...
+	OriginInbound Origin = "Inbound"
+	// OriginLocal ...
+	OriginLocal Origin = "Local"
+	// OriginOutbound ...
+	OriginOutbound Origin = "Outbound"
+)
+
+// PossibleOriginValues returns an array of possible values for the Origin const type.
+func PossibleOriginValues() []Origin {
+	return []Origin{OriginInbound, OriginLocal, OriginOutbound}
+}
+
+// PcError enumerates the values for pc error.
+type PcError string
+
+const (
+	// AgentStopped ...
+	AgentStopped PcError = "AgentStopped"
+	// CaptureFailed ...
+	CaptureFailed PcError = "CaptureFailed"
+	// InternalError ...
+	InternalError PcError = "InternalError"
+	// LocalFileFailed ...
+	LocalFileFailed PcError = "LocalFileFailed"
+	// StorageFailed ...
+	StorageFailed PcError = "StorageFailed"
+)
+
+// PossiblePcErrorValues returns an array of possible values for the PcError const type.
+func PossiblePcErrorValues() []PcError {
+	return []PcError{AgentStopped, CaptureFailed, InternalError, LocalFileFailed, StorageFailed}
+}
+
+// PcProtocol enumerates the values for pc protocol.
+type PcProtocol string
+
+const (
+	// PcProtocolAny ...
+	PcProtocolAny PcProtocol = "Any"
+	// PcProtocolTCP ...
+	PcProtocolTCP PcProtocol = "TCP"
+	// PcProtocolUDP ...
+	PcProtocolUDP PcProtocol = "UDP"
+)
+
+// PossiblePcProtocolValues returns an array of possible values for the PcProtocol const type.
+func PossiblePcProtocolValues() []PcProtocol {
+	return []PcProtocol{PcProtocolAny, PcProtocolTCP, PcProtocolUDP}
+}
+
+// PcStatus enumerates the values for pc status.
+type PcStatus string
+
+const (
+	// PcStatusError ...
+	PcStatusError PcStatus = "Error"
+	// PcStatusNotStarted ...
+	PcStatusNotStarted PcStatus = "NotStarted"
+	// PcStatusRunning ...
+	PcStatusRunning PcStatus = "Running"
+	// PcStatusStopped ...
+	PcStatusStopped PcStatus = "Stopped"
+	// PcStatusUnknown ...
+	PcStatusUnknown PcStatus = "Unknown"
+)
+
+// PossiblePcStatusValues returns an array of possible values for the PcStatus const type.
+func PossiblePcStatusValues() []PcStatus {
+	return []PcStatus{PcStatusError, PcStatusNotStarted, PcStatusRunning, PcStatusStopped, PcStatusUnknown}
+}
+
+// PfsGroup enumerates the values for pfs group.
+type PfsGroup string
+
+const (
+	// PfsGroupECP256 ...
+	PfsGroupECP256 PfsGroup = "ECP256"
+	// PfsGroupECP384 ...
+	PfsGroupECP384 PfsGroup = "ECP384"
+	// PfsGroupNone ...
+	PfsGroupNone PfsGroup = "None"
+	// PfsGroupPFS1 ...
+	PfsGroupPFS1 PfsGroup = "PFS1"
+	// PfsGroupPFS2 ...
+	PfsGroupPFS2 PfsGroup = "PFS2"
+	// PfsGroupPFS2048 ...
+	PfsGroupPFS2048 PfsGroup = "PFS2048"
+	// PfsGroupPFS24 ...
+	PfsGroupPFS24 PfsGroup = "PFS24"
+)
+
+// PossiblePfsGroupValues returns an array of possible values for the PfsGroup const type.
+func PossiblePfsGroupValues() []PfsGroup {
+	return []PfsGroup{PfsGroupECP256, PfsGroupECP384, PfsGroupNone, PfsGroupPFS1, PfsGroupPFS2, PfsGroupPFS2048, PfsGroupPFS24}
+}
+
+// ProbeProtocol enumerates the values for probe protocol.
+type ProbeProtocol string
+
+const (
+	// ProbeProtocolHTTP ...
+	ProbeProtocolHTTP ProbeProtocol = "Http"
+	// ProbeProtocolTCP ...
+	ProbeProtocolTCP ProbeProtocol = "Tcp"
+)
+
+// PossibleProbeProtocolValues returns an array of possible values for the ProbeProtocol const type.
+func PossibleProbeProtocolValues() []ProbeProtocol {
+	return []ProbeProtocol{ProbeProtocolHTTP, ProbeProtocolTCP}
+}
+
+// ProcessorArchitecture enumerates the values for processor architecture.
+type ProcessorArchitecture string
+
+const (
+	// Amd64 ...
+	Amd64 ProcessorArchitecture = "Amd64"
+	// X86 ...
+	X86 ProcessorArchitecture = "X86"
+)
+
+// PossibleProcessorArchitectureValues returns an array of possible values for the ProcessorArchitecture const type.
+func PossibleProcessorArchitectureValues() []ProcessorArchitecture {
+	return []ProcessorArchitecture{Amd64, X86}
+}
+
+// Protocol enumerates the values for protocol.
+type Protocol string
+
+const (
+	// ProtocolTCP ...
+	ProtocolTCP Protocol = "TCP"
+	// ProtocolUDP ...
+	ProtocolUDP Protocol = "UDP"
+)
+
+// PossibleProtocolValues returns an array of possible values for the Protocol const type.
+func PossibleProtocolValues() []Protocol {
+	return []Protocol{ProtocolTCP, ProtocolUDP}
+}
+
+// ProvisioningState enumerates the values for provisioning state.
+type ProvisioningState string
+
+const (
+	// ProvisioningStateDeleting ...
+	ProvisioningStateDeleting ProvisioningState = "Deleting"
+	// ProvisioningStateFailed ...
+	ProvisioningStateFailed ProvisioningState = "Failed"
+	// ProvisioningStateSucceeded ...
+	ProvisioningStateSucceeded ProvisioningState = "Succeeded"
+	// ProvisioningStateUpdating ...
+	ProvisioningStateUpdating ProvisioningState = "Updating"
+)
+
+// PossibleProvisioningStateValues returns an array of possible values for the ProvisioningState const type.
+func PossibleProvisioningStateValues() []ProvisioningState {
+	return []ProvisioningState{ProvisioningStateDeleting, ProvisioningStateFailed, ProvisioningStateSucceeded, ProvisioningStateUpdating}
+}
+
+// PublicIPAddressSkuName enumerates the values for public ip address sku name.
+type PublicIPAddressSkuName string
+
+const (
+	// PublicIPAddressSkuNameBasic ...
+	PublicIPAddressSkuNameBasic PublicIPAddressSkuName = "Basic"
+	// PublicIPAddressSkuNameStandard ...
+	PublicIPAddressSkuNameStandard PublicIPAddressSkuName = "Standard"
+)
+
+// PossiblePublicIPAddressSkuNameValues returns an array of possible values for the PublicIPAddressSkuName const type.
+func PossiblePublicIPAddressSkuNameValues() []PublicIPAddressSkuName {
+	return []PublicIPAddressSkuName{PublicIPAddressSkuNameBasic, PublicIPAddressSkuNameStandard}
+}
+
+// RouteNextHopType enumerates the values for route next hop type.
+type RouteNextHopType string
+
+const (
+	// RouteNextHopTypeInternet ...
+	RouteNextHopTypeInternet RouteNextHopType = "Internet"
+	// RouteNextHopTypeNone ...
+	RouteNextHopTypeNone RouteNextHopType = "None"
+	// RouteNextHopTypeVirtualAppliance ...
+	RouteNextHopTypeVirtualAppliance RouteNextHopType = "VirtualAppliance"
+	// RouteNextHopTypeVirtualNetworkGateway ...
+	RouteNextHopTypeVirtualNetworkGateway RouteNextHopType = "VirtualNetworkGateway"
+	// RouteNextHopTypeVnetLocal ...
+	RouteNextHopTypeVnetLocal RouteNextHopType = "VnetLocal"
+)
+
+// PossibleRouteNextHopTypeValues returns an array of possible values for the RouteNextHopType const type.
+func PossibleRouteNextHopTypeValues() []RouteNextHopType {
+	return []RouteNextHopType{RouteNextHopTypeInternet, RouteNextHopTypeNone, RouteNextHopTypeVirtualAppliance, RouteNextHopTypeVirtualNetworkGateway, RouteNextHopTypeVnetLocal}
+}
+
+// SecurityRuleAccess enumerates the values for security rule access.
+type SecurityRuleAccess string
+
+const (
+	// SecurityRuleAccessAllow ...
+	SecurityRuleAccessAllow SecurityRuleAccess = "Allow"
+	// SecurityRuleAccessDeny ...
+	SecurityRuleAccessDeny SecurityRuleAccess = "Deny"
+)
+
+// PossibleSecurityRuleAccessValues returns an array of possible values for the SecurityRuleAccess const type.
+func PossibleSecurityRuleAccessValues() []SecurityRuleAccess {
+	return []SecurityRuleAccess{SecurityRuleAccessAllow, SecurityRuleAccessDeny}
+}
+
+// SecurityRuleDirection enumerates the values for security rule direction.
+type SecurityRuleDirection string
+
+const (
+	// SecurityRuleDirectionInbound ...
+	SecurityRuleDirectionInbound SecurityRuleDirection = "Inbound"
+	// SecurityRuleDirectionOutbound ...
+	SecurityRuleDirectionOutbound SecurityRuleDirection = "Outbound"
+)
+
+// PossibleSecurityRuleDirectionValues returns an array of possible values for the SecurityRuleDirection const type.
+func PossibleSecurityRuleDirectionValues() []SecurityRuleDirection {
+	return []SecurityRuleDirection{SecurityRuleDirectionInbound, SecurityRuleDirectionOutbound}
+}
+
+// SecurityRuleProtocol enumerates the values for security rule protocol.
+type SecurityRuleProtocol string
+
+const (
+	// SecurityRuleProtocolAsterisk ...
+	SecurityRuleProtocolAsterisk SecurityRuleProtocol = "*"
+	// SecurityRuleProtocolTCP ...
+	SecurityRuleProtocolTCP SecurityRuleProtocol = "Tcp"
+	// SecurityRuleProtocolUDP ...
+	SecurityRuleProtocolUDP SecurityRuleProtocol = "Udp"
+)
+
+// PossibleSecurityRuleProtocolValues returns an array of possible values for the SecurityRuleProtocol const type.
+func PossibleSecurityRuleProtocolValues() []SecurityRuleProtocol {
+	return []SecurityRuleProtocol{SecurityRuleProtocolAsterisk, SecurityRuleProtocolTCP, SecurityRuleProtocolUDP}
+}
+
+// ServiceProviderProvisioningState enumerates the values for service provider provisioning state.
+type ServiceProviderProvisioningState string
+
+const (
+	// Deprovisioning ...
+	Deprovisioning ServiceProviderProvisioningState = "Deprovisioning"
+	// NotProvisioned ...
+	NotProvisioned ServiceProviderProvisioningState = "NotProvisioned"
+	// Provisioned ...
+	Provisioned ServiceProviderProvisioningState = "Provisioned"
+	// Provisioning ...
+	Provisioning ServiceProviderProvisioningState = "Provisioning"
+)
+
+// PossibleServiceProviderProvisioningStateValues returns an array of possible values for the ServiceProviderProvisioningState const type.
+func PossibleServiceProviderProvisioningStateValues() []ServiceProviderProvisioningState {
+	return []ServiceProviderProvisioningState{Deprovisioning, NotProvisioned, Provisioned, Provisioning}
+}
+
+// Severity enumerates the values for severity.
+type Severity string
+
+const (
+	// SeverityError ...
+	SeverityError Severity = "Error"
+	// SeverityWarning ...
+	SeverityWarning Severity = "Warning"
+)
+
+// PossibleSeverityValues returns an array of possible values for the Severity const type.
+func PossibleSeverityValues() []Severity {
+	return []Severity{SeverityError, SeverityWarning}
+}
+
+// TransportProtocol enumerates the values for transport protocol.
+type TransportProtocol string
+
+const (
+	// TransportProtocolTCP ...
+	TransportProtocolTCP TransportProtocol = "Tcp"
+	// TransportProtocolUDP ...
+	TransportProtocolUDP TransportProtocol = "Udp"
+)
+
+// PossibleTransportProtocolValues returns an array of possible values for the TransportProtocol const type.
+func PossibleTransportProtocolValues() []TransportProtocol {
+	return []TransportProtocol{TransportProtocolTCP, TransportProtocolUDP}
+}
+
+// VirtualNetworkGatewayConnectionStatus enumerates the values for virtual network gateway connection status.
+type VirtualNetworkGatewayConnectionStatus string
+
+const (
+	// VirtualNetworkGatewayConnectionStatusConnected ...
+	VirtualNetworkGatewayConnectionStatusConnected VirtualNetworkGatewayConnectionStatus = "Connected"
+	// VirtualNetworkGatewayConnectionStatusConnecting ...
+	VirtualNetworkGatewayConnectionStatusConnecting VirtualNetworkGatewayConnectionStatus = "Connecting"
+	// VirtualNetworkGatewayConnectionStatusNotConnected ...
+	VirtualNetworkGatewayConnectionStatusNotConnected VirtualNetworkGatewayConnectionStatus = "NotConnected"
+	// VirtualNetworkGatewayConnectionStatusUnknown ...
+	VirtualNetworkGatewayConnectionStatusUnknown VirtualNetworkGatewayConnectionStatus = "Unknown"
+)
+
+// PossibleVirtualNetworkGatewayConnectionStatusValues returns an array of possible values for the VirtualNetworkGatewayConnectionStatus const type.
+func PossibleVirtualNetworkGatewayConnectionStatusValues() []VirtualNetworkGatewayConnectionStatus {
+	return []VirtualNetworkGatewayConnectionStatus{VirtualNetworkGatewayConnectionStatusConnected, VirtualNetworkGatewayConnectionStatusConnecting, VirtualNetworkGatewayConnectionStatusNotConnected, VirtualNetworkGatewayConnectionStatusUnknown}
+}
+
+// VirtualNetworkGatewayConnectionType enumerates the values for virtual network gateway connection type.
+type VirtualNetworkGatewayConnectionType string
+
+const (
+	// ExpressRoute ...
+	ExpressRoute VirtualNetworkGatewayConnectionType = "ExpressRoute"
+	// IPsec ...
+	IPsec VirtualNetworkGatewayConnectionType = "IPsec"
+	// Vnet2Vnet ...
+	Vnet2Vnet VirtualNetworkGatewayConnectionType = "Vnet2Vnet"
+	// VPNClient ...
+	VPNClient VirtualNetworkGatewayConnectionType = "VPNClient"
+)
+
+// PossibleVirtualNetworkGatewayConnectionTypeValues returns an array of possible values for the VirtualNetworkGatewayConnectionType const type.
+func PossibleVirtualNetworkGatewayConnectionTypeValues() []VirtualNetworkGatewayConnectionType {
+	return []VirtualNetworkGatewayConnectionType{ExpressRoute, IPsec, Vnet2Vnet, VPNClient}
+}
+
+// VirtualNetworkGatewaySkuName enumerates the values for virtual network gateway sku name.
+type VirtualNetworkGatewaySkuName string
+
+const (
+	// VirtualNetworkGatewaySkuNameBasic ...
+	VirtualNetworkGatewaySkuNameBasic VirtualNetworkGatewaySkuName = "Basic"
+	// VirtualNetworkGatewaySkuNameHighPerformance ...
+	VirtualNetworkGatewaySkuNameHighPerformance VirtualNetworkGatewaySkuName = "HighPerformance"
+	// VirtualNetworkGatewaySkuNameStandard ...
+	VirtualNetworkGatewaySkuNameStandard VirtualNetworkGatewaySkuName = "Standard"
+	// VirtualNetworkGatewaySkuNameUltraPerformance ...
+	VirtualNetworkGatewaySkuNameUltraPerformance VirtualNetworkGatewaySkuName = "UltraPerformance"
+	// VirtualNetworkGatewaySkuNameVpnGw1 ...
+	VirtualNetworkGatewaySkuNameVpnGw1 VirtualNetworkGatewaySkuName = "VpnGw1"
+	// VirtualNetworkGatewaySkuNameVpnGw2 ...
+	VirtualNetworkGatewaySkuNameVpnGw2 VirtualNetworkGatewaySkuName = "VpnGw2"
+	// VirtualNetworkGatewaySkuNameVpnGw3 ...
+	VirtualNetworkGatewaySkuNameVpnGw3 VirtualNetworkGatewaySkuName = "VpnGw3"
+)
+
+// PossibleVirtualNetworkGatewaySkuNameValues returns an array of possible values for the VirtualNetworkGatewaySkuName const type.
+func PossibleVirtualNetworkGatewaySkuNameValues() []VirtualNetworkGatewaySkuName {
+	return []VirtualNetworkGatewaySkuName{VirtualNetworkGatewaySkuNameBasic, VirtualNetworkGatewaySkuNameHighPerformance, VirtualNetworkGatewaySkuNameStandard, VirtualNetworkGatewaySkuNameUltraPerformance, VirtualNetworkGatewaySkuNameVpnGw1, VirtualNetworkGatewaySkuNameVpnGw2, VirtualNetworkGatewaySkuNameVpnGw3}
+}
+
+// VirtualNetworkGatewaySkuTier enumerates the values for virtual network gateway sku tier.
+type VirtualNetworkGatewaySkuTier string
+
+const (
+	// VirtualNetworkGatewaySkuTierBasic ...
+	VirtualNetworkGatewaySkuTierBasic VirtualNetworkGatewaySkuTier = "Basic"
+	// VirtualNetworkGatewaySkuTierHighPerformance ...
+	VirtualNetworkGatewaySkuTierHighPerformance VirtualNetworkGatewaySkuTier = "HighPerformance"
+	// VirtualNetworkGatewaySkuTierStandard ...
+	VirtualNetworkGatewaySkuTierStandard VirtualNetworkGatewaySkuTier = "Standard"
+	// VirtualNetworkGatewaySkuTierUltraPerformance ...
+	VirtualNetworkGatewaySkuTierUltraPerformance VirtualNetworkGatewaySkuTier = "UltraPerformance"
+	// VirtualNetworkGatewaySkuTierVpnGw1 ...
+	VirtualNetworkGatewaySkuTierVpnGw1 VirtualNetworkGatewaySkuTier = "VpnGw1"
+	// VirtualNetworkGatewaySkuTierVpnGw2 ...
+	VirtualNetworkGatewaySkuTierVpnGw2 VirtualNetworkGatewaySkuTier = "VpnGw2"
+	// VirtualNetworkGatewaySkuTierVpnGw3 ...
+	VirtualNetworkGatewaySkuTierVpnGw3 VirtualNetworkGatewaySkuTier = "VpnGw3"
+)
+
+// PossibleVirtualNetworkGatewaySkuTierValues returns an array of possible values for the VirtualNetworkGatewaySkuTier const type.
+func PossibleVirtualNetworkGatewaySkuTierValues() []VirtualNetworkGatewaySkuTier {
+	return []VirtualNetworkGatewaySkuTier{VirtualNetworkGatewaySkuTierBasic, VirtualNetworkGatewaySkuTierHighPerformance, VirtualNetworkGatewaySkuTierStandard, VirtualNetworkGatewaySkuTierUltraPerformance, VirtualNetworkGatewaySkuTierVpnGw1, VirtualNetworkGatewaySkuTierVpnGw2, VirtualNetworkGatewaySkuTierVpnGw3}
+}
+
+// VirtualNetworkGatewayType enumerates the values for virtual network gateway type.
+type VirtualNetworkGatewayType string
+
+const (
+	// VirtualNetworkGatewayTypeExpressRoute ...
+	VirtualNetworkGatewayTypeExpressRoute VirtualNetworkGatewayType = "ExpressRoute"
+	// VirtualNetworkGatewayTypeVpn ...
+	VirtualNetworkGatewayTypeVpn VirtualNetworkGatewayType = "Vpn"
+)
+
+// PossibleVirtualNetworkGatewayTypeValues returns an array of possible values for the VirtualNetworkGatewayType const type.
+func PossibleVirtualNetworkGatewayTypeValues() []VirtualNetworkGatewayType {
+	return []VirtualNetworkGatewayType{VirtualNetworkGatewayTypeExpressRoute, VirtualNetworkGatewayTypeVpn}
+}
+
+// VirtualNetworkPeeringState enumerates the values for virtual network peering state.
+type VirtualNetworkPeeringState string
+
+const (
+	// Connected ...
+	Connected VirtualNetworkPeeringState = "Connected"
+	// Disconnected ...
+	Disconnected VirtualNetworkPeeringState = "Disconnected"
+	// Initiated ...
+	Initiated VirtualNetworkPeeringState = "Initiated"
+)
+
+// PossibleVirtualNetworkPeeringStateValues returns an array of possible values for the VirtualNetworkPeeringState const type.
+func PossibleVirtualNetworkPeeringStateValues() []VirtualNetworkPeeringState {
+	return []VirtualNetworkPeeringState{Connected, Disconnected, Initiated}
+}
+
+// VpnClientProtocol enumerates the values for vpn client protocol.
+type VpnClientProtocol string
+
+const (
+	// IkeV2 ...
+	IkeV2 VpnClientProtocol = "IkeV2"
+	// SSTP ...
+	SSTP VpnClientProtocol = "SSTP"
+)
+
+// PossibleVpnClientProtocolValues returns an array of possible values for the VpnClientProtocol const type.
+func PossibleVpnClientProtocolValues() []VpnClientProtocol {
+	return []VpnClientProtocol{IkeV2, SSTP}
+}
+
+// VpnType enumerates the values for vpn type.
+type VpnType string
+
+const (
+	// PolicyBased ...
+	PolicyBased VpnType = "PolicyBased"
+	// RouteBased ...
+	RouteBased VpnType = "RouteBased"
+)
+
+// PossibleVpnTypeValues returns an array of possible values for the VpnType const type.
+func PossibleVpnTypeValues() []VpnType {
+	return []VpnType{PolicyBased, RouteBased}
+}
+
+// AddressSpace addressSpace contains an array of IP address ranges that can be used by subnets of the
+// virtual network.
 type AddressSpace struct {
 	// AddressPrefixes - A list of address blocks reserved for this virtual network in CIDR notation.
 	AddressPrefixes *[]string `json:"addressPrefixes,omitempty"`
@@ -258,7 +1476,8 @@ type ApplicationGatewayAuthenticationCertificatePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// ApplicationGatewayAvailableSslOptions response for ApplicationGatewayAvailableSslOptions API service call.
+// ApplicationGatewayAvailableSslOptions response for ApplicationGatewayAvailableSslOptions API service
+// call.
 type ApplicationGatewayAvailableSslOptions struct {
 	autorest.Response                                      `json:"-"`
 	*ApplicationGatewayAvailableSslOptionsPropertiesFormat `json:"properties,omitempty"`
@@ -361,7 +1580,8 @@ func (agaso *ApplicationGatewayAvailableSslOptions) UnmarshalJSON(body []byte) e
 	return nil
 }
 
-// ApplicationGatewayAvailableSslOptionsPropertiesFormat properties of ApplicationGatewayAvailableSslOptions
+// ApplicationGatewayAvailableSslOptionsPropertiesFormat properties of
+// ApplicationGatewayAvailableSslOptions
 type ApplicationGatewayAvailableSslOptionsPropertiesFormat struct {
 	// PredefinedPolicies - List of available Ssl predefined policy.
 	PredefinedPolicies *[]SubResource `json:"predefinedPolicies,omitempty"`
@@ -452,15 +1672,10 @@ func (agaspp ApplicationGatewayAvailableSslPredefinedPolicies) IsEmpty() bool {
 	return agaspp.Value == nil || len(*agaspp.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (agaspp ApplicationGatewayAvailableSslPredefinedPolicies) hasNextLink() bool {
-	return agaspp.NextLink != nil && len(*agaspp.NextLink) != 0
-}
-
 // applicationGatewayAvailableSslPredefinedPoliciesPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (agaspp ApplicationGatewayAvailableSslPredefinedPolicies) applicationGatewayAvailableSslPredefinedPoliciesPreparer(ctx context.Context) (*http.Request, error) {
-	if !agaspp.hasNextLink() {
+	if agaspp.NextLink == nil || len(to.String(agaspp.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -489,16 +1704,11 @@ func (page *ApplicationGatewayAvailableSslPredefinedPoliciesPage) NextWithContex
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.agaspp)
-		if err != nil {
-			return err
-		}
-		page.agaspp = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.agaspp)
+	if err != nil {
+		return err
 	}
+	page.agaspp = next
 	return nil
 }
 
@@ -532,8 +1742,8 @@ func NewApplicationGatewayAvailableSslPredefinedPoliciesPage(getNextPage func(co
 	return ApplicationGatewayAvailableSslPredefinedPoliciesPage{fn: getNextPage}
 }
 
-// ApplicationGatewayAvailableWafRuleSetsResult response for ApplicationGatewayAvailableWafRuleSets API service
-// call.
+// ApplicationGatewayAvailableWafRuleSetsResult response for ApplicationGatewayAvailableWafRuleSets API
+// service call.
 type ApplicationGatewayAvailableWafRuleSetsResult struct {
 	autorest.Response `json:"-"`
 	// Value - The list of application gateway rule sets.
@@ -642,8 +1852,8 @@ func (agbap *ApplicationGatewayBackendAddressPool) UnmarshalJSON(body []byte) er
 	return nil
 }
 
-// ApplicationGatewayBackendAddressPoolPropertiesFormat properties of Backend Address Pool of an application
-// gateway.
+// ApplicationGatewayBackendAddressPoolPropertiesFormat properties of Backend Address Pool of an
+// application gateway.
 type ApplicationGatewayBackendAddressPoolPropertiesFormat struct {
 	// BackendIPConfigurations - Collection of references to IPs defined in network interfaces.
 	BackendIPConfigurations *[]InterfaceIPConfiguration `json:"backendIPConfigurations,omitempty"`
@@ -810,8 +2020,8 @@ type ApplicationGatewayBackendHTTPSettingsPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// ApplicationGatewayConnectionDraining connection draining allows open connections to a backend server to be
-// active for a specified time after the backend server got removed from the configuration.
+// ApplicationGatewayConnectionDraining connection draining allows open connections to a backend server to
+// be active for a specified time after the backend server got removed from the configuration.
 type ApplicationGatewayConnectionDraining struct {
 	// Enabled - Whether connection draining is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
@@ -819,8 +2029,8 @@ type ApplicationGatewayConnectionDraining struct {
 	DrainTimeoutInSec *int32 `json:"drainTimeoutInSec,omitempty"`
 }
 
-// ApplicationGatewayFirewallDisabledRuleGroup allows to disable rules within a rule group or an entire rule
-// group.
+// ApplicationGatewayFirewallDisabledRuleGroup allows to disable rules within a rule group or an entire
+// rule group.
 type ApplicationGatewayFirewallDisabledRuleGroup struct {
 	// RuleGroupName - The name of the rule group that will be disabled.
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
@@ -1378,7 +2588,8 @@ func (agic *ApplicationGatewayIPConfiguration) UnmarshalJSON(body []byte) error 
 	return nil
 }
 
-// ApplicationGatewayIPConfigurationPropertiesFormat properties of IP configuration of an application gateway.
+// ApplicationGatewayIPConfigurationPropertiesFormat properties of IP configuration of an application
+// gateway.
 type ApplicationGatewayIPConfigurationPropertiesFormat struct {
 	// Subnet - Reference of the subnet resource. A subnet from where application gateway gets its private address.
 	Subnet *SubResource `json:"subnet,omitempty"`
@@ -1463,15 +2674,10 @@ func (aglr ApplicationGatewayListResult) IsEmpty() bool {
 	return aglr.Value == nil || len(*aglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (aglr ApplicationGatewayListResult) hasNextLink() bool {
-	return aglr.NextLink != nil && len(*aglr.NextLink) != 0
-}
-
 // applicationGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (aglr ApplicationGatewayListResult) applicationGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !aglr.hasNextLink() {
+	if aglr.NextLink == nil || len(to.String(aglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1499,16 +2705,11 @@ func (page *ApplicationGatewayListResultPage) NextWithContext(ctx context.Contex
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.aglr)
-		if err != nil {
-			return err
-		}
-		page.aglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.aglr)
+	if err != nil {
+		return err
 	}
+	page.aglr = next
 	return nil
 }
 
@@ -1816,63 +3017,6 @@ type ApplicationGatewayPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ApplicationGatewayPropertiesFormat.
-func (agpf ApplicationGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if agpf.Sku != nil {
-		objectMap["sku"] = agpf.Sku
-	}
-	if agpf.SslPolicy != nil {
-		objectMap["sslPolicy"] = agpf.SslPolicy
-	}
-	if agpf.GatewayIPConfigurations != nil {
-		objectMap["gatewayIPConfigurations"] = agpf.GatewayIPConfigurations
-	}
-	if agpf.AuthenticationCertificates != nil {
-		objectMap["authenticationCertificates"] = agpf.AuthenticationCertificates
-	}
-	if agpf.SslCertificates != nil {
-		objectMap["sslCertificates"] = agpf.SslCertificates
-	}
-	if agpf.FrontendIPConfigurations != nil {
-		objectMap["frontendIPConfigurations"] = agpf.FrontendIPConfigurations
-	}
-	if agpf.FrontendPorts != nil {
-		objectMap["frontendPorts"] = agpf.FrontendPorts
-	}
-	if agpf.Probes != nil {
-		objectMap["probes"] = agpf.Probes
-	}
-	if agpf.BackendAddressPools != nil {
-		objectMap["backendAddressPools"] = agpf.BackendAddressPools
-	}
-	if agpf.BackendHTTPSettingsCollection != nil {
-		objectMap["backendHttpSettingsCollection"] = agpf.BackendHTTPSettingsCollection
-	}
-	if agpf.HTTPListeners != nil {
-		objectMap["httpListeners"] = agpf.HTTPListeners
-	}
-	if agpf.URLPathMaps != nil {
-		objectMap["urlPathMaps"] = agpf.URLPathMaps
-	}
-	if agpf.RequestRoutingRules != nil {
-		objectMap["requestRoutingRules"] = agpf.RequestRoutingRules
-	}
-	if agpf.RedirectConfigurations != nil {
-		objectMap["redirectConfigurations"] = agpf.RedirectConfigurations
-	}
-	if agpf.WebApplicationFirewallConfiguration != nil {
-		objectMap["webApplicationFirewallConfiguration"] = agpf.WebApplicationFirewallConfiguration
-	}
-	if agpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = agpf.ResourceGUID
-	}
-	if agpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = agpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
-}
-
 // ApplicationGatewayRedirectConfiguration redirect configuration of an application gateway.
 type ApplicationGatewayRedirectConfiguration struct {
 	*ApplicationGatewayRedirectConfigurationPropertiesFormat `json:"properties,omitempty"`
@@ -2082,8 +3226,8 @@ func (agrrr *ApplicationGatewayRequestRoutingRule) UnmarshalJSON(body []byte) er
 	return nil
 }
 
-// ApplicationGatewayRequestRoutingRulePropertiesFormat properties of request routing rule of the application
-// gateway.
+// ApplicationGatewayRequestRoutingRulePropertiesFormat properties of request routing rule of the
+// application gateway.
 type ApplicationGatewayRequestRoutingRulePropertiesFormat struct {
 	// RuleType - Rule type. Possible values include: 'Basic', 'PathBasedRouting'
 	RuleType ApplicationGatewayRequestRoutingRuleType `json:"ruleType,omitempty"`
@@ -2159,8 +3303,8 @@ func (future *ApplicationGatewaysCreateOrUpdateFuture) Result(client Application
 	return
 }
 
-// ApplicationGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ApplicationGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ApplicationGatewaysDeleteFuture struct {
 	azure.Future
 }
@@ -2286,7 +3430,8 @@ func (agsc *ApplicationGatewaySslCertificate) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// ApplicationGatewaySslCertificatePropertiesFormat properties of SSL certificates of an application gateway.
+// ApplicationGatewaySslCertificatePropertiesFormat properties of SSL certificates of an application
+// gateway.
 type ApplicationGatewaySslCertificatePropertiesFormat struct {
 	// Data - Base-64 encoded pfx certificate. Only applicable in PUT Request.
 	Data *string `json:"data,omitempty"`
@@ -2379,7 +3524,8 @@ func (agspp *ApplicationGatewaySslPredefinedPolicy) UnmarshalJSON(body []byte) e
 	return nil
 }
 
-// ApplicationGatewaySslPredefinedPolicyPropertiesFormat properties of ApplicationGatewaySslPredefinedPolicy
+// ApplicationGatewaySslPredefinedPolicyPropertiesFormat properties of
+// ApplicationGatewaySslPredefinedPolicy
 type ApplicationGatewaySslPredefinedPolicyPropertiesFormat struct {
 	// CipherSuites - Ssl cipher suites to be enabled in the specified order for application gateway.
 	CipherSuites *[]ApplicationGatewaySslCipherSuite `json:"cipherSuites,omitempty"`
@@ -2387,8 +3533,8 @@ type ApplicationGatewaySslPredefinedPolicyPropertiesFormat struct {
 	MinProtocolVersion ApplicationGatewaySslProtocol `json:"minProtocolVersion,omitempty"`
 }
 
-// ApplicationGatewaysStartFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ApplicationGatewaysStartFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ApplicationGatewaysStartFuture struct {
 	azure.Future
 }
@@ -2557,8 +3703,8 @@ type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 	DisabledRuleGroups *[]ApplicationGatewayFirewallDisabledRuleGroup `json:"disabledRuleGroups,omitempty"`
 }
 
-// AuthorizationListResult response for ListAuthorizations API service call retrieves all authorizations that
-// belongs to an ExpressRouteCircuit.
+// AuthorizationListResult response for ListAuthorizations API service call retrieves all authorizations
+// that belongs to an ExpressRouteCircuit.
 type AuthorizationListResult struct {
 	autorest.Response `json:"-"`
 	// Value - The authorizations in an ExpressRoute Circuit.
@@ -2567,8 +3713,8 @@ type AuthorizationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// AuthorizationListResultIterator provides access to a complete listing of ExpressRouteCircuitAuthorization
-// values.
+// AuthorizationListResultIterator provides access to a complete listing of
+// ExpressRouteCircuitAuthorization values.
 type AuthorizationListResultIterator struct {
 	i    int
 	page AuthorizationListResultPage
@@ -2636,15 +3782,10 @@ func (alr AuthorizationListResult) IsEmpty() bool {
 	return alr.Value == nil || len(*alr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (alr AuthorizationListResult) hasNextLink() bool {
-	return alr.NextLink != nil && len(*alr.NextLink) != 0
-}
-
 // authorizationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (alr AuthorizationListResult) authorizationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !alr.hasNextLink() {
+	if alr.NextLink == nil || len(to.String(alr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2672,16 +3813,11 @@ func (page *AuthorizationListResultPage) NextWithContext(ctx context.Context) (e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.alr)
-		if err != nil {
-			return err
-		}
-		page.alr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.alr)
+	if err != nil {
+		return err
 	}
+	page.alr = next
 	return nil
 }
 
@@ -2726,11 +3862,11 @@ type AuthorizationPropertiesFormat struct {
 }
 
 // AzureAsyncOperationResult the response body contains the status of the specified asynchronous operation,
-// indicating whether it has succeeded, is in progress, or has failed. Note that this status is distinct from
-// the HTTP status code returned for the Get Operation Status operation itself. If the asynchronous operation
-// succeeded, the response body includes the HTTP status code for the successful request. If the asynchronous
-// operation failed, the response body includes the HTTP status code for the failed request and error
-// information regarding the failure.
+// indicating whether it has succeeded, is in progress, or has failed. Note that this status is distinct
+// from the HTTP status code returned for the Get Operation Status operation itself. If the asynchronous
+// operation succeeded, the response body includes the HTTP status code for the successful request. If the
+// asynchronous operation failed, the response body includes the HTTP status code for the failed request
+// and error information regarding the failure.
 type AzureAsyncOperationResult struct {
 	// Status - Status of the Azure async operation. Possible values are: 'InProgress', 'Succeeded', and 'Failed'. Possible values include: 'InProgress', 'Succeeded', 'Failed'
 	Status OperationStatus `json:"status,omitempty"`
@@ -2829,15 +3965,6 @@ type BackendAddressPoolPropertiesFormat struct {
 	OutboundNatRule *SubResource `json:"outboundNatRule,omitempty"`
 	// ProvisioningState - Get provisioning state of the public IP resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for BackendAddressPoolPropertiesFormat.
-func (bappf BackendAddressPoolPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if bappf.ProvisioningState != nil {
-		objectMap["provisioningState"] = bappf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // BGPCommunity contains bgp community information offered in Service Community resources.
@@ -2994,7 +4121,8 @@ type BgpServiceCommunityListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// BgpServiceCommunityListResultIterator provides access to a complete listing of BgpServiceCommunity values.
+// BgpServiceCommunityListResultIterator provides access to a complete listing of BgpServiceCommunity
+// values.
 type BgpServiceCommunityListResultIterator struct {
 	i    int
 	page BgpServiceCommunityListResultPage
@@ -3062,15 +4190,10 @@ func (bsclr BgpServiceCommunityListResult) IsEmpty() bool {
 	return bsclr.Value == nil || len(*bsclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (bsclr BgpServiceCommunityListResult) hasNextLink() bool {
-	return bsclr.NextLink != nil && len(*bsclr.NextLink) != 0
-}
-
 // bgpServiceCommunityListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (bsclr BgpServiceCommunityListResult) bgpServiceCommunityListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !bsclr.hasNextLink() {
+	if bsclr.NextLink == nil || len(to.String(bsclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3098,16 +4221,11 @@ func (page *BgpServiceCommunityListResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.bsclr)
-		if err != nil {
-			return err
-		}
-		page.bsclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.bsclr)
+	if err != nil {
+		return err
 	}
+	page.bsclr = next
 	return nil
 }
 
@@ -3244,8 +4362,8 @@ type ConnectivitySource struct {
 	Port *int32 `json:"port,omitempty"`
 }
 
-// DhcpOptions dhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network.
-// Standard DHCP option for a subnet overrides VNET DHCP options.
+// DhcpOptions dhcpOptions contains an array of DNS servers available to VMs deployed in the virtual
+// network. Standard DHCP option for a subnet overrides VNET DHCP options.
 type DhcpOptions struct {
 	// DNSServers - The list of DNS servers IP addresses.
 	DNSServers *[]string `json:"dnsServers,omitempty"`
@@ -3304,15 +4422,6 @@ type EffectiveNetworkSecurityGroupListResult struct {
 	Value *[]EffectiveNetworkSecurityGroup `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for EffectiveNetworkSecurityGroupListResult.
-func (ensglr EffectiveNetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ensglr.Value != nil {
-		objectMap["value"] = ensglr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // EffectiveNetworkSecurityRule effective network security rules.
@@ -3374,15 +4483,6 @@ type EffectiveRouteListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for EffectiveRouteListResult.
-func (erlr EffectiveRouteListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if erlr.Value != nil {
-		objectMap["value"] = erlr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
 // EndpointServiceResult endpoint service.
 type EndpointServiceResult struct {
 	// Name - READ-ONLY; Name of the endpoint service.
@@ -3391,15 +4491,6 @@ type EndpointServiceResult struct {
 	Type *string `json:"type,omitempty"`
 	// ID - Resource ID.
 	ID *string `json:"id,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for EndpointServiceResult.
-func (esr EndpointServiceResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if esr.ID != nil {
-		objectMap["id"] = esr.ID
-	}
-	return json.Marshal(objectMap)
 }
 
 // EndpointServicesListResult response for the ListAvailableEndpointServices API service call.
@@ -3411,7 +4502,8 @@ type EndpointServicesListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// EndpointServicesListResultIterator provides access to a complete listing of EndpointServiceResult values.
+// EndpointServicesListResultIterator provides access to a complete listing of EndpointServiceResult
+// values.
 type EndpointServicesListResultIterator struct {
 	i    int
 	page EndpointServicesListResultPage
@@ -3479,15 +4571,10 @@ func (eslr EndpointServicesListResult) IsEmpty() bool {
 	return eslr.Value == nil || len(*eslr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (eslr EndpointServicesListResult) hasNextLink() bool {
-	return eslr.NextLink != nil && len(*eslr.NextLink) != 0
-}
-
 // endpointServicesListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (eslr EndpointServicesListResult) endpointServicesListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !eslr.hasNextLink() {
+	if eslr.NextLink == nil || len(to.String(eslr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3515,16 +4602,11 @@ func (page *EndpointServicesListResultPage) NextWithContext(ctx context.Context)
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.eslr)
-		if err != nil {
-			return err
-		}
-		page.eslr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.eslr)
+	if err != nil {
+		return err
 	}
+	page.eslr = next
 	return nil
 }
 
@@ -3821,8 +4903,8 @@ func (future *ExpressRouteCircuitAuthorizationsCreateOrUpdateFuture) Result(clie
 	return
 }
 
-// ExpressRouteCircuitAuthorizationsDeleteFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// ExpressRouteCircuitAuthorizationsDeleteFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type ExpressRouteCircuitAuthorizationsDeleteFuture struct {
 	azure.Future
 }
@@ -3853,7 +4935,8 @@ type ExpressRouteCircuitListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// ExpressRouteCircuitListResultIterator provides access to a complete listing of ExpressRouteCircuit values.
+// ExpressRouteCircuitListResultIterator provides access to a complete listing of ExpressRouteCircuit
+// values.
 type ExpressRouteCircuitListResultIterator struct {
 	i    int
 	page ExpressRouteCircuitListResultPage
@@ -3921,15 +5004,10 @@ func (erclr ExpressRouteCircuitListResult) IsEmpty() bool {
 	return erclr.Value == nil || len(*erclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (erclr ExpressRouteCircuitListResult) hasNextLink() bool {
-	return erclr.NextLink != nil && len(*erclr.NextLink) != 0
-}
-
 // expressRouteCircuitListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (erclr ExpressRouteCircuitListResult) expressRouteCircuitListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !erclr.hasNextLink() {
+	if erclr.NextLink == nil || len(to.String(erclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3957,16 +5035,11 @@ func (page *ExpressRouteCircuitListResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.erclr)
-		if err != nil {
-			return err
-		}
-		page.erclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.erclr)
+	if err != nil {
+		return err
 	}
+	page.erclr = next
 	return nil
 }
 
@@ -4094,8 +5167,8 @@ type ExpressRouteCircuitPeeringConfig struct {
 	RoutingRegistryName *string `json:"routingRegistryName,omitempty"`
 }
 
-// ExpressRouteCircuitPeeringListResult response for ListPeering API service call retrieves all peerings that
-// belong to an ExpressRouteCircuit.
+// ExpressRouteCircuitPeeringListResult response for ListPeering API service call retrieves all peerings
+// that belong to an ExpressRouteCircuit.
 type ExpressRouteCircuitPeeringListResult struct {
 	autorest.Response `json:"-"`
 	// Value - The peerings in an express route circuit.
@@ -4173,15 +5246,10 @@ func (ercplr ExpressRouteCircuitPeeringListResult) IsEmpty() bool {
 	return ercplr.Value == nil || len(*ercplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ercplr ExpressRouteCircuitPeeringListResult) hasNextLink() bool {
-	return ercplr.NextLink != nil && len(*ercplr.NextLink) != 0
-}
-
 // expressRouteCircuitPeeringListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ercplr ExpressRouteCircuitPeeringListResult) expressRouteCircuitPeeringListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ercplr.hasNextLink() {
+	if ercplr.NextLink == nil || len(to.String(ercplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4209,16 +5277,11 @@ func (page *ExpressRouteCircuitPeeringListResultPage) NextWithContext(ctx contex
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ercplr)
-		if err != nil {
-			return err
-		}
-		page.ercplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ercplr)
+	if err != nil {
+		return err
 	}
+	page.ercplr = next
 	return nil
 }
 
@@ -4290,8 +5353,8 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	Ipv6PeeringConfig *Ipv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 }
 
-// ExpressRouteCircuitPeeringsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// ExpressRouteCircuitPeeringsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type ExpressRouteCircuitPeeringsCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -4394,8 +5457,8 @@ type ExpressRouteCircuitRoutesTableSummary struct {
 	StatePfxRcd *string `json:"statePfxRcd,omitempty"`
 }
 
-// ExpressRouteCircuitsArpTableListResult response for ListArpTable associated with the Express Route Circuits
-// API.
+// ExpressRouteCircuitsArpTableListResult response for ListArpTable associated with the Express Route
+// Circuits API.
 type ExpressRouteCircuitsArpTableListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets list of the ARP table.
@@ -4433,8 +5496,8 @@ func (future *ExpressRouteCircuitsCreateOrUpdateFuture) Result(client ExpressRou
 	return
 }
 
-// ExpressRouteCircuitsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ExpressRouteCircuitsDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ExpressRouteCircuitsDeleteFuture struct {
 	azure.Future
 }
@@ -4456,7 +5519,8 @@ func (future *ExpressRouteCircuitsDeleteFuture) Result(client ExpressRouteCircui
 	return
 }
 
-// ExpressRouteCircuitServiceProviderProperties contains ServiceProviderProperties in an ExpressRouteCircuit.
+// ExpressRouteCircuitServiceProviderProperties contains ServiceProviderProperties in an
+// ExpressRouteCircuit.
 type ExpressRouteCircuitServiceProviderProperties struct {
 	// ServiceProviderName - The serviceProviderName.
 	ServiceProviderName *string `json:"serviceProviderName,omitempty"`
@@ -4534,8 +5598,8 @@ func (future *ExpressRouteCircuitsListRoutesTableFuture) Result(client ExpressRo
 	return
 }
 
-// ExpressRouteCircuitsListRoutesTableSummaryFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// ExpressRouteCircuitsListRoutesTableSummaryFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type ExpressRouteCircuitsListRoutesTableSummaryFuture struct {
 	azure.Future
 }
@@ -4573,8 +5637,8 @@ type ExpressRouteCircuitsRoutesTableListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// ExpressRouteCircuitsRoutesTableSummaryListResult response for ListRoutesTable associated with the Express
-// Route Circuits API.
+// ExpressRouteCircuitsRoutesTableSummaryListResult response for ListRoutesTable associated with the
+// Express Route Circuits API.
 type ExpressRouteCircuitsRoutesTableSummaryListResult struct {
 	autorest.Response `json:"-"`
 	// Value - A list of the routes table.
@@ -4785,15 +5849,10 @@ func (ersplr ExpressRouteServiceProviderListResult) IsEmpty() bool {
 	return ersplr.Value == nil || len(*ersplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ersplr ExpressRouteServiceProviderListResult) hasNextLink() bool {
-	return ersplr.NextLink != nil && len(*ersplr.NextLink) != 0
-}
-
 // expressRouteServiceProviderListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ersplr ExpressRouteServiceProviderListResult) expressRouteServiceProviderListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ersplr.hasNextLink() {
+	if ersplr.NextLink == nil || len(to.String(ersplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4821,16 +5880,11 @@ func (page *ExpressRouteServiceProviderListResultPage) NextWithContext(ctx conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ersplr)
-		if err != nil {
-			return err
-		}
-		page.ersplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ersplr)
+	if err != nil {
+		return err
 	}
+	page.ersplr = next
 	return nil
 }
 
@@ -5060,27 +6114,6 @@ type FrontendIPConfigurationPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for FrontendIPConfigurationPropertiesFormat.
-func (ficpf FrontendIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ficpf.PrivateIPAddress != nil {
-		objectMap["privateIPAddress"] = ficpf.PrivateIPAddress
-	}
-	if ficpf.PrivateIPAllocationMethod != "" {
-		objectMap["privateIPAllocationMethod"] = ficpf.PrivateIPAllocationMethod
-	}
-	if ficpf.Subnet != nil {
-		objectMap["subnet"] = ficpf.Subnet
-	}
-	if ficpf.PublicIPAddress != nil {
-		objectMap["publicIPAddress"] = ficpf.PublicIPAddress
-	}
-	if ficpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = ficpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
-}
-
 // GatewayRoute gateway routing details
 type GatewayRoute struct {
 	// LocalAddress - READ-ONLY; The gateway's local address
@@ -5294,15 +6327,6 @@ type InboundNatRuleListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InboundNatRuleListResult.
-func (inrlr InboundNatRuleListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if inrlr.Value != nil {
-		objectMap["value"] = inrlr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
 // InboundNatRuleListResultIterator provides access to a complete listing of InboundNatRule values.
 type InboundNatRuleListResultIterator struct {
 	i    int
@@ -5371,15 +6395,10 @@ func (inrlr InboundNatRuleListResult) IsEmpty() bool {
 	return inrlr.Value == nil || len(*inrlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (inrlr InboundNatRuleListResult) hasNextLink() bool {
-	return inrlr.NextLink != nil && len(*inrlr.NextLink) != 0
-}
-
 // inboundNatRuleListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (inrlr InboundNatRuleListResult) inboundNatRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !inrlr.hasNextLink() {
+	if inrlr.NextLink == nil || len(to.String(inrlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5407,16 +6426,11 @@ func (page *InboundNatRuleListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.inrlr)
-		if err != nil {
-			return err
-		}
-		page.inrlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.inrlr)
+	if err != nil {
+		return err
 	}
+	page.inrlr = next
 	return nil
 }
 
@@ -5468,33 +6482,6 @@ type InboundNatRulePropertiesFormat struct {
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 	// ProvisioningState - Gets the provisioning state of the public IP resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for InboundNatRulePropertiesFormat.
-func (inrpf InboundNatRulePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if inrpf.FrontendIPConfiguration != nil {
-		objectMap["frontendIPConfiguration"] = inrpf.FrontendIPConfiguration
-	}
-	if inrpf.Protocol != "" {
-		objectMap["protocol"] = inrpf.Protocol
-	}
-	if inrpf.FrontendPort != nil {
-		objectMap["frontendPort"] = inrpf.FrontendPort
-	}
-	if inrpf.BackendPort != nil {
-		objectMap["backendPort"] = inrpf.BackendPort
-	}
-	if inrpf.IdleTimeoutInMinutes != nil {
-		objectMap["idleTimeoutInMinutes"] = inrpf.IdleTimeoutInMinutes
-	}
-	if inrpf.EnableFloatingIP != nil {
-		objectMap["enableFloatingIP"] = inrpf.EnableFloatingIP
-	}
-	if inrpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = inrpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // InboundNatRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -5675,15 +6662,6 @@ type InterfaceAssociation struct {
 	SecurityRules *[]SecurityRule `json:"securityRules,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InterfaceAssociation.
-func (ia InterfaceAssociation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ia.SecurityRules != nil {
-		objectMap["securityRules"] = ia.SecurityRules
-	}
-	return json.Marshal(objectMap)
-}
-
 // InterfaceDNSSettings DNS settings of a network interface.
 type InterfaceDNSSettings struct {
 	// DNSServers - List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS' value cannot be combined with other IPs, it must be the only value in dnsServers collection.
@@ -5789,17 +6767,8 @@ type InterfaceIPConfigurationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InterfaceIPConfigurationListResult.
-func (iiclr InterfaceIPConfigurationListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if iiclr.Value != nil {
-		objectMap["value"] = iiclr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
-// InterfaceIPConfigurationListResultIterator provides access to a complete listing of InterfaceIPConfiguration
-// values.
+// InterfaceIPConfigurationListResultIterator provides access to a complete listing of
+// InterfaceIPConfiguration values.
 type InterfaceIPConfigurationListResultIterator struct {
 	i    int
 	page InterfaceIPConfigurationListResultPage
@@ -5867,15 +6836,10 @@ func (iiclr InterfaceIPConfigurationListResult) IsEmpty() bool {
 	return iiclr.Value == nil || len(*iiclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (iiclr InterfaceIPConfigurationListResult) hasNextLink() bool {
-	return iiclr.NextLink != nil && len(*iiclr.NextLink) != 0
-}
-
 // interfaceIPConfigurationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (iiclr InterfaceIPConfigurationListResult) interfaceIPConfigurationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !iiclr.hasNextLink() {
+	if iiclr.NextLink == nil || len(to.String(iiclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5903,16 +6867,11 @@ func (page *InterfaceIPConfigurationListResultPage) NextWithContext(ctx context.
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.iiclr)
-		if err != nil {
-			return err
-		}
-		page.iiclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.iiclr)
+	if err != nil {
+		return err
 	}
+	page.iiclr = next
 	return nil
 }
 
@@ -5977,15 +6936,6 @@ type InterfaceListResult struct {
 	Value *[]Interface `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for InterfaceListResult.
-func (ilr InterfaceListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ilr.Value != nil {
-		objectMap["value"] = ilr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // InterfaceListResultIterator provides access to a complete listing of Interface values.
@@ -6056,15 +7006,10 @@ func (ilr InterfaceListResult) IsEmpty() bool {
 	return ilr.Value == nil || len(*ilr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilr InterfaceListResult) hasNextLink() bool {
-	return ilr.NextLink != nil && len(*ilr.NextLink) != 0
-}
-
 // interfaceListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilr InterfaceListResult) interfaceListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilr.hasNextLink() {
+	if ilr.NextLink == nil || len(to.String(ilr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6092,16 +7037,11 @@ func (page *InterfaceListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilr)
-		if err != nil {
-			return err
-		}
-		page.ilr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilr)
+	if err != nil {
+		return err
 	}
+	page.ilr = next
 	return nil
 }
 
@@ -6142,15 +7082,6 @@ type InterfaceLoadBalancerListResult struct {
 	Value *[]LoadBalancer `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for InterfaceLoadBalancerListResult.
-func (ilblr InterfaceLoadBalancerListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ilblr.Value != nil {
-		objectMap["value"] = ilblr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // InterfaceLoadBalancerListResultIterator provides access to a complete listing of LoadBalancer values.
@@ -6221,15 +7152,10 @@ func (ilblr InterfaceLoadBalancerListResult) IsEmpty() bool {
 	return ilblr.Value == nil || len(*ilblr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilblr InterfaceLoadBalancerListResult) hasNextLink() bool {
-	return ilblr.NextLink != nil && len(*ilblr.NextLink) != 0
-}
-
 // interfaceLoadBalancerListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilblr InterfaceLoadBalancerListResult) interfaceLoadBalancerListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilblr.hasNextLink() {
+	if ilblr.NextLink == nil || len(to.String(ilblr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6257,16 +7183,11 @@ func (page *InterfaceLoadBalancerListResultPage) NextWithContext(ctx context.Con
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilblr)
-		if err != nil {
-			return err
-		}
-		page.ilblr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilblr)
+	if err != nil {
+		return err
 	}
+	page.ilblr = next
 	return nil
 }
 
@@ -6324,8 +7245,8 @@ type InterfacePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// InterfacesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// InterfacesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type InterfacesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -6353,7 +7274,8 @@ func (future *InterfacesCreateOrUpdateFuture) Result(client InterfacesClient) (i
 	return
 }
 
-// InterfacesDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// InterfacesDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type InterfacesDeleteFuture struct {
 	azure.Future
 }
@@ -6404,8 +7326,8 @@ func (future *InterfacesGetEffectiveRouteTableFuture) Result(client InterfacesCl
 	return
 }
 
-// InterfacesListEffectiveNetworkSecurityGroupsFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// InterfacesListEffectiveNetworkSecurityGroupsFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type InterfacesListEffectiveNetworkSecurityGroupsFuture struct {
 	azure.Future
 }
@@ -6712,17 +7634,8 @@ type LoadBalancerBackendAddressPoolListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for LoadBalancerBackendAddressPoolListResult.
-func (lbbaplr LoadBalancerBackendAddressPoolListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lbbaplr.Value != nil {
-		objectMap["value"] = lbbaplr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
-// LoadBalancerBackendAddressPoolListResultIterator provides access to a complete listing of BackendAddressPool
-// values.
+// LoadBalancerBackendAddressPoolListResultIterator provides access to a complete listing of
+// BackendAddressPool values.
 type LoadBalancerBackendAddressPoolListResultIterator struct {
 	i    int
 	page LoadBalancerBackendAddressPoolListResultPage
@@ -6790,15 +7703,10 @@ func (lbbaplr LoadBalancerBackendAddressPoolListResult) IsEmpty() bool {
 	return lbbaplr.Value == nil || len(*lbbaplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lbbaplr LoadBalancerBackendAddressPoolListResult) hasNextLink() bool {
-	return lbbaplr.NextLink != nil && len(*lbbaplr.NextLink) != 0
-}
-
 // loadBalancerBackendAddressPoolListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lbbaplr LoadBalancerBackendAddressPoolListResult) loadBalancerBackendAddressPoolListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lbbaplr.hasNextLink() {
+	if lbbaplr.NextLink == nil || len(to.String(lbbaplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6826,16 +7734,11 @@ func (page *LoadBalancerBackendAddressPoolListResultPage) NextWithContext(ctx co
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lbbaplr)
-		if err != nil {
-			return err
-		}
-		page.lbbaplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lbbaplr)
+	if err != nil {
+		return err
 	}
+	page.lbbaplr = next
 	return nil
 }
 
@@ -6876,15 +7779,6 @@ type LoadBalancerFrontendIPConfigurationListResult struct {
 	Value *[]FrontendIPConfiguration `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for LoadBalancerFrontendIPConfigurationListResult.
-func (lbficlr LoadBalancerFrontendIPConfigurationListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lbficlr.Value != nil {
-		objectMap["value"] = lbficlr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // LoadBalancerFrontendIPConfigurationListResultIterator provides access to a complete listing of
@@ -6956,15 +7850,10 @@ func (lbficlr LoadBalancerFrontendIPConfigurationListResult) IsEmpty() bool {
 	return lbficlr.Value == nil || len(*lbficlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lbficlr LoadBalancerFrontendIPConfigurationListResult) hasNextLink() bool {
-	return lbficlr.NextLink != nil && len(*lbficlr.NextLink) != 0
-}
-
 // loadBalancerFrontendIPConfigurationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lbficlr LoadBalancerFrontendIPConfigurationListResult) loadBalancerFrontendIPConfigurationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lbficlr.hasNextLink() {
+	if lbficlr.NextLink == nil || len(to.String(lbficlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -6992,16 +7881,11 @@ func (page *LoadBalancerFrontendIPConfigurationListResultPage) NextWithContext(c
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lbficlr)
-		if err != nil {
-			return err
-		}
-		page.lbficlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lbficlr)
+	if err != nil {
+		return err
 	}
+	page.lbficlr = next
 	return nil
 }
 
@@ -7042,15 +7926,6 @@ type LoadBalancerListResult struct {
 	Value *[]LoadBalancer `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for LoadBalancerListResult.
-func (lblr LoadBalancerListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lblr.Value != nil {
-		objectMap["value"] = lblr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // LoadBalancerListResultIterator provides access to a complete listing of LoadBalancer values.
@@ -7121,15 +7996,10 @@ func (lblr LoadBalancerListResult) IsEmpty() bool {
 	return lblr.Value == nil || len(*lblr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lblr LoadBalancerListResult) hasNextLink() bool {
-	return lblr.NextLink != nil && len(*lblr.NextLink) != 0
-}
-
 // loadBalancerListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lblr LoadBalancerListResult) loadBalancerListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lblr.hasNextLink() {
+	if lblr.NextLink == nil || len(to.String(lblr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7157,16 +8027,11 @@ func (page *LoadBalancerListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lblr)
-		if err != nil {
-			return err
-		}
-		page.lblr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lblr)
+	if err != nil {
+		return err
 	}
+	page.lblr = next
 	return nil
 }
 
@@ -7209,17 +8074,8 @@ type LoadBalancerLoadBalancingRuleListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for LoadBalancerLoadBalancingRuleListResult.
-func (lblbrlr LoadBalancerLoadBalancingRuleListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lblbrlr.Value != nil {
-		objectMap["value"] = lblbrlr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
-// LoadBalancerLoadBalancingRuleListResultIterator provides access to a complete listing of LoadBalancingRule
-// values.
+// LoadBalancerLoadBalancingRuleListResultIterator provides access to a complete listing of
+// LoadBalancingRule values.
 type LoadBalancerLoadBalancingRuleListResultIterator struct {
 	i    int
 	page LoadBalancerLoadBalancingRuleListResultPage
@@ -7287,15 +8143,10 @@ func (lblbrlr LoadBalancerLoadBalancingRuleListResult) IsEmpty() bool {
 	return lblbrlr.Value == nil || len(*lblbrlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lblbrlr LoadBalancerLoadBalancingRuleListResult) hasNextLink() bool {
-	return lblbrlr.NextLink != nil && len(*lblbrlr.NextLink) != 0
-}
-
 // loadBalancerLoadBalancingRuleListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lblbrlr LoadBalancerLoadBalancingRuleListResult) loadBalancerLoadBalancingRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lblbrlr.hasNextLink() {
+	if lblbrlr.NextLink == nil || len(to.String(lblbrlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7323,16 +8174,11 @@ func (page *LoadBalancerLoadBalancingRuleListResultPage) NextWithContext(ctx con
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lblbrlr)
-		if err != nil {
-			return err
-		}
-		page.lblbrlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lblbrlr)
+	if err != nil {
+		return err
 	}
+	page.lblbrlr = next
 	return nil
 }
 
@@ -7373,15 +8219,6 @@ type LoadBalancerProbeListResult struct {
 	Value *[]Probe `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for LoadBalancerProbeListResult.
-func (lbplr LoadBalancerProbeListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lbplr.Value != nil {
-		objectMap["value"] = lbplr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // LoadBalancerProbeListResultIterator provides access to a complete listing of Probe values.
@@ -7452,15 +8289,10 @@ func (lbplr LoadBalancerProbeListResult) IsEmpty() bool {
 	return lbplr.Value == nil || len(*lbplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lbplr LoadBalancerProbeListResult) hasNextLink() bool {
-	return lbplr.NextLink != nil && len(*lbplr.NextLink) != 0
-}
-
 // loadBalancerProbeListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lbplr LoadBalancerProbeListResult) loadBalancerProbeListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lbplr.hasNextLink() {
+	if lbplr.NextLink == nil || len(to.String(lbplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7488,16 +8320,11 @@ func (page *LoadBalancerProbeListResultPage) NextWithContext(ctx context.Context
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lbplr)
-		if err != nil {
-			return err
-		}
-		page.lbplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lbplr)
+	if err != nil {
+		return err
 	}
+	page.lbplr = next
 	return nil
 }
 
@@ -7553,8 +8380,8 @@ type LoadBalancerPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// LoadBalancersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LoadBalancersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LoadBalancersCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -7846,16 +8673,8 @@ type LocalNetworkGatewayListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for LocalNetworkGatewayListResult.
-func (lnglr LocalNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lnglr.Value != nil {
-		objectMap["value"] = lnglr.Value
-	}
-	return json.Marshal(objectMap)
-}
-
-// LocalNetworkGatewayListResultIterator provides access to a complete listing of LocalNetworkGateway values.
+// LocalNetworkGatewayListResultIterator provides access to a complete listing of LocalNetworkGateway
+// values.
 type LocalNetworkGatewayListResultIterator struct {
 	i    int
 	page LocalNetworkGatewayListResultPage
@@ -7923,15 +8742,10 @@ func (lnglr LocalNetworkGatewayListResult) IsEmpty() bool {
 	return lnglr.Value == nil || len(*lnglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (lnglr LocalNetworkGatewayListResult) hasNextLink() bool {
-	return lnglr.NextLink != nil && len(*lnglr.NextLink) != 0
-}
-
 // localNetworkGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (lnglr LocalNetworkGatewayListResult) localNetworkGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !lnglr.hasNextLink() {
+	if lnglr.NextLink == nil || len(to.String(lnglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -7959,16 +8773,11 @@ func (page *LocalNetworkGatewayListResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.lnglr)
-		if err != nil {
-			return err
-		}
-		page.lnglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.lnglr)
+	if err != nil {
+		return err
 	}
+	page.lnglr = next
 	return nil
 }
 
@@ -8016,24 +8825,6 @@ type LocalNetworkGatewayPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for LocalNetworkGatewayPropertiesFormat.
-func (lngpf LocalNetworkGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if lngpf.LocalNetworkAddressSpace != nil {
-		objectMap["localNetworkAddressSpace"] = lngpf.LocalNetworkAddressSpace
-	}
-	if lngpf.GatewayIPAddress != nil {
-		objectMap["gatewayIpAddress"] = lngpf.GatewayIPAddress
-	}
-	if lngpf.BgpSettings != nil {
-		objectMap["bgpSettings"] = lngpf.BgpSettings
-	}
-	if lngpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = lngpf.ResourceGUID
-	}
-	return json.Marshal(objectMap)
-}
-
 // LocalNetworkGatewaysCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LocalNetworkGatewaysCreateOrUpdateFuture struct {
@@ -8063,8 +8854,8 @@ func (future *LocalNetworkGatewaysCreateOrUpdateFuture) Result(client LocalNetwo
 	return
 }
 
-// LocalNetworkGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LocalNetworkGatewaysDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LocalNetworkGatewaysDeleteFuture struct {
 	azure.Future
 }
@@ -8783,30 +9574,6 @@ type ProbePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ProbePropertiesFormat.
-func (ppf ProbePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ppf.Protocol != "" {
-		objectMap["protocol"] = ppf.Protocol
-	}
-	if ppf.Port != nil {
-		objectMap["port"] = ppf.Port
-	}
-	if ppf.IntervalInSeconds != nil {
-		objectMap["intervalInSeconds"] = ppf.IntervalInSeconds
-	}
-	if ppf.NumberOfProbes != nil {
-		objectMap["numberOfProbes"] = ppf.NumberOfProbes
-	}
-	if ppf.RequestPath != nil {
-		objectMap["requestPath"] = ppf.RequestPath
-	}
-	if ppf.ProvisioningState != nil {
-		objectMap["provisioningState"] = ppf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
-}
-
 // PublicIPAddress public IP address resource.
 type PublicIPAddress struct {
 	autorest.Response `json:"-"`
@@ -9092,15 +9859,10 @@ func (pialr PublicIPAddressListResult) IsEmpty() bool {
 	return pialr.Value == nil || len(*pialr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (pialr PublicIPAddressListResult) hasNextLink() bool {
-	return pialr.NextLink != nil && len(*pialr.NextLink) != 0
-}
-
 // publicIPAddressListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (pialr PublicIPAddressListResult) publicIPAddressListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !pialr.hasNextLink() {
+	if pialr.NextLink == nil || len(to.String(pialr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -9128,16 +9890,11 @@ func (page *PublicIPAddressListResultPage) NextWithContext(ctx context.Context) 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.pialr)
-		if err != nil {
-			return err
-		}
-		page.pialr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.pialr)
+	if err != nil {
+		return err
 	}
+	page.pialr = next
 	return nil
 }
 
@@ -9189,33 +9946,6 @@ type PublicIPAddressPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty"`
 	// ProvisioningState - The provisioning state of the PublicIP resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for PublicIPAddressPropertiesFormat.
-func (piapf PublicIPAddressPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if piapf.PublicIPAllocationMethod != "" {
-		objectMap["publicIPAllocationMethod"] = piapf.PublicIPAllocationMethod
-	}
-	if piapf.PublicIPAddressVersion != "" {
-		objectMap["publicIPAddressVersion"] = piapf.PublicIPAddressVersion
-	}
-	if piapf.DNSSettings != nil {
-		objectMap["dnsSettings"] = piapf.DNSSettings
-	}
-	if piapf.IPAddress != nil {
-		objectMap["ipAddress"] = piapf.IPAddress
-	}
-	if piapf.IdleTimeoutInMinutes != nil {
-		objectMap["idleTimeoutInMinutes"] = piapf.IdleTimeoutInMinutes
-	}
-	if piapf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = piapf.ResourceGUID
-	}
-	if piapf.ProvisioningState != nil {
-		objectMap["provisioningState"] = piapf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // PublicIPAddressSku SKU of a public IP address
@@ -9345,18 +10075,6 @@ type ResourceNavigationLinkFormat struct {
 	Link *string `json:"link,omitempty"`
 	// ProvisioningState - READ-ONLY; Provisioning state of the ResourceNavigationLink resource.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for ResourceNavigationLinkFormat.
-func (rnlf ResourceNavigationLinkFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rnlf.LinkedResourceType != nil {
-		objectMap["linkedResourceType"] = rnlf.LinkedResourceType
-	}
-	if rnlf.Link != nil {
-		objectMap["link"] = rnlf.Link
-	}
-	return json.Marshal(objectMap)
 }
 
 // RetentionPolicyParameters parameters that define the retention policy for flow log.
@@ -9640,15 +10358,10 @@ func (rflr RouteFilterListResult) IsEmpty() bool {
 	return rflr.Value == nil || len(*rflr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rflr RouteFilterListResult) hasNextLink() bool {
-	return rflr.NextLink != nil && len(*rflr.NextLink) != 0
-}
-
 // routeFilterListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rflr RouteFilterListResult) routeFilterListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rflr.hasNextLink() {
+	if rflr.NextLink == nil || len(to.String(rflr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -9676,16 +10389,11 @@ func (page *RouteFilterListResultPage) NextWithContext(ctx context.Context) (err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rflr)
-		if err != nil {
-			return err
-		}
-		page.rflr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rflr)
+	if err != nil {
+		return err
 	}
+	page.rflr = next
 	return nil
 }
 
@@ -9727,18 +10435,6 @@ type RouteFilterPropertiesFormat struct {
 	Peerings *[]ExpressRouteCircuitPeering `json:"peerings,omitempty"`
 	// ProvisioningState - READ-ONLY; The provisioning state of the resource. Possible values are: 'Updating', 'Deleting', 'Succeeded' and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for RouteFilterPropertiesFormat.
-func (rfpf RouteFilterPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rfpf.Rules != nil {
-		objectMap["rules"] = rfpf.Rules
-	}
-	if rfpf.Peerings != nil {
-		objectMap["peerings"] = rfpf.Peerings
-	}
-	return json.Marshal(objectMap)
 }
 
 // RouteFilterRule route Filter Rule Resource
@@ -9924,15 +10620,10 @@ func (rfrlr RouteFilterRuleListResult) IsEmpty() bool {
 	return rfrlr.Value == nil || len(*rfrlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rfrlr RouteFilterRuleListResult) hasNextLink() bool {
-	return rfrlr.NextLink != nil && len(*rfrlr.NextLink) != 0
-}
-
 // routeFilterRuleListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rfrlr RouteFilterRuleListResult) routeFilterRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rfrlr.hasNextLink() {
+	if rfrlr.NextLink == nil || len(to.String(rfrlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -9960,16 +10651,11 @@ func (page *RouteFilterRuleListResultPage) NextWithContext(ctx context.Context) 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rfrlr)
-		if err != nil {
-			return err
-		}
-		page.rfrlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rfrlr)
+	if err != nil {
+		return err
 	}
+	page.rfrlr = next
 	return nil
 }
 
@@ -10013,21 +10699,6 @@ type RouteFilterRulePropertiesFormat struct {
 	Communities *[]string `json:"communities,omitempty"`
 	// ProvisioningState - READ-ONLY; The provisioning state of the resource. Possible values are: 'Updating', 'Deleting', 'Succeeded' and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for RouteFilterRulePropertiesFormat.
-func (rfrpf RouteFilterRulePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rfrpf.Access != "" {
-		objectMap["access"] = rfrpf.Access
-	}
-	if rfrpf.RouteFilterRuleType != nil {
-		objectMap["routeFilterRuleType"] = rfrpf.RouteFilterRuleType
-	}
-	if rfrpf.Communities != nil {
-		objectMap["communities"] = rfrpf.Communities
-	}
-	return json.Marshal(objectMap)
 }
 
 // RouteFilterRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -10111,8 +10782,8 @@ func (future *RouteFilterRulesUpdateFuture) Result(client RouteFilterRulesClient
 	return
 }
 
-// RouteFiltersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// RouteFiltersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type RouteFiltersCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -10269,15 +10940,10 @@ func (rlr RouteListResult) IsEmpty() bool {
 	return rlr.Value == nil || len(*rlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rlr RouteListResult) hasNextLink() bool {
-	return rlr.NextLink != nil && len(*rlr.NextLink) != 0
-}
-
 // routeListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rlr RouteListResult) routeListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rlr.hasNextLink() {
+	if rlr.NextLink == nil || len(to.String(rlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -10305,16 +10971,11 @@ func (page *RouteListResultPage) NextWithContext(ctx context.Context) (err error
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rlr)
-		if err != nil {
-			return err
-		}
-		page.rlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rlr)
+	if err != nil {
+		return err
 	}
+	page.rlr = next
 	return nil
 }
 
@@ -10606,15 +11267,10 @@ func (rtlr RouteTableListResult) IsEmpty() bool {
 	return rtlr.Value == nil || len(*rtlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rtlr RouteTableListResult) hasNextLink() bool {
-	return rtlr.NextLink != nil && len(*rtlr.NextLink) != 0
-}
-
 // routeTableListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rtlr RouteTableListResult) routeTableListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rtlr.hasNextLink() {
+	if rtlr.NextLink == nil || len(to.String(rtlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -10642,16 +11298,11 @@ func (page *RouteTableListResultPage) NextWithContext(ctx context.Context) (err 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rtlr)
-		if err != nil {
-			return err
-		}
-		page.rtlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rtlr)
+	if err != nil {
+		return err
 	}
+	page.rtlr = next
 	return nil
 }
 
@@ -10695,20 +11346,8 @@ type RouteTablePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for RouteTablePropertiesFormat.
-func (rtpf RouteTablePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rtpf.Routes != nil {
-		objectMap["routes"] = rtpf.Routes
-	}
-	if rtpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = rtpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
-}
-
-// RouteTablesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// RouteTablesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type RouteTablesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -10954,15 +11593,10 @@ func (sglr SecurityGroupListResult) IsEmpty() bool {
 	return sglr.Value == nil || len(*sglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (sglr SecurityGroupListResult) hasNextLink() bool {
-	return sglr.NextLink != nil && len(*sglr.NextLink) != 0
-}
-
 // securityGroupListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (sglr SecurityGroupListResult) securityGroupListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !sglr.hasNextLink() {
+	if sglr.NextLink == nil || len(to.String(sglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -10990,16 +11624,11 @@ func (page *SecurityGroupListResultPage) NextWithContext(ctx context.Context) (e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.sglr)
-		if err != nil {
-			return err
-		}
-		page.sglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.sglr)
+	if err != nil {
+		return err
 	}
+	page.sglr = next
 	return nil
 }
 
@@ -11054,24 +11683,6 @@ type SecurityGroupPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty"`
 	// ProvisioningState - The provisioning state of the public IP resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for SecurityGroupPropertiesFormat.
-func (sgpf SecurityGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if sgpf.SecurityRules != nil {
-		objectMap["securityRules"] = sgpf.SecurityRules
-	}
-	if sgpf.DefaultSecurityRules != nil {
-		objectMap["defaultSecurityRules"] = sgpf.DefaultSecurityRules
-	}
-	if sgpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = sgpf.ResourceGUID
-	}
-	if sgpf.ProvisioningState != nil {
-		objectMap["provisioningState"] = sgpf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // SecurityGroupsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -11309,15 +11920,10 @@ func (srlr SecurityRuleListResult) IsEmpty() bool {
 	return srlr.Value == nil || len(*srlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (srlr SecurityRuleListResult) hasNextLink() bool {
-	return srlr.NextLink != nil && len(*srlr.NextLink) != 0
-}
-
 // securityRuleListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (srlr SecurityRuleListResult) securityRuleListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !srlr.hasNextLink() {
+	if srlr.NextLink == nil || len(to.String(srlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -11345,16 +11951,11 @@ func (page *SecurityRuleListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.srlr)
-		if err != nil {
-			return err
-		}
-		page.srlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.srlr)
+	if err != nil {
+		return err
 	}
+	page.srlr = next
 	return nil
 }
 
@@ -11420,8 +12021,8 @@ type SecurityRulePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// SecurityRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// SecurityRulesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type SecurityRulesCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -11578,15 +12179,6 @@ type SubnetAssociation struct {
 	SecurityRules *[]SecurityRule `json:"securityRules,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for SubnetAssociation.
-func (sa SubnetAssociation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if sa.SecurityRules != nil {
-		objectMap["securityRules"] = sa.SecurityRules
-	}
-	return json.Marshal(objectMap)
-}
-
 // SubnetListResult response for ListSubnets API service callRetrieves all subnet that belongs to a virtual
 // network
 type SubnetListResult struct {
@@ -11665,15 +12257,10 @@ func (slr SubnetListResult) IsEmpty() bool {
 	return slr.Value == nil || len(*slr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (slr SubnetListResult) hasNextLink() bool {
-	return slr.NextLink != nil && len(*slr.NextLink) != 0
-}
-
 // subnetListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (slr SubnetListResult) subnetListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !slr.hasNextLink() {
+	if slr.NextLink == nil || len(to.String(slr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -11701,16 +12288,11 @@ func (page *SubnetListResultPage) NextWithContext(ctx context.Context) (err erro
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.slr)
-		if err != nil {
-			return err
-		}
-		page.slr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.slr)
+	if err != nil {
+		return err
 	}
+	page.slr = next
 	return nil
 }
 
@@ -11762,30 +12344,6 @@ type SubnetPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for SubnetPropertiesFormat.
-func (spf SubnetPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if spf.AddressPrefix != nil {
-		objectMap["addressPrefix"] = spf.AddressPrefix
-	}
-	if spf.NetworkSecurityGroup != nil {
-		objectMap["networkSecurityGroup"] = spf.NetworkSecurityGroup
-	}
-	if spf.RouteTable != nil {
-		objectMap["routeTable"] = spf.RouteTable
-	}
-	if spf.ServiceEndpoints != nil {
-		objectMap["serviceEndpoints"] = spf.ServiceEndpoints
-	}
-	if spf.ResourceNavigationLinks != nil {
-		objectMap["resourceNavigationLinks"] = spf.ResourceNavigationLinks
-	}
-	if spf.ProvisioningState != nil {
-		objectMap["provisioningState"] = spf.ProvisioningState
-	}
-	return json.Marshal(objectMap)
-}
-
 // SubnetsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type SubnetsCreateOrUpdateFuture struct {
@@ -11815,7 +12373,8 @@ func (future *SubnetsCreateOrUpdateFuture) Result(client SubnetsClient) (s Subne
 	return
 }
 
-// SubnetsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// SubnetsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type SubnetsDeleteFuture struct {
 	azure.Future
 }
@@ -11853,15 +12412,6 @@ type Topology struct {
 	// LastModified - READ-ONLY; The datetime when the topology was last modified.
 	LastModified *date.Time          `json:"lastModified,omitempty"`
 	Resources    *[]TopologyResource `json:"resources,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Topology.
-func (t Topology) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if t.Resources != nil {
-		objectMap["resources"] = t.Resources
-	}
-	return json.Marshal(objectMap)
 }
 
 // TopologyAssociation resources that have an association with the parent resource.
@@ -12019,24 +12569,6 @@ type Usage struct {
 	Name *UsageName `json:"name,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for Usage.
-func (u Usage) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if u.Unit != nil {
-		objectMap["unit"] = u.Unit
-	}
-	if u.CurrentValue != nil {
-		objectMap["currentValue"] = u.CurrentValue
-	}
-	if u.Limit != nil {
-		objectMap["limit"] = u.Limit
-	}
-	if u.Name != nil {
-		objectMap["name"] = u.Name
-	}
-	return json.Marshal(objectMap)
-}
-
 // UsageName the usage names.
 type UsageName struct {
 	// Value - A string describing the resource name.
@@ -12122,15 +12654,10 @@ func (ulr UsagesListResult) IsEmpty() bool {
 	return ulr.Value == nil || len(*ulr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ulr UsagesListResult) hasNextLink() bool {
-	return ulr.NextLink != nil && len(*ulr.NextLink) != 0
-}
-
 // usagesListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ulr UsagesListResult) usagesListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ulr.hasNextLink() {
+	if ulr.NextLink == nil || len(to.String(ulr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -12158,16 +12685,11 @@ func (page *UsagesListResultPage) NextWithContext(ctx context.Context) (err erro
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ulr)
-		if err != nil {
-			return err
-		}
-		page.ulr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ulr)
+	if err != nil {
+		return err
 	}
+	page.ulr = next
 	return nil
 }
 
@@ -12746,65 +13268,14 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayConnectionListEntityPropertiesFormat.
-func (vngclepf VirtualNetworkGatewayConnectionListEntityPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vngclepf.AuthorizationKey != nil {
-		objectMap["authorizationKey"] = vngclepf.AuthorizationKey
-	}
-	if vngclepf.VirtualNetworkGateway1 != nil {
-		objectMap["virtualNetworkGateway1"] = vngclepf.VirtualNetworkGateway1
-	}
-	if vngclepf.VirtualNetworkGateway2 != nil {
-		objectMap["virtualNetworkGateway2"] = vngclepf.VirtualNetworkGateway2
-	}
-	if vngclepf.LocalNetworkGateway2 != nil {
-		objectMap["localNetworkGateway2"] = vngclepf.LocalNetworkGateway2
-	}
-	if vngclepf.ConnectionType != "" {
-		objectMap["connectionType"] = vngclepf.ConnectionType
-	}
-	if vngclepf.RoutingWeight != nil {
-		objectMap["routingWeight"] = vngclepf.RoutingWeight
-	}
-	if vngclepf.SharedKey != nil {
-		objectMap["sharedKey"] = vngclepf.SharedKey
-	}
-	if vngclepf.Peer != nil {
-		objectMap["peer"] = vngclepf.Peer
-	}
-	if vngclepf.EnableBgp != nil {
-		objectMap["enableBgp"] = vngclepf.EnableBgp
-	}
-	if vngclepf.UsePolicyBasedTrafficSelectors != nil {
-		objectMap["usePolicyBasedTrafficSelectors"] = vngclepf.UsePolicyBasedTrafficSelectors
-	}
-	if vngclepf.IpsecPolicies != nil {
-		objectMap["ipsecPolicies"] = vngclepf.IpsecPolicies
-	}
-	if vngclepf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = vngclepf.ResourceGUID
-	}
-	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkGatewayConnectionListResult response for the ListVirtualNetworkGatewayConnections API service
-// call
+// VirtualNetworkGatewayConnectionListResult response for the ListVirtualNetworkGatewayConnections API
+// service call
 type VirtualNetworkGatewayConnectionListResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets a list of VirtualNetworkGatewayConnection resources that exists in a resource group.
 	Value *[]VirtualNetworkGatewayConnection `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayConnectionListResult.
-func (vngclr VirtualNetworkGatewayConnectionListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vngclr.Value != nil {
-		objectMap["value"] = vngclr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayConnectionListResultIterator provides access to a complete listing of
@@ -12876,15 +13347,10 @@ func (vngclr VirtualNetworkGatewayConnectionListResult) IsEmpty() bool {
 	return vngclr.Value == nil || len(*vngclr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vngclr VirtualNetworkGatewayConnectionListResult) hasNextLink() bool {
-	return vngclr.NextLink != nil && len(*vngclr.NextLink) != 0
-}
-
 // virtualNetworkGatewayConnectionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vngclr VirtualNetworkGatewayConnectionListResult) virtualNetworkGatewayConnectionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vngclr.hasNextLink() {
+	if vngclr.NextLink == nil || len(to.String(vngclr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -12912,16 +13378,11 @@ func (page *VirtualNetworkGatewayConnectionListResultPage) NextWithContext(ctx c
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vngclr)
-		if err != nil {
-			return err
-		}
-		page.vngclr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vngclr)
+	if err != nil {
+		return err
 	}
+	page.vngclr = next
 	return nil
 }
 
@@ -12993,48 +13454,6 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayConnectionPropertiesFormat.
-func (vngcpf VirtualNetworkGatewayConnectionPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vngcpf.AuthorizationKey != nil {
-		objectMap["authorizationKey"] = vngcpf.AuthorizationKey
-	}
-	if vngcpf.VirtualNetworkGateway1 != nil {
-		objectMap["virtualNetworkGateway1"] = vngcpf.VirtualNetworkGateway1
-	}
-	if vngcpf.VirtualNetworkGateway2 != nil {
-		objectMap["virtualNetworkGateway2"] = vngcpf.VirtualNetworkGateway2
-	}
-	if vngcpf.LocalNetworkGateway2 != nil {
-		objectMap["localNetworkGateway2"] = vngcpf.LocalNetworkGateway2
-	}
-	if vngcpf.ConnectionType != "" {
-		objectMap["connectionType"] = vngcpf.ConnectionType
-	}
-	if vngcpf.RoutingWeight != nil {
-		objectMap["routingWeight"] = vngcpf.RoutingWeight
-	}
-	if vngcpf.SharedKey != nil {
-		objectMap["sharedKey"] = vngcpf.SharedKey
-	}
-	if vngcpf.Peer != nil {
-		objectMap["peer"] = vngcpf.Peer
-	}
-	if vngcpf.EnableBgp != nil {
-		objectMap["enableBgp"] = vngcpf.EnableBgp
-	}
-	if vngcpf.UsePolicyBasedTrafficSelectors != nil {
-		objectMap["usePolicyBasedTrafficSelectors"] = vngcpf.UsePolicyBasedTrafficSelectors
-	}
-	if vngcpf.IpsecPolicies != nil {
-		objectMap["ipsecPolicies"] = vngcpf.IpsecPolicies
-	}
-	if vngcpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = vngcpf.ResourceGUID
-	}
-	return json.Marshal(objectMap)
-}
-
 // VirtualNetworkGatewayConnectionsCreateOrUpdateFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type VirtualNetworkGatewayConnectionsCreateOrUpdateFuture struct {
@@ -13064,8 +13483,8 @@ func (future *VirtualNetworkGatewayConnectionsCreateOrUpdateFuture) Result(clien
 	return
 }
 
-// VirtualNetworkGatewayConnectionsDeleteFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// VirtualNetworkGatewayConnectionsDeleteFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type VirtualNetworkGatewayConnectionsDeleteFuture struct {
 	azure.Future
 }
@@ -13116,8 +13535,8 @@ func (future *VirtualNetworkGatewayConnectionsResetSharedKeyFuture) Result(clien
 	return
 }
 
-// VirtualNetworkGatewayConnectionsSetSharedKeyFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// VirtualNetworkGatewayConnectionsSetSharedKeyFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type VirtualNetworkGatewayConnectionsSetSharedKeyFuture struct {
 	azure.Future
 }
@@ -13238,38 +13657,14 @@ type VirtualNetworkGatewayIPConfigurationPropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayIPConfigurationPropertiesFormat.
-func (vngicpf VirtualNetworkGatewayIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vngicpf.PrivateIPAllocationMethod != "" {
-		objectMap["privateIPAllocationMethod"] = vngicpf.PrivateIPAllocationMethod
-	}
-	if vngicpf.Subnet != nil {
-		objectMap["subnet"] = vngicpf.Subnet
-	}
-	if vngicpf.PublicIPAddress != nil {
-		objectMap["publicIPAddress"] = vngicpf.PublicIPAddress
-	}
-	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkGatewayListConnectionsResult response for the VirtualNetworkGatewayListConnections API service
-// call
+// VirtualNetworkGatewayListConnectionsResult response for the VirtualNetworkGatewayListConnections API
+// service call
 type VirtualNetworkGatewayListConnectionsResult struct {
 	autorest.Response `json:"-"`
 	// Value - Gets a list of VirtualNetworkGatewayConnection resources that exists in a resource group.
 	Value *[]VirtualNetworkGatewayConnectionListEntity `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayListConnectionsResult.
-func (vnglcr VirtualNetworkGatewayListConnectionsResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vnglcr.Value != nil {
-		objectMap["value"] = vnglcr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayListConnectionsResultIterator provides access to a complete listing of
@@ -13341,15 +13736,10 @@ func (vnglcr VirtualNetworkGatewayListConnectionsResult) IsEmpty() bool {
 	return vnglcr.Value == nil || len(*vnglcr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnglcr VirtualNetworkGatewayListConnectionsResult) hasNextLink() bool {
-	return vnglcr.NextLink != nil && len(*vnglcr.NextLink) != 0
-}
-
 // virtualNetworkGatewayListConnectionsResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnglcr VirtualNetworkGatewayListConnectionsResult) virtualNetworkGatewayListConnectionsResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnglcr.hasNextLink() {
+	if vnglcr.NextLink == nil || len(to.String(vnglcr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -13358,8 +13748,8 @@ func (vnglcr VirtualNetworkGatewayListConnectionsResult) virtualNetworkGatewayLi
 		autorest.WithBaseURL(to.String(vnglcr.NextLink)))
 }
 
-// VirtualNetworkGatewayListConnectionsResultPage contains a page of VirtualNetworkGatewayConnectionListEntity
-// values.
+// VirtualNetworkGatewayListConnectionsResultPage contains a page of
+// VirtualNetworkGatewayConnectionListEntity values.
 type VirtualNetworkGatewayListConnectionsResultPage struct {
 	fn     func(context.Context, VirtualNetworkGatewayListConnectionsResult) (VirtualNetworkGatewayListConnectionsResult, error)
 	vnglcr VirtualNetworkGatewayListConnectionsResult
@@ -13378,16 +13768,11 @@ func (page *VirtualNetworkGatewayListConnectionsResultPage) NextWithContext(ctx 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnglcr)
-		if err != nil {
-			return err
-		}
-		page.vnglcr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnglcr)
+	if err != nil {
+		return err
 	}
+	page.vnglcr = next
 	return nil
 }
 
@@ -13428,15 +13813,6 @@ type VirtualNetworkGatewayListResult struct {
 	Value *[]VirtualNetworkGateway `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayListResult.
-func (vnglr VirtualNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vnglr.Value != nil {
-		objectMap["value"] = vnglr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayListResultIterator provides access to a complete listing of VirtualNetworkGateway
@@ -13508,15 +13884,10 @@ func (vnglr VirtualNetworkGatewayListResult) IsEmpty() bool {
 	return vnglr.Value == nil || len(*vnglr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnglr VirtualNetworkGatewayListResult) hasNextLink() bool {
-	return vnglr.NextLink != nil && len(*vnglr.NextLink) != 0
-}
-
 // virtualNetworkGatewayListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnglr VirtualNetworkGatewayListResult) virtualNetworkGatewayListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnglr.hasNextLink() {
+	if vnglr.NextLink == nil || len(to.String(vnglr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -13544,16 +13915,11 @@ func (page *VirtualNetworkGatewayListResultPage) NextWithContext(ctx context.Con
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnglr)
-		if err != nil {
-			return err
-		}
-		page.vnglr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnglr)
+	if err != nil {
+		return err
 	}
+	page.vnglr = next
 	return nil
 }
 
@@ -13611,42 +13977,6 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty"`
 	// ProvisioningState - READ-ONLY; The provisioning state of the VirtualNetworkGateway resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for VirtualNetworkGatewayPropertiesFormat.
-func (vngpf VirtualNetworkGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vngpf.IPConfigurations != nil {
-		objectMap["ipConfigurations"] = vngpf.IPConfigurations
-	}
-	if vngpf.GatewayType != "" {
-		objectMap["gatewayType"] = vngpf.GatewayType
-	}
-	if vngpf.VpnType != "" {
-		objectMap["vpnType"] = vngpf.VpnType
-	}
-	if vngpf.EnableBgp != nil {
-		objectMap["enableBgp"] = vngpf.EnableBgp
-	}
-	if vngpf.ActiveActive != nil {
-		objectMap["activeActive"] = vngpf.ActiveActive
-	}
-	if vngpf.GatewayDefaultSite != nil {
-		objectMap["gatewayDefaultSite"] = vngpf.GatewayDefaultSite
-	}
-	if vngpf.Sku != nil {
-		objectMap["sku"] = vngpf.Sku
-	}
-	if vngpf.VpnClientConfiguration != nil {
-		objectMap["vpnClientConfiguration"] = vngpf.VpnClientConfiguration
-	}
-	if vngpf.BgpSettings != nil {
-		objectMap["bgpSettings"] = vngpf.BgpSettings
-	}
-	if vngpf.ResourceGUID != nil {
-		objectMap["resourceGuid"] = vngpf.ResourceGUID
-	}
-	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewaysCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
@@ -13730,8 +14060,8 @@ func (future *VirtualNetworkGatewaysGeneratevpnclientpackageFuture) Result(clien
 	return
 }
 
-// VirtualNetworkGatewaysGenerateVpnProfileFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// VirtualNetworkGatewaysGenerateVpnProfileFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type VirtualNetworkGatewaysGenerateVpnProfileFuture struct {
 	azure.Future
 }
@@ -13759,8 +14089,8 @@ func (future *VirtualNetworkGatewaysGenerateVpnProfileFuture) Result(client Virt
 	return
 }
 
-// VirtualNetworkGatewaysGetAdvertisedRoutesFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// VirtualNetworkGatewaysGetAdvertisedRoutesFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type VirtualNetworkGatewaysGetAdvertisedRoutesFuture struct {
 	azure.Future
 }
@@ -13788,8 +14118,8 @@ func (future *VirtualNetworkGatewaysGetAdvertisedRoutesFuture) Result(client Vir
 	return
 }
 
-// VirtualNetworkGatewaysGetBgpPeerStatusFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// VirtualNetworkGatewaysGetBgpPeerStatusFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type VirtualNetworkGatewaysGetBgpPeerStatusFuture struct {
 	azure.Future
 }
@@ -13817,8 +14147,8 @@ func (future *VirtualNetworkGatewaysGetBgpPeerStatusFuture) Result(client Virtua
 	return
 }
 
-// VirtualNetworkGatewaysGetLearnedRoutesFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// VirtualNetworkGatewaysGetLearnedRoutesFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type VirtualNetworkGatewaysGetLearnedRoutesFuture struct {
 	azure.Future
 }
@@ -13846,8 +14176,8 @@ func (future *VirtualNetworkGatewaysGetLearnedRoutesFuture) Result(client Virtua
 	return
 }
 
-// VirtualNetworkGatewaysGetVpnProfilePackageURLFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// VirtualNetworkGatewaysGetVpnProfilePackageURLFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type VirtualNetworkGatewaysGetVpnProfilePackageURLFuture struct {
 	azure.Future
 }
@@ -13885,8 +14215,8 @@ type VirtualNetworkGatewaySku struct {
 	Capacity *int32 `json:"capacity,omitempty"`
 }
 
-// VirtualNetworkGatewaysResetFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// VirtualNetworkGatewaysResetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type VirtualNetworkGatewaysResetFuture struct {
 	azure.Future
 }
@@ -13991,15 +14321,10 @@ func (vnlr VirtualNetworkListResult) IsEmpty() bool {
 	return vnlr.Value == nil || len(*vnlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnlr VirtualNetworkListResult) hasNextLink() bool {
-	return vnlr.NextLink != nil && len(*vnlr.NextLink) != 0
-}
-
 // virtualNetworkListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnlr VirtualNetworkListResult) virtualNetworkListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnlr.hasNextLink() {
+	if vnlr.NextLink == nil || len(to.String(vnlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -14027,16 +14352,11 @@ func (page *VirtualNetworkListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnlr)
-		if err != nil {
-			return err
-		}
-		page.vnlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnlr)
+	if err != nil {
+		return err
 	}
+	page.vnlr = next
 	return nil
 }
 
@@ -14079,16 +14399,8 @@ type VirtualNetworkListUsageResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for VirtualNetworkListUsageResult.
-func (vnlur VirtualNetworkListUsageResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vnlur.NextLink != nil {
-		objectMap["nextLink"] = vnlur.NextLink
-	}
-	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkListUsageResultIterator provides access to a complete listing of VirtualNetworkUsage values.
+// VirtualNetworkListUsageResultIterator provides access to a complete listing of VirtualNetworkUsage
+// values.
 type VirtualNetworkListUsageResultIterator struct {
 	i    int
 	page VirtualNetworkListUsageResultPage
@@ -14156,15 +14468,10 @@ func (vnlur VirtualNetworkListUsageResult) IsEmpty() bool {
 	return vnlur.Value == nil || len(*vnlur.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnlur VirtualNetworkListUsageResult) hasNextLink() bool {
-	return vnlur.NextLink != nil && len(*vnlur.NextLink) != 0
-}
-
 // virtualNetworkListUsageResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnlur VirtualNetworkListUsageResult) virtualNetworkListUsageResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnlur.hasNextLink() {
+	if vnlur.NextLink == nil || len(to.String(vnlur.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -14192,16 +14499,11 @@ func (page *VirtualNetworkListUsageResultPage) NextWithContext(ctx context.Conte
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnlur)
-		if err != nil {
-			return err
-		}
-		page.vnlur = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnlur)
+	if err != nil {
+		return err
 	}
+	page.vnlur = next
 	return nil
 }
 
@@ -14317,8 +14619,8 @@ func (vnp *VirtualNetworkPeering) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// VirtualNetworkPeeringListResult response for ListSubnets API service call. Retrieves all subnets that belong
-// to a virtual network.
+// VirtualNetworkPeeringListResult response for ListSubnets API service call. Retrieves all subnets that
+// belong to a virtual network.
 type VirtualNetworkPeeringListResult struct {
 	autorest.Response `json:"-"`
 	// Value - The peerings in a virtual network.
@@ -14396,15 +14698,10 @@ func (vnplr VirtualNetworkPeeringListResult) IsEmpty() bool {
 	return vnplr.Value == nil || len(*vnplr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (vnplr VirtualNetworkPeeringListResult) hasNextLink() bool {
-	return vnplr.NextLink != nil && len(*vnplr.NextLink) != 0
-}
-
 // virtualNetworkPeeringListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vnplr VirtualNetworkPeeringListResult) virtualNetworkPeeringListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !vnplr.hasNextLink() {
+	if vnplr.NextLink == nil || len(to.String(vnplr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -14432,16 +14729,11 @@ func (page *VirtualNetworkPeeringListResultPage) NextWithContext(ctx context.Con
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.vnplr)
-		if err != nil {
-			return err
-		}
-		page.vnplr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.vnplr)
+	if err != nil {
+		return err
 	}
+	page.vnplr = next
 	return nil
 }
 
@@ -14753,15 +15045,6 @@ type VpnClientRevokedCertificatePropertiesFormat struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for VpnClientRevokedCertificatePropertiesFormat.
-func (vcrcpf VpnClientRevokedCertificatePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vcrcpf.Thumbprint != nil {
-		objectMap["thumbprint"] = vcrcpf.Thumbprint
-	}
-	return json.Marshal(objectMap)
-}
-
 // VpnClientRootCertificate VPN client root certificate of virtual network gateway
 type VpnClientRootCertificate struct {
 	// VpnClientRootCertificatePropertiesFormat - Properties of the vpn client root certificate.
@@ -14849,15 +15132,6 @@ type VpnClientRootCertificatePropertiesFormat struct {
 	PublicCertData *string `json:"publicCertData,omitempty"`
 	// ProvisioningState - READ-ONLY; The provisioning state of the VPN client root certificate resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for VpnClientRootCertificatePropertiesFormat.
-func (vcrcpf VpnClientRootCertificatePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vcrcpf.PublicCertData != nil {
-		objectMap["publicCertData"] = vcrcpf.PublicCertData
-	}
-	return json.Marshal(objectMap)
 }
 
 // Watcher network watcher in a resource group.
@@ -14989,8 +15263,8 @@ type WatcherPropertiesFormat struct {
 	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 }
 
-// WatchersCheckConnectivityFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// WatchersCheckConnectivityFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type WatchersCheckConnectivityFuture struct {
 	azure.Future
 }
@@ -15018,7 +15292,8 @@ func (future *WatchersCheckConnectivityFuture) Result(client WatchersClient) (ci
 	return
 }
 
-// WatchersDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// WatchersDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type WatchersDeleteFuture struct {
 	azure.Future
 }
@@ -15040,8 +15315,8 @@ func (future *WatchersDeleteFuture) Result(client WatchersClient) (ar autorest.R
 	return
 }
 
-// WatchersGetFlowLogStatusFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// WatchersGetFlowLogStatusFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type WatchersGetFlowLogStatusFuture struct {
 	azure.Future
 }
@@ -15098,8 +15373,8 @@ func (future *WatchersGetNextHopFuture) Result(client WatchersClient) (nhr NextH
 	return
 }
 
-// WatchersGetTroubleshootingFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// WatchersGetTroubleshootingFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type WatchersGetTroubleshootingFuture struct {
 	azure.Future
 }
@@ -15156,8 +15431,8 @@ func (future *WatchersGetTroubleshootingResultFuture) Result(client WatchersClie
 	return
 }
 
-// WatchersGetVMSecurityRulesFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// WatchersGetVMSecurityRulesFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type WatchersGetVMSecurityRulesFuture struct {
 	azure.Future
 }
