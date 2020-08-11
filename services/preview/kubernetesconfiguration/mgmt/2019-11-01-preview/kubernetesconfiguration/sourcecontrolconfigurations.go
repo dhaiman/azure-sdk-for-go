@@ -122,6 +122,7 @@ func (client SourceControlConfigurationsClient) CreateOrUpdateSender(req *http.R
 func (client SourceControlConfigurationsClient) CreateOrUpdateResponder(resp *http.Response) (result SourceControlConfiguration, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -206,6 +207,7 @@ func (client SourceControlConfigurationsClient) DeleteSender(req *http.Request) 
 func (client SourceControlConfigurationsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -288,6 +290,7 @@ func (client SourceControlConfigurationsClient) GetSender(req *http.Request) (*h
 func (client SourceControlConfigurationsClient) GetResponder(resp *http.Response) (result SourceControlConfiguration, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -332,9 +335,6 @@ func (client SourceControlConfigurationsClient) List(ctx context.Context, resour
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "kubernetesconfiguration.SourceControlConfigurationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.sccl.hasNextLink() && result.sccl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -373,6 +373,7 @@ func (client SourceControlConfigurationsClient) ListSender(req *http.Request) (*
 func (client SourceControlConfigurationsClient) ListResponder(resp *http.Response) (result SourceControlConfigurationList, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
