@@ -300,9 +300,6 @@ func (client ExpressRoutePortsClient) List(ctx context.Context) (result ExpressR
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.ExpressRoutePortsClient", "List", resp, "Failure responding to request")
 	}
-	if result.erplr.hasNextLink() && result.erplr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -412,9 +409,6 @@ func (client ExpressRoutePortsClient) ListByResourceGroup(ctx context.Context, r
 	result.erplr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.ExpressRoutePortsClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.erplr.hasNextLink() && result.erplr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
