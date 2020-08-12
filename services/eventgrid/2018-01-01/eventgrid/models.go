@@ -25,192 +25,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/eventgrid/2018-01-01/eventgrid"
 
-// AppAction enumerates the values for app action.
-type AppAction string
-
-const (
-	// ChangedAppSettings There was an operation to change app setting on the web app.
-	ChangedAppSettings AppAction = "ChangedAppSettings"
-	// Completed The job has completed.
-	Completed AppAction = "Completed"
-	// Failed The job has failed to complete.
-	Failed AppAction = "Failed"
-	// Restarted Web app was restarted.
-	Restarted AppAction = "Restarted"
-	// Started The job has started.
-	Started AppAction = "Started"
-	// Stopped Web app was stopped.
-	Stopped AppAction = "Stopped"
-)
-
-// PossibleAppActionValues returns an array of possible values for the AppAction const type.
-func PossibleAppActionValues() []AppAction {
-	return []AppAction{ChangedAppSettings, Completed, Failed, Restarted, Started, Stopped}
-}
-
-// AppServicePlanAction enumerates the values for app service plan action.
-type AppServicePlanAction string
-
-const (
-	// Updated App Service plan is being updated.
-	Updated AppServicePlanAction = "Updated"
-)
-
-// PossibleAppServicePlanActionValues returns an array of possible values for the AppServicePlanAction const type.
-func PossibleAppServicePlanActionValues() []AppServicePlanAction {
-	return []AppServicePlanAction{Updated}
-}
-
-// AsyncStatus enumerates the values for async status.
-type AsyncStatus string
-
-const (
-	// AsyncStatusCompleted Async operation has completed.
-	AsyncStatusCompleted AsyncStatus = "Completed"
-	// AsyncStatusFailed Async operation failed to complete.
-	AsyncStatusFailed AsyncStatus = "Failed"
-	// AsyncStatusStarted Async operation has started.
-	AsyncStatusStarted AsyncStatus = "Started"
-)
-
-// PossibleAsyncStatusValues returns an array of possible values for the AsyncStatus const type.
-func PossibleAsyncStatusValues() []AsyncStatus {
-	return []AsyncStatus{AsyncStatusCompleted, AsyncStatusFailed, AsyncStatusStarted}
-}
-
-// MediaJobErrorCategory enumerates the values for media job error category.
-type MediaJobErrorCategory string
-
-const (
-	// Configuration The error is configuration related.
-	Configuration MediaJobErrorCategory = "Configuration"
-	// Content The error is related to data in the input files.
-	Content MediaJobErrorCategory = "Content"
-	// Download The error is download related.
-	Download MediaJobErrorCategory = "Download"
-	// Service The error is service related.
-	Service MediaJobErrorCategory = "Service"
-	// Upload The error is upload related.
-	Upload MediaJobErrorCategory = "Upload"
-)
-
-// PossibleMediaJobErrorCategoryValues returns an array of possible values for the MediaJobErrorCategory const type.
-func PossibleMediaJobErrorCategoryValues() []MediaJobErrorCategory {
-	return []MediaJobErrorCategory{Configuration, Content, Download, Service, Upload}
-}
-
-// MediaJobErrorCode enumerates the values for media job error code.
-type MediaJobErrorCode string
-
-const (
-	// ConfigurationUnsupported There was a problem with the combination of input files and the configuration
-	// settings applied, fix the configuration settings and retry with the same input, or change input to match
-	// the configuration.
-	ConfigurationUnsupported MediaJobErrorCode = "ConfigurationUnsupported"
-	// ContentMalformed There was a problem with the input content (for example: zero byte files, or
-	// corrupt/non-decodable files), check the input files.
-	ContentMalformed MediaJobErrorCode = "ContentMalformed"
-	// ContentUnsupported There was a problem with the format of the input (not valid media file, or an
-	// unsupported file/codec), check the validity of the input files.
-	ContentUnsupported MediaJobErrorCode = "ContentUnsupported"
-	// DownloadNotAccessible While trying to download the input files, the files were not accessible, please
-	// check the availability of the source.
-	DownloadNotAccessible MediaJobErrorCode = "DownloadNotAccessible"
-	// DownloadTransientError While trying to download the input files, there was an issue during transfer
-	// (storage service, network errors), see details and check your source.
-	DownloadTransientError MediaJobErrorCode = "DownloadTransientError"
-	// ServiceError Fatal service error, please contact support.
-	ServiceError MediaJobErrorCode = "ServiceError"
-	// ServiceTransientError Transient error, please retry, if retry is unsuccessful, please contact support.
-	ServiceTransientError MediaJobErrorCode = "ServiceTransientError"
-	// UploadNotAccessible While trying to upload the output files, the destination was not reachable, please
-	// check the availability of the destination.
-	UploadNotAccessible MediaJobErrorCode = "UploadNotAccessible"
-	// UploadTransientError While trying to upload the output files, there was an issue during transfer
-	// (storage service, network errors), see details and check your destination.
-	UploadTransientError MediaJobErrorCode = "UploadTransientError"
-)
-
-// PossibleMediaJobErrorCodeValues returns an array of possible values for the MediaJobErrorCode const type.
-func PossibleMediaJobErrorCodeValues() []MediaJobErrorCode {
-	return []MediaJobErrorCode{ConfigurationUnsupported, ContentMalformed, ContentUnsupported, DownloadNotAccessible, DownloadTransientError, ServiceError, ServiceTransientError, UploadNotAccessible, UploadTransientError}
-}
-
-// MediaJobRetry enumerates the values for media job retry.
-type MediaJobRetry string
-
-const (
-	// DoNotRetry Issue needs to be investigated and then the job resubmitted with corrections or retried once
-	// the underlying issue has been corrected.
-	DoNotRetry MediaJobRetry = "DoNotRetry"
-	// MayRetry Issue may be resolved after waiting for a period of time and resubmitting the same Job.
-	MayRetry MediaJobRetry = "MayRetry"
-)
-
-// PossibleMediaJobRetryValues returns an array of possible values for the MediaJobRetry const type.
-func PossibleMediaJobRetryValues() []MediaJobRetry {
-	return []MediaJobRetry{DoNotRetry, MayRetry}
-}
-
-// MediaJobState enumerates the values for media job state.
-type MediaJobState string
-
-const (
-	// Canceled The job was canceled. This is a final state for the job.
-	Canceled MediaJobState = "Canceled"
-	// Canceling The job is in the process of being canceled. This is a transient state for the job.
-	Canceling MediaJobState = "Canceling"
-	// Error The job has encountered an error. This is a final state for the job.
-	Error MediaJobState = "Error"
-	// Finished The job is finished. This is a final state for the job.
-	Finished MediaJobState = "Finished"
-	// Processing The job is processing. This is a transient state for the job.
-	Processing MediaJobState = "Processing"
-	// Queued The job is in a queued state, waiting for resources to become available. This is a transient
-	// state.
-	Queued MediaJobState = "Queued"
-	// Scheduled The job is being scheduled to run on an available resource. This is a transient state, between
-	// queued and processing states.
-	Scheduled MediaJobState = "Scheduled"
-)
-
-// PossibleMediaJobStateValues returns an array of possible values for the MediaJobState const type.
-func PossibleMediaJobStateValues() []MediaJobState {
-	return []MediaJobState{Canceled, Canceling, Error, Finished, Processing, Queued, Scheduled}
-}
-
-// OdataType enumerates the values for odata type.
-type OdataType string
-
-const (
-	// OdataTypeMediaJobOutput ...
-	OdataTypeMediaJobOutput OdataType = "MediaJobOutput"
-	// OdataTypeMicrosoftMediaJobOutputAsset ...
-	OdataTypeMicrosoftMediaJobOutputAsset OdataType = "#Microsoft.Media.JobOutputAsset"
-)
-
-// PossibleOdataTypeValues returns an array of possible values for the OdataType const type.
-func PossibleOdataTypeValues() []OdataType {
-	return []OdataType{OdataTypeMediaJobOutput, OdataTypeMicrosoftMediaJobOutputAsset}
-}
-
-// StampKind enumerates the values for stamp kind.
-type StampKind string
-
-const (
-	// AseV1 App Service Plan is running on an App Service Environment V1.
-	AseV1 StampKind = "AseV1"
-	// AseV2 App Service Plan is running on an App Service Environment V2.
-	AseV2 StampKind = "AseV2"
-	// Public App Service Plan is running on a public stamp.
-	Public StampKind = "Public"
-)
-
-// PossibleStampKindValues returns an array of possible values for the StampKind const type.
-func PossibleStampKindValues() []StampKind {
-	return []StampKind{AseV1, AseV2, Public}
-}
-
 // AppConfigurationKeyValueDeletedEventData schema of the Data property of an EventGridEvent for an
 // Microsoft.AppConfiguration.KeyValueDeleted event.
 type AppConfigurationKeyValueDeletedEventData struct {
@@ -247,6 +61,188 @@ type AppServicePlanEventTypeDetail struct {
 	Action AppServicePlanAction `json:"action,omitempty"`
 	// Status - Possible values include: 'AsyncStatusStarted', 'AsyncStatusCompleted', 'AsyncStatusFailed'
 	Status AsyncStatus `json:"status,omitempty"`
+}
+
+// CloudEventEvent properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema
+type CloudEventEvent struct {
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// ID - An identifier for the event. The combination of id and source must be unique for each distinct event.
+	ID *string `json:"id,omitempty"`
+	// Source - Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
+	Source *string `json:"source,omitempty"`
+	// Data - Event data specific to the event type.
+	Data interface{} `json:"data,omitempty"`
+	// DataBase64 - Event data specific to the event type, encoded as a base64 string.
+	DataBase64 *[]byte `json:"data_base64,omitempty"`
+	// Type - Type of event related to the originating occurrence.
+	Type *string `json:"type,omitempty"`
+	// Time - The time (in UTC) the event was generated, in RFC3339 format.
+	Time *date.Time `json:"time,omitempty"`
+	// Specversion - The version of the CloudEvents specification which the event uses.
+	Specversion *string `json:"specversion,omitempty"`
+	// Dataschema - Identifies the schema that data adheres to.
+	Dataschema *string `json:"dataschema,omitempty"`
+	// Datacontenttype - Content type of data value.
+	Datacontenttype *string `json:"datacontenttype,omitempty"`
+	// Subject - This describes the subject of the event in the context of the event producer (identified by source).
+	Subject *string `json:"subject,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CloudEventEvent.
+func (cee CloudEventEvent) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cee.ID != nil {
+		objectMap["id"] = cee.ID
+	}
+	if cee.Source != nil {
+		objectMap["source"] = cee.Source
+	}
+	if cee.Data != nil {
+		objectMap["data"] = cee.Data
+	}
+	if cee.DataBase64 != nil {
+		objectMap["data_base64"] = cee.DataBase64
+	}
+	if cee.Type != nil {
+		objectMap["type"] = cee.Type
+	}
+	if cee.Time != nil {
+		objectMap["time"] = cee.Time
+	}
+	if cee.Specversion != nil {
+		objectMap["specversion"] = cee.Specversion
+	}
+	if cee.Dataschema != nil {
+		objectMap["dataschema"] = cee.Dataschema
+	}
+	if cee.Datacontenttype != nil {
+		objectMap["datacontenttype"] = cee.Datacontenttype
+	}
+	if cee.Subject != nil {
+		objectMap["subject"] = cee.Subject
+	}
+	for k, v := range cee.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for CloudEventEvent struct.
+func (cee *CloudEventEvent) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if cee.AdditionalProperties == nil {
+					cee.AdditionalProperties = make(map[string]interface{})
+				}
+				cee.AdditionalProperties[k] = additionalProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				cee.ID = &ID
+			}
+		case "source":
+			if v != nil {
+				var source string
+				err = json.Unmarshal(*v, &source)
+				if err != nil {
+					return err
+				}
+				cee.Source = &source
+			}
+		case "data":
+			if v != nil {
+				var data interface{}
+				err = json.Unmarshal(*v, &data)
+				if err != nil {
+					return err
+				}
+				cee.Data = data
+			}
+		case "data_base64":
+			if v != nil {
+				var dataBase64 []byte
+				err = json.Unmarshal(*v, &dataBase64)
+				if err != nil {
+					return err
+				}
+				cee.DataBase64 = &dataBase64
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				cee.Type = &typeVar
+			}
+		case "time":
+			if v != nil {
+				var timeVar date.Time
+				err = json.Unmarshal(*v, &timeVar)
+				if err != nil {
+					return err
+				}
+				cee.Time = &timeVar
+			}
+		case "specversion":
+			if v != nil {
+				var specversion string
+				err = json.Unmarshal(*v, &specversion)
+				if err != nil {
+					return err
+				}
+				cee.Specversion = &specversion
+			}
+		case "dataschema":
+			if v != nil {
+				var dataschema string
+				err = json.Unmarshal(*v, &dataschema)
+				if err != nil {
+					return err
+				}
+				cee.Dataschema = &dataschema
+			}
+		case "datacontenttype":
+			if v != nil {
+				var datacontenttype string
+				err = json.Unmarshal(*v, &datacontenttype)
+				if err != nil {
+					return err
+				}
+				cee.Datacontenttype = &datacontenttype
+			}
+		case "subject":
+			if v != nil {
+				var subject string
+				err = json.Unmarshal(*v, &subject)
+				if err != nil {
+					return err
+				}
+				cee.Subject = &subject
+			}
+		}
+	}
+
+	return nil
 }
 
 // ContainerRegistryArtifactEventData the content of the event request message.
@@ -305,8 +301,8 @@ type ContainerRegistryChartPushedEventData struct {
 	Target *ContainerRegistryArtifactEventTarget `json:"target,omitempty"`
 }
 
-// ContainerRegistryEventActor the agent that initiated the event. For most situations, this could be from
-// the authorization context of the request.
+// ContainerRegistryEventActor the agent that initiated the event. For most situations, this could be from the
+// authorization context of the request.
 type ContainerRegistryEventActor struct {
 	// Name - The subject or username associated with the request context that generated the event.
 	Name *string `json:"name,omitempty"`
@@ -344,8 +340,8 @@ type ContainerRegistryEventRequest struct {
 	Useragent *string `json:"useragent,omitempty"`
 }
 
-// ContainerRegistryEventSource the registry node that generated the event. Put differently, while the
-// actor initiates the event, the source generates it.
+// ContainerRegistryEventSource the registry node that generated the event. Put differently, while the actor
+// initiates the event, the source generates it.
 type ContainerRegistryEventSource struct {
 	// Addr - The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port.
 	Addr *string `json:"addr,omitempty"`
@@ -439,8 +435,8 @@ type DeviceLifeCycleEventProperties struct {
 	Twin *DeviceTwinInfo `json:"twin,omitempty"`
 }
 
-// DeviceTelemetryEventProperties schema of the Data property of an EventGridEvent for a device telemetry
-// event (DeviceTelemetry).
+// DeviceTelemetryEventProperties schema of the Data property of an EventGridEvent for a device telemetry event
+// (DeviceTelemetry).
 type DeviceTelemetryEventProperties struct {
 	// Body - The content of the message from the device.
 	Body interface{} `json:"body,omitempty"`
@@ -465,8 +461,8 @@ func (dtep DeviceTelemetryEventProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DeviceTwinInfo information about the device twin, which is the cloud representation of application
-// device metadata.
+// DeviceTwinInfo information about the device twin, which is the cloud representation of application device
+// metadata.
 type DeviceTwinInfo struct {
 	// AuthenticationType - Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority.
 	AuthenticationType *string `json:"authenticationType,omitempty"`
@@ -501,8 +497,8 @@ type DeviceTwinInfoProperties struct {
 }
 
 // DeviceTwinInfoX509Thumbprint the thumbprint is a unique value for the x509 certificate, commonly used to
-// find a particular certificate in a certificate store. The thumbprint is dynamically generated using the
-// SHA1 algorithm, and does not physically exist in the certificate.
+// find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1
+// algorithm, and does not physically exist in the certificate.
 type DeviceTwinInfoX509Thumbprint struct {
 	// PrimaryThumbprint - Primary thumbprint for the x509 certificate.
 	PrimaryThumbprint *string `json:"primaryThumbprint,omitempty"`
@@ -516,8 +512,8 @@ type DeviceTwinMetadata struct {
 	LastUpdated *string `json:"lastUpdated,omitempty"`
 }
 
-// DeviceTwinProperties a portion of the properties that can be written only by the application back-end,
-// and read by the device.
+// DeviceTwinProperties a portion of the properties that can be written only by the application back-end, and
+// read by the device.
 type DeviceTwinProperties struct {
 	// Metadata - Metadata information for the properties JSON document.
 	Metadata *DeviceTwinMetadata `json:"metadata,omitempty"`
@@ -525,7 +521,7 @@ type DeviceTwinProperties struct {
 	Version *float64 `json:"version,omitempty"`
 }
 
-// Event properties of an event published to an Event Grid topic.
+// Event properties of an event published to an Event Grid topic using the EventGrid Schema.
 type Event struct {
 	// ID - An unique identifier for the event.
 	ID *string `json:"id,omitempty"`
@@ -543,6 +539,33 @@ type Event struct {
 	MetadataVersion *string `json:"metadataVersion,omitempty"`
 	// DataVersion - The schema version of the data object.
 	DataVersion *string `json:"dataVersion,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Event.
+func (e Event) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if e.ID != nil {
+		objectMap["id"] = e.ID
+	}
+	if e.Topic != nil {
+		objectMap["topic"] = e.Topic
+	}
+	if e.Subject != nil {
+		objectMap["subject"] = e.Subject
+	}
+	if e.Data != nil {
+		objectMap["data"] = e.Data
+	}
+	if e.EventType != nil {
+		objectMap["eventType"] = e.EventType
+	}
+	if e.EventTime != nil {
+		objectMap["eventTime"] = e.EventTime
+	}
+	if e.DataVersion != nil {
+		objectMap["dataVersion"] = e.DataVersion
+	}
+	return json.Marshal(objectMap)
 }
 
 // EventHubCaptureFileCreatedEventData schema of the Data property of an EventGridEvent for an
@@ -712,8 +735,7 @@ type KeyVaultKeyExpiredEventData struct {
 	Exp *float64 `json:"exp,omitempty"`
 }
 
-// KeyVaultKeyNearExpiryEventData schema of the Data property of an EventGridEvent for an KeyNearExpiry
-// event.
+// KeyVaultKeyNearExpiryEventData schema of the Data property of an EventGridEvent for an KeyNearExpiry event.
 type KeyVaultKeyNearExpiryEventData struct {
 	// ID - The id of the object that triggered this event.
 	ID *string `json:"id,omitempty"`
@@ -750,8 +772,7 @@ type KeyVaultKeyNewVersionCreatedEventData struct {
 	Exp *float64 `json:"exp,omitempty"`
 }
 
-// KeyVaultSecretExpiredEventData schema of the Data property of an EventGridEvent for an SecretExpired
-// event.
+// KeyVaultSecretExpiredEventData schema of the Data property of an EventGridEvent for an SecretExpired event.
 type KeyVaultSecretExpiredEventData struct {
 	// ID - The id of the object that triggered this event.
 	ID *string `json:"id,omitempty"`
@@ -769,8 +790,8 @@ type KeyVaultSecretExpiredEventData struct {
 	Exp *float64 `json:"exp,omitempty"`
 }
 
-// KeyVaultSecretNearExpiryEventData schema of the Data property of an EventGridEvent for an
-// SecretNearExpiry event.
+// KeyVaultSecretNearExpiryEventData schema of the Data property of an EventGridEvent for an SecretNearExpiry
+// event.
 type KeyVaultSecretNearExpiryEventData struct {
 	// ID - The id of the object that triggered this event.
 	ID *string `json:"id,omitempty"`
@@ -807,8 +828,8 @@ type KeyVaultSecretNewVersionCreatedEventData struct {
 	Exp *float64 `json:"exp,omitempty"`
 }
 
-// MachineLearningServicesDatasetDriftDetectedEventData schema of the Data property of an EventGridEvent
-// for an Microsoft.MachineLearningServices.DatasetDriftDetected event.
+// MachineLearningServicesDatasetDriftDetectedEventData schema of the Data property of an EventGridEvent for an
+// Microsoft.MachineLearningServices.DatasetDriftDetected event.
 type MachineLearningServicesDatasetDriftDetectedEventData struct {
 	// DataDriftID - The ID of the data drift monitor that triggered the event.
 	DataDriftID *string `json:"dataDriftId,omitempty"`
@@ -2083,8 +2104,7 @@ type RedisScalingCompletedEventData struct {
 }
 
 // ResourceActionCancelData schema of the Data property of an EventGridEvent for an
-// Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is
-// canceled.
+// Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is canceled.
 type ResourceActionCancelData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2138,8 +2158,7 @@ type ResourceActionFailureData struct {
 }
 
 // ResourceActionSuccessData schema of the Data property of an EventGridEvent for a
-// Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation
-// succeeds.
+// Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation succeeds.
 type ResourceActionSuccessData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2166,8 +2185,7 @@ type ResourceActionSuccessData struct {
 }
 
 // ResourceDeleteCancelData schema of the Data property of an EventGridEvent for an
-// Microsoft.Resources.ResourceDeleteCancel event. This is raised when a resource delete operation is
-// canceled.
+// Microsoft.Resources.ResourceDeleteCancel event. This is raised when a resource delete operation is canceled.
 type ResourceDeleteCancelData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2221,8 +2239,7 @@ type ResourceDeleteFailureData struct {
 }
 
 // ResourceDeleteSuccessData schema of the Data property of an EventGridEvent for a
-// Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation
-// succeeds.
+// Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds.
 type ResourceDeleteSuccessData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2249,8 +2266,8 @@ type ResourceDeleteSuccessData struct {
 }
 
 // ResourceWriteCancelData schema of the Data property of an EventGridEvent for a
-// Microsoft.Resources.ResourceWriteCancel event. This is raised when a resource create or update operation
-// is canceled.
+// Microsoft.Resources.ResourceWriteCancel event. This is raised when a resource create or update operation is
+// canceled.
 type ResourceWriteCancelData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2277,8 +2294,8 @@ type ResourceWriteCancelData struct {
 }
 
 // ResourceWriteFailureData schema of the Data property of an EventGridEvent for a
-// Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update
-// operation fails.
+// Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update operation
+// fails.
 type ResourceWriteFailureData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2305,8 +2322,8 @@ type ResourceWriteFailureData struct {
 }
 
 // ResourceWriteSuccessData schema of the Data property of an EventGridEvent for a
-// Microsoft.Resources.ResourceWriteSuccess event. This is raised when a resource create or update
-// operation succeeds.
+// Microsoft.Resources.ResourceWriteSuccess event. This is raised when a resource create or update operation
+// succeeds.
 type ResourceWriteSuccessData struct {
 	// TenantID - The tenant ID of the resource.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -2332,8 +2349,8 @@ type ResourceWriteSuccessData struct {
 	HTTPRequest *string `json:"httpRequest,omitempty"`
 }
 
-// ServiceBusActiveMessagesAvailableWithNoListenersEventData schema of the Data property of an
-// EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event.
+// ServiceBusActiveMessagesAvailableWithNoListenersEventData schema of the Data property of an EventGridEvent
+// for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event.
 type ServiceBusActiveMessagesAvailableWithNoListenersEventData struct {
 	// NamespaceName - The namespace name of the Microsoft.ServiceBus resource.
 	NamespaceName *string `json:"namespaceName,omitempty"`
@@ -2379,8 +2396,8 @@ type SignalRServiceClientConnectionConnectedEventData struct {
 	UserID *string `json:"userId,omitempty"`
 }
 
-// SignalRServiceClientConnectionDisconnectedEventData schema of the Data property of an EventGridEvent for
-// a Microsoft.SignalRService.ClientConnectionDisconnected event.
+// SignalRServiceClientConnectionDisconnectedEventData schema of the Data property of an EventGridEvent for a
+// Microsoft.SignalRService.ClientConnectionDisconnected event.
 type SignalRServiceClientConnectionDisconnectedEventData struct {
 	// Timestamp - The time at which the event occurred.
 	Timestamp *date.Time `json:"timestamp,omitempty"`
@@ -2567,8 +2584,8 @@ type SubscriptionValidationEventData struct {
 	ValidationURL *string `json:"validationUrl,omitempty"`
 }
 
-// SubscriptionValidationResponse to complete an event subscription validation handshake, a subscriber can
-// use either the validationCode or the validationUrl received in a SubscriptionValidationEvent. When the
+// SubscriptionValidationResponse to complete an event subscription validation handshake, a subscriber can use
+// either the validationCode or the validationUrl received in a SubscriptionValidationEvent. When the
 // validationCode is used, the SubscriptionValidationResponse can be used to build the response.
 type SubscriptionValidationResponse struct {
 	// ValidationResponse - The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription.
