@@ -253,9 +253,11 @@ type CassandraKeyspaceGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for CassandraKeyspaceGetPropertiesResource.
@@ -809,9 +811,11 @@ type CassandraTableGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for CassandraTableGetPropertiesResource.
@@ -1750,9 +1754,11 @@ type ExtendedResourceProperties struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // FailoverPolicies the list of new failover policies for the failover priority change.
@@ -1911,9 +1917,11 @@ type GremlinDatabaseGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for GremlinDatabaseGetPropertiesResource.
@@ -2177,9 +2185,11 @@ type GremlinGraphGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for GremlinGraphGetPropertiesResource.
@@ -2908,9 +2918,11 @@ type MongoDBCollectionGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for MongoDBCollectionGetPropertiesResource.
@@ -3197,9 +3209,11 @@ type MongoDBDatabaseGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for MongoDBDatabaseGetPropertiesResource.
@@ -4584,9 +4598,11 @@ type SQLContainerGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SQLContainerGetPropertiesResource.
@@ -4869,9 +4885,11 @@ type SQLDatabaseGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 	// Colls - A system generated property that specified the addressable path of the collections resource.
 	Colls *string `json:"_colls,omitempty"`
 	// Users - A system generated property that specifies the addressable path of the users resource.
@@ -5561,9 +5579,11 @@ type SQLStoredProcedureGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SQLStoredProcedureGetPropertiesResource.
@@ -5819,9 +5839,11 @@ type SQLTriggerGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SQLTriggerGetPropertiesResource.
@@ -6083,9 +6105,11 @@ type SQLUserDefinedFunctionGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SQLUserDefinedFunctionGetPropertiesResource.
@@ -6344,9 +6368,11 @@ type TableGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for TableGetPropertiesResource.
@@ -6636,9 +6662,11 @@ type ThroughputSettingsGetPropertiesResource struct {
 	// Rid - READ-ONLY; A system generated property. A unique identifier.
 	Rid *string `json:"_rid,omitempty"`
 	// Ts - READ-ONLY; A system generated property that denotes the last updated timestamp of the resource.
-	Ts interface{} `json:"_ts,omitempty"`
+	Ts *float64 `json:"_ts,omitempty"`
 	// Etag - READ-ONLY; A system generated property representing the resource etag required for optimistic concurrency control.
 	Etag *string `json:"_etag,omitempty"`
+	// Self - READ-ONLY; A system generated property. It is the unique addressable URI for the resource.
+	Self *string `json:"_self,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for ThroughputSettingsGetPropertiesResource.
