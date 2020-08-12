@@ -322,9 +322,6 @@ func (client VirtualRouterPeeringsClient) List(ctx context.Context, resourceGrou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.VirtualRouterPeeringsClient", "List", resp, "Failure responding to request")
 	}
-	if result.vrplr.hasNextLink() && result.vrplr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

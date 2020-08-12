@@ -74,9 +74,6 @@ func (client AvailableDelegationsClient) List(ctx context.Context, location stri
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.AvailableDelegationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.adr.hasNextLink() && result.adr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
