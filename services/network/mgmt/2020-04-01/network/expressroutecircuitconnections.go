@@ -318,9 +318,6 @@ func (client ExpressRouteCircuitConnectionsClient) List(ctx context.Context, res
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.ExpressRouteCircuitConnectionsClient", "List", resp, "Failure responding to request")
 	}
-	if result.ercclr.hasNextLink() && result.ercclr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
