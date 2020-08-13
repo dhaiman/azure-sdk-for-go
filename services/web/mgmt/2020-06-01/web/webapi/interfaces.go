@@ -315,7 +315,7 @@ type AppsClientAPI interface {
 	DeleteSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string) (result autorest.Response, err error)
 	DeleteSlot(ctx context.Context, resourceGroupName string, name string, slot string, deleteMetrics *bool, deleteEmptyServerFarm *bool) (result autorest.Response, err error)
 	DeleteSourceControl(ctx context.Context, resourceGroupName string, name string) (result autorest.Response, err error)
-	DeleteSourceControlSlot(ctx context.Context, resourceGroupName string, name string, slot string) (result autorest.Response, err error)
+	DeleteSourceControlSlot(ctx context.Context, resourceGroupName string, name string, slot string, additionalFlags string) (result autorest.Response, err error)
 	DeleteSwiftVirtualNetwork(ctx context.Context, resourceGroupName string, name string) (result autorest.Response, err error)
 	DeleteSwiftVirtualNetworkSlot(ctx context.Context, resourceGroupName string, name string, slot string) (result autorest.Response, err error)
 	DeleteTriggeredWebJob(ctx context.Context, resourceGroupName string, name string, webJobName string) (result autorest.Response, err error)
