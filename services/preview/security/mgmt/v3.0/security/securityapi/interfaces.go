@@ -79,6 +79,22 @@ type AdvancedThreatProtectionClientAPI interface {
 
 var _ AdvancedThreatProtectionClientAPI = (*security.AdvancedThreatProtectionClient)(nil)
 
+// DevicesClientAPI contains the set of methods on the DevicesClient type.
+type DevicesClientAPI interface {
+	List(ctx context.Context, resourceGroupName string, solutionName string, limit *int32, skipToken string) (result security.DeviceListPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, solutionName string, limit *int32, skipToken string) (result security.DeviceListIterator, err error)
+}
+
+var _ DevicesClientAPI = (*security.DevicesClient)(nil)
+
+// DeviceClientAPI contains the set of methods on the DeviceClient type.
+type DeviceClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, solutionName string, deviceID string) (result security.Device, err error)
+	Update(ctx context.Context, resourceGroupName string, solutionName string, deviceID string, deviceData security.Device) (result security.Device, err error)
+}
+
+var _ DeviceClientAPI = (*security.DeviceClient)(nil)
+
 // DeviceSecurityGroupsClientAPI contains the set of methods on the DeviceSecurityGroupsClient type.
 type DeviceSecurityGroupsClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceID string, deviceSecurityGroupName string, deviceSecurityGroup security.DeviceSecurityGroup) (result security.DeviceSecurityGroup, err error)
