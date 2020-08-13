@@ -10542,6 +10542,38 @@ type GeoRegionProperties struct {
 	OrgDomain *string `json:"orgDomain,omitempty"`
 }
 
+// GitHubActionCodeConfiguration the GitHub action code configuration.
+type GitHubActionCodeConfiguration struct {
+	// RuntimeStack - Runtime stack is used to determine the workflow file content for code base apps.
+	RuntimeStack *string `json:"runtimeStack,omitempty"`
+	// RuntimeVersion - Runtime version is used to determine what build version to set in the workflow file.
+	RuntimeVersion *string `json:"runtimeVersion,omitempty"`
+}
+
+// GitHubActionConfiguration the GitHub action configuration.
+type GitHubActionConfiguration struct {
+	// CodeConfiguration - GitHub Action code configuration.
+	CodeConfiguration *GitHubActionCodeConfiguration `json:"codeConfiguration,omitempty"`
+	// ContainerConfiguration - GitHub Action container configuration.
+	ContainerConfiguration *GitHubActionContainerConfiguration `json:"containerConfiguration,omitempty"`
+	// IsLinux - This will help determine the workflow configuration to select.
+	IsLinux *bool `json:"isLinux,omitempty"`
+	// GenerateWorkflowFile - Workflow option to determine whether the workflow file should be generated and written to the repository.
+	GenerateWorkflowFile *bool `json:"generateWorkflowFile,omitempty"`
+}
+
+// GitHubActionContainerConfiguration the GitHub action container configuration.
+type GitHubActionContainerConfiguration struct {
+	// ServerURL - The server URL for the container registry where the build will be hosted.
+	ServerURL *string `json:"serverUrl,omitempty"`
+	// ImageName - The image name for the build.
+	ImageName *string `json:"imageName,omitempty"`
+	// Username - The username used to upload the image to the container registry.
+	Username *string `json:"username,omitempty"`
+	// Password - The password used to upload the image to the container registry.
+	Password *string `json:"password,omitempty"`
+}
+
 // GlobalCsmSkuDescription a Global SKU Description.
 type GlobalCsmSkuDescription struct {
 	// Name - Name of the resource SKU.
@@ -20151,10 +20183,14 @@ type SiteSourceControlProperties struct {
 	Branch *string `json:"branch,omitempty"`
 	// IsManualIntegration - <code>true</code> to limit to manual integration; <code>false</code> to enable continuous integration (which configures webhooks into online repos like GitHub).
 	IsManualIntegration *bool `json:"isManualIntegration,omitempty"`
+	// IsGitHubAction - <code>true</code> if this is deployed via GitHub action.
+	IsGitHubAction *bool `json:"isGitHubAction,omitempty"`
 	// DeploymentRollbackEnabled - <code>true</code> to enable deployment rollback; otherwise, <code>false</code>.
 	DeploymentRollbackEnabled *bool `json:"deploymentRollbackEnabled,omitempty"`
 	// IsMercurial - <code>true</code> for a Mercurial repository; <code>false</code> for a Git repository.
 	IsMercurial *bool `json:"isMercurial,omitempty"`
+	// GitHubActionConfiguration - If GitHub Action is selected, than the associated configuration.
+	GitHubActionConfiguration *GitHubActionConfiguration `json:"gitHubActionConfiguration,omitempty"`
 }
 
 // SkuCapacity description of the App Service plan scale options.

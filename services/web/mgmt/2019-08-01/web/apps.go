@@ -7187,7 +7187,9 @@ func (client AppsClient) DeleteSlotResponder(resp *http.Response) (result autore
 // Parameters:
 // resourceGroupName - name of the resource group to which the resource belongs.
 // name - name of the app.
-func (client AppsClient) DeleteSourceControl(ctx context.Context, resourceGroupName string, name string) (result autorest.Response, err error) {
+// additionalFlags - comma separated flags to be considered during delete operations. E.g.
+// 'ScmGitHubActionSkipWorkflowDelete' will delete the GitHub Action workflow file from GitHub repo.
+func (client AppsClient) DeleteSourceControl(ctx context.Context, resourceGroupName string, name string, additionalFlags string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.DeleteSourceControl")
 		defer func() {
@@ -7206,7 +7208,7 @@ func (client AppsClient) DeleteSourceControl(ctx context.Context, resourceGroupN
 		return result, validation.NewError("web.AppsClient", "DeleteSourceControl", err.Error())
 	}
 
-	req, err := client.DeleteSourceControlPreparer(ctx, resourceGroupName, name)
+	req, err := client.DeleteSourceControlPreparer(ctx, resourceGroupName, name, additionalFlags)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "web.AppsClient", "DeleteSourceControl", nil, "Failure preparing request")
 		return
@@ -7228,7 +7230,7 @@ func (client AppsClient) DeleteSourceControl(ctx context.Context, resourceGroupN
 }
 
 // DeleteSourceControlPreparer prepares the DeleteSourceControl request.
-func (client AppsClient) DeleteSourceControlPreparer(ctx context.Context, resourceGroupName string, name string) (*http.Request, error) {
+func (client AppsClient) DeleteSourceControlPreparer(ctx context.Context, resourceGroupName string, name string, additionalFlags string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"name":              autorest.Encode("path", name),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -7238,6 +7240,9 @@ func (client AppsClient) DeleteSourceControlPreparer(ctx context.Context, resour
 	const APIVersion = "2019-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
+	}
+	if len(additionalFlags) > 0 {
+		queryParameters["additionalFlags"] = autorest.Encode("query", additionalFlags)
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -7271,7 +7276,9 @@ func (client AppsClient) DeleteSourceControlResponder(resp *http.Response) (resu
 // name - name of the app.
 // slot - name of the deployment slot. If a slot is not specified, the API will delete the source control
 // configuration for the production slot.
-func (client AppsClient) DeleteSourceControlSlot(ctx context.Context, resourceGroupName string, name string, slot string) (result autorest.Response, err error) {
+// additionalFlags - comma separated flags to be considered during delete operations. E.g.
+// 'ScmGitHubActionSkipWorkflowDelete' will delete the GitHub Action workflow file from GitHub repo.
+func (client AppsClient) DeleteSourceControlSlot(ctx context.Context, resourceGroupName string, name string, slot string, additionalFlags string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AppsClient.DeleteSourceControlSlot")
 		defer func() {
@@ -7290,7 +7297,7 @@ func (client AppsClient) DeleteSourceControlSlot(ctx context.Context, resourceGr
 		return result, validation.NewError("web.AppsClient", "DeleteSourceControlSlot", err.Error())
 	}
 
-	req, err := client.DeleteSourceControlSlotPreparer(ctx, resourceGroupName, name, slot)
+	req, err := client.DeleteSourceControlSlotPreparer(ctx, resourceGroupName, name, slot, additionalFlags)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "web.AppsClient", "DeleteSourceControlSlot", nil, "Failure preparing request")
 		return
@@ -7312,7 +7319,7 @@ func (client AppsClient) DeleteSourceControlSlot(ctx context.Context, resourceGr
 }
 
 // DeleteSourceControlSlotPreparer prepares the DeleteSourceControlSlot request.
-func (client AppsClient) DeleteSourceControlSlotPreparer(ctx context.Context, resourceGroupName string, name string, slot string) (*http.Request, error) {
+func (client AppsClient) DeleteSourceControlSlotPreparer(ctx context.Context, resourceGroupName string, name string, slot string, additionalFlags string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"name":              autorest.Encode("path", name),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -7323,6 +7330,9 @@ func (client AppsClient) DeleteSourceControlSlotPreparer(ctx context.Context, re
 	const APIVersion = "2019-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
+	}
+	if len(additionalFlags) > 0 {
+		queryParameters["additionalFlags"] = autorest.Encode("query", additionalFlags)
 	}
 
 	preparer := autorest.CreatePreparer(
