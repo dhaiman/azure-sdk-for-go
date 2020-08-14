@@ -355,9 +355,6 @@ func (client PrivateEndpointConnectionsClient) ListByServer(ctx context.Context,
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "mariadb.PrivateEndpointConnectionsClient", "ListByServer", resp, "Failure responding to request")
 	}
-	if result.peclr.hasNextLink() && result.peclr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

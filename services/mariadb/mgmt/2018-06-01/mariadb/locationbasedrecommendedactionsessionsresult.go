@@ -85,9 +85,6 @@ func (client LocationBasedRecommendedActionSessionsResultClient) List(ctx contex
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "mariadb.LocationBasedRecommendedActionSessionsResultClient", "List", resp, "Failure responding to request")
 	}
-	if result.rarl.hasNextLink() && result.rarl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
