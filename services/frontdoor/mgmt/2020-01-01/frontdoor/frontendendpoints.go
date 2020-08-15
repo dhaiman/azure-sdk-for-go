@@ -370,9 +370,6 @@ func (client FrontendEndpointsClient) ListByFrontDoor(ctx context.Context, resou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "frontdoor.FrontendEndpointsClient", "ListByFrontDoor", resp, "Failure responding to request")
 	}
-	if result.felr.hasNextLink() && result.felr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
