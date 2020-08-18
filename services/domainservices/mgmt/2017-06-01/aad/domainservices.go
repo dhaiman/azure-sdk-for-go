@@ -124,6 +124,7 @@ func (client DomainServicesClient) CreateOrUpdateSender(req *http.Request) (futu
 func (client DomainServicesClient) CreateOrUpdateResponder(resp *http.Response) (result DomainService, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -208,6 +209,7 @@ func (client DomainServicesClient) DeleteSender(req *http.Request) (future Domai
 func (client DomainServicesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -291,6 +293,7 @@ func (client DomainServicesClient) GetSender(req *http.Request) (*http.Response,
 func (client DomainServicesClient) GetResponder(resp *http.Response) (result DomainService, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -329,9 +332,6 @@ func (client DomainServicesClient) List(ctx context.Context) (result DomainServi
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "aad.DomainServicesClient", "List", resp, "Failure responding to request")
 	}
-	if result.dslr.hasNextLink() && result.dslr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -366,6 +366,7 @@ func (client DomainServicesClient) ListSender(req *http.Request) (*http.Response
 func (client DomainServicesClient) ListResponder(resp *http.Response) (result DomainServiceListResult, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -452,9 +453,6 @@ func (client DomainServicesClient) ListByResourceGroup(ctx context.Context, reso
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "aad.DomainServicesClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
-	if result.dslr.hasNextLink() && result.dslr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -490,6 +488,7 @@ func (client DomainServicesClient) ListByResourceGroupSender(req *http.Request) 
 func (client DomainServicesClient) ListByResourceGroupResponder(resp *http.Response) (result DomainServiceListResult, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -615,6 +614,7 @@ func (client DomainServicesClient) UpdateSender(req *http.Request) (future Domai
 func (client DomainServicesClient) UpdateResponder(resp *http.Response) (result DomainService, err error) {
 	err = autorest.Respond(
 		resp,
+		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
