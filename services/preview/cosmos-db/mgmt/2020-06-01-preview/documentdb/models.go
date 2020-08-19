@@ -5732,7 +5732,7 @@ type RestorableDatabaseAccountsListResult struct {
 type RestoreParameters struct {
 	// RestoreMode - Describes the mode of the restore. Possible values include: 'PointInTime'
 	RestoreMode RestoreMode `json:"restoreMode,omitempty"`
-	// RestoreSource - Path of the source account from which the restore has to be initiated
+	// RestoreSource - The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}
 	RestoreSource *string `json:"restoreSource,omitempty"`
 	// RestoreTimestampInUtc - Time to which the account has to be restored (ISO-8601 format).
 	RestoreTimestampInUtc *date.Time `json:"restoreTimestampInUtc,omitempty"`
