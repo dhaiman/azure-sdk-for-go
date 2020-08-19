@@ -323,9 +323,6 @@ func (client ContainerGroupsClient) List(ctx context.Context) (result ContainerG
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "containerinstance.ContainerGroupsClient", "List", resp, "Failure responding to request")
 	}
-	if result.cglr.hasNextLink() && result.cglr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -437,9 +434,6 @@ func (client ContainerGroupsClient) ListByResourceGroup(ctx context.Context, res
 	result.cglr, err = client.ListByResourceGroupResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "containerinstance.ContainerGroupsClient", "ListByResourceGroup", resp, "Failure responding to request")
-	}
-	if result.cglr.hasNextLink() && result.cglr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
