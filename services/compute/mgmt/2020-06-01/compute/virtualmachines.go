@@ -313,7 +313,11 @@ func (client VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resource
 							}},
 						}},
 					}},
-				}}}}}); err != nil {
+				}},
+				{Target: "parameters.ExtendedLocation", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "parameters.ExtendedLocation.Name", Name: validation.Null, Rule: true, Chain: nil},
+						{Target: "parameters.ExtendedLocation.Type", Name: validation.Null, Rule: true, Chain: nil},
+					}}}}}); err != nil {
 		return result, validation.NewError("compute.VirtualMachinesClient", "CreateOrUpdate", err.Error())
 	}
 

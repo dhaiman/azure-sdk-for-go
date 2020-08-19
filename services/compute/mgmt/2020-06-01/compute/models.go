@@ -3560,6 +3560,14 @@ type EncryptionSettingsElement struct {
 	KeyEncryptionKey *KeyVaultAndKeyReference `json:"keyEncryptionKey,omitempty"`
 }
 
+// ExtendedLocation extendedLocation complex type.
+type ExtendedLocation struct {
+	// Name - The name of the extended location.
+	Name *string `json:"name,omitempty"`
+	// Type - The type of the extended location.
+	Type *string `json:"type,omitempty"`
+}
+
 // GalleriesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type GalleriesCreateOrUpdateFuture struct {
@@ -6065,6 +6073,8 @@ type HardwareProfile struct {
 type Image struct {
 	autorest.Response `json:"-"`
 	*ImageProperties  `json:"properties,omitempty"`
+	// ExtendedLocation - The extended location of the Image.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name
@@ -6082,6 +6092,9 @@ func (i Image) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if i.ImageProperties != nil {
 		objectMap["properties"] = i.ImageProperties
+	}
+	if i.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = i.ExtendedLocation
 	}
 	if i.Location != nil {
 		objectMap["location"] = i.Location
@@ -6109,6 +6122,15 @@ func (i *Image) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				i.ImageProperties = &imageProperties
+			}
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				i.ExtendedLocation = &extendedLocation
 			}
 		case "id":
 			if v != nil {
@@ -9643,6 +9665,8 @@ type VirtualMachine struct {
 	Identity *VirtualMachineIdentity `json:"identity,omitempty"`
 	// Zones - The virtual machine zones.
 	Zones *[]string `json:"zones,omitempty"`
+	// ExtendedLocation - The extended location of the Virtual Machine.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name
@@ -9669,6 +9693,9 @@ func (VM VirtualMachine) MarshalJSON() ([]byte, error) {
 	}
 	if VM.Zones != nil {
 		objectMap["zones"] = VM.Zones
+	}
+	if VM.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = VM.ExtendedLocation
 	}
 	if VM.Location != nil {
 		objectMap["location"] = VM.Location
@@ -9732,6 +9759,15 @@ func (VM *VirtualMachine) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				VM.Zones = &zones
+			}
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				VM.ExtendedLocation = &extendedLocation
 			}
 		case "id":
 			if v != nil {
@@ -10877,6 +10913,8 @@ type VirtualMachineScaleSet struct {
 	Identity *VirtualMachineScaleSetIdentity `json:"identity,omitempty"`
 	// Zones - The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set
 	Zones *[]string `json:"zones,omitempty"`
+	// ExtendedLocation - The extended location of the Virtual Machine Scale Set.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Resource name
@@ -10906,6 +10944,9 @@ func (vmss VirtualMachineScaleSet) MarshalJSON() ([]byte, error) {
 	}
 	if vmss.Zones != nil {
 		objectMap["zones"] = vmss.Zones
+	}
+	if vmss.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = vmss.ExtendedLocation
 	}
 	if vmss.Location != nil {
 		objectMap["location"] = vmss.Location
@@ -10969,6 +11010,15 @@ func (vmss *VirtualMachineScaleSet) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				vmss.Zones = &zones
+			}
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				vmss.ExtendedLocation = &extendedLocation
 			}
 		case "id":
 			if v != nil {

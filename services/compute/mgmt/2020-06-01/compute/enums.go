@@ -392,6 +392,19 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 	return []EncryptionType{EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}
 }
 
+// ExtendedLocationTypes enumerates the values for extended location types.
+type ExtendedLocationTypes string
+
+const (
+	// EdgeZone ...
+	EdgeZone ExtendedLocationTypes = "EdgeZone"
+)
+
+// PossibleExtendedLocationTypesValues returns an array of possible values for the ExtendedLocationTypes const type.
+func PossibleExtendedLocationTypesValues() []ExtendedLocationTypes {
+	return []ExtendedLocationTypes{EdgeZone}
+}
+
 // HostCaching enumerates the values for host caching.
 type HostCaching string
 
