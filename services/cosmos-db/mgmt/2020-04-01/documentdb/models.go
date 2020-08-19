@@ -119,6 +119,90 @@ type AzureEntityResource struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// BasicBackupPolicy the object representing the policy for taking backups on an account.
+type BasicBackupPolicy interface {
+	AsPeriodicModeBackupPolicy() (*PeriodicModeBackupPolicy, bool)
+	AsContinuousModeBackupPolicy() (*ContinuousModeBackupPolicy, bool)
+	AsBackupPolicy() (*BackupPolicy, bool)
+}
+
+// BackupPolicy the object representing the policy for taking backups on an account.
+type BackupPolicy struct {
+	// Type - Possible values include: 'TypeBackupPolicy', 'TypePeriodic', 'TypeContinuous'
+	Type Type `json:"type,omitempty"`
+}
+
+func unmarshalBasicBackupPolicy(body []byte) (BasicBackupPolicy, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["type"] {
+	case string(TypePeriodic):
+		var pmbp PeriodicModeBackupPolicy
+		err := json.Unmarshal(body, &pmbp)
+		return pmbp, err
+	case string(TypeContinuous):
+		var cmbp ContinuousModeBackupPolicy
+		err := json.Unmarshal(body, &cmbp)
+		return cmbp, err
+	default:
+		var bp BackupPolicy
+		err := json.Unmarshal(body, &bp)
+		return bp, err
+	}
+}
+func unmarshalBasicBackupPolicyArray(body []byte) ([]BasicBackupPolicy, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	bpArray := make([]BasicBackupPolicy, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		bp, err := unmarshalBasicBackupPolicy(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		bpArray[index] = bp
+	}
+	return bpArray, nil
+}
+
+// MarshalJSON is the custom marshaler for BackupPolicy.
+func (bp BackupPolicy) MarshalJSON() ([]byte, error) {
+	bp.Type = TypeBackupPolicy
+	objectMap := make(map[string]interface{})
+	if bp.Type != "" {
+		objectMap["type"] = bp.Type
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsPeriodicModeBackupPolicy is the BasicBackupPolicy implementation for BackupPolicy.
+func (bp BackupPolicy) AsPeriodicModeBackupPolicy() (*PeriodicModeBackupPolicy, bool) {
+	return nil, false
+}
+
+// AsContinuousModeBackupPolicy is the BasicBackupPolicy implementation for BackupPolicy.
+func (bp BackupPolicy) AsContinuousModeBackupPolicy() (*ContinuousModeBackupPolicy, bool) {
+	return nil, false
+}
+
+// AsBackupPolicy is the BasicBackupPolicy implementation for BackupPolicy.
+func (bp BackupPolicy) AsBackupPolicy() (*BackupPolicy, bool) {
+	return &bp, true
+}
+
+// AsBasicBackupPolicy is the BasicBackupPolicy implementation for BackupPolicy.
+func (bp BackupPolicy) AsBasicBackupPolicy() (BasicBackupPolicy, bool) {
+	return &bp, true
+}
+
 // Capability cosmos DB capability object
 type Capability struct {
 	// Name - Name of the Cosmos DB capability. For example, "name": "EnableCassandra". Current values also include "EnableTable" and "EnableGremlin".
@@ -1007,6 +1091,42 @@ type ContainerPartitionKey struct {
 	Version *int32 `json:"version,omitempty"`
 }
 
+// ContinuousModeBackupPolicy the object representing continuous mode backup policy.
+type ContinuousModeBackupPolicy struct {
+	// Type - Possible values include: 'TypeBackupPolicy', 'TypePeriodic', 'TypeContinuous'
+	Type Type `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ContinuousModeBackupPolicy.
+func (cmbp ContinuousModeBackupPolicy) MarshalJSON() ([]byte, error) {
+	cmbp.Type = TypeContinuous
+	objectMap := make(map[string]interface{})
+	if cmbp.Type != "" {
+		objectMap["type"] = cmbp.Type
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsPeriodicModeBackupPolicy is the BasicBackupPolicy implementation for ContinuousModeBackupPolicy.
+func (cmbp ContinuousModeBackupPolicy) AsPeriodicModeBackupPolicy() (*PeriodicModeBackupPolicy, bool) {
+	return nil, false
+}
+
+// AsContinuousModeBackupPolicy is the BasicBackupPolicy implementation for ContinuousModeBackupPolicy.
+func (cmbp ContinuousModeBackupPolicy) AsContinuousModeBackupPolicy() (*ContinuousModeBackupPolicy, bool) {
+	return &cmbp, true
+}
+
+// AsBackupPolicy is the BasicBackupPolicy implementation for ContinuousModeBackupPolicy.
+func (cmbp ContinuousModeBackupPolicy) AsBackupPolicy() (*BackupPolicy, bool) {
+	return nil, false
+}
+
+// AsBasicBackupPolicy is the BasicBackupPolicy implementation for ContinuousModeBackupPolicy.
+func (cmbp ContinuousModeBackupPolicy) AsBasicBackupPolicy() (BasicBackupPolicy, bool) {
+	return &cmbp, true
+}
+
 // CorsPolicy the CORS policy for the Cosmos DB database account.
 type CorsPolicy struct {
 	// AllowedOrigins - The origin domains that are permitted to make a request against the service via CORS.
@@ -1186,8 +1306,195 @@ type DatabaseAccountCreateUpdateProperties struct {
 	APIProperties *APIProperties `json:"apiProperties,omitempty"`
 	// EnableAnalyticalStorage - Flag to indicate whether to enable storage analytics.
 	EnableAnalyticalStorage *bool `json:"enableAnalyticalStorage,omitempty"`
+	// BackupPolicy - The object representing the policy for taking backups on an account.
+	BackupPolicy BasicBackupPolicy `json:"backupPolicy,omitempty"`
 	// Cors - The CORS policy for the Cosmos DB database account.
 	Cors *[]CorsPolicy `json:"cors,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for DatabaseAccountCreateUpdateProperties struct.
+func (dacup *DatabaseAccountCreateUpdateProperties) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "consistencyPolicy":
+			if v != nil {
+				var consistencyPolicy ConsistencyPolicy
+				err = json.Unmarshal(*v, &consistencyPolicy)
+				if err != nil {
+					return err
+				}
+				dacup.ConsistencyPolicy = &consistencyPolicy
+			}
+		case "locations":
+			if v != nil {
+				var locations []Location
+				err = json.Unmarshal(*v, &locations)
+				if err != nil {
+					return err
+				}
+				dacup.Locations = &locations
+			}
+		case "databaseAccountOfferType":
+			if v != nil {
+				var databaseAccountOfferType string
+				err = json.Unmarshal(*v, &databaseAccountOfferType)
+				if err != nil {
+					return err
+				}
+				dacup.DatabaseAccountOfferType = &databaseAccountOfferType
+			}
+		case "ipRules":
+			if v != nil {
+				var IPRules []IPAddressOrRange
+				err = json.Unmarshal(*v, &IPRules)
+				if err != nil {
+					return err
+				}
+				dacup.IPRules = &IPRules
+			}
+		case "isVirtualNetworkFilterEnabled":
+			if v != nil {
+				var isVirtualNetworkFilterEnabled bool
+				err = json.Unmarshal(*v, &isVirtualNetworkFilterEnabled)
+				if err != nil {
+					return err
+				}
+				dacup.IsVirtualNetworkFilterEnabled = &isVirtualNetworkFilterEnabled
+			}
+		case "enableAutomaticFailover":
+			if v != nil {
+				var enableAutomaticFailover bool
+				err = json.Unmarshal(*v, &enableAutomaticFailover)
+				if err != nil {
+					return err
+				}
+				dacup.EnableAutomaticFailover = &enableAutomaticFailover
+			}
+		case "capabilities":
+			if v != nil {
+				var capabilities []Capability
+				err = json.Unmarshal(*v, &capabilities)
+				if err != nil {
+					return err
+				}
+				dacup.Capabilities = &capabilities
+			}
+		case "virtualNetworkRules":
+			if v != nil {
+				var virtualNetworkRules []VirtualNetworkRule
+				err = json.Unmarshal(*v, &virtualNetworkRules)
+				if err != nil {
+					return err
+				}
+				dacup.VirtualNetworkRules = &virtualNetworkRules
+			}
+		case "enableMultipleWriteLocations":
+			if v != nil {
+				var enableMultipleWriteLocations bool
+				err = json.Unmarshal(*v, &enableMultipleWriteLocations)
+				if err != nil {
+					return err
+				}
+				dacup.EnableMultipleWriteLocations = &enableMultipleWriteLocations
+			}
+		case "enableCassandraConnector":
+			if v != nil {
+				var enableCassandraConnector bool
+				err = json.Unmarshal(*v, &enableCassandraConnector)
+				if err != nil {
+					return err
+				}
+				dacup.EnableCassandraConnector = &enableCassandraConnector
+			}
+		case "connectorOffer":
+			if v != nil {
+				var connectorOffer ConnectorOffer
+				err = json.Unmarshal(*v, &connectorOffer)
+				if err != nil {
+					return err
+				}
+				dacup.ConnectorOffer = connectorOffer
+			}
+		case "disableKeyBasedMetadataWriteAccess":
+			if v != nil {
+				var disableKeyBasedMetadataWriteAccess bool
+				err = json.Unmarshal(*v, &disableKeyBasedMetadataWriteAccess)
+				if err != nil {
+					return err
+				}
+				dacup.DisableKeyBasedMetadataWriteAccess = &disableKeyBasedMetadataWriteAccess
+			}
+		case "keyVaultKeyUri":
+			if v != nil {
+				var keyVaultKeyURI string
+				err = json.Unmarshal(*v, &keyVaultKeyURI)
+				if err != nil {
+					return err
+				}
+				dacup.KeyVaultKeyURI = &keyVaultKeyURI
+			}
+		case "publicNetworkAccess":
+			if v != nil {
+				var publicNetworkAccess PublicNetworkAccess
+				err = json.Unmarshal(*v, &publicNetworkAccess)
+				if err != nil {
+					return err
+				}
+				dacup.PublicNetworkAccess = publicNetworkAccess
+			}
+		case "enableFreeTier":
+			if v != nil {
+				var enableFreeTier bool
+				err = json.Unmarshal(*v, &enableFreeTier)
+				if err != nil {
+					return err
+				}
+				dacup.EnableFreeTier = &enableFreeTier
+			}
+		case "apiProperties":
+			if v != nil {
+				var APIProperties APIProperties
+				err = json.Unmarshal(*v, &APIProperties)
+				if err != nil {
+					return err
+				}
+				dacup.APIProperties = &APIProperties
+			}
+		case "enableAnalyticalStorage":
+			if v != nil {
+				var enableAnalyticalStorage bool
+				err = json.Unmarshal(*v, &enableAnalyticalStorage)
+				if err != nil {
+					return err
+				}
+				dacup.EnableAnalyticalStorage = &enableAnalyticalStorage
+			}
+		case "backupPolicy":
+			if v != nil {
+				backupPolicy, err := unmarshalBasicBackupPolicy(*v)
+				if err != nil {
+					return err
+				}
+				dacup.BackupPolicy = backupPolicy
+			}
+		case "cors":
+			if v != nil {
+				var cors []CorsPolicy
+				err = json.Unmarshal(*v, &cors)
+				if err != nil {
+					return err
+				}
+				dacup.Cors = &cors
+			}
+		}
+	}
+
+	return nil
 }
 
 // DatabaseAccountGetProperties properties for the database account.
@@ -1237,6 +1544,8 @@ type DatabaseAccountGetProperties struct {
 	APIProperties *APIProperties `json:"apiProperties,omitempty"`
 	// EnableAnalyticalStorage - Flag to indicate whether to enable storage analytics.
 	EnableAnalyticalStorage *bool `json:"enableAnalyticalStorage,omitempty"`
+	// BackupPolicy - The object representing the policy for taking backups on an account.
+	BackupPolicy BasicBackupPolicy `json:"backupPolicy,omitempty"`
 	// Cors - The CORS policy for the Cosmos DB database account.
 	Cors *[]CorsPolicy `json:"cors,omitempty"`
 }
@@ -1292,10 +1601,250 @@ func (dagp DatabaseAccountGetProperties) MarshalJSON() ([]byte, error) {
 	if dagp.EnableAnalyticalStorage != nil {
 		objectMap["enableAnalyticalStorage"] = dagp.EnableAnalyticalStorage
 	}
+	objectMap["backupPolicy"] = dagp.BackupPolicy
 	if dagp.Cors != nil {
 		objectMap["cors"] = dagp.Cors
 	}
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for DatabaseAccountGetProperties struct.
+func (dagp *DatabaseAccountGetProperties) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "provisioningState":
+			if v != nil {
+				var provisioningState string
+				err = json.Unmarshal(*v, &provisioningState)
+				if err != nil {
+					return err
+				}
+				dagp.ProvisioningState = &provisioningState
+			}
+		case "documentEndpoint":
+			if v != nil {
+				var documentEndpoint string
+				err = json.Unmarshal(*v, &documentEndpoint)
+				if err != nil {
+					return err
+				}
+				dagp.DocumentEndpoint = &documentEndpoint
+			}
+		case "databaseAccountOfferType":
+			if v != nil {
+				var databaseAccountOfferType DatabaseAccountOfferType
+				err = json.Unmarshal(*v, &databaseAccountOfferType)
+				if err != nil {
+					return err
+				}
+				dagp.DatabaseAccountOfferType = databaseAccountOfferType
+			}
+		case "ipRules":
+			if v != nil {
+				var IPRules []IPAddressOrRange
+				err = json.Unmarshal(*v, &IPRules)
+				if err != nil {
+					return err
+				}
+				dagp.IPRules = &IPRules
+			}
+		case "isVirtualNetworkFilterEnabled":
+			if v != nil {
+				var isVirtualNetworkFilterEnabled bool
+				err = json.Unmarshal(*v, &isVirtualNetworkFilterEnabled)
+				if err != nil {
+					return err
+				}
+				dagp.IsVirtualNetworkFilterEnabled = &isVirtualNetworkFilterEnabled
+			}
+		case "enableAutomaticFailover":
+			if v != nil {
+				var enableAutomaticFailover bool
+				err = json.Unmarshal(*v, &enableAutomaticFailover)
+				if err != nil {
+					return err
+				}
+				dagp.EnableAutomaticFailover = &enableAutomaticFailover
+			}
+		case "consistencyPolicy":
+			if v != nil {
+				var consistencyPolicy ConsistencyPolicy
+				err = json.Unmarshal(*v, &consistencyPolicy)
+				if err != nil {
+					return err
+				}
+				dagp.ConsistencyPolicy = &consistencyPolicy
+			}
+		case "capabilities":
+			if v != nil {
+				var capabilities []Capability
+				err = json.Unmarshal(*v, &capabilities)
+				if err != nil {
+					return err
+				}
+				dagp.Capabilities = &capabilities
+			}
+		case "writeLocations":
+			if v != nil {
+				var writeLocations []Location
+				err = json.Unmarshal(*v, &writeLocations)
+				if err != nil {
+					return err
+				}
+				dagp.WriteLocations = &writeLocations
+			}
+		case "readLocations":
+			if v != nil {
+				var readLocations []Location
+				err = json.Unmarshal(*v, &readLocations)
+				if err != nil {
+					return err
+				}
+				dagp.ReadLocations = &readLocations
+			}
+		case "locations":
+			if v != nil {
+				var locations []Location
+				err = json.Unmarshal(*v, &locations)
+				if err != nil {
+					return err
+				}
+				dagp.Locations = &locations
+			}
+		case "failoverPolicies":
+			if v != nil {
+				var failoverPolicies []FailoverPolicy
+				err = json.Unmarshal(*v, &failoverPolicies)
+				if err != nil {
+					return err
+				}
+				dagp.FailoverPolicies = &failoverPolicies
+			}
+		case "virtualNetworkRules":
+			if v != nil {
+				var virtualNetworkRules []VirtualNetworkRule
+				err = json.Unmarshal(*v, &virtualNetworkRules)
+				if err != nil {
+					return err
+				}
+				dagp.VirtualNetworkRules = &virtualNetworkRules
+			}
+		case "privateEndpointConnections":
+			if v != nil {
+				var privateEndpointConnections []PrivateEndpointConnection
+				err = json.Unmarshal(*v, &privateEndpointConnections)
+				if err != nil {
+					return err
+				}
+				dagp.PrivateEndpointConnections = &privateEndpointConnections
+			}
+		case "enableMultipleWriteLocations":
+			if v != nil {
+				var enableMultipleWriteLocations bool
+				err = json.Unmarshal(*v, &enableMultipleWriteLocations)
+				if err != nil {
+					return err
+				}
+				dagp.EnableMultipleWriteLocations = &enableMultipleWriteLocations
+			}
+		case "enableCassandraConnector":
+			if v != nil {
+				var enableCassandraConnector bool
+				err = json.Unmarshal(*v, &enableCassandraConnector)
+				if err != nil {
+					return err
+				}
+				dagp.EnableCassandraConnector = &enableCassandraConnector
+			}
+		case "connectorOffer":
+			if v != nil {
+				var connectorOffer ConnectorOffer
+				err = json.Unmarshal(*v, &connectorOffer)
+				if err != nil {
+					return err
+				}
+				dagp.ConnectorOffer = connectorOffer
+			}
+		case "disableKeyBasedMetadataWriteAccess":
+			if v != nil {
+				var disableKeyBasedMetadataWriteAccess bool
+				err = json.Unmarshal(*v, &disableKeyBasedMetadataWriteAccess)
+				if err != nil {
+					return err
+				}
+				dagp.DisableKeyBasedMetadataWriteAccess = &disableKeyBasedMetadataWriteAccess
+			}
+		case "keyVaultKeyUri":
+			if v != nil {
+				var keyVaultKeyURI string
+				err = json.Unmarshal(*v, &keyVaultKeyURI)
+				if err != nil {
+					return err
+				}
+				dagp.KeyVaultKeyURI = &keyVaultKeyURI
+			}
+		case "publicNetworkAccess":
+			if v != nil {
+				var publicNetworkAccess PublicNetworkAccess
+				err = json.Unmarshal(*v, &publicNetworkAccess)
+				if err != nil {
+					return err
+				}
+				dagp.PublicNetworkAccess = publicNetworkAccess
+			}
+		case "enableFreeTier":
+			if v != nil {
+				var enableFreeTier bool
+				err = json.Unmarshal(*v, &enableFreeTier)
+				if err != nil {
+					return err
+				}
+				dagp.EnableFreeTier = &enableFreeTier
+			}
+		case "apiProperties":
+			if v != nil {
+				var APIProperties APIProperties
+				err = json.Unmarshal(*v, &APIProperties)
+				if err != nil {
+					return err
+				}
+				dagp.APIProperties = &APIProperties
+			}
+		case "enableAnalyticalStorage":
+			if v != nil {
+				var enableAnalyticalStorage bool
+				err = json.Unmarshal(*v, &enableAnalyticalStorage)
+				if err != nil {
+					return err
+				}
+				dagp.EnableAnalyticalStorage = &enableAnalyticalStorage
+			}
+		case "backupPolicy":
+			if v != nil {
+				backupPolicy, err := unmarshalBasicBackupPolicy(*v)
+				if err != nil {
+					return err
+				}
+				dagp.BackupPolicy = backupPolicy
+			}
+		case "cors":
+			if v != nil {
+				var cors []CorsPolicy
+				err = json.Unmarshal(*v, &cors)
+				if err != nil {
+					return err
+				}
+				dagp.Cors = &cors
+			}
+		}
+	}
+
+	return nil
 }
 
 // DatabaseAccountGetResults an Azure Cosmos DB database account.
@@ -1726,8 +2275,186 @@ type DatabaseAccountUpdateProperties struct {
 	APIProperties *APIProperties `json:"apiProperties,omitempty"`
 	// EnableAnalyticalStorage - Flag to indicate whether to enable storage analytics.
 	EnableAnalyticalStorage *bool `json:"enableAnalyticalStorage,omitempty"`
+	// BackupPolicy - The object representing the policy for taking backups on an account.
+	BackupPolicy BasicBackupPolicy `json:"backupPolicy,omitempty"`
 	// Cors - The CORS policy for the Cosmos DB database account.
 	Cors *[]CorsPolicy `json:"cors,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for DatabaseAccountUpdateProperties struct.
+func (daup *DatabaseAccountUpdateProperties) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "consistencyPolicy":
+			if v != nil {
+				var consistencyPolicy ConsistencyPolicy
+				err = json.Unmarshal(*v, &consistencyPolicy)
+				if err != nil {
+					return err
+				}
+				daup.ConsistencyPolicy = &consistencyPolicy
+			}
+		case "locations":
+			if v != nil {
+				var locations []Location
+				err = json.Unmarshal(*v, &locations)
+				if err != nil {
+					return err
+				}
+				daup.Locations = &locations
+			}
+		case "ipRules":
+			if v != nil {
+				var IPRules []IPAddressOrRange
+				err = json.Unmarshal(*v, &IPRules)
+				if err != nil {
+					return err
+				}
+				daup.IPRules = &IPRules
+			}
+		case "isVirtualNetworkFilterEnabled":
+			if v != nil {
+				var isVirtualNetworkFilterEnabled bool
+				err = json.Unmarshal(*v, &isVirtualNetworkFilterEnabled)
+				if err != nil {
+					return err
+				}
+				daup.IsVirtualNetworkFilterEnabled = &isVirtualNetworkFilterEnabled
+			}
+		case "enableAutomaticFailover":
+			if v != nil {
+				var enableAutomaticFailover bool
+				err = json.Unmarshal(*v, &enableAutomaticFailover)
+				if err != nil {
+					return err
+				}
+				daup.EnableAutomaticFailover = &enableAutomaticFailover
+			}
+		case "capabilities":
+			if v != nil {
+				var capabilities []Capability
+				err = json.Unmarshal(*v, &capabilities)
+				if err != nil {
+					return err
+				}
+				daup.Capabilities = &capabilities
+			}
+		case "virtualNetworkRules":
+			if v != nil {
+				var virtualNetworkRules []VirtualNetworkRule
+				err = json.Unmarshal(*v, &virtualNetworkRules)
+				if err != nil {
+					return err
+				}
+				daup.VirtualNetworkRules = &virtualNetworkRules
+			}
+		case "enableMultipleWriteLocations":
+			if v != nil {
+				var enableMultipleWriteLocations bool
+				err = json.Unmarshal(*v, &enableMultipleWriteLocations)
+				if err != nil {
+					return err
+				}
+				daup.EnableMultipleWriteLocations = &enableMultipleWriteLocations
+			}
+		case "enableCassandraConnector":
+			if v != nil {
+				var enableCassandraConnector bool
+				err = json.Unmarshal(*v, &enableCassandraConnector)
+				if err != nil {
+					return err
+				}
+				daup.EnableCassandraConnector = &enableCassandraConnector
+			}
+		case "connectorOffer":
+			if v != nil {
+				var connectorOffer ConnectorOffer
+				err = json.Unmarshal(*v, &connectorOffer)
+				if err != nil {
+					return err
+				}
+				daup.ConnectorOffer = connectorOffer
+			}
+		case "disableKeyBasedMetadataWriteAccess":
+			if v != nil {
+				var disableKeyBasedMetadataWriteAccess bool
+				err = json.Unmarshal(*v, &disableKeyBasedMetadataWriteAccess)
+				if err != nil {
+					return err
+				}
+				daup.DisableKeyBasedMetadataWriteAccess = &disableKeyBasedMetadataWriteAccess
+			}
+		case "keyVaultKeyUri":
+			if v != nil {
+				var keyVaultKeyURI string
+				err = json.Unmarshal(*v, &keyVaultKeyURI)
+				if err != nil {
+					return err
+				}
+				daup.KeyVaultKeyURI = &keyVaultKeyURI
+			}
+		case "publicNetworkAccess":
+			if v != nil {
+				var publicNetworkAccess PublicNetworkAccess
+				err = json.Unmarshal(*v, &publicNetworkAccess)
+				if err != nil {
+					return err
+				}
+				daup.PublicNetworkAccess = publicNetworkAccess
+			}
+		case "enableFreeTier":
+			if v != nil {
+				var enableFreeTier bool
+				err = json.Unmarshal(*v, &enableFreeTier)
+				if err != nil {
+					return err
+				}
+				daup.EnableFreeTier = &enableFreeTier
+			}
+		case "apiProperties":
+			if v != nil {
+				var APIProperties APIProperties
+				err = json.Unmarshal(*v, &APIProperties)
+				if err != nil {
+					return err
+				}
+				daup.APIProperties = &APIProperties
+			}
+		case "enableAnalyticalStorage":
+			if v != nil {
+				var enableAnalyticalStorage bool
+				err = json.Unmarshal(*v, &enableAnalyticalStorage)
+				if err != nil {
+					return err
+				}
+				daup.EnableAnalyticalStorage = &enableAnalyticalStorage
+			}
+		case "backupPolicy":
+			if v != nil {
+				backupPolicy, err := unmarshalBasicBackupPolicy(*v)
+				if err != nil {
+					return err
+				}
+				daup.BackupPolicy = backupPolicy
+			}
+		case "cors":
+			if v != nil {
+				var cors []CorsPolicy
+				err = json.Unmarshal(*v, &cors)
+				if err != nil {
+					return err
+				}
+				daup.Cors = &cors
+			}
+		}
+	}
+
+	return nil
 }
 
 // ErrorResponse error Response.
@@ -4145,6 +4872,55 @@ type PercentileMetricValue struct {
 	Timestamp *date.Time `json:"timestamp,omitempty"`
 	// Total - READ-ONLY; The total value of the metric.
 	Total *float64 `json:"total,omitempty"`
+}
+
+// PeriodicModeBackupPolicy the object representing periodic mode backup policy.
+type PeriodicModeBackupPolicy struct {
+	// PeriodicModeProperties - Configuration values for periodic mode backup
+	PeriodicModeProperties *PeriodicModeProperties `json:"periodicModeProperties,omitempty"`
+	// Type - Possible values include: 'TypeBackupPolicy', 'TypePeriodic', 'TypeContinuous'
+	Type Type `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for PeriodicModeBackupPolicy.
+func (pmbp PeriodicModeBackupPolicy) MarshalJSON() ([]byte, error) {
+	pmbp.Type = TypePeriodic
+	objectMap := make(map[string]interface{})
+	if pmbp.PeriodicModeProperties != nil {
+		objectMap["periodicModeProperties"] = pmbp.PeriodicModeProperties
+	}
+	if pmbp.Type != "" {
+		objectMap["type"] = pmbp.Type
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsPeriodicModeBackupPolicy is the BasicBackupPolicy implementation for PeriodicModeBackupPolicy.
+func (pmbp PeriodicModeBackupPolicy) AsPeriodicModeBackupPolicy() (*PeriodicModeBackupPolicy, bool) {
+	return &pmbp, true
+}
+
+// AsContinuousModeBackupPolicy is the BasicBackupPolicy implementation for PeriodicModeBackupPolicy.
+func (pmbp PeriodicModeBackupPolicy) AsContinuousModeBackupPolicy() (*ContinuousModeBackupPolicy, bool) {
+	return nil, false
+}
+
+// AsBackupPolicy is the BasicBackupPolicy implementation for PeriodicModeBackupPolicy.
+func (pmbp PeriodicModeBackupPolicy) AsBackupPolicy() (*BackupPolicy, bool) {
+	return nil, false
+}
+
+// AsBasicBackupPolicy is the BasicBackupPolicy implementation for PeriodicModeBackupPolicy.
+func (pmbp PeriodicModeBackupPolicy) AsBasicBackupPolicy() (BasicBackupPolicy, bool) {
+	return &pmbp, true
+}
+
+// PeriodicModeProperties configuration values for periodic mode backup
+type PeriodicModeProperties struct {
+	// BackupIntervalInMinutes - An integer representing the interval in minutes between two backups
+	BackupIntervalInMinutes *int32 `json:"backupIntervalInMinutes,omitempty"`
+	// BackupRetentionIntervalInHours - An integer representing the time (in hours) that each backup is retained
+	BackupRetentionIntervalInHours *int32 `json:"backupRetentionIntervalInHours,omitempty"`
 }
 
 // PrivateEndpointConnection a private endpoint connection
