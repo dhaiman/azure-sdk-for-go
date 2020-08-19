@@ -554,9 +554,6 @@ func (client AccountsClient) List(ctx context.Context) (result AccountListResult
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storage.AccountsClient", "List", resp, "Failure responding to request")
 	}
-	if result.alr.hasNextLink() && result.alr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
