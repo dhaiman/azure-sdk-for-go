@@ -308,9 +308,6 @@ func (client CustomerSubscriptionsClient) List(ctx context.Context, resourceGrou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "azurestack.CustomerSubscriptionsClient", "List", resp, "Failure responding to request")
 	}
-	if result.csl.hasNextLink() && result.csl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

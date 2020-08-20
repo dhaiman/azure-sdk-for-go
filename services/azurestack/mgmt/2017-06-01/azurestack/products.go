@@ -319,9 +319,6 @@ func (client ProductsClient) List(ctx context.Context, resourceGroup string, reg
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "azurestack.ProductsClient", "List", resp, "Failure responding to request")
 	}
-	if result.pl.hasNextLink() && result.pl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
