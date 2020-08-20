@@ -7064,10 +7064,10 @@ func (bap *BackendAddressPool) UnmarshalJSON(body []byte) error {
 
 // BackendAddressPoolPropertiesFormat properties of the backend address pool.
 type BackendAddressPoolPropertiesFormat struct {
-	// BackendIPConfigurations - READ-ONLY; An array of references to IP addresses defined in network interfaces.
-	BackendIPConfigurations *[]InterfaceIPConfiguration `json:"backendIPConfigurations,omitempty"`
 	// LoadBalancerBackendAddresses - An array of backend addresses.
 	LoadBalancerBackendAddresses *[]LoadBalancerBackendAddress `json:"loadBalancerBackendAddresses,omitempty"`
+	// BackendIPConfigurations - READ-ONLY; An array of references to IP addresses defined in network interfaces.
+	BackendIPConfigurations *[]InterfaceIPConfiguration `json:"backendIPConfigurations,omitempty"`
 	// LoadBalancingRules - READ-ONLY; An array of references to load balancing rules that use this backend address pool.
 	LoadBalancingRules *[]SubResource `json:"loadBalancingRules,omitempty"`
 	// OutboundRule - READ-ONLY; A reference to an outbound rule that uses this backend address pool.
