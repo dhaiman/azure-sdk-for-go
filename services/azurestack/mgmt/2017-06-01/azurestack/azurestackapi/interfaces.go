@@ -25,8 +25,8 @@ import (
 
 // OperationsClientAPI contains the set of methods on the OperationsClient type.
 type OperationsClientAPI interface {
-	List(ctx context.Context) (result azurestack.OperationListPage, err error)
-	ListComplete(ctx context.Context) (result azurestack.OperationListIterator, err error)
+	XXX(ctx context.Context) (result azurestack.OperationListPage, err error)
+	XXXComplete(ctx context.Context) (result azurestack.OperationListIterator, err error)
 }
 
 var _ OperationsClientAPI = (*azurestack.OperationsClient)(nil)

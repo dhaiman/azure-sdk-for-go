@@ -41,10 +41,10 @@ func NewOperationsClientWithBaseURI(baseURI string, subscriptionID string) Opera
 	return OperationsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
-// List returns the list of supported REST operations.
-func (client OperationsClient) List(ctx context.Context) (result OperationListPage, err error) {
+// XXX returns the list of supported REST operations.
+func (client OperationsClient) XXX(ctx context.Context) (result OperationListPage, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/OperationsClient.List")
+		ctx = tracing.StartSpan(ctx, fqdn+"/OperationsClient.XXX")
 		defer func() {
 			sc := -1
 			if result.ol.Response.Response != nil {
@@ -53,30 +53,33 @@ func (client OperationsClient) List(ctx context.Context) (result OperationListPa
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	result.fn = client.listNextResults
-	req, err := client.ListPreparer(ctx)
+	result.fn = client.xXXNextResults
+	req, err := client.XXXPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "List", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "XXX", nil, "Failure preparing request")
 		return
 	}
 
-	resp, err := client.ListSender(req)
+	resp, err := client.XXXSender(req)
 	if err != nil {
 		result.ol.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "List", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "XXX", resp, "Failure sending request")
 		return
 	}
 
-	result.ol, err = client.ListResponder(resp)
+	result.ol, err = client.XXXResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "List", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "XXX", resp, "Failure responding to request")
+	}
+	if result.ol.hasNextLink() && result.ol.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
 }
 
-// ListPreparer prepares the List request.
-func (client OperationsClient) ListPreparer(ctx context.Context) (*http.Request, error) {
+// XXXPreparer prepares the XXX request.
+func (client OperationsClient) XXXPreparer(ctx context.Context) (*http.Request, error) {
 	const APIVersion = "2017-06-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
@@ -90,15 +93,15 @@ func (client OperationsClient) ListPreparer(ctx context.Context) (*http.Request,
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
-// ListSender sends the List request. The method will close the
+// XXXSender sends the XXX request. The method will close the
 // http.Response Body if it receives an error.
-func (client OperationsClient) ListSender(req *http.Request) (*http.Response, error) {
+func (client OperationsClient) XXXSender(req *http.Request) (*http.Response, error) {
 	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
-// ListResponder handles the response to the List request. The method always
+// XXXResponder handles the response to the XXX request. The method always
 // closes the http.Response Body.
-func (client OperationsClient) ListResponder(resp *http.Response) (result OperationList, err error) {
+func (client OperationsClient) XXXResponder(resp *http.Response) (result OperationList, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -108,31 +111,31 @@ func (client OperationsClient) ListResponder(resp *http.Response) (result Operat
 	return
 }
 
-// listNextResults retrieves the next set of results, if any.
-func (client OperationsClient) listNextResults(ctx context.Context, lastResults OperationList) (result OperationList, err error) {
+// xXXNextResults retrieves the next set of results, if any.
+func (client OperationsClient) xXXNextResults(ctx context.Context, lastResults OperationList) (result OperationList, err error) {
 	req, err := lastResults.operationListPreparer(ctx)
 	if err != nil {
-		return result, autorest.NewErrorWithError(err, "azurestack.OperationsClient", "listNextResults", nil, "Failure preparing next results request")
+		return result, autorest.NewErrorWithError(err, "azurestack.OperationsClient", "xXXNextResults", nil, "Failure preparing next results request")
 	}
 	if req == nil {
 		return
 	}
-	resp, err := client.ListSender(req)
+	resp, err := client.XXXSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		return result, autorest.NewErrorWithError(err, "azurestack.OperationsClient", "listNextResults", resp, "Failure sending next results request")
+		return result, autorest.NewErrorWithError(err, "azurestack.OperationsClient", "xXXNextResults", resp, "Failure sending next results request")
 	}
-	result, err = client.ListResponder(resp)
+	result, err = client.XXXResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "listNextResults", resp, "Failure responding to next results request")
+		err = autorest.NewErrorWithError(err, "azurestack.OperationsClient", "xXXNextResults", resp, "Failure responding to next results request")
 	}
 	return
 }
 
-// ListComplete enumerates all values, automatically crossing page boundaries as required.
-func (client OperationsClient) ListComplete(ctx context.Context) (result OperationListIterator, err error) {
+// XXXComplete enumerates all values, automatically crossing page boundaries as required.
+func (client OperationsClient) XXXComplete(ctx context.Context) (result OperationListIterator, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/OperationsClient.List")
+		ctx = tracing.StartSpan(ctx, fqdn+"/OperationsClient.XXX")
 		defer func() {
 			sc := -1
 			if result.Response().Response.Response != nil {
@@ -141,6 +144,6 @@ func (client OperationsClient) ListComplete(ctx context.Context) (result Operati
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	result.page, err = client.List(ctx)
+	result.page, err = client.XXX(ctx)
 	return
 }
