@@ -152,6 +152,98 @@ type CalculatePriceResponsePropertiesPricingCurrencyTotal struct {
 	Amount       *float64 `json:"amount,omitempty"`
 }
 
+// CalculateRequest ...
+type CalculateRequest struct {
+	Sku *SkuName `json:"sku,omitempty"`
+	// Location - The Azure Region where the reserved resource lives.
+	Location                    *string `json:"location,omitempty"`
+	*CalculateRequestProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CalculateRequest.
+func (cr CalculateRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cr.Sku != nil {
+		objectMap["sku"] = cr.Sku
+	}
+	if cr.Location != nil {
+		objectMap["location"] = cr.Location
+	}
+	if cr.CalculateRequestProperties != nil {
+		objectMap["properties"] = cr.CalculateRequestProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for CalculateRequest struct.
+func (cr *CalculateRequest) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "sku":
+			if v != nil {
+				var sku SkuName
+				err = json.Unmarshal(*v, &sku)
+				if err != nil {
+					return err
+				}
+				cr.Sku = &sku
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				cr.Location = &location
+			}
+		case "properties":
+			if v != nil {
+				var calculateRequestProperties CalculateRequestProperties
+				err = json.Unmarshal(*v, &calculateRequestProperties)
+				if err != nil {
+					return err
+				}
+				cr.CalculateRequestProperties = &calculateRequestProperties
+			}
+		}
+	}
+
+	return nil
+}
+
+// CalculateRequestProperties ...
+type CalculateRequestProperties struct {
+	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySQL', 'MariaDb', 'PostgreSQL', 'DedicatedHost', 'SapHana', 'SQLAzureHybridBenefit'
+	ReservedResourceType ReservedResourceType `json:"reservedResourceType,omitempty"`
+	BillingScopeID       *string              `json:"billingScopeId,omitempty"`
+	// Term - Possible values include: 'P1Y', 'P3Y'
+	Term ReservationTerm `json:"term,omitempty"`
+	// BillingPlan - Possible values include: 'Upfront', 'Monthly'
+	BillingPlan ReservationBillingPlan `json:"billingPlan,omitempty"`
+	Quantity    *int32                 `json:"quantity,omitempty"`
+	// DisplayName - Friendly name of the Reservation
+	DisplayName *string `json:"displayName,omitempty"`
+	// AppliedScopeType - Possible values include: 'Single', 'Shared'
+	AppliedScopeType AppliedScopeType `json:"appliedScopeType,omitempty"`
+	AppliedScopes    *[]string        `json:"appliedScopes,omitempty"`
+	Renew            *bool            `json:"renew,omitempty"`
+	// ReservedResourceProperties - Properties specific to each reserved resource type. Not required if not applicable.
+	ReservedResourceProperties *CalculateRequestPropertiesReservedResourceProperties `json:"reservedResourceProperties,omitempty"`
+}
+
+// CalculateRequestPropertiesReservedResourceProperties properties specific to each reserved resource type. Not
+// required if not applicable.
+type CalculateRequestPropertiesReservedResourceProperties struct {
+	// InstanceFlexibility - Possible values include: 'On', 'Off'
+	InstanceFlexibility InstanceFlexibility `json:"instanceFlexibility,omitempty"`
+}
+
 // Catalog ...
 type Catalog struct {
 	// ResourceType - READ-ONLY; The type of resource the SKU applies to.
@@ -1152,7 +1244,7 @@ type PurchaseRequestProperties struct {
 	Term ReservationTerm `json:"term,omitempty"`
 	// BillingPlan - Possible values include: 'Upfront', 'Monthly'
 	BillingPlan ReservationBillingPlan `json:"billingPlan,omitempty"`
-	Quantity    *int32                 `json:"quantity,omitempty"`
+	Quantity    *string                `json:"quantity,omitempty"`
 	// DisplayName - Friendly name of the Reservation
 	DisplayName *string `json:"displayName,omitempty"`
 	// AppliedScopeType - Possible values include: 'Single', 'Shared'
@@ -1172,7 +1264,7 @@ type PurchaseRequestPropertiesReservedResourceProperties struct {
 
 // RenewPropertiesResponse ...
 type RenewPropertiesResponse struct {
-	PurchaseProperties *PurchaseRequest `json:"purchaseProperties,omitempty"`
+	PurchaseProperties *CalculateRequest `json:"purchaseProperties,omitempty"`
 	// PricingCurrencyTotal - Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry.
 	PricingCurrencyTotal *RenewPropertiesResponsePricingCurrencyTotal `json:"pricingCurrencyTotal,omitempty"`
 	// BillingCurrencyTotal - Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included.
@@ -1314,6 +1406,16 @@ func (r Response) MarshalJSON() ([]byte, error) {
 type ScopeProperties struct {
 	Scope *string `json:"scope,omitempty"`
 	Valid *bool   `json:"valid,omitempty"`
+}
+
+// Scopes ...
+type Scopes struct {
+	Properties *ScopesProperties `json:"properties,omitempty"`
+}
+
+// ScopesProperties ...
+type ScopesProperties struct {
+	Scopes *[]string `json:"scopes,omitempty"`
 }
 
 // SkuName ...

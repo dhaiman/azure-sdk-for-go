@@ -32,7 +32,7 @@ var _ BaseClientAPI = (*reservations.BaseClient)(nil)
 
 // ClientAPI contains the set of methods on the Client type.
 type ClientAPI interface {
-	AvailableScopes(ctx context.Context, reservationOrderID string, reservationID string, body []string) (result reservations.ReservationAvailableScopesFuture, err error)
+	AvailableScopes(ctx context.Context, reservationOrderID string, reservationID string, body reservations.Scopes) (result reservations.ReservationAvailableScopesFuture, err error)
 	Get(ctx context.Context, reservationID string, reservationOrderID string, expand string) (result reservations.Response, err error)
 	List(ctx context.Context, reservationOrderID string) (result reservations.ListPage, err error)
 	ListComplete(ctx context.Context, reservationOrderID string) (result reservations.ListIterator, err error)
@@ -47,7 +47,7 @@ var _ ClientAPI = (*reservations.Client)(nil)
 
 // OrderClientAPI contains the set of methods on the OrderClient type.
 type OrderClientAPI interface {
-	Calculate(ctx context.Context, body reservations.PurchaseRequest) (result reservations.CalculatePriceResponse, err error)
+	Calculate(ctx context.Context, body reservations.CalculateRequest) (result reservations.CalculatePriceResponse, err error)
 	Get(ctx context.Context, reservationOrderID string, expand string) (result reservations.OrderResponse, err error)
 	List(ctx context.Context) (result reservations.OrderListPage, err error)
 	ListComplete(ctx context.Context) (result reservations.OrderListIterator, err error)
