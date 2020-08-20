@@ -283,3 +283,20 @@ const (
 func PossibleStatusValues() []Status {
 	return []Status{StatusCanceled, StatusCompleted, StatusFailed, StatusInProgress, StatusNotStarted, StatusSlowedDown}
 }
+
+// StorageAccountType enumerates the values for storage account type.
+type StorageAccountType string
+
+const (
+	// GRS ...
+	GRS StorageAccountType = "GRS"
+	// LRS ...
+	LRS StorageAccountType = "LRS"
+	// ZRS ...
+	ZRS StorageAccountType = "ZRS"
+)
+
+// PossibleStorageAccountTypeValues returns an array of possible values for the StorageAccountType const type.
+func PossibleStorageAccountTypeValues() []StorageAccountType {
+	return []StorageAccountType{GRS, LRS, ZRS}
+}
