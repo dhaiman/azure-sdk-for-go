@@ -800,6 +800,23 @@ func PossibleServiceObjectiveNameValues() []ServiceObjectiveName {
 	return []ServiceObjectiveName{ServiceObjectiveNameBasic, ServiceObjectiveNameDS100, ServiceObjectiveNameDS1000, ServiceObjectiveNameDS1200, ServiceObjectiveNameDS1500, ServiceObjectiveNameDS200, ServiceObjectiveNameDS2000, ServiceObjectiveNameDS300, ServiceObjectiveNameDS400, ServiceObjectiveNameDS500, ServiceObjectiveNameDS600, ServiceObjectiveNameDW100, ServiceObjectiveNameDW1000, ServiceObjectiveNameDW10000c, ServiceObjectiveNameDW1000c, ServiceObjectiveNameDW1200, ServiceObjectiveNameDW1500, ServiceObjectiveNameDW15000c, ServiceObjectiveNameDW1500c, ServiceObjectiveNameDW200, ServiceObjectiveNameDW2000, ServiceObjectiveNameDW2000c, ServiceObjectiveNameDW2500c, ServiceObjectiveNameDW300, ServiceObjectiveNameDW3000, ServiceObjectiveNameDW30000c, ServiceObjectiveNameDW3000c, ServiceObjectiveNameDW400, ServiceObjectiveNameDW500, ServiceObjectiveNameDW5000c, ServiceObjectiveNameDW600, ServiceObjectiveNameDW6000, ServiceObjectiveNameDW6000c, ServiceObjectiveNameDW7500c, ServiceObjectiveNameElasticPool, ServiceObjectiveNameFree, ServiceObjectiveNameP1, ServiceObjectiveNameP11, ServiceObjectiveNameP15, ServiceObjectiveNameP2, ServiceObjectiveNameP3, ServiceObjectiveNameP4, ServiceObjectiveNameP6, ServiceObjectiveNamePRS1, ServiceObjectiveNamePRS2, ServiceObjectiveNamePRS4, ServiceObjectiveNamePRS6, ServiceObjectiveNameS0, ServiceObjectiveNameS1, ServiceObjectiveNameS12, ServiceObjectiveNameS2, ServiceObjectiveNameS3, ServiceObjectiveNameS4, ServiceObjectiveNameS6, ServiceObjectiveNameS7, ServiceObjectiveNameS9, ServiceObjectiveNameSystem, ServiceObjectiveNameSystem0, ServiceObjectiveNameSystem1, ServiceObjectiveNameSystem2, ServiceObjectiveNameSystem2L, ServiceObjectiveNameSystem3, ServiceObjectiveNameSystem3L, ServiceObjectiveNameSystem4, ServiceObjectiveNameSystem4L}
 }
 
+// StorageAccountType enumerates the values for storage account type.
+type StorageAccountType string
+
+const (
+	// GRS ...
+	GRS StorageAccountType = "GRS"
+	// LRS ...
+	LRS StorageAccountType = "LRS"
+	// ZRS ...
+	ZRS StorageAccountType = "ZRS"
+)
+
+// PossibleStorageAccountTypeValues returns an array of possible values for the StorageAccountType const type.
+func PossibleStorageAccountTypeValues() []StorageAccountType {
+	return []StorageAccountType{GRS, LRS, ZRS}
+}
+
 // StorageKeyType enumerates the values for storage key type.
 type StorageKeyType string
 
