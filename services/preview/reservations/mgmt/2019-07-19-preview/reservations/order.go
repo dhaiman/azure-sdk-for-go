@@ -44,7 +44,7 @@ func NewOrderClientWithBaseURI(baseURI string) OrderClient {
 // Calculate calculate price for placing a `ReservationOrder`.
 // Parameters:
 // body - information needed for calculate or purchase reservation
-func (client OrderClient) Calculate(ctx context.Context, body PurchaseRequest) (result CalculatePriceResponse, err error) {
+func (client OrderClient) Calculate(ctx context.Context, body CalculateRequest) (result CalculatePriceResponse, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/OrderClient.Calculate")
 		defer func() {
@@ -77,7 +77,7 @@ func (client OrderClient) Calculate(ctx context.Context, body PurchaseRequest) (
 }
 
 // CalculatePreparer prepares the Calculate request.
-func (client OrderClient) CalculatePreparer(ctx context.Context, body PurchaseRequest) (*http.Request, error) {
+func (client OrderClient) CalculatePreparer(ctx context.Context, body CalculateRequest) (*http.Request, error) {
 	const APIVersion = "2019-04-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,

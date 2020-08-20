@@ -21,7 +21,6 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/validation"
 	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
@@ -46,7 +45,7 @@ func NewClientWithBaseURI(baseURI string) Client {
 // Parameters:
 // reservationOrderID - order Id of the reservation
 // reservationID - id of the Reservation Item
-func (client Client) AvailableScopes(ctx context.Context, reservationOrderID string, reservationID string, body []string) (result ReservationAvailableScopesFuture, err error) {
+func (client Client) AvailableScopes(ctx context.Context, reservationOrderID string, reservationID string, body Scopes) (result ReservationAvailableScopesFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/Client.AvailableScopes")
 		defer func() {
@@ -57,12 +56,6 @@ func (client Client) AvailableScopes(ctx context.Context, reservationOrderID str
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: body,
-			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("reservations.Client", "AvailableScopes", err.Error())
-	}
-
 	req, err := client.AvailableScopesPreparer(ctx, reservationOrderID, reservationID, body)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "reservations.Client", "AvailableScopes", nil, "Failure preparing request")
@@ -79,7 +72,7 @@ func (client Client) AvailableScopes(ctx context.Context, reservationOrderID str
 }
 
 // AvailableScopesPreparer prepares the AvailableScopes request.
-func (client Client) AvailableScopesPreparer(ctx context.Context, reservationOrderID string, reservationID string, body []string) (*http.Request, error) {
+func (client Client) AvailableScopesPreparer(ctx context.Context, reservationOrderID string, reservationID string, body Scopes) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"reservationId":      autorest.Encode("path", reservationID),
 		"reservationOrderId": autorest.Encode("path", reservationOrderID),
