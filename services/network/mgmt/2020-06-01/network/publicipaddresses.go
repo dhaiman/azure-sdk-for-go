@@ -61,12 +61,16 @@ func (client PublicIPAddressesClient) CreateOrUpdate(ctx context.Context, resour
 	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
-			Constraints: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat", Name: validation.Null, Rule: false,
-				Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration", Name: validation.Null, Rule: false,
-					Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration.IPConfigurationPropertiesFormat", Name: validation.Null, Rule: false,
-						Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration.IPConfigurationPropertiesFormat.PublicIPAddress", Name: validation.Null, Rule: false, Chain: nil}}},
-					}},
-				}}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "parameters.ExtendedLocation", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "parameters.ExtendedLocation.Name", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.ExtendedLocation.Type", Name: validation.Null, Rule: true, Chain: nil},
+				}},
+				{Target: "parameters.PublicIPAddressPropertiesFormat", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration.IPConfigurationPropertiesFormat", Name: validation.Null, Rule: false,
+							Chain: []validation.Constraint{{Target: "parameters.PublicIPAddressPropertiesFormat.IPConfiguration.IPConfigurationPropertiesFormat.PublicIPAddress", Name: validation.Null, Rule: false, Chain: nil}}},
+						}},
+					}}}}}); err != nil {
 		return result, validation.NewError("network.PublicIPAddressesClient", "CreateOrUpdate", err.Error())
 	}
 

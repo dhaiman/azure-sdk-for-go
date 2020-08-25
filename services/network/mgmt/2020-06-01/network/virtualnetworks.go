@@ -137,10 +137,14 @@ func (client VirtualNetworksClient) CreateOrUpdate(ctx context.Context, resource
 	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
-			Constraints: []validation.Constraint{{Target: "parameters.VirtualNetworkPropertiesFormat", Name: validation.Null, Rule: false,
-				Chain: []validation.Constraint{{Target: "parameters.VirtualNetworkPropertiesFormat.BgpCommunities", Name: validation.Null, Rule: false,
-					Chain: []validation.Constraint{{Target: "parameters.VirtualNetworkPropertiesFormat.BgpCommunities.VirtualNetworkCommunity", Name: validation.Null, Rule: true, Chain: nil}}},
-				}}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "parameters.ExtendedLocation", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "parameters.ExtendedLocation.Name", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.ExtendedLocation.Type", Name: validation.Null, Rule: true, Chain: nil},
+				}},
+				{Target: "parameters.VirtualNetworkPropertiesFormat", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "parameters.VirtualNetworkPropertiesFormat.BgpCommunities", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.VirtualNetworkPropertiesFormat.BgpCommunities.VirtualNetworkCommunity", Name: validation.Null, Rule: true, Chain: nil}}},
+					}}}}}); err != nil {
 		return result, validation.NewError("network.VirtualNetworksClient", "CreateOrUpdate", err.Error())
 	}
 

@@ -15417,6 +15417,14 @@ func (ersppf ExpressRouteServiceProviderPropertiesFormat) MarshalJSON() ([]byte,
 	return json.Marshal(objectMap)
 }
 
+// ExtendedLocation extendedLocation complex type.
+type ExtendedLocation struct {
+	// Name - The name of the extended location.
+	Name *string `json:"name,omitempty"`
+	// Type - The type of the extended location.
+	Type *string `json:"type,omitempty"`
+}
+
 // FirewallPoliciesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type FirewallPoliciesCreateOrUpdateFuture struct {
@@ -18649,6 +18657,8 @@ type IntentPolicyConfiguration struct {
 // Interface a network interface in a resource group.
 type Interface struct {
 	autorest.Response `json:"-"`
+	// ExtendedLocation - The extended location of the network interface.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// InterfacePropertiesFormat - Properties of the network interface.
 	*InterfacePropertiesFormat `json:"properties,omitempty"`
 	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
@@ -18668,6 +18678,9 @@ type Interface struct {
 // MarshalJSON is the custom marshaler for Interface.
 func (i Interface) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if i.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = i.ExtendedLocation
+	}
 	if i.InterfacePropertiesFormat != nil {
 		objectMap["properties"] = i.InterfacePropertiesFormat
 	}
@@ -18692,6 +18705,15 @@ func (i *Interface) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				i.ExtendedLocation = &extendedLocation
+			}
 		case "properties":
 			if v != nil {
 				var interfacePropertiesFormat InterfacePropertiesFormat
@@ -23171,6 +23193,8 @@ func NewListVpnSitesResultPage(getNextPage func(context.Context, ListVpnSitesRes
 // LoadBalancer loadBalancer resource.
 type LoadBalancer struct {
 	autorest.Response `json:"-"`
+	// ExtendedLocation - The extended location of the load balancer.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// Sku - The load balancer SKU.
 	Sku *LoadBalancerSku `json:"sku,omitempty"`
 	// LoadBalancerPropertiesFormat - Properties of load balancer.
@@ -23192,6 +23216,9 @@ type LoadBalancer struct {
 // MarshalJSON is the custom marshaler for LoadBalancer.
 func (lb LoadBalancer) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if lb.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = lb.ExtendedLocation
+	}
 	if lb.Sku != nil {
 		objectMap["sku"] = lb.Sku
 	}
@@ -23219,6 +23246,15 @@ func (lb *LoadBalancer) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				lb.ExtendedLocation = &extendedLocation
+			}
 		case "sku":
 			if v != nil {
 				var sku LoadBalancerSku
@@ -29687,6 +29723,8 @@ type ProtocolCustomSettingsFormat struct {
 // PublicIPAddress public IP address resource.
 type PublicIPAddress struct {
 	autorest.Response `json:"-"`
+	// ExtendedLocation - The extended location of the public ip address.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// Sku - The public IP address SKU.
 	Sku *PublicIPAddressSku `json:"sku,omitempty"`
 	// PublicIPAddressPropertiesFormat - Public IP address properties.
@@ -29710,6 +29748,9 @@ type PublicIPAddress struct {
 // MarshalJSON is the custom marshaler for PublicIPAddress.
 func (pia PublicIPAddress) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if pia.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = pia.ExtendedLocation
+	}
 	if pia.Sku != nil {
 		objectMap["sku"] = pia.Sku
 	}
@@ -29740,6 +29781,15 @@ func (pia *PublicIPAddress) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				pia.ExtendedLocation = &extendedLocation
+			}
 		case "sku":
 			if v != nil {
 				var sku PublicIPAddressSku
@@ -30110,6 +30160,8 @@ type PublicIPAddressSku struct {
 // PublicIPPrefix public IP prefix resource.
 type PublicIPPrefix struct {
 	autorest.Response `json:"-"`
+	// ExtendedLocation - The extended location of the public ip address.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// Sku - The public IP prefix SKU.
 	Sku *PublicIPPrefixSku `json:"sku,omitempty"`
 	// PublicIPPrefixPropertiesFormat - Public IP prefix properties.
@@ -30133,6 +30185,9 @@ type PublicIPPrefix struct {
 // MarshalJSON is the custom marshaler for PublicIPPrefix.
 func (pip PublicIPPrefix) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if pip.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = pip.ExtendedLocation
+	}
 	if pip.Sku != nil {
 		objectMap["sku"] = pip.Sku
 	}
@@ -30163,6 +30218,15 @@ func (pip *PublicIPPrefix) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				pip.ExtendedLocation = &extendedLocation
+			}
 		case "sku":
 			if v != nil {
 				var sku PublicIPPrefixSku
@@ -36841,6 +36905,8 @@ func (future *VirtualHubsGetEffectiveVirtualHubRoutesFuture) Result(client Virtu
 // VirtualNetwork virtual Network resource.
 type VirtualNetwork struct {
 	autorest.Response `json:"-"`
+	// ExtendedLocation - The extended location of the virtual network.
+	ExtendedLocation *ExtendedLocation `json:"extendedLocation,omitempty"`
 	// VirtualNetworkPropertiesFormat - Properties of the virtual network.
 	*VirtualNetworkPropertiesFormat `json:"properties,omitempty"`
 	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
@@ -36860,6 +36926,9 @@ type VirtualNetwork struct {
 // MarshalJSON is the custom marshaler for VirtualNetwork.
 func (vn VirtualNetwork) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if vn.ExtendedLocation != nil {
+		objectMap["extendedLocation"] = vn.ExtendedLocation
+	}
 	if vn.VirtualNetworkPropertiesFormat != nil {
 		objectMap["properties"] = vn.VirtualNetworkPropertiesFormat
 	}
@@ -36884,6 +36953,15 @@ func (vn *VirtualNetwork) UnmarshalJSON(body []byte) error {
 	}
 	for k, v := range m {
 		switch k {
+		case "extendedLocation":
+			if v != nil {
+				var extendedLocation ExtendedLocation
+				err = json.Unmarshal(*v, &extendedLocation)
+				if err != nil {
+					return err
+				}
+				vn.ExtendedLocation = &extendedLocation
+			}
 		case "properties":
 			if v != nil {
 				var virtualNetworkPropertiesFormat VirtualNetworkPropertiesFormat

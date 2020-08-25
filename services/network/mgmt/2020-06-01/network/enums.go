@@ -1080,6 +1080,19 @@ func PossibleExpressRoutePortsEncapsulationValues() []ExpressRoutePortsEncapsula
 	return []ExpressRoutePortsEncapsulation{Dot1Q, QinQ}
 }
 
+// ExtendedLocationTypes enumerates the values for extended location types.
+type ExtendedLocationTypes string
+
+const (
+	// EdgeZone ...
+	EdgeZone ExtendedLocationTypes = "EdgeZone"
+)
+
+// PossibleExtendedLocationTypesValues returns an array of possible values for the ExtendedLocationTypes const type.
+func PossibleExtendedLocationTypesValues() []ExtendedLocationTypes {
+	return []ExtendedLocationTypes{EdgeZone}
+}
+
 // FirewallPolicyFilterRuleCollectionActionType enumerates the values for firewall policy filter rule
 // collection action type.
 type FirewallPolicyFilterRuleCollectionActionType string

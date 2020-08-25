@@ -21,6 +21,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
 	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
@@ -58,6 +59,15 @@ func (client PublicIPPrefixesClient) CreateOrUpdate(ctx context.Context, resourc
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: parameters,
+			Constraints: []validation.Constraint{{Target: "parameters.ExtendedLocation", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "parameters.ExtendedLocation.Name", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.ExtendedLocation.Type", Name: validation.Null, Rule: true, Chain: nil},
+				}}}}}); err != nil {
+		return result, validation.NewError("network.PublicIPPrefixesClient", "CreateOrUpdate", err.Error())
+	}
+
 	req, err := client.CreateOrUpdatePreparer(ctx, resourceGroupName, publicIPPrefixName, parameters)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "network.PublicIPPrefixesClient", "CreateOrUpdate", nil, "Failure preparing request")
