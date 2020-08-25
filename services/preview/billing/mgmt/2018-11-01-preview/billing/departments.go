@@ -159,9 +159,6 @@ func (client DepartmentsClient) ListByBillingAccountName(ctx context.Context, bi
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.DepartmentsClient", "ListByBillingAccountName", resp, "Failure responding to request")
 	}
-	if result.dlr.hasNextLink() && result.dlr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

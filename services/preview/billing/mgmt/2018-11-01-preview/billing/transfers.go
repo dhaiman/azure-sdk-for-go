@@ -285,9 +285,6 @@ func (client TransfersClient) List(ctx context.Context, billingAccountName strin
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.TransfersClient", "List", resp, "Failure responding to request")
 	}
-	if result.tdlr.hasNextLink() && result.tdlr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

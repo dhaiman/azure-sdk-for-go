@@ -370,9 +370,6 @@ func (client InvoiceSectionsClient) ListByBillingProfileName(ctx context.Context
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.InvoiceSectionsClient", "ListByBillingProfileName", resp, "Failure responding to request")
 	}
-	if result.islr.hasNextLink() && result.islr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -484,9 +481,6 @@ func (client InvoiceSectionsClient) ListByCreateSubscriptionPermission(ctx conte
 	result.islr, err = client.ListByCreateSubscriptionPermissionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.InvoiceSectionsClient", "ListByCreateSubscriptionPermission", resp, "Failure responding to request")
-	}
-	if result.islr.hasNextLink() && result.islr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
