@@ -153,6 +153,9 @@ func (client ProductsClient) ListByBillingAccount(ctx context.Context, billingAc
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.ProductsClient", "ListByBillingAccount", resp, "Failure responding to request")
 	}
+	if result.plr.hasNextLink() && result.plr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -272,6 +275,9 @@ func (client ProductsClient) ListByBillingProfile(ctx context.Context, billingAc
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.ProductsClient", "ListByBillingProfile", resp, "Failure responding to request")
 	}
+	if result.plr.hasNextLink() && result.plr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -387,6 +393,9 @@ func (client ProductsClient) ListByCustomer(ctx context.Context, billingAccountN
 	result.plr, err = client.ListByCustomerResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.ProductsClient", "ListByCustomer", resp, "Failure responding to request")
+	}
+	if result.plr.hasNextLink() && result.plr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -504,6 +513,9 @@ func (client ProductsClient) ListByInvoiceSection(ctx context.Context, billingAc
 	result.plr, err = client.ListByInvoiceSectionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.ProductsClient", "ListByInvoiceSection", resp, "Failure responding to request")
+	}
+	if result.plr.hasNextLink() && result.plr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return

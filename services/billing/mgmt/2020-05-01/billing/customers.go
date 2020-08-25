@@ -156,6 +156,9 @@ func (client CustomersClient) ListByBillingAccount(ctx context.Context, billingA
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.CustomersClient", "ListByBillingAccount", resp, "Failure responding to request")
 	}
+	if result.clr.hasNextLink() && result.clr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -276,6 +279,9 @@ func (client CustomersClient) ListByBillingProfile(ctx context.Context, billingA
 	result.clr, err = client.ListByBillingProfileResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.CustomersClient", "ListByBillingProfile", resp, "Failure responding to request")
+	}
+	if result.clr.hasNextLink() && result.clr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
