@@ -152,9 +152,6 @@ func (client InstructionsClient) ListByBillingProfile(ctx context.Context, billi
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.InstructionsClient", "ListByBillingProfile", resp, "Failure responding to request")
 	}
-	if result.ilr.hasNextLink() && result.ilr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

@@ -232,9 +232,6 @@ func (client InvoiceSectionsClient) ListByBillingProfile(ctx context.Context, bi
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.InvoiceSectionsClient", "ListByBillingProfile", resp, "Failure responding to request")
 	}
-	if result.islr.hasNextLink() && result.islr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

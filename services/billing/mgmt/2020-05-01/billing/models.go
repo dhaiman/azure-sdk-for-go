@@ -32,6 +32,596 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/billing/mgmt/2020-05-01/billing"
 
+// AcceptanceMode enumerates the values for acceptance mode.
+type AcceptanceMode string
+
+const (
+	// ClickToAccept ...
+	ClickToAccept AcceptanceMode = "ClickToAccept"
+	// ESignEmbedded ...
+	ESignEmbedded AcceptanceMode = "ESignEmbedded"
+	// ESignOffline ...
+	ESignOffline AcceptanceMode = "ESignOffline"
+)
+
+// PossibleAcceptanceModeValues returns an array of possible values for the AcceptanceMode const type.
+func PossibleAcceptanceModeValues() []AcceptanceMode {
+	return []AcceptanceMode{ClickToAccept, ESignEmbedded, ESignOffline}
+}
+
+// AccountStatus enumerates the values for account status.
+type AccountStatus string
+
+const (
+	// Active ...
+	Active AccountStatus = "Active"
+	// Deleted ...
+	Deleted AccountStatus = "Deleted"
+	// Disabled ...
+	Disabled AccountStatus = "Disabled"
+	// Expired ...
+	Expired AccountStatus = "Expired"
+	// Extended ...
+	Extended AccountStatus = "Extended"
+	// Terminated ...
+	Terminated AccountStatus = "Terminated"
+	// Transferred ...
+	Transferred AccountStatus = "Transferred"
+)
+
+// PossibleAccountStatusValues returns an array of possible values for the AccountStatus const type.
+func PossibleAccountStatusValues() []AccountStatus {
+	return []AccountStatus{Active, Deleted, Disabled, Expired, Extended, Terminated, Transferred}
+}
+
+// AccountType enumerates the values for account type.
+type AccountType string
+
+const (
+	// Enterprise ...
+	Enterprise AccountType = "Enterprise"
+	// Individual ...
+	Individual AccountType = "Individual"
+	// Partner ...
+	Partner AccountType = "Partner"
+)
+
+// PossibleAccountTypeValues returns an array of possible values for the AccountType const type.
+func PossibleAccountTypeValues() []AccountType {
+	return []AccountType{Enterprise, Individual, Partner}
+}
+
+// AddressValidationStatus enumerates the values for address validation status.
+type AddressValidationStatus string
+
+const (
+	// Invalid ...
+	Invalid AddressValidationStatus = "Invalid"
+	// Valid ...
+	Valid AddressValidationStatus = "Valid"
+)
+
+// PossibleAddressValidationStatusValues returns an array of possible values for the AddressValidationStatus const type.
+func PossibleAddressValidationStatusValues() []AddressValidationStatus {
+	return []AddressValidationStatus{Invalid, Valid}
+}
+
+// AgreementType enumerates the values for agreement type.
+type AgreementType string
+
+const (
+	// EnterpriseAgreement ...
+	EnterpriseAgreement AgreementType = "EnterpriseAgreement"
+	// MicrosoftCustomerAgreement ...
+	MicrosoftCustomerAgreement AgreementType = "MicrosoftCustomerAgreement"
+	// MicrosoftOnlineServicesProgram ...
+	MicrosoftOnlineServicesProgram AgreementType = "MicrosoftOnlineServicesProgram"
+	// MicrosoftPartnerAgreement ...
+	MicrosoftPartnerAgreement AgreementType = "MicrosoftPartnerAgreement"
+)
+
+// PossibleAgreementTypeValues returns an array of possible values for the AgreementType const type.
+func PossibleAgreementTypeValues() []AgreementType {
+	return []AgreementType{EnterpriseAgreement, MicrosoftCustomerAgreement, MicrosoftOnlineServicesProgram, MicrosoftPartnerAgreement}
+}
+
+// AutoRenew enumerates the values for auto renew.
+type AutoRenew string
+
+const (
+	// Off ...
+	Off AutoRenew = "Off"
+	// On ...
+	On AutoRenew = "On"
+)
+
+// PossibleAutoRenewValues returns an array of possible values for the AutoRenew const type.
+func PossibleAutoRenewValues() []AutoRenew {
+	return []AutoRenew{Off, On}
+}
+
+// Category enumerates the values for category.
+type Category string
+
+const (
+	// CategoryAffiliatePurchaseTerms ...
+	CategoryAffiliatePurchaseTerms Category = "AffiliatePurchaseTerms"
+	// CategoryMicrosoftCustomerAgreement ...
+	CategoryMicrosoftCustomerAgreement Category = "MicrosoftCustomerAgreement"
+	// CategoryOther ...
+	CategoryOther Category = "Other"
+)
+
+// PossibleCategoryValues returns an array of possible values for the Category const type.
+func PossibleCategoryValues() []Category {
+	return []Category{CategoryAffiliatePurchaseTerms, CategoryMicrosoftCustomerAgreement, CategoryOther}
+}
+
+// DocumentSource enumerates the values for document source.
+type DocumentSource string
+
+const (
+	// DRS ...
+	DRS DocumentSource = "DRS"
+	// ENF ...
+	ENF DocumentSource = "ENF"
+)
+
+// PossibleDocumentSourceValues returns an array of possible values for the DocumentSource const type.
+func PossibleDocumentSourceValues() []DocumentSource {
+	return []DocumentSource{DRS, ENF}
+}
+
+// DocumentType enumerates the values for document type.
+type DocumentType string
+
+const (
+	// DocumentTypeCreditNote ...
+	DocumentTypeCreditNote DocumentType = "CreditNote"
+	// DocumentTypeInvoice ...
+	DocumentTypeInvoice DocumentType = "Invoice"
+	// DocumentTypeTaxReceipt ...
+	DocumentTypeTaxReceipt DocumentType = "TaxReceipt"
+	// DocumentTypeVoidNote ...
+	DocumentTypeVoidNote DocumentType = "VoidNote"
+)
+
+// PossibleDocumentTypeValues returns an array of possible values for the DocumentType const type.
+func PossibleDocumentTypeValues() []DocumentType {
+	return []DocumentType{DocumentTypeCreditNote, DocumentTypeInvoice, DocumentTypeTaxReceipt, DocumentTypeVoidNote}
+}
+
+// Frequency enumerates the values for frequency.
+type Frequency string
+
+const (
+	// Monthly ...
+	Monthly Frequency = "Monthly"
+	// OneTime ...
+	OneTime Frequency = "OneTime"
+	// UsageBased ...
+	UsageBased Frequency = "UsageBased"
+)
+
+// PossibleFrequencyValues returns an array of possible values for the Frequency const type.
+func PossibleFrequencyValues() []Frequency {
+	return []Frequency{Monthly, OneTime, UsageBased}
+}
+
+// InvoiceSectionState enumerates the values for invoice section state.
+type InvoiceSectionState string
+
+const (
+	// InvoiceSectionStateActive ...
+	InvoiceSectionStateActive InvoiceSectionState = "Active"
+	// InvoiceSectionStateRestricted ...
+	InvoiceSectionStateRestricted InvoiceSectionState = "Restricted"
+)
+
+// PossibleInvoiceSectionStateValues returns an array of possible values for the InvoiceSectionState const type.
+func PossibleInvoiceSectionStateValues() []InvoiceSectionState {
+	return []InvoiceSectionState{InvoiceSectionStateActive, InvoiceSectionStateRestricted}
+}
+
+// InvoiceStatus enumerates the values for invoice status.
+type InvoiceStatus string
+
+const (
+	// Due ...
+	Due InvoiceStatus = "Due"
+	// OverDue ...
+	OverDue InvoiceStatus = "OverDue"
+	// Paid ...
+	Paid InvoiceStatus = "Paid"
+)
+
+// PossibleInvoiceStatusValues returns an array of possible values for the InvoiceStatus const type.
+func PossibleInvoiceStatusValues() []InvoiceStatus {
+	return []InvoiceStatus{Due, OverDue, Paid}
+}
+
+// InvoiceType enumerates the values for invoice type.
+type InvoiceType string
+
+const (
+	// AzureMarketplace ...
+	AzureMarketplace InvoiceType = "AzureMarketplace"
+	// AzureService ...
+	AzureService InvoiceType = "AzureService"
+	// AzureSupport ...
+	AzureSupport InvoiceType = "AzureSupport"
+)
+
+// PossibleInvoiceTypeValues returns an array of possible values for the InvoiceType const type.
+func PossibleInvoiceTypeValues() []InvoiceType {
+	return []InvoiceType{AzureMarketplace, AzureService, AzureSupport}
+}
+
+// MarketplacePurchasesPolicy enumerates the values for marketplace purchases policy.
+type MarketplacePurchasesPolicy string
+
+const (
+	// AllAllowed ...
+	AllAllowed MarketplacePurchasesPolicy = "AllAllowed"
+	// NotAllowed ...
+	NotAllowed MarketplacePurchasesPolicy = "NotAllowed"
+	// OnlyFreeAllowed ...
+	OnlyFreeAllowed MarketplacePurchasesPolicy = "OnlyFreeAllowed"
+)
+
+// PossibleMarketplacePurchasesPolicyValues returns an array of possible values for the MarketplacePurchasesPolicy const type.
+func PossibleMarketplacePurchasesPolicyValues() []MarketplacePurchasesPolicy {
+	return []MarketplacePurchasesPolicy{AllAllowed, NotAllowed, OnlyFreeAllowed}
+}
+
+// PaymentMethodFamily enumerates the values for payment method family.
+type PaymentMethodFamily string
+
+const (
+	// CheckWire ...
+	CheckWire PaymentMethodFamily = "CheckWire"
+	// CreditCard ...
+	CreditCard PaymentMethodFamily = "CreditCard"
+	// Credits ...
+	Credits PaymentMethodFamily = "Credits"
+	// None ...
+	None PaymentMethodFamily = "None"
+)
+
+// PossiblePaymentMethodFamilyValues returns an array of possible values for the PaymentMethodFamily const type.
+func PossiblePaymentMethodFamilyValues() []PaymentMethodFamily {
+	return []PaymentMethodFamily{CheckWire, CreditCard, Credits, None}
+}
+
+// ProductStatusType enumerates the values for product status type.
+type ProductStatusType string
+
+const (
+	// ProductStatusTypeActive ...
+	ProductStatusTypeActive ProductStatusType = "Active"
+	// ProductStatusTypeAutoRenew ...
+	ProductStatusTypeAutoRenew ProductStatusType = "AutoRenew"
+	// ProductStatusTypeCancelled ...
+	ProductStatusTypeCancelled ProductStatusType = "Cancelled"
+	// ProductStatusTypeDisabled ...
+	ProductStatusTypeDisabled ProductStatusType = "Disabled"
+	// ProductStatusTypeExpired ...
+	ProductStatusTypeExpired ProductStatusType = "Expired"
+	// ProductStatusTypeExpiring ...
+	ProductStatusTypeExpiring ProductStatusType = "Expiring"
+	// ProductStatusTypeInactive ...
+	ProductStatusTypeInactive ProductStatusType = "Inactive"
+	// ProductStatusTypePastDue ...
+	ProductStatusTypePastDue ProductStatusType = "PastDue"
+)
+
+// PossibleProductStatusTypeValues returns an array of possible values for the ProductStatusType const type.
+func PossibleProductStatusTypeValues() []ProductStatusType {
+	return []ProductStatusType{ProductStatusTypeActive, ProductStatusTypeAutoRenew, ProductStatusTypeCancelled, ProductStatusTypeDisabled, ProductStatusTypeExpired, ProductStatusTypeExpiring, ProductStatusTypeInactive, ProductStatusTypePastDue}
+}
+
+// ProductTransferValidationErrorCode enumerates the values for product transfer validation error code.
+type ProductTransferValidationErrorCode string
+
+const (
+	// CrossBillingAccountNotAllowed ...
+	CrossBillingAccountNotAllowed ProductTransferValidationErrorCode = "CrossBillingAccountNotAllowed"
+	// DestinationBillingProfilePastDue ...
+	DestinationBillingProfilePastDue ProductTransferValidationErrorCode = "DestinationBillingProfilePastDue"
+	// InsufficientPermissionOnDestination ...
+	InsufficientPermissionOnDestination ProductTransferValidationErrorCode = "InsufficientPermissionOnDestination"
+	// InsufficientPermissionOnSource ...
+	InsufficientPermissionOnSource ProductTransferValidationErrorCode = "InsufficientPermissionOnSource"
+	// InvalidSource ...
+	InvalidSource ProductTransferValidationErrorCode = "InvalidSource"
+	// NotAvailableForDestinationMarket ...
+	NotAvailableForDestinationMarket ProductTransferValidationErrorCode = "NotAvailableForDestinationMarket"
+	// OneTimePurchaseProductTransferNotAllowed ...
+	OneTimePurchaseProductTransferNotAllowed ProductTransferValidationErrorCode = "OneTimePurchaseProductTransferNotAllowed"
+	// ProductNotActive ...
+	ProductNotActive ProductTransferValidationErrorCode = "ProductNotActive"
+	// ProductTypeNotSupported ...
+	ProductTypeNotSupported ProductTransferValidationErrorCode = "ProductTypeNotSupported"
+)
+
+// PossibleProductTransferValidationErrorCodeValues returns an array of possible values for the ProductTransferValidationErrorCode const type.
+func PossibleProductTransferValidationErrorCodeValues() []ProductTransferValidationErrorCode {
+	return []ProductTransferValidationErrorCode{CrossBillingAccountNotAllowed, DestinationBillingProfilePastDue, InsufficientPermissionOnDestination, InsufficientPermissionOnSource, InvalidSource, NotAvailableForDestinationMarket, OneTimePurchaseProductTransferNotAllowed, ProductNotActive, ProductTypeNotSupported}
+}
+
+// ProfileSpendingLimit enumerates the values for profile spending limit.
+type ProfileSpendingLimit string
+
+const (
+	// ProfileSpendingLimitOff ...
+	ProfileSpendingLimitOff ProfileSpendingLimit = "Off"
+	// ProfileSpendingLimitOn ...
+	ProfileSpendingLimitOn ProfileSpendingLimit = "On"
+)
+
+// PossibleProfileSpendingLimitValues returns an array of possible values for the ProfileSpendingLimit const type.
+func PossibleProfileSpendingLimitValues() []ProfileSpendingLimit {
+	return []ProfileSpendingLimit{ProfileSpendingLimitOff, ProfileSpendingLimitOn}
+}
+
+// ProfileStatus enumerates the values for profile status.
+type ProfileStatus string
+
+const (
+	// ProfileStatusActive ...
+	ProfileStatusActive ProfileStatus = "Active"
+	// ProfileStatusDisabled ...
+	ProfileStatusDisabled ProfileStatus = "Disabled"
+	// ProfileStatusWarned ...
+	ProfileStatusWarned ProfileStatus = "Warned"
+)
+
+// PossibleProfileStatusValues returns an array of possible values for the ProfileStatus const type.
+func PossibleProfileStatusValues() []ProfileStatus {
+	return []ProfileStatus{ProfileStatusActive, ProfileStatusDisabled, ProfileStatusWarned}
+}
+
+// ProfileStatusReasonCode enumerates the values for profile status reason code.
+type ProfileStatusReasonCode string
+
+const (
+	// PastDue ...
+	PastDue ProfileStatusReasonCode = "PastDue"
+	// SpendingLimitExpired ...
+	SpendingLimitExpired ProfileStatusReasonCode = "SpendingLimitExpired"
+	// SpendingLimitReached ...
+	SpendingLimitReached ProfileStatusReasonCode = "SpendingLimitReached"
+)
+
+// PossibleProfileStatusReasonCodeValues returns an array of possible values for the ProfileStatusReasonCode const type.
+func PossibleProfileStatusReasonCodeValues() []ProfileStatusReasonCode {
+	return []ProfileStatusReasonCode{PastDue, SpendingLimitExpired, SpendingLimitReached}
+}
+
+// RelationshipType enumerates the values for relationship type.
+type RelationshipType string
+
+const (
+	// CSPPartner ...
+	CSPPartner RelationshipType = "CSPPartner"
+	// Direct ...
+	Direct RelationshipType = "Direct"
+	// IndirectCustomer ...
+	IndirectCustomer RelationshipType = "IndirectCustomer"
+	// IndirectPartner ...
+	IndirectPartner RelationshipType = "IndirectPartner"
+)
+
+// PossibleRelationshipTypeValues returns an array of possible values for the RelationshipType const type.
+func PossibleRelationshipTypeValues() []RelationshipType {
+	return []RelationshipType{CSPPartner, Direct, IndirectCustomer, IndirectPartner}
+}
+
+// ReservationPurchasesPolicy enumerates the values for reservation purchases policy.
+type ReservationPurchasesPolicy string
+
+const (
+	// ReservationPurchasesPolicyAllowed ...
+	ReservationPurchasesPolicyAllowed ReservationPurchasesPolicy = "Allowed"
+	// ReservationPurchasesPolicyNotAllowed ...
+	ReservationPurchasesPolicyNotAllowed ReservationPurchasesPolicy = "NotAllowed"
+)
+
+// PossibleReservationPurchasesPolicyValues returns an array of possible values for the ReservationPurchasesPolicy const type.
+func PossibleReservationPurchasesPolicyValues() []ReservationPurchasesPolicy {
+	return []ReservationPurchasesPolicy{ReservationPurchasesPolicyAllowed, ReservationPurchasesPolicyNotAllowed}
+}
+
+// ReservationType enumerates the values for reservation type.
+type ReservationType string
+
+const (
+	// Purchase ...
+	Purchase ReservationType = "Purchase"
+	// UsageCharge ...
+	UsageCharge ReservationType = "Usage Charge"
+)
+
+// PossibleReservationTypeValues returns an array of possible values for the ReservationType const type.
+func PossibleReservationTypeValues() []ReservationType {
+	return []ReservationType{Purchase, UsageCharge}
+}
+
+// SpendingLimit enumerates the values for spending limit.
+type SpendingLimit string
+
+const (
+	// SpendingLimitOff ...
+	SpendingLimitOff SpendingLimit = "Off"
+	// SpendingLimitOn ...
+	SpendingLimitOn SpendingLimit = "On"
+)
+
+// PossibleSpendingLimitValues returns an array of possible values for the SpendingLimit const type.
+func PossibleSpendingLimitValues() []SpendingLimit {
+	return []SpendingLimit{SpendingLimitOff, SpendingLimitOn}
+}
+
+// SpendingLimitForBillingProfile enumerates the values for spending limit for billing profile.
+type SpendingLimitForBillingProfile string
+
+const (
+	// SpendingLimitForBillingProfileOff ...
+	SpendingLimitForBillingProfileOff SpendingLimitForBillingProfile = "Off"
+	// SpendingLimitForBillingProfileOn ...
+	SpendingLimitForBillingProfileOn SpendingLimitForBillingProfile = "On"
+)
+
+// PossibleSpendingLimitForBillingProfileValues returns an array of possible values for the SpendingLimitForBillingProfile const type.
+func PossibleSpendingLimitForBillingProfileValues() []SpendingLimitForBillingProfile {
+	return []SpendingLimitForBillingProfile{SpendingLimitForBillingProfileOff, SpendingLimitForBillingProfileOn}
+}
+
+// StatusReasonCode enumerates the values for status reason code.
+type StatusReasonCode string
+
+const (
+	// StatusReasonCodePastDue ...
+	StatusReasonCodePastDue StatusReasonCode = "PastDue"
+	// StatusReasonCodeSpendingLimitExpired ...
+	StatusReasonCodeSpendingLimitExpired StatusReasonCode = "SpendingLimitExpired"
+	// StatusReasonCodeSpendingLimitReached ...
+	StatusReasonCodeSpendingLimitReached StatusReasonCode = "SpendingLimitReached"
+)
+
+// PossibleStatusReasonCodeValues returns an array of possible values for the StatusReasonCode const type.
+func PossibleStatusReasonCodeValues() []StatusReasonCode {
+	return []StatusReasonCode{StatusReasonCodePastDue, StatusReasonCodeSpendingLimitExpired, StatusReasonCodeSpendingLimitReached}
+}
+
+// StatusReasonCodeForBillingProfile enumerates the values for status reason code for billing profile.
+type StatusReasonCodeForBillingProfile string
+
+const (
+	// StatusReasonCodeForBillingProfilePastDue ...
+	StatusReasonCodeForBillingProfilePastDue StatusReasonCodeForBillingProfile = "PastDue"
+	// StatusReasonCodeForBillingProfileSpendingLimitExpired ...
+	StatusReasonCodeForBillingProfileSpendingLimitExpired StatusReasonCodeForBillingProfile = "SpendingLimitExpired"
+	// StatusReasonCodeForBillingProfileSpendingLimitReached ...
+	StatusReasonCodeForBillingProfileSpendingLimitReached StatusReasonCodeForBillingProfile = "SpendingLimitReached"
+)
+
+// PossibleStatusReasonCodeForBillingProfileValues returns an array of possible values for the StatusReasonCodeForBillingProfile const type.
+func PossibleStatusReasonCodeForBillingProfileValues() []StatusReasonCodeForBillingProfile {
+	return []StatusReasonCodeForBillingProfile{StatusReasonCodeForBillingProfilePastDue, StatusReasonCodeForBillingProfileSpendingLimitExpired, StatusReasonCodeForBillingProfileSpendingLimitReached}
+}
+
+// SubscriptionStatusType enumerates the values for subscription status type.
+type SubscriptionStatusType string
+
+const (
+	// SubscriptionStatusTypeAbandoned ...
+	SubscriptionStatusTypeAbandoned SubscriptionStatusType = "Abandoned"
+	// SubscriptionStatusTypeActive ...
+	SubscriptionStatusTypeActive SubscriptionStatusType = "Active"
+	// SubscriptionStatusTypeDeleted ...
+	SubscriptionStatusTypeDeleted SubscriptionStatusType = "Deleted"
+	// SubscriptionStatusTypeInactive ...
+	SubscriptionStatusTypeInactive SubscriptionStatusType = "Inactive"
+	// SubscriptionStatusTypeWarning ...
+	SubscriptionStatusTypeWarning SubscriptionStatusType = "Warning"
+)
+
+// PossibleSubscriptionStatusTypeValues returns an array of possible values for the SubscriptionStatusType const type.
+func PossibleSubscriptionStatusTypeValues() []SubscriptionStatusType {
+	return []SubscriptionStatusType{SubscriptionStatusTypeAbandoned, SubscriptionStatusTypeActive, SubscriptionStatusTypeDeleted, SubscriptionStatusTypeInactive, SubscriptionStatusTypeWarning}
+}
+
+// SubscriptionTransferValidationErrorCode enumerates the values for subscription transfer validation error
+// code.
+type SubscriptionTransferValidationErrorCode string
+
+const (
+	// SubscriptionTransferValidationErrorCodeCrossBillingAccountNotAllowed ...
+	SubscriptionTransferValidationErrorCodeCrossBillingAccountNotAllowed SubscriptionTransferValidationErrorCode = "CrossBillingAccountNotAllowed"
+	// SubscriptionTransferValidationErrorCodeDestinationBillingProfilePastDue ...
+	SubscriptionTransferValidationErrorCodeDestinationBillingProfilePastDue SubscriptionTransferValidationErrorCode = "DestinationBillingProfilePastDue"
+	// SubscriptionTransferValidationErrorCodeInsufficientPermissionOnDestination ...
+	SubscriptionTransferValidationErrorCodeInsufficientPermissionOnDestination SubscriptionTransferValidationErrorCode = "InsufficientPermissionOnDestination"
+	// SubscriptionTransferValidationErrorCodeInsufficientPermissionOnSource ...
+	SubscriptionTransferValidationErrorCodeInsufficientPermissionOnSource SubscriptionTransferValidationErrorCode = "InsufficientPermissionOnSource"
+	// SubscriptionTransferValidationErrorCodeInvalidSource ...
+	SubscriptionTransferValidationErrorCodeInvalidSource SubscriptionTransferValidationErrorCode = "InvalidSource"
+	// SubscriptionTransferValidationErrorCodeNotAvailableForDestinationMarket ...
+	SubscriptionTransferValidationErrorCodeNotAvailableForDestinationMarket SubscriptionTransferValidationErrorCode = "NotAvailableForDestinationMarket"
+	// SubscriptionTransferValidationErrorCodeSubscriptionNotActive ...
+	SubscriptionTransferValidationErrorCodeSubscriptionNotActive SubscriptionTransferValidationErrorCode = "SubscriptionNotActive"
+	// SubscriptionTransferValidationErrorCodeSubscriptionTypeNotSupported ...
+	SubscriptionTransferValidationErrorCodeSubscriptionTypeNotSupported SubscriptionTransferValidationErrorCode = "SubscriptionTypeNotSupported"
+)
+
+// PossibleSubscriptionTransferValidationErrorCodeValues returns an array of possible values for the SubscriptionTransferValidationErrorCode const type.
+func PossibleSubscriptionTransferValidationErrorCodeValues() []SubscriptionTransferValidationErrorCode {
+	return []SubscriptionTransferValidationErrorCode{SubscriptionTransferValidationErrorCodeCrossBillingAccountNotAllowed, SubscriptionTransferValidationErrorCodeDestinationBillingProfilePastDue, SubscriptionTransferValidationErrorCodeInsufficientPermissionOnDestination, SubscriptionTransferValidationErrorCodeInsufficientPermissionOnSource, SubscriptionTransferValidationErrorCodeInvalidSource, SubscriptionTransferValidationErrorCodeNotAvailableForDestinationMarket, SubscriptionTransferValidationErrorCodeSubscriptionNotActive, SubscriptionTransferValidationErrorCodeSubscriptionTypeNotSupported}
+}
+
+// TargetCloud enumerates the values for target cloud.
+type TargetCloud string
+
+const (
+	// USGov ...
+	USGov TargetCloud = "USGov"
+	// USNat ...
+	USNat TargetCloud = "USNat"
+	// USSec ...
+	USSec TargetCloud = "USSec"
+)
+
+// PossibleTargetCloudValues returns an array of possible values for the TargetCloud const type.
+func PossibleTargetCloudValues() []TargetCloud {
+	return []TargetCloud{USGov, USNat, USSec}
+}
+
+// TransactionTypeKind enumerates the values for transaction type kind.
+type TransactionTypeKind string
+
+const (
+	// All ...
+	All TransactionTypeKind = "all"
+	// Reservation ...
+	Reservation TransactionTypeKind = "reservation"
+)
+
+// PossibleTransactionTypeKindValues returns an array of possible values for the TransactionTypeKind const type.
+func PossibleTransactionTypeKindValues() []TransactionTypeKind {
+	return []TransactionTypeKind{All, Reservation}
+}
+
+// ViewCharges enumerates the values for view charges.
+type ViewCharges string
+
+const (
+	// ViewChargesAllowed ...
+	ViewChargesAllowed ViewCharges = "Allowed"
+	// ViewChargesNotAllowed ...
+	ViewChargesNotAllowed ViewCharges = "NotAllowed"
+)
+
+// PossibleViewChargesValues returns an array of possible values for the ViewCharges const type.
+func PossibleViewChargesValues() []ViewCharges {
+	return []ViewCharges{ViewChargesAllowed, ViewChargesNotAllowed}
+}
+
+// ViewChargesPolicy enumerates the values for view charges policy.
+type ViewChargesPolicy string
+
+const (
+	// ViewChargesPolicyAllowed ...
+	ViewChargesPolicyAllowed ViewChargesPolicy = "Allowed"
+	// ViewChargesPolicyNotAllowed ...
+	ViewChargesPolicyNotAllowed ViewChargesPolicy = "NotAllowed"
+)
+
+// PossibleViewChargesPolicyValues returns an array of possible values for the ViewChargesPolicy const type.
+func PossibleViewChargesPolicyValues() []ViewChargesPolicy {
+	return []ViewChargesPolicy{ViewChargesPolicyAllowed, ViewChargesPolicyNotAllowed}
+}
+
 // Account a billing account.
 type Account struct {
 	autorest.Response `json:"-"`
@@ -182,15 +772,10 @@ func (alr AccountListResult) IsEmpty() bool {
 	return alr.Value == nil || len(*alr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (alr AccountListResult) hasNextLink() bool {
-	return alr.NextLink != nil && len(*alr.NextLink) != 0
-}
-
 // accountListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (alr AccountListResult) accountListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !alr.hasNextLink() {
+	if alr.NextLink == nil || len(to.String(alr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -218,16 +803,11 @@ func (page *AccountListResultPage) NextWithContext(ctx context.Context) (err err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.alr)
-		if err != nil {
-			return err
-		}
-		page.alr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.alr)
+	if err != nil {
+		return err
 	}
+	page.alr = next
 	return nil
 }
 
@@ -285,28 +865,8 @@ type AccountProperties struct {
 	HasReadAccess *bool `json:"hasReadAccess,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for AccountProperties.
-func (ap AccountProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ap.DisplayName != nil {
-		objectMap["displayName"] = ap.DisplayName
-	}
-	if ap.SoldTo != nil {
-		objectMap["soldTo"] = ap.SoldTo
-	}
-	if ap.BillingProfiles != nil {
-		objectMap["billingProfiles"] = ap.BillingProfiles
-	}
-	if ap.Departments != nil {
-		objectMap["departments"] = ap.Departments
-	}
-	if ap.EnrollmentAccounts != nil {
-		objectMap["enrollmentAccounts"] = ap.EnrollmentAccounts
-	}
-	return json.Marshal(objectMap)
-}
-
-// AccountsUpdateFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// AccountsUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type AccountsUpdateFuture struct {
 	azure.Future
 }
@@ -553,15 +1113,10 @@ func (alr AgreementListResult) IsEmpty() bool {
 	return alr.Value == nil || len(*alr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (alr AgreementListResult) hasNextLink() bool {
-	return alr.NextLink != nil && len(*alr.NextLink) != 0
-}
-
 // agreementListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (alr AgreementListResult) agreementListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !alr.hasNextLink() {
+	if alr.NextLink == nil || len(to.String(alr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -589,16 +1144,11 @@ func (page *AgreementListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.alr)
-		if err != nil {
-			return err
-		}
-		page.alr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.alr)
+	if err != nil {
+		return err
 	}
+	page.alr = next
 	return nil
 }
 
@@ -650,30 +1200,12 @@ type AgreementProperties struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for AgreementProperties.
-func (ap AgreementProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ap.Participants != nil {
-		objectMap["participants"] = ap.Participants
-	}
-	return json.Marshal(objectMap)
-}
-
 // Amount the amount.
 type Amount struct {
 	// Currency - READ-ONLY; The currency for the amount value.
 	Currency *string `json:"currency,omitempty"`
 	// Value - Amount value.
 	Value *float64 `json:"value,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Amount.
-func (a Amount) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if a.Value != nil {
-		objectMap["value"] = a.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // AvailableBalance the latest Azure credit balance. This is the balance available for pay now.
@@ -760,15 +1292,6 @@ type AzurePlan struct {
 	SkuID *string `json:"skuId,omitempty"`
 	// SkuDescription - READ-ONLY; The sku description.
 	SkuDescription *string `json:"skuDescription,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for AzurePlan.
-func (ap AzurePlan) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if ap.SkuID != nil {
-		objectMap["skuId"] = ap.SkuID
-	}
-	return json.Marshal(objectMap)
 }
 
 // Customer a partner's customer.
@@ -921,15 +1444,10 @@ func (clr CustomerListResult) IsEmpty() bool {
 	return clr.Value == nil || len(*clr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (clr CustomerListResult) hasNextLink() bool {
-	return clr.NextLink != nil && len(*clr.NextLink) != 0
-}
-
 // customerListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (clr CustomerListResult) customerListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !clr.hasNextLink() {
+	if clr.NextLink == nil || len(to.String(clr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -957,16 +1475,11 @@ func (page *CustomerListResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.clr)
-		if err != nil {
-			return err
-		}
-		page.clr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.clr)
+	if err != nil {
+		return err
 	}
+	page.clr = next
 	return nil
 }
 
@@ -1092,21 +1605,6 @@ type CustomerProperties struct {
 	Resellers *[]Reseller `json:"resellers,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for CustomerProperties.
-func (cp CustomerProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if cp.DisplayName != nil {
-		objectMap["displayName"] = cp.DisplayName
-	}
-	if cp.EnabledAzurePlans != nil {
-		objectMap["enabledAzurePlans"] = cp.EnabledAzurePlans
-	}
-	if cp.Resellers != nil {
-		objectMap["resellers"] = cp.Resellers
-	}
-	return json.Marshal(objectMap)
-}
-
 // Department a department.
 type Department struct {
 	// DepartmentProperties - A department.
@@ -1230,18 +1728,6 @@ type Enrollment struct {
 	Status *string `json:"status,omitempty"`
 	// BillingCycle - READ-ONLY; The billing cycle for the enrollment.
 	BillingCycle *string `json:"billingCycle,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Enrollment.
-func (e Enrollment) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if e.StartDate != nil {
-		objectMap["startDate"] = e.StartDate
-	}
-	if e.EndDate != nil {
-		objectMap["endDate"] = e.EndDate
-	}
-	return json.Marshal(objectMap)
 }
 
 // EnrollmentAccount an enrollment account.
@@ -1406,15 +1892,10 @@ func (ealr EnrollmentAccountListResult) IsEmpty() bool {
 	return ealr.Value == nil || len(*ealr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ealr EnrollmentAccountListResult) hasNextLink() bool {
-	return ealr.NextLink != nil && len(*ealr.NextLink) != 0
-}
-
 // enrollmentAccountListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ealr EnrollmentAccountListResult) enrollmentAccountListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ealr.hasNextLink() {
+	if ealr.NextLink == nil || len(to.String(ealr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1442,16 +1923,11 @@ func (page *EnrollmentAccountListResultPage) NextWithContext(ctx context.Context
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ealr)
-		if err != nil {
-			return err
-		}
-		page.ealr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ealr)
+	if err != nil {
+		return err
 	}
+	page.ealr = next
 	return nil
 }
 
@@ -1611,7 +2087,8 @@ type ErrorResponse struct {
 	Error *ErrorDetails `json:"error,omitempty"`
 }
 
-// IndirectRelationshipInfo the billing profile details of the partner of the customer for an indirect motion.
+// IndirectRelationshipInfo the billing profile details of the partner of the customer for an indirect
+// motion.
 type IndirectRelationshipInfo struct {
 	// BillingAccountName - The billing account name of the partner or the customer for an indirect motion.
 	BillingAccountName *string `json:"billingAccountName,omitempty"`
@@ -1771,15 +2248,10 @@ func (ilr InstructionListResult) IsEmpty() bool {
 	return ilr.Value == nil || len(*ilr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilr InstructionListResult) hasNextLink() bool {
-	return ilr.NextLink != nil && len(*ilr.NextLink) != 0
-}
-
 // instructionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilr InstructionListResult) instructionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilr.hasNextLink() {
+	if ilr.NextLink == nil || len(to.String(ilr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1807,16 +2279,11 @@ func (page *InstructionListResultPage) NextWithContext(ctx context.Context) (err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilr)
-		if err != nil {
-			return err
-		}
-		page.ilr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilr)
+	if err != nil {
+		return err
 	}
+	page.ilr = next
 	return nil
 }
 
@@ -2012,15 +2479,10 @@ func (ilr InvoiceListResult) IsEmpty() bool {
 	return ilr.Value == nil || len(*ilr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilr InvoiceListResult) hasNextLink() bool {
-	return ilr.NextLink != nil && len(*ilr.NextLink) != 0
-}
-
 // invoiceListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilr InvoiceListResult) invoiceListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilr.hasNextLink() {
+	if ilr.NextLink == nil || len(to.String(ilr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2048,16 +2510,11 @@ func (page *InvoiceListResultPage) NextWithContext(ctx context.Context) (err err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilr)
-		if err != nil {
-			return err
-		}
-		page.ilr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilr)
+	if err != nil {
+		return err
 	}
+	page.ilr = next
 	return nil
 }
 
@@ -2137,8 +2594,8 @@ type InvoiceProperties struct {
 	SubscriptionID *string `json:"subscriptionId,omitempty"`
 }
 
-// InvoicesDownloadBillingSubscriptionInvoiceFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// InvoicesDownloadBillingSubscriptionInvoiceFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type InvoicesDownloadBillingSubscriptionInvoiceFuture struct {
 	azure.Future
 }
@@ -2351,15 +2808,10 @@ func (islr InvoiceSectionListResult) IsEmpty() bool {
 	return islr.Value == nil || len(*islr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (islr InvoiceSectionListResult) hasNextLink() bool {
-	return islr.NextLink != nil && len(*islr.NextLink) != 0
-}
-
 // invoiceSectionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (islr InvoiceSectionListResult) invoiceSectionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !islr.hasNextLink() {
+	if islr.NextLink == nil || len(to.String(islr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2387,16 +2839,11 @@ func (page *InvoiceSectionListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.islr)
-		if err != nil {
-			return err
-		}
-		page.islr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.islr)
+	if err != nil {
+		return err
 	}
+	page.islr = next
 	return nil
 }
 
@@ -2438,15 +2885,6 @@ type InvoiceSectionListWithCreateSubPermissionResult struct {
 	Value *[]InvoiceSectionWithCreateSubPermission `json:"value,omitempty"`
 	// NextLink - READ-ONLY; The link (url) to the next page of results.
 	NextLink *string `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for InvoiceSectionListWithCreateSubPermissionResult.
-func (islwcspr InvoiceSectionListWithCreateSubPermissionResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if islwcspr.Value != nil {
-		objectMap["value"] = islwcspr.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // InvoiceSectionListWithCreateSubPermissionResultIterator provides access to a complete listing of
@@ -2518,15 +2956,10 @@ func (islwcspr InvoiceSectionListWithCreateSubPermissionResult) IsEmpty() bool {
 	return islwcspr.Value == nil || len(*islwcspr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (islwcspr InvoiceSectionListWithCreateSubPermissionResult) hasNextLink() bool {
-	return islwcspr.NextLink != nil && len(*islwcspr.NextLink) != 0
-}
-
 // invoiceSectionListWithCreateSubPermissionResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (islwcspr InvoiceSectionListWithCreateSubPermissionResult) invoiceSectionListWithCreateSubPermissionResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !islwcspr.hasNextLink() {
+	if islwcspr.NextLink == nil || len(to.String(islwcspr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2535,8 +2968,8 @@ func (islwcspr InvoiceSectionListWithCreateSubPermissionResult) invoiceSectionLi
 		autorest.WithBaseURL(to.String(islwcspr.NextLink)))
 }
 
-// InvoiceSectionListWithCreateSubPermissionResultPage contains a page of InvoiceSectionWithCreateSubPermission
-// values.
+// InvoiceSectionListWithCreateSubPermissionResultPage contains a page of
+// InvoiceSectionWithCreateSubPermission values.
 type InvoiceSectionListWithCreateSubPermissionResultPage struct {
 	fn       func(context.Context, InvoiceSectionListWithCreateSubPermissionResult) (InvoiceSectionListWithCreateSubPermissionResult, error)
 	islwcspr InvoiceSectionListWithCreateSubPermissionResult
@@ -2555,16 +2988,11 @@ func (page *InvoiceSectionListWithCreateSubPermissionResultPage) NextWithContext
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.islwcspr)
-		if err != nil {
-			return err
-		}
-		page.islwcspr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.islwcspr)
+	if err != nil {
+		return err
 	}
+	page.islwcspr = next
 	return nil
 }
 
@@ -2662,15 +3090,6 @@ type InvoiceSectionsOnExpand struct {
 	Value *[]InvoiceSection `json:"value,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InvoiceSectionsOnExpand.
-func (isoe InvoiceSectionsOnExpand) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if isoe.Value != nil {
-		objectMap["value"] = isoe.Value
-	}
-	return json.Marshal(objectMap)
-}
-
 // InvoiceSectionWithCreateSubPermission invoice section properties with create subscription permission.
 type InvoiceSectionWithCreateSubPermission struct {
 	// InvoiceSectionID - READ-ONLY; The ID of the invoice section.
@@ -2695,30 +3114,12 @@ type InvoiceSectionWithCreateSubPermission struct {
 	EnabledAzurePlans *[]AzurePlan `json:"enabledAzurePlans,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InvoiceSectionWithCreateSubPermission.
-func (iswcsp InvoiceSectionWithCreateSubPermission) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if iswcsp.EnabledAzurePlans != nil {
-		objectMap["enabledAzurePlans"] = iswcsp.EnabledAzurePlans
-	}
-	return json.Marshal(objectMap)
-}
-
 // Operation a Billing REST API operation.
 type Operation struct {
 	// Name - READ-ONLY; Operation name: {provider}/{resource}/{operation}.
 	Name *string `json:"name,omitempty"`
 	// Display - The object that represents the operation.
 	Display *OperationDisplay `json:"display,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Operation.
-func (o Operation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if o.Display != nil {
-		objectMap["display"] = o.Display
-	}
-	return json.Marshal(objectMap)
 }
 
 // OperationDisplay the object that represents the operation.
@@ -2808,15 +3209,10 @@ func (olr OperationListResult) IsEmpty() bool {
 	return olr.Value == nil || len(*olr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (olr OperationListResult) hasNextLink() bool {
-	return olr.NextLink != nil && len(*olr.NextLink) != 0
-}
-
 // operationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (olr OperationListResult) operationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !olr.hasNextLink() {
+	if olr.NextLink == nil || len(to.String(olr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -2844,16 +3240,11 @@ func (page *OperationListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.olr)
-		if err != nil {
-			return err
-		}
-		page.olr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.olr)
+	if err != nil {
+		return err
 	}
+	page.olr = next
 	return nil
 }
 
@@ -2909,15 +3300,6 @@ type PaymentProperties struct {
 	PaymentMethodFamily PaymentMethodFamily `json:"paymentMethodFamily,omitempty"`
 	// PaymentMethodType - READ-ONLY; The type of payment method.
 	PaymentMethodType *string `json:"paymentMethodType,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for PaymentProperties.
-func (pp PaymentProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if pp.PaymentMethodFamily != "" {
-		objectMap["paymentMethodFamily"] = pp.PaymentMethodFamily
-	}
-	return json.Marshal(objectMap)
 }
 
 // Period a billing period resource.
@@ -3081,15 +3463,10 @@ func (plr PeriodsListResult) IsEmpty() bool {
 	return plr.Value == nil || len(*plr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (plr PeriodsListResult) hasNextLink() bool {
-	return plr.NextLink != nil && len(*plr.NextLink) != 0
-}
-
 // periodsListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (plr PeriodsListResult) periodsListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !plr.hasNextLink() {
+	if plr.NextLink == nil || len(to.String(plr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3117,16 +3494,11 @@ func (page *PeriodsListResultPage) NextWithContext(ctx context.Context) (err err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.plr)
-		if err != nil {
-			return err
-		}
-		page.plr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.plr)
+	if err != nil {
+		return err
 	}
+	page.plr = next
 	return nil
 }
 
@@ -3237,15 +3609,10 @@ func (plr PermissionsListResult) IsEmpty() bool {
 	return plr.Value == nil || len(*plr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (plr PermissionsListResult) hasNextLink() bool {
-	return plr.NextLink != nil && len(*plr.NextLink) != 0
-}
-
 // permissionsListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (plr PermissionsListResult) permissionsListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !plr.hasNextLink() {
+	if plr.NextLink == nil || len(to.String(plr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3273,16 +3640,11 @@ func (page *PermissionsListResultPage) NextWithContext(ctx context.Context) (err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.plr)
-		if err != nil {
-			return err
-		}
-		page.plr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.plr)
+	if err != nil {
+		return err
 	}
+	page.plr = next
 	return nil
 }
 
@@ -3316,7 +3678,8 @@ func NewPermissionsListResultPage(getNextPage func(context.Context, PermissionsL
 	return PermissionsListResultPage{fn: getNextPage}
 }
 
-// PermissionsProperties the set of allowed action and not allowed actions a caller has on a billing account
+// PermissionsProperties the set of allowed action and not allowed actions a caller has on a billing
+// account
 type PermissionsProperties struct {
 	// Actions - READ-ONLY; The set of actions that the caller is allowed to perform.
 	Actions *[]string `json:"actions,omitempty"`
@@ -3526,21 +3889,6 @@ type ProductProperties struct {
 	Reseller *Reseller `json:"reseller,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ProductProperties.
-func (pp ProductProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if pp.AutoRenew != "" {
-		objectMap["autoRenew"] = pp.AutoRenew
-	}
-	if pp.Status != "" {
-		objectMap["status"] = pp.Status
-	}
-	if pp.BillingFrequency != "" {
-		objectMap["billingFrequency"] = pp.BillingFrequency
-	}
-	return json.Marshal(objectMap)
-}
-
 // ProductsListResult the list of products. It contains a list of available product summaries in reverse
 // chronological order by purchase date.
 type ProductsListResult struct {
@@ -3619,15 +3967,10 @@ func (plr ProductsListResult) IsEmpty() bool {
 	return plr.Value == nil || len(*plr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (plr ProductsListResult) hasNextLink() bool {
-	return plr.NextLink != nil && len(*plr.NextLink) != 0
-}
-
 // productsListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (plr ProductsListResult) productsListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !plr.hasNextLink() {
+	if plr.NextLink == nil || len(to.String(plr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3655,16 +3998,11 @@ func (page *ProductsListResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.plr)
-		if err != nil {
-			return err
-		}
-		page.plr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.plr)
+	if err != nil {
+		return err
 	}
+	page.plr = next
 	return nil
 }
 
@@ -3862,15 +4200,10 @@ func (plr ProfileListResult) IsEmpty() bool {
 	return plr.Value == nil || len(*plr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (plr ProfileListResult) hasNextLink() bool {
-	return plr.NextLink != nil && len(*plr.NextLink) != 0
-}
-
 // profileListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (plr ProfileListResult) profileListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !plr.hasNextLink() {
+	if plr.NextLink == nil || len(to.String(plr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -3898,16 +4231,11 @@ func (page *ProfileListResultPage) NextWithContext(ctx context.Context) (err err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.plr)
-		if err != nil {
-			return err
-		}
-		page.plr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.plr)
+	if err != nil {
+		return err
 	}
+	page.plr = next
 	return nil
 }
 
@@ -3977,30 +4305,6 @@ type ProfileProperties struct {
 	TargetClouds *[]TargetCloud `json:"targetClouds,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ProfileProperties.
-func (pp ProfileProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if pp.DisplayName != nil {
-		objectMap["displayName"] = pp.DisplayName
-	}
-	if pp.PoNumber != nil {
-		objectMap["poNumber"] = pp.PoNumber
-	}
-	if pp.BillTo != nil {
-		objectMap["billTo"] = pp.BillTo
-	}
-	if pp.InvoiceEmailOptIn != nil {
-		objectMap["invoiceEmailOptIn"] = pp.InvoiceEmailOptIn
-	}
-	if pp.EnabledAzurePlans != nil {
-		objectMap["enabledAzurePlans"] = pp.EnabledAzurePlans
-	}
-	if pp.InvoiceSections != nil {
-		objectMap["invoiceSections"] = pp.InvoiceSections
-	}
-	return json.Marshal(objectMap)
-}
-
 // ProfilesCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type ProfilesCreateOrUpdateFuture struct {
@@ -4030,22 +4334,13 @@ func (future *ProfilesCreateOrUpdateFuture) Result(client ProfilesClient) (p Pro
 	return
 }
 
-// ProfilesOnExpand the billing profiles associated with the billing account. By default this is not populated,
-// unless it's specified in $expand.
+// ProfilesOnExpand the billing profiles associated with the billing account. By default this is not
+// populated, unless it's specified in $expand.
 type ProfilesOnExpand struct {
 	// HasMoreResults - READ-ONLY; Indicates whether there are more billing profiles than the ones listed in this collection. The collection lists a maximum of 50 billing profiles. To get all billing profiles, use the list billing profiles API.
 	HasMoreResults *bool `json:"hasMoreResults,omitempty"`
 	// Value - The billing profiles associated with the billing account.
 	Value *[]Profile `json:"value,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for ProfilesOnExpand.
-func (poe ProfilesOnExpand) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if poe.Value != nil {
-		objectMap["value"] = poe.Value
-	}
-	return json.Marshal(objectMap)
 }
 
 // Property a billing property.
@@ -4157,15 +4452,6 @@ type PropertyProperties struct {
 	SkuID *string `json:"skuId,omitempty"`
 	// SkuDescription - READ-ONLY; The sku description of the Azure plan for the subscription.
 	SkuDescription *string `json:"skuDescription,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for PropertyProperties.
-func (pp PropertyProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if pp.CostCenter != nil {
-		objectMap["costCenter"] = pp.CostCenter
-	}
-	return json.Marshal(objectMap)
 }
 
 // Reseller details of the reseller.
@@ -4336,15 +4622,10 @@ func (ralr RoleAssignmentListResult) IsEmpty() bool {
 	return ralr.Value == nil || len(*ralr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ralr RoleAssignmentListResult) hasNextLink() bool {
-	return ralr.NextLink != nil && len(*ralr.NextLink) != 0
-}
-
 // roleAssignmentListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ralr RoleAssignmentListResult) roleAssignmentListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ralr.hasNextLink() {
+	if ralr.NextLink == nil || len(to.String(ralr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4372,16 +4653,11 @@ func (page *RoleAssignmentListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ralr)
-		if err != nil {
-			return err
-		}
-		page.ralr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ralr)
+	if err != nil {
+		return err
 	}
+	page.ralr = next
 	return nil
 }
 
@@ -4437,27 +4713,6 @@ type RoleAssignmentProperties struct {
 	UserAuthenticationType *string `json:"userAuthenticationType,omitempty"`
 	// UserEmailAddress - The email address of the user.
 	UserEmailAddress *string `json:"userEmailAddress,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for RoleAssignmentProperties.
-func (rap RoleAssignmentProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rap.PrincipalID != nil {
-		objectMap["principalId"] = rap.PrincipalID
-	}
-	if rap.PrincipalTenantID != nil {
-		objectMap["principalTenantId"] = rap.PrincipalTenantID
-	}
-	if rap.RoleDefinitionID != nil {
-		objectMap["roleDefinitionId"] = rap.RoleDefinitionID
-	}
-	if rap.UserAuthenticationType != nil {
-		objectMap["userAuthenticationType"] = rap.UserAuthenticationType
-	}
-	if rap.UserEmailAddress != nil {
-		objectMap["userEmailAddress"] = rap.UserEmailAddress
-	}
-	return json.Marshal(objectMap)
 }
 
 // RoleDefinition the properties of a role definition.
@@ -4610,15 +4865,10 @@ func (rdlr RoleDefinitionListResult) IsEmpty() bool {
 	return rdlr.Value == nil || len(*rdlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (rdlr RoleDefinitionListResult) hasNextLink() bool {
-	return rdlr.NextLink != nil && len(*rdlr.NextLink) != 0
-}
-
 // roleDefinitionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rdlr RoleDefinitionListResult) roleDefinitionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !rdlr.hasNextLink() {
+	if rdlr.NextLink == nil || len(to.String(rdlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4646,16 +4896,11 @@ func (page *RoleDefinitionListResultPage) NextWithContext(ctx context.Context) (
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.rdlr)
-		if err != nil {
-			return err
-		}
-		page.rdlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.rdlr)
+	if err != nil {
+		return err
 	}
+	page.rdlr = next
 	return nil
 }
 
@@ -4697,15 +4942,6 @@ type RoleDefinitionProperties struct {
 	Permissions *[]PermissionsProperties `json:"permissions,omitempty"`
 	// RoleName - READ-ONLY; The name of the role
 	RoleName *string `json:"roleName,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for RoleDefinitionProperties.
-func (rdp RoleDefinitionProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if rdp.Permissions != nil {
-		objectMap["permissions"] = rdp.Permissions
-	}
-	return json.Marshal(objectMap)
 }
 
 // Subscription a billing subscription.
@@ -4814,21 +5050,6 @@ type SubscriptionProperties struct {
 	SkuDescription *string `json:"skuDescription,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for SubscriptionProperties.
-func (sp SubscriptionProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if sp.SubscriptionBillingStatus != "" {
-		objectMap["subscriptionBillingStatus"] = sp.SubscriptionBillingStatus
-	}
-	if sp.CostCenter != nil {
-		objectMap["costCenter"] = sp.CostCenter
-	}
-	if sp.SkuID != nil {
-		objectMap["skuId"] = sp.SkuID
-	}
-	return json.Marshal(objectMap)
-}
-
 // SubscriptionsListResult the list of billing subscriptions.
 type SubscriptionsListResult struct {
 	autorest.Response `json:"-"`
@@ -4906,15 +5127,10 @@ func (slr SubscriptionsListResult) IsEmpty() bool {
 	return slr.Value == nil || len(*slr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (slr SubscriptionsListResult) hasNextLink() bool {
-	return slr.NextLink != nil && len(*slr.NextLink) != 0
-}
-
 // subscriptionsListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (slr SubscriptionsListResult) subscriptionsListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !slr.hasNextLink() {
+	if slr.NextLink == nil || len(to.String(slr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -4942,16 +5158,11 @@ func (page *SubscriptionsListResultPage) NextWithContext(ctx context.Context) (e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.slr)
-		if err != nil {
-			return err
-		}
-		page.slr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.slr)
+	if err != nil {
+		return err
 	}
+	page.slr = next
 	return nil
 }
 
@@ -5162,15 +5373,10 @@ func (tlr TransactionListResult) IsEmpty() bool {
 	return tlr.Value == nil || len(*tlr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (tlr TransactionListResult) hasNextLink() bool {
-	return tlr.NextLink != nil && len(*tlr.NextLink) != 0
-}
-
 // transactionListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (tlr TransactionListResult) transactionListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !tlr.hasNextLink() {
+	if tlr.NextLink == nil || len(to.String(tlr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -5198,16 +5404,11 @@ func (page *TransactionListResultPage) NextWithContext(ctx context.Context) (err
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.tlr)
-		if err != nil {
-			return err
-		}
-		page.tlr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.tlr)
+	if err != nil {
+		return err
 	}
+	page.tlr = next
 	return nil
 }
 
@@ -5317,18 +5518,6 @@ type TransactionProperties struct {
 	UnitType *string `json:"unitType,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for TransactionProperties.
-func (tp TransactionProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if tp.Kind != "" {
-		objectMap["kind"] = tp.Kind
-	}
-	if tp.TransactionType != "" {
-		objectMap["transactionType"] = tp.TransactionType
-	}
-	return json.Marshal(objectMap)
-}
-
 // TransferBillingSubscriptionRequestProperties request parameters to transfer billing subscription.
 type TransferBillingSubscriptionRequestProperties struct {
 	// DestinationInvoiceSectionID - The destination invoice section id.
@@ -5371,15 +5560,6 @@ type ValidateProductTransferEligibilityResult struct {
 	ErrorDetails *ValidateProductTransferEligibilityError `json:"errorDetails,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for ValidateProductTransferEligibilityResult.
-func (vpter ValidateProductTransferEligibilityResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vpter.ErrorDetails != nil {
-		objectMap["errorDetails"] = vpter.ErrorDetails
-	}
-	return json.Marshal(objectMap)
-}
-
 // ValidateSubscriptionTransferEligibilityError error details of the transfer eligibility validation
 type ValidateSubscriptionTransferEligibilityError struct {
 	// Code - Error code for the product transfer validation. Possible values include: 'SubscriptionTransferValidationErrorCodeInvalidSource', 'SubscriptionTransferValidationErrorCodeSubscriptionNotActive', 'SubscriptionTransferValidationErrorCodeInsufficientPermissionOnSource', 'SubscriptionTransferValidationErrorCodeInsufficientPermissionOnDestination', 'SubscriptionTransferValidationErrorCodeDestinationBillingProfilePastDue', 'SubscriptionTransferValidationErrorCodeSubscriptionTypeNotSupported', 'SubscriptionTransferValidationErrorCodeCrossBillingAccountNotAllowed', 'SubscriptionTransferValidationErrorCodeNotAvailableForDestinationMarket'
@@ -5397,13 +5577,4 @@ type ValidateSubscriptionTransferEligibilityResult struct {
 	IsMoveEligible *bool `json:"isMoveEligible,omitempty"`
 	// ErrorDetails - Validation error details.
 	ErrorDetails *ValidateSubscriptionTransferEligibilityError `json:"errorDetails,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for ValidateSubscriptionTransferEligibilityResult.
-func (vster ValidateSubscriptionTransferEligibilityResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if vster.ErrorDetails != nil {
-		objectMap["errorDetails"] = vster.ErrorDetails
-	}
-	return json.Marshal(objectMap)
 }

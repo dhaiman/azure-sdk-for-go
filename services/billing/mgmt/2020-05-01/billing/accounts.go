@@ -149,9 +149,6 @@ func (client AccountsClient) List(ctx context.Context, expand string) (result Ac
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.AccountsClient", "List", resp, "Failure responding to request")
 	}
-	if result.alr.hasNextLink() && result.alr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -262,9 +259,6 @@ func (client AccountsClient) ListInvoiceSectionsByCreateSubscriptionPermission(c
 	result.islwcspr, err = client.ListInvoiceSectionsByCreateSubscriptionPermissionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.AccountsClient", "ListInvoiceSectionsByCreateSubscriptionPermission", resp, "Failure responding to request")
-	}
-	if result.islwcspr.hasNextLink() && result.islwcspr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return

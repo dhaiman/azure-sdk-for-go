@@ -75,9 +75,6 @@ func (client TransactionsClient) ListByInvoice(ctx context.Context, billingAccou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.TransactionsClient", "ListByInvoice", resp, "Failure responding to request")
 	}
-	if result.tlr.hasNextLink() && result.tlr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

@@ -152,9 +152,6 @@ func (client AgreementsClient) ListByBillingAccount(ctx context.Context, billing
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.AgreementsClient", "ListByBillingAccount", resp, "Failure responding to request")
 	}
-	if result.alr.hasNextLink() && result.alr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }

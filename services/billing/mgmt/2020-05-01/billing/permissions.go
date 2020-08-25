@@ -73,9 +73,6 @@ func (client PermissionsClient) ListByBillingAccount(ctx context.Context, billin
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.PermissionsClient", "ListByBillingAccount", resp, "Failure responding to request")
 	}
-	if result.plr.hasNextLink() && result.plr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -186,9 +183,6 @@ func (client PermissionsClient) ListByBillingProfile(ctx context.Context, billin
 	result.plr, err = client.ListByBillingProfileResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.PermissionsClient", "ListByBillingProfile", resp, "Failure responding to request")
-	}
-	if result.plr.hasNextLink() && result.plr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -302,9 +296,6 @@ func (client PermissionsClient) ListByCustomer(ctx context.Context, billingAccou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.PermissionsClient", "ListByCustomer", resp, "Failure responding to request")
 	}
-	if result.plr.hasNextLink() && result.plr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -417,9 +408,6 @@ func (client PermissionsClient) ListByInvoiceSections(ctx context.Context, billi
 	result.plr, err = client.ListByInvoiceSectionsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "billing.PermissionsClient", "ListByInvoiceSections", resp, "Failure responding to request")
-	}
-	if result.plr.hasNextLink() && result.plr.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
