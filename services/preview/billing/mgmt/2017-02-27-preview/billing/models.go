@@ -136,15 +136,6 @@ type InvoiceProperties struct {
 	DownloadURL *DownloadURL `json:"downloadUrl,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for InvoiceProperties.
-func (IP InvoiceProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if IP.DownloadURL != nil {
-		objectMap["downloadUrl"] = IP.DownloadURL
-	}
-	return json.Marshal(objectMap)
-}
-
 // InvoicesListResult result of the request to list invoices. It contains a list of available invoices in
 // reverse chronological order.
 type InvoicesListResult struct {
@@ -223,15 +214,10 @@ func (ilr InvoicesListResult) IsEmpty() bool {
 	return ilr.Value == nil || len(*ilr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (ilr InvoicesListResult) hasNextLink() bool {
-	return ilr.NextLink != nil && len(*ilr.NextLink) != 0
-}
-
 // invoicesListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (ilr InvoicesListResult) invoicesListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !ilr.hasNextLink() {
+	if ilr.NextLink == nil || len(to.String(ilr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -259,16 +245,11 @@ func (page *InvoicesListResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.ilr)
-		if err != nil {
-			return err
-		}
-		page.ilr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.ilr)
+	if err != nil {
+		return err
 	}
+	page.ilr = next
 	return nil
 }
 
@@ -310,15 +291,6 @@ type Operation struct {
 	Display *OperationDisplay `json:"display,omitempty"`
 }
 
-// MarshalJSON is the custom marshaler for Operation.
-func (o Operation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if o.Display != nil {
-		objectMap["display"] = o.Display
-	}
-	return json.Marshal(objectMap)
-}
-
 // OperationDisplay the object that represents the operation.
 type OperationDisplay struct {
 	// Provider - READ-ONLY; Service provider: Microsoft.Billing
@@ -329,8 +301,8 @@ type OperationDisplay struct {
 	Operation *string `json:"operation,omitempty"`
 }
 
-// OperationListResult result of the request to list billing operations. It contains a list of operations and a
-// URL link to get the next set of results.
+// OperationListResult result of the request to list billing operations. It contains a list of operations
+// and a URL link to get the next set of results.
 type OperationListResult struct {
 	autorest.Response `json:"-"`
 	// Value - READ-ONLY; List of billing operations supported by the Microsoft.Billing resource provider.
@@ -407,15 +379,10 @@ func (olr OperationListResult) IsEmpty() bool {
 	return olr.Value == nil || len(*olr.Value) == 0
 }
 
-// hasNextLink returns true if the NextLink is not empty.
-func (olr OperationListResult) hasNextLink() bool {
-	return olr.NextLink != nil && len(*olr.NextLink) != 0
-}
-
 // operationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (olr OperationListResult) operationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if !olr.hasNextLink() {
+	if olr.NextLink == nil || len(to.String(olr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -443,16 +410,11 @@ func (page *OperationListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	for {
-		next, err := page.fn(ctx, page.olr)
-		if err != nil {
-			return err
-		}
-		page.olr = next
-		if !next.hasNextLink() || !next.IsEmpty() {
-			break
-		}
+	next, err := page.fn(ctx, page.olr)
+	if err != nil {
+		return err
 	}
+	page.olr = next
 	return nil
 }
 
