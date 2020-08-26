@@ -4391,10 +4391,10 @@ type PrivateLinkResourceProperties struct {
 type PrivateLinkServiceConnectionStateProperty struct {
 	// Status - The private link service connection status.
 	Status *string `json:"status,omitempty"`
-	// ActionsRequired - READ-ONLY; Any action that is required beyond basic workflow (approve/ reject/ disconnect)
-	ActionsRequired *string `json:"actionsRequired,omitempty"`
 	// Description - The private link service connection description.
 	Description *string `json:"description,omitempty"`
+	// ActionsRequired - READ-ONLY; Any action that is required beyond basic workflow (approve/ reject/ disconnect)
+	ActionsRequired *string `json:"actionsRequired,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PrivateLinkServiceConnectionStateProperty.
