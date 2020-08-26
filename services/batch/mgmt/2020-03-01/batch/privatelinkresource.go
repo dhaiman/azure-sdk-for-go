@@ -174,9 +174,6 @@ func (client PrivateLinkResourceClient) ListByBatchAccount(ctx context.Context, 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "batch.PrivateLinkResourceClient", "ListByBatchAccount", resp, "Failure responding to request")
 	}
-	if result.lplrr.hasNextLink() && result.lplrr.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
