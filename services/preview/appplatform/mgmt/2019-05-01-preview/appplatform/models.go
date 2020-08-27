@@ -226,7 +226,7 @@ type AppResourceProperties struct {
 	Public *bool `json:"public,omitempty"`
 	// URL - READ-ONLY; URL of the App
 	URL *string `json:"url,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating'
+	// ProvisioningState - READ-ONLY; Provisioning state of the App. Possible values include: 'Succeeded', 'Failed', 'Creating', 'Updating', 'Deleting'
 	ProvisioningState AppResourceProvisioningState `json:"provisioningState,omitempty"`
 	// ActiveDeploymentName - Name of the active deployment of the App
 	ActiveDeploymentName *string `json:"activeDeploymentName,omitempty"`
@@ -1253,6 +1253,8 @@ type DeploymentResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the Deployment resource
 	Properties *DeploymentResourceProperties `json:"properties,omitempty"`
+	// Sku - Sku of the Deployment resource
+	Sku *Sku `json:"sku,omitempty"`
 	// ID - READ-ONLY; Fully qualified resource Id for the resource.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource.
@@ -1266,6 +1268,9 @@ func (dr DeploymentResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if dr.Properties != nil {
 		objectMap["properties"] = dr.Properties
+	}
+	if dr.Sku != nil {
+		objectMap["sku"] = dr.Sku
 	}
 	return json.Marshal(objectMap)
 }
@@ -1435,7 +1440,7 @@ type DeploymentResourceProperties struct {
 	AppName *string `json:"appName,omitempty"`
 	// DeploymentSettings - Deployment settings of the Deployment
 	DeploymentSettings *DeploymentSettings `json:"deploymentSettings,omitempty"`
-	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed'
+	// ProvisioningState - READ-ONLY; Provisioning state of the Deployment. Possible values include: 'DeploymentResourceProvisioningStateCreating', 'DeploymentResourceProvisioningStateUpdating', 'DeploymentResourceProvisioningStateSucceeded', 'DeploymentResourceProvisioningStateFailed', 'DeploymentResourceProvisioningStateDeleting'
 	ProvisioningState DeploymentResourceProvisioningState `json:"provisioningState,omitempty"`
 	// Status - READ-ONLY; Status of the Deployment. Possible values include: 'DeploymentResourceStatusUnknown', 'DeploymentResourceStatusStopped', 'DeploymentResourceStatusRunning', 'DeploymentResourceStatusFailed', 'DeploymentResourceStatusAllocating', 'DeploymentResourceStatusUpgrading', 'DeploymentResourceStatusCompiling'
 	Status DeploymentResourceStatus `json:"status,omitempty"`
@@ -1694,6 +1699,8 @@ type MetricDimension struct {
 	Name *string `json:"name,omitempty"`
 	// DisplayName - Localized friendly display name of the dimension
 	DisplayName *string `json:"displayName,omitempty"`
+	// ToBeExportedForShoebox - Whether this dimension should be included for the Shoebox export scenario
+	ToBeExportedForShoebox *bool `json:"toBeExportedForShoebox,omitempty"`
 }
 
 // MetricSpecification specifications of the Metrics for Azure Monitoring
