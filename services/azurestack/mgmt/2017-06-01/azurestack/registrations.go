@@ -384,9 +384,6 @@ func (client RegistrationsClient) List(ctx context.Context, resourceGroup string
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "azurestack.RegistrationsClient", "List", resp, "Failure responding to request")
 	}
-	if result.rl.hasNextLink() && result.rl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
