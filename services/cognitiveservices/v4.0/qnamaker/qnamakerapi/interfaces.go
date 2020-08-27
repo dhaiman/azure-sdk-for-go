@@ -51,7 +51,7 @@ var _ AlterationsClientAPI = (*qnamaker.AlterationsClient)(nil)
 type KnowledgebaseClientAPI interface {
 	Create(ctx context.Context, createKbPayload qnamaker.CreateKbDTO) (result qnamaker.Operation, err error)
 	Delete(ctx context.Context, kbID string) (result autorest.Response, err error)
-	Download(ctx context.Context, kbID string, environment qnamaker.EnvironmentType) (result qnamaker.QnADocumentsDTO, err error)
+	Download(ctx context.Context, kbID string, environment qnamaker.EnvironmentType, source string, changedSince string) (result qnamaker.QnADocumentsDTO, err error)
 	GetDetails(ctx context.Context, kbID string) (result qnamaker.KnowledgebaseDTO, err error)
 	ListAll(ctx context.Context) (result qnamaker.KnowledgebasesDTO, err error)
 	Publish(ctx context.Context, kbID string) (result autorest.Response, err error)
