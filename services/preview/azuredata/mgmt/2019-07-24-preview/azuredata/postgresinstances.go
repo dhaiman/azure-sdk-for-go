@@ -47,7 +47,8 @@ func NewPostgresInstancesClientWithBaseURI(baseURI string, subscriptionID string
 // Parameters:
 // resourceGroupName - the name of the Azure resource group
 // postgresInstanceName - name of PostgresInstance
-func (client PostgresInstancesClient) Create(ctx context.Context, resourceGroupName string, postgresInstanceName string) (result PostgresInstance, err error) {
+// resource - the postgres instance
+func (client PostgresInstancesClient) Create(ctx context.Context, resourceGroupName string, postgresInstanceName string, resource PostgresInstance) (result PostgresInstance, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PostgresInstancesClient.Create")
 		defer func() {
@@ -58,7 +59,7 @@ func (client PostgresInstancesClient) Create(ctx context.Context, resourceGroupN
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.CreatePreparer(ctx, resourceGroupName, postgresInstanceName)
+	req, err := client.CreatePreparer(ctx, resourceGroupName, postgresInstanceName, resource)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "azuredata.PostgresInstancesClient", "Create", nil, "Failure preparing request")
 		return
@@ -80,7 +81,7 @@ func (client PostgresInstancesClient) Create(ctx context.Context, resourceGroupN
 }
 
 // CreatePreparer prepares the Create request.
-func (client PostgresInstancesClient) CreatePreparer(ctx context.Context, resourceGroupName string, postgresInstanceName string) (*http.Request, error) {
+func (client PostgresInstancesClient) CreatePreparer(ctx context.Context, resourceGroupName string, postgresInstanceName string, resource PostgresInstance) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"postgresInstanceName": autorest.Encode("path", postgresInstanceName),
 		"resourceGroupName":    autorest.Encode("path", resourceGroupName),
@@ -93,9 +94,11 @@ func (client PostgresInstancesClient) CreatePreparer(ctx context.Context, resour
 	}
 
 	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureData/postgresInstances/{postgresInstanceName}", pathParameters),
+		autorest.WithJSON(resource),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }

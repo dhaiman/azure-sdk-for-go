@@ -86,7 +86,7 @@ var _ SQLServerInstancesClientAPI = (*azuredata.SQLServerInstancesClient)(nil)
 
 // PostgresInstancesClientAPI contains the set of methods on the PostgresInstancesClient type.
 type PostgresInstancesClientAPI interface {
-	Create(ctx context.Context, resourceGroupName string, postgresInstanceName string) (result azuredata.PostgresInstance, err error)
+	Create(ctx context.Context, resourceGroupName string, postgresInstanceName string, resource azuredata.PostgresInstance) (result azuredata.PostgresInstance, err error)
 	Delete(ctx context.Context, resourceGroupName string, postgresInstanceName string) (result autorest.Response, err error)
 	Get(ctx context.Context, resourceGroupName string, postgresInstanceName string) (result azuredata.PostgresInstance, err error)
 	List(ctx context.Context) (result azuredata.PostgresInstanceListResultPage, err error)

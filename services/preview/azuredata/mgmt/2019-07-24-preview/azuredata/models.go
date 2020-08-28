@@ -847,16 +847,19 @@ func NewPostgresInstanceListResultPage(getNextPage func(context.Context, Postgre
 
 // PostgresInstanceProperties postgres Instance properties.
 type PostgresInstanceProperties struct {
-	// HybridDataManagerID - null
-	HybridDataManagerID *string `json:"hybridDataManagerId,omitempty"`
+	// DataControllerID - The data controller id
+	DataControllerID *string `json:"dataControllerId,omitempty"`
+	// Admin - The instance admin
+	Admin *string `json:"admin,omitempty"`
+	// K8sRaw - The raw kubernetes information
+	K8sRaw interface{} `json:"k8sRaw,omitempty"`
 }
 
 // PostgresInstanceUpdate an update to a Postgres Instance.
 type PostgresInstanceUpdate struct {
 	// Tags - Resource tags.
-	Tags map[string]*string `json:"tags"`
-	// HybridDataManagerID - null
-	HybridDataManagerID *string `json:"hybridDataManagerId,omitempty"`
+	Tags       map[string]*string          `json:"tags"`
+	Properties *PostgresInstanceProperties `json:"properties,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PostgresInstanceUpdate.
@@ -865,8 +868,8 @@ func (piu PostgresInstanceUpdate) MarshalJSON() ([]byte, error) {
 	if piu.Tags != nil {
 		objectMap["tags"] = piu.Tags
 	}
-	if piu.HybridDataManagerID != nil {
-		objectMap["hybridDataManagerId"] = piu.HybridDataManagerID
+	if piu.Properties != nil {
+		objectMap["properties"] = piu.Properties
 	}
 	return json.Marshal(objectMap)
 }
