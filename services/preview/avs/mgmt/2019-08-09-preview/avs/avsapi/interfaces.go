@@ -64,3 +64,17 @@ type ClustersClientAPI interface {
 }
 
 var _ ClustersClientAPI = (*avs.ClustersClient)(nil)
+
+// VMWareDatastoreBackingsClientAPI contains the set of methods on the VMWareDatastoreBackingsClient type.
+type VMWareDatastoreBackingsClientAPI interface {
+	Create(ctx context.Context, resourceGroupName string, privateCloudName string, clusterName string, vmwareDatastoreBackingName string, backingType string, backingResourceID string) (result avs.VMWareDatastoreBackingsCreateFuture, err error)
+}
+
+var _ VMWareDatastoreBackingsClientAPI = (*avs.VMWareDatastoreBackingsClient)(nil)
+
+// VMWareDatastoreClientAPI contains the set of methods on the VMWareDatastoreClient type.
+type VMWareDatastoreClientAPI interface {
+	Create(ctx context.Context, resourceGroupName string, privateCloudName string, clusterName string, vmwareDatastoreBackingName string, vmwareDatastoreName string) (result avs.VMWareDatastoreCreateFuture, err error)
+}
+
+var _ VMWareDatastoreClientAPI = (*avs.VMWareDatastoreClient)(nil)
