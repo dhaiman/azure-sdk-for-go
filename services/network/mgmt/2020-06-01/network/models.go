@@ -17364,8 +17364,8 @@ type HopLink struct {
 	*HopLinkProperties `json:"properties,omitempty"`
 	// Issues - READ-ONLY; List of issues.
 	Issues *[]ConnectivityIssue `json:"issues,omitempty"`
-	// Context - READ-ONLY; Provides additional context on the issue.
-	Context *[]map[string]*string `json:"context,omitempty"`
+	// Context - READ-ONLY; Provides additional context on links.
+	Context map[string]*string `json:"context"`
 	// ResourceID - READ-ONLY; Resource ID.
 	ResourceID *string `json:"resourceId,omitempty"`
 }
@@ -17426,12 +17426,12 @@ func (hl *HopLink) UnmarshalJSON(body []byte) error {
 			}
 		case "context":
 			if v != nil {
-				var context []map[string]*string
+				var context map[string]*string
 				err = json.Unmarshal(*v, &context)
 				if err != nil {
 					return err
 				}
-				hl.Context = &context
+				hl.Context = context
 			}
 		case "resourceId":
 			if v != nil {
