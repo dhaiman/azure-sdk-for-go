@@ -65,6 +65,14 @@ type AliasPattern struct {
 	Type AliasPatternType `json:"type,omitempty"`
 }
 
+// APIProfiles the API profile.
+type APIProfiles struct {
+	// ProfileVersion - The profile version.
+	ProfileVersion *string `json:"profileVersion,omitempty"`
+	// APIVersion - The API version.
+	APIVersion *string `json:"apiVersion,omitempty"`
+}
+
 // BasicDependency deployment dependency information.
 type BasicDependency struct {
 	// ID - The ID of the dependency.
@@ -1749,7 +1757,7 @@ type Identity struct {
 	PrincipalID *string `json:"principalId,omitempty"`
 	// TenantID - READ-ONLY; The tenant ID of resource.
 	TenantID *string `json:"tenantId,omitempty"`
-	// Type - The identity type. Possible values include: 'SystemAssigned', 'UserAssigned', 'SystemAssignedUserAssigned', 'None'
+	// Type - The identity type. Possible values include: 'ResourceIdentityTypeSystemAssigned', 'ResourceIdentityTypeUserAssigned', 'ResourceIdentityTypeSystemAssignedUserAssigned', 'ResourceIdentityTypeNone'
 	Type ResourceIdentityType `json:"type,omitempty"`
 	// UserAssignedIdentities - The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIdentities map[string]*IdentityUserAssignedIdentitiesValue `json:"userAssignedIdentities"`
@@ -2202,14 +2210,10 @@ type Plan struct {
 // Provider resource provider information.
 type Provider struct {
 	autorest.Response `json:"-"`
-	// ID - READ-ONLY; The provider ID.
-	ID *string `json:"id,omitempty"`
 	// Namespace - The namespace of the resource provider.
 	Namespace *string `json:"namespace,omitempty"`
-	// RegistrationState - READ-ONLY; The registration state of the resource provider.
-	RegistrationState *string `json:"registrationState,omitempty"`
-	// RegistrationPolicy - READ-ONLY; The registration policy of the resource provider.
-	RegistrationPolicy *string `json:"registrationPolicy,omitempty"`
+	// Metadata - The metadata.
+	Metadata interface{} `json:"metadata,omitempty"`
 	// ResourceTypes - READ-ONLY; The collection of provider resource types.
 	ResourceTypes *[]ProviderResourceType `json:"resourceTypes,omitempty"`
 }
@@ -2219,6 +2223,9 @@ func (p Provider) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.Namespace != nil {
 		objectMap["namespace"] = p.Namespace
+	}
+	if p.Metadata != nil {
+		objectMap["metadata"] = p.Metadata
 	}
 	return json.Marshal(objectMap)
 }
@@ -2412,34 +2419,12 @@ type ProviderResourceType struct {
 	Aliases *[]Alias `json:"aliases,omitempty"`
 	// APIVersions - The API version.
 	APIVersions *[]string `json:"apiVersions,omitempty"`
-	// Capabilities - The additional capabilities offered by this resource type.
-	Capabilities *string `json:"capabilities,omitempty"`
-	// Properties - The properties.
-	Properties map[string]*string `json:"properties"`
-}
-
-// MarshalJSON is the custom marshaler for ProviderResourceType.
-func (prt ProviderResourceType) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if prt.ResourceType != nil {
-		objectMap["resourceType"] = prt.ResourceType
-	}
-	if prt.Locations != nil {
-		objectMap["locations"] = prt.Locations
-	}
-	if prt.Aliases != nil {
-		objectMap["aliases"] = prt.Aliases
-	}
-	if prt.APIVersions != nil {
-		objectMap["apiVersions"] = prt.APIVersions
-	}
-	if prt.Capabilities != nil {
-		objectMap["capabilities"] = prt.Capabilities
-	}
-	if prt.Properties != nil {
-		objectMap["properties"] = prt.Properties
-	}
-	return json.Marshal(objectMap)
+	// APIProfiles - API profiles of the resource type.
+	APIProfiles *[]APIProfiles `json:"apiProfiles,omitempty"`
+	// Capabilities - The additional capabilities offered by this resource type. Possible values include: 'None', 'CrossResourceGroupMove', 'CrossSubscriptionResourceMove', 'SystemAssignedResourceIdentity', 'SupportTags', 'SupportsLocation', 'SupportsExtension'
+	Capabilities Capabilities `json:"capabilities,omitempty"`
+	// Metadata - Resource type metadata.
+	Metadata interface{} `json:"metadata,omitempty"`
 }
 
 // Reference the resource Id model.

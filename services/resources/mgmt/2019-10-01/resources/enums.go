@@ -49,6 +49,31 @@ func PossibleAliasTypeValues() []AliasType {
 	return []AliasType{AliasTypeMask, AliasTypeNotSpecified, AliasTypePlainText}
 }
 
+// Capabilities enumerates the values for capabilities.
+type Capabilities string
+
+const (
+	// CrossResourceGroupMove ...
+	CrossResourceGroupMove Capabilities = "CrossResourceGroupMove"
+	// CrossSubscriptionResourceMove ...
+	CrossSubscriptionResourceMove Capabilities = "CrossSubscriptionResourceMove"
+	// None ...
+	None Capabilities = "None"
+	// SupportsExtension ...
+	SupportsExtension Capabilities = "SupportsExtension"
+	// SupportsLocation ...
+	SupportsLocation Capabilities = "SupportsLocation"
+	// SupportTags ...
+	SupportTags Capabilities = "SupportTags"
+	// SystemAssignedResourceIdentity ...
+	SystemAssignedResourceIdentity Capabilities = "SystemAssignedResourceIdentity"
+)
+
+// PossibleCapabilitiesValues returns an array of possible values for the Capabilities const type.
+func PossibleCapabilitiesValues() []Capabilities {
+	return []Capabilities{CrossResourceGroupMove, CrossSubscriptionResourceMove, None, SupportsExtension, SupportsLocation, SupportTags, SystemAssignedResourceIdentity}
+}
+
 // ChangeType enumerates the values for change type.
 type ChangeType string
 
@@ -167,19 +192,19 @@ func PossibleProvisioningOperationValues() []ProvisioningOperation {
 type ResourceIdentityType string
 
 const (
-	// None ...
-	None ResourceIdentityType = "None"
-	// SystemAssigned ...
-	SystemAssigned ResourceIdentityType = "SystemAssigned"
-	// SystemAssignedUserAssigned ...
-	SystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
-	// UserAssigned ...
-	UserAssigned ResourceIdentityType = "UserAssigned"
+	// ResourceIdentityTypeNone ...
+	ResourceIdentityTypeNone ResourceIdentityType = "None"
+	// ResourceIdentityTypeSystemAssigned ...
+	ResourceIdentityTypeSystemAssigned ResourceIdentityType = "SystemAssigned"
+	// ResourceIdentityTypeSystemAssignedUserAssigned ...
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	// ResourceIdentityTypeUserAssigned ...
+	ResourceIdentityTypeUserAssigned ResourceIdentityType = "UserAssigned"
 )
 
 // PossibleResourceIdentityTypeValues returns an array of possible values for the ResourceIdentityType const type.
 func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
-	return []ResourceIdentityType{None, SystemAssigned, SystemAssignedUserAssigned, UserAssigned}
+	return []ResourceIdentityType{ResourceIdentityTypeNone, ResourceIdentityTypeSystemAssigned, ResourceIdentityTypeSystemAssignedUserAssigned, ResourceIdentityTypeUserAssigned}
 }
 
 // TagsPatchOperation enumerates the values for tags patch operation.
