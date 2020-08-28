@@ -308,9 +308,6 @@ func (client PrivateCloudsClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "avs.PrivateCloudsClient", "List", resp, "Failure responding to request")
 	}
-	if result.pcl.hasNextLink() && result.pcl.IsEmpty() {
-		err = result.NextWithContext(ctx)
-	}
 
 	return
 }
@@ -494,9 +491,6 @@ func (client PrivateCloudsClient) ListInSubscription(ctx context.Context) (resul
 	result.pcl, err = client.ListInSubscriptionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "avs.PrivateCloudsClient", "ListInSubscription", resp, "Failure responding to request")
-	}
-	if result.pcl.hasNextLink() && result.pcl.IsEmpty() {
-		err = result.NextWithContext(ctx)
 	}
 
 	return
