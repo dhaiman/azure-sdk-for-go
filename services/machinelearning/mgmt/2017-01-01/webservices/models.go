@@ -206,6 +206,14 @@ type DiagnosticsConfiguration struct {
 	Expiry *date.Time `json:"expiry,omitempty"`
 }
 
+// ErrorResponse error Response.
+type ErrorResponse struct {
+	// Code - Error code.
+	Code *string `json:"code,omitempty"`
+	// Message - Error message indicating why the operation failed.
+	Message *string `json:"message,omitempty"`
+}
+
 // ExampleRequest sample input data for the service's input(s).
 type ExampleRequest struct {
 	// Inputs - Sample input data for the web service's input(s) given as an input name to sample input values matrix map.
@@ -1017,7 +1025,7 @@ func (pfg PropertiesForGraph) AsBasicProperties() (BasicProperties, bool) {
 // RealtimeConfiguration holds the available configuration options for an Azure ML web service endpoint.
 type RealtimeConfiguration struct {
 	// MaxConcurrentCalls - Specifies the maximum concurrent calls that can be made to the web service. Minimum value: 4, Maximum value: 200.
-	MaxConcurrentCalls *int32 `json:"maxConcurrentCalls,omitempty"`
+	MaxConcurrentCalls *int64 `json:"maxConcurrentCalls,omitempty"`
 }
 
 // RemoveFuture an abstraction for monitoring and retrieving the results of a long-running operation.
