@@ -294,6 +294,14 @@ func (cp CommitmentPlan) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// ErrorResponse error Response.
+type ErrorResponse struct {
+	// Code - Error code.
+	Code *string `json:"code,omitempty"`
+	// Message - Error message indicating why the operation failed.
+	Message *string `json:"message,omitempty"`
+}
+
 // ListResult a page of commitment plan resources.
 type ListResult struct {
 	autorest.Response `json:"-"`
