@@ -42,6 +42,88 @@ func NewSubscriptionsClientWithBaseURI(baseURI string, subscriptionID string, su
 	return SubscriptionsClient{NewWithBaseURI(baseURI, subscriptionID, subscriptionID1)}
 }
 
+// ChangeInvoiceSection moves a subscription's charges to a new invoice section. This operation is supported for
+// billing accounts with agreement type Microsoft Customer Agreement.
+// Parameters:
+// billingAccountName - the ID that uniquely identifies a billing account.
+// parameters - request parameters that are provided to the move subscription operation.
+func (client SubscriptionsClient) ChangeInvoiceSection(ctx context.Context, billingAccountName string, parameters TransferBillingSubscriptionRequestProperties) (result SubscriptionsChangeInvoiceSectionFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SubscriptionsClient.ChangeInvoiceSection")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: parameters,
+			Constraints: []validation.Constraint{{Target: "parameters.DestinationInvoiceSectionID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("billing.SubscriptionsClient", "ChangeInvoiceSection", err.Error())
+	}
+
+	req, err := client.ChangeInvoiceSectionPreparer(ctx, billingAccountName, parameters)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "billing.SubscriptionsClient", "ChangeInvoiceSection", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.ChangeInvoiceSectionSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "billing.SubscriptionsClient", "ChangeInvoiceSection", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// ChangeInvoiceSectionPreparer prepares the ChangeInvoiceSection request.
+func (client SubscriptionsClient) ChangeInvoiceSectionPreparer(ctx context.Context, billingAccountName string, parameters TransferBillingSubscriptionRequestProperties) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"billingAccountName": autorest.Encode("path", billingAccountName),
+		"subscriptionId":     autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-05-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{subscriptionId}/changeInvoiceSection", pathParameters),
+		autorest.WithJSON(parameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ChangeInvoiceSectionSender sends the ChangeInvoiceSection request. The method will close the
+// http.Response Body if it receives an error.
+func (client SubscriptionsClient) ChangeInvoiceSectionSender(req *http.Request) (future SubscriptionsChangeInvoiceSectionFuture, err error) {
+	var resp *http.Response
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// ChangeInvoiceSectionResponder handles the response to the ChangeInvoiceSection request. The method always
+// closes the http.Response Body.
+func (client SubscriptionsClient) ChangeInvoiceSectionResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
 // Get gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft
 // Customer Agreement and Microsoft Partner Agreement.
 // Parameters:

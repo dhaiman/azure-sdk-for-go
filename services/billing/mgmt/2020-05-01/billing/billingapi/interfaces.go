@@ -105,6 +105,7 @@ var _ PermissionsClientAPI = (*billing.PermissionsClient)(nil)
 
 // SubscriptionsClientAPI contains the set of methods on the SubscriptionsClient type.
 type SubscriptionsClientAPI interface {
+	ChangeInvoiceSection(ctx context.Context, billingAccountName string, parameters billing.TransferBillingSubscriptionRequestProperties) (result billing.SubscriptionsChangeInvoiceSectionFuture, err error)
 	Get(ctx context.Context, billingAccountName string) (result billing.Subscription, err error)
 	ListByBillingAccount(ctx context.Context, billingAccountName string) (result billing.SubscriptionsListResultPage, err error)
 	ListByBillingAccountComplete(ctx context.Context, billingAccountName string) (result billing.SubscriptionsListResultIterator, err error)
@@ -231,6 +232,40 @@ type AgreementsClientAPI interface {
 }
 
 var _ AgreementsClientAPI = (*billing.AgreementsClient)(nil)
+
+// TransfersClientAPI contains the set of methods on the TransfersClient type.
+type TransfersClientAPI interface {
+	Cancel(ctx context.Context, billingAccountName string, billingProfileName string, invoiceSectionName string, transferName string) (result billing.TransferDetails, err error)
+	Get(ctx context.Context, billingAccountName string, billingProfileName string, invoiceSectionName string, transferName string) (result billing.TransferDetails, err error)
+	Initiate(ctx context.Context, billingAccountName string, billingProfileName string, invoiceSectionName string, parameters billing.InitiateTransferRequest) (result billing.TransferDetails, err error)
+	List(ctx context.Context, billingAccountName string, billingProfileName string, invoiceSectionName string) (result billing.TransferDetailsListResultPage, err error)
+	ListComplete(ctx context.Context, billingAccountName string, billingProfileName string, invoiceSectionName string) (result billing.TransferDetailsListResultIterator, err error)
+}
+
+var _ TransfersClientAPI = (*billing.TransfersClient)(nil)
+
+// PartnerTransfersClientAPI contains the set of methods on the PartnerTransfersClient type.
+type PartnerTransfersClientAPI interface {
+	Cancel(ctx context.Context, billingAccountName string, customerName string, transferName string) (result billing.PartnerTransferDetails, err error)
+	Get(ctx context.Context, billingAccountName string, customerName string, transferName string) (result billing.PartnerTransferDetails, err error)
+	Initiate(ctx context.Context, billingAccountName string, customerName string, parameters billing.InitiateTransferRequest) (result billing.PartnerTransferDetails, err error)
+	List(ctx context.Context, billingAccountName string, customerName string) (result billing.PartnerTransferDetailsListResultPage, err error)
+	ListComplete(ctx context.Context, billingAccountName string, customerName string) (result billing.PartnerTransferDetailsListResultIterator, err error)
+}
+
+var _ PartnerTransfersClientAPI = (*billing.PartnerTransfersClient)(nil)
+
+// RecipientTransfersClientAPI contains the set of methods on the RecipientTransfersClient type.
+type RecipientTransfersClientAPI interface {
+	Accept(ctx context.Context, transferName string, parameters billing.AcceptTransferRequest) (result billing.RecipientTransferDetails, err error)
+	Decline(ctx context.Context, transferName string) (result billing.RecipientTransferDetails, err error)
+	Get(ctx context.Context, transferName string) (result billing.RecipientTransferDetails, err error)
+	List(ctx context.Context) (result billing.RecipientTransferDetailsListResultPage, err error)
+	ListComplete(ctx context.Context) (result billing.RecipientTransferDetailsListResultIterator, err error)
+	Validate(ctx context.Context, transferName string, parameters billing.AcceptTransferRequest) (result billing.ValidateTransferListResponse, err error)
+}
+
+var _ RecipientTransfersClientAPI = (*billing.RecipientTransfersClient)(nil)
 
 // EnrollmentAccountsClientAPI contains the set of methods on the EnrollmentAccountsClient type.
 type EnrollmentAccountsClientAPI interface {

@@ -32,6 +32,51 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/billing/mgmt/2020-05-01/billing"
 
+// AcceptTransferProperties request parameters to accept transfer.
+type AcceptTransferProperties struct {
+	// ProductDetails - Request parameters to accept transfer.
+	ProductDetails *[]ProductDetails `json:"productDetails,omitempty"`
+}
+
+// AcceptTransferRequest request parameters to accept transfer.
+type AcceptTransferRequest struct {
+	// AcceptTransferProperties - Request parameters to accept transfer.
+	*AcceptTransferProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AcceptTransferRequest.
+func (atr AcceptTransferRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if atr.AcceptTransferProperties != nil {
+		objectMap["properties"] = atr.AcceptTransferProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for AcceptTransferRequest struct.
+func (atr *AcceptTransferRequest) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var acceptTransferProperties AcceptTransferProperties
+				err = json.Unmarshal(*v, &acceptTransferProperties)
+				if err != nil {
+					return err
+				}
+				atr.AcceptTransferProperties = &acceptTransferProperties
+			}
+		}
+	}
+
+	return nil
+}
+
 // Account a billing account.
 type Account struct {
 	autorest.Response `json:"-"`
@@ -1191,6 +1236,27 @@ type DepartmentProperties struct {
 	EnrollmentAccounts *[]EnrollmentAccount `json:"enrollmentAccounts,omitempty"`
 }
 
+// DetailedTransferStatus detailed transfer status.
+type DetailedTransferStatus struct {
+	// ProductType - READ-ONLY; Type of product that is transferred. Possible values include: 'ProductTypeAzureSubscription', 'ProductTypeAzureReservation'
+	ProductType ProductType `json:"productType,omitempty"`
+	// ProductID - READ-ONLY; The ID of the product that is transferred.
+	ProductID *string `json:"productId,omitempty"`
+	// TransferStatus - READ-ONLY; Transfer status. Possible values include: 'NotStarted', 'InProgress', 'Completed', 'Failed'
+	TransferStatus ProductTransferStatus `json:"transferStatus,omitempty"`
+	// ErrorDetails - Error details for transfer execution.
+	ErrorDetails *Error `json:"errorDetails,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DetailedTransferStatus.
+func (dts DetailedTransferStatus) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if dts.ErrorDetails != nil {
+		objectMap["errorDetails"] = dts.ErrorDetails
+	}
+	return json.Marshal(objectMap)
+}
+
 // Document the properties of a document.
 type Document struct {
 	// Kind - READ-ONLY; The type of the document. Possible values include: 'DocumentTypeInvoice', 'DocumentTypeVoidNote', 'DocumentTypeTaxReceipt', 'DocumentTypeCreditNote'
@@ -1594,6 +1660,14 @@ type EnrollmentPolicies struct {
 	ReservedInstancesEnabled *bool `json:"reservedInstancesEnabled,omitempty"`
 }
 
+// Error error details for transfer execution.
+type Error struct {
+	// ErrorCode - READ-ONLY; Error code.
+	ErrorCode *string `json:"errorCode,omitempty"`
+	// ErrorMessage - READ-ONLY; Error message.
+	ErrorMessage *string `json:"errorMessage,omitempty"`
+}
+
 // ErrorDetails the details of the error.
 type ErrorDetails struct {
 	// Code - READ-ONLY; Error code.
@@ -1619,6 +1693,53 @@ type IndirectRelationshipInfo struct {
 	BillingProfileName *string `json:"billingProfileName,omitempty"`
 	// DisplayName - The display name of the partner or customer for an indirect motion.
 	DisplayName *string `json:"displayName,omitempty"`
+}
+
+// InitiateTransferProperties request parameters to initiate transfer.
+type InitiateTransferProperties struct {
+	// RecipientEmailID - The email ID of the recipient to whom the transfer request is sent.
+	RecipientEmailID *string `json:"recipientEmailId,omitempty"`
+	// ResellerID - Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account.
+	ResellerID *string `json:"resellerId,omitempty"`
+}
+
+// InitiateTransferRequest request parameters to initiate transfer.
+type InitiateTransferRequest struct {
+	// InitiateTransferProperties - Request parameters to initiate transfer.
+	*InitiateTransferProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for InitiateTransferRequest.
+func (itr InitiateTransferRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if itr.InitiateTransferProperties != nil {
+		objectMap["properties"] = itr.InitiateTransferProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for InitiateTransferRequest struct.
+func (itr *InitiateTransferRequest) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var initiateTransferProperties InitiateTransferProperties
+				err = json.Unmarshal(*v, &initiateTransferProperties)
+				if err != nil {
+					return err
+				}
+				itr.InitiateTransferProperties = &initiateTransferProperties
+			}
+		}
+	}
+
+	return nil
 }
 
 // Instruction an instruction.
@@ -2097,7 +2218,7 @@ type InvoiceProperties struct {
 	DueDate *date.Time `json:"dueDate,omitempty"`
 	// InvoiceDate - READ-ONLY; The date when the invoice was generated.
 	InvoiceDate *date.Time `json:"invoiceDate,omitempty"`
-	// Status - READ-ONLY; The current status of the invoice. Possible values include: 'Due', 'OverDue', 'Paid'
+	// Status - READ-ONLY; The current status of the invoice. Possible values include: 'Due', 'OverDue', 'Paid', 'Void'
 	Status InvoiceStatus `json:"status,omitempty"`
 	// AmountDue - READ-ONLY; The amount due as of now.
 	AmountDue *Amount `json:"amountDue,omitempty"`
@@ -2133,8 +2254,22 @@ type InvoiceProperties struct {
 	Documents *[]Document `json:"documents,omitempty"`
 	// Payments - READ-ONLY; List of payments.
 	Payments *[]PaymentProperties `json:"payments,omitempty"`
+	// RebillDetails - READ-ONLY; Rebill details for an invoice.
+	RebillDetails map[string]*RebillDetails `json:"rebillDetails"`
+	// DocumentType - READ-ONLY; The type of the document. Possible values include: 'InvoiceDocumentTypeInvoice', 'InvoiceDocumentTypeCreditNote'
+	DocumentType InvoiceDocumentType `json:"documentType,omitempty"`
+	// BilledDocumentID - READ-ONLY; The Id of the active invoice which is originally billed after this invoice was voided. This field is applicable to the void invoices only.
+	BilledDocumentID *string `json:"billedDocumentId,omitempty"`
+	// CreditForDocumentID - READ-ONLY; The Id of the invoice which got voided and this credit note was issued as a result. This field is applicable to the credit notes only.
+	CreditForDocumentID *string `json:"creditForDocumentId,omitempty"`
 	// SubscriptionID - READ-ONLY; The ID of the subscription for which the invoice is generated.
 	SubscriptionID *string `json:"subscriptionId,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for InvoiceProperties.
+func (IP InvoiceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
 }
 
 // InvoicesDownloadBillingSubscriptionInvoiceFuture an abstraction for monitoring and retrieving the results of
@@ -2897,6 +3032,262 @@ type Participants struct {
 	Email *string `json:"email,omitempty"`
 }
 
+// PartnerTransferDetails details of the transfer.
+type PartnerTransferDetails struct {
+	autorest.Response `json:"-"`
+	// PartnerTransferProperties - Details of the transfer.
+	*PartnerTransferProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for PartnerTransferDetails.
+func (ptd PartnerTransferDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ptd.PartnerTransferProperties != nil {
+		objectMap["properties"] = ptd.PartnerTransferProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for PartnerTransferDetails struct.
+func (ptd *PartnerTransferDetails) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var partnerTransferProperties PartnerTransferProperties
+				err = json.Unmarshal(*v, &partnerTransferProperties)
+				if err != nil {
+					return err
+				}
+				ptd.PartnerTransferProperties = &partnerTransferProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				ptd.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				ptd.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ptd.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// PartnerTransferDetailsListResult the list of transfers initiated by partner.
+type PartnerTransferDetailsListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; The list of transfers initiated by partner.
+	Value *[]PartnerTransferDetails `json:"value,omitempty"`
+	// NextLink - READ-ONLY; The link (url) to the next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// PartnerTransferDetailsListResultIterator provides access to a complete listing of PartnerTransferDetails
+// values.
+type PartnerTransferDetailsListResultIterator struct {
+	i    int
+	page PartnerTransferDetailsListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *PartnerTransferDetailsListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PartnerTransferDetailsListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *PartnerTransferDetailsListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter PartnerTransferDetailsListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter PartnerTransferDetailsListResultIterator) Response() PartnerTransferDetailsListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter PartnerTransferDetailsListResultIterator) Value() PartnerTransferDetails {
+	if !iter.page.NotDone() {
+		return PartnerTransferDetails{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the PartnerTransferDetailsListResultIterator type.
+func NewPartnerTransferDetailsListResultIterator(page PartnerTransferDetailsListResultPage) PartnerTransferDetailsListResultIterator {
+	return PartnerTransferDetailsListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (ptdlr PartnerTransferDetailsListResult) IsEmpty() bool {
+	return ptdlr.Value == nil || len(*ptdlr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (ptdlr PartnerTransferDetailsListResult) hasNextLink() bool {
+	return ptdlr.NextLink != nil && len(*ptdlr.NextLink) != 0
+}
+
+// partnerTransferDetailsListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (ptdlr PartnerTransferDetailsListResult) partnerTransferDetailsListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !ptdlr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(ptdlr.NextLink)))
+}
+
+// PartnerTransferDetailsListResultPage contains a page of PartnerTransferDetails values.
+type PartnerTransferDetailsListResultPage struct {
+	fn    func(context.Context, PartnerTransferDetailsListResult) (PartnerTransferDetailsListResult, error)
+	ptdlr PartnerTransferDetailsListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *PartnerTransferDetailsListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PartnerTransferDetailsListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.ptdlr)
+		if err != nil {
+			return err
+		}
+		page.ptdlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *PartnerTransferDetailsListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page PartnerTransferDetailsListResultPage) NotDone() bool {
+	return !page.ptdlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page PartnerTransferDetailsListResultPage) Response() PartnerTransferDetailsListResult {
+	return page.ptdlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page PartnerTransferDetailsListResultPage) Values() []PartnerTransferDetails {
+	if page.ptdlr.IsEmpty() {
+		return nil
+	}
+	return *page.ptdlr.Value
+}
+
+// Creates a new instance of the PartnerTransferDetailsListResultPage type.
+func NewPartnerTransferDetailsListResultPage(getNextPage func(context.Context, PartnerTransferDetailsListResult) (PartnerTransferDetailsListResult, error)) PartnerTransferDetailsListResultPage {
+	return PartnerTransferDetailsListResultPage{fn: getNextPage}
+}
+
+// PartnerTransferProperties transfer Details.
+type PartnerTransferProperties struct {
+	// CreationTime - READ-ONLY; The time at which the transfer request was created.
+	CreationTime *date.Time `json:"creationTime,omitempty"`
+	// ExpirationTime - READ-ONLY; The time at which the transfer request expires.
+	ExpirationTime *date.Time `json:"expirationTime,omitempty"`
+	// TransferStatus - READ-ONLY; Overall transfer status. Possible values include: 'TransferStatusPending', 'TransferStatusInProgress', 'TransferStatusCompleted', 'TransferStatusCompletedWithErrors', 'TransferStatusFailed', 'TransferStatusCanceled', 'TransferStatusDeclined'
+	TransferStatus TransferStatus `json:"transferStatus,omitempty"`
+	// RecipientEmailID - READ-ONLY; The email ID of the user to whom the transfer request was sent.
+	RecipientEmailID *string `json:"recipientEmailId,omitempty"`
+	// InitiatorEmailID - READ-ONLY; The email ID of the user who sent the transfer request.
+	InitiatorEmailID *string `json:"initiatorEmailId,omitempty"`
+	// ResellerID - READ-ONLY; Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account.
+	ResellerID *string `json:"resellerId,omitempty"`
+	// ResellerName - READ-ONLY; Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account.
+	ResellerName *string `json:"resellerName,omitempty"`
+	// InitiatorCustomerType - READ-ONLY; The type of customer who sent the transfer request.
+	InitiatorCustomerType *string `json:"initiatorCustomerType,omitempty"`
+	// CanceledBy - READ-ONLY; The email ID of the user who canceled the transfer request.
+	CanceledBy *string `json:"canceledBy,omitempty"`
+	// LastModifiedTime - READ-ONLY; The time at which the transfer request was last modified.
+	LastModifiedTime *date.Time `json:"lastModifiedTime,omitempty"`
+	// DetailedTransferStatus - READ-ONLY; Detailed transfer status.
+	DetailedTransferStatus *[]DetailedTransferStatus `json:"detailedTransferStatus,omitempty"`
+}
+
 // PaymentProperties the properties of a payment.
 type PaymentProperties struct {
 	// PaymentType - READ-ONLY; The type of payment.
@@ -3476,6 +3867,14 @@ func (p *Product) UnmarshalJSON(body []byte) error {
 	}
 
 	return nil
+}
+
+// ProductDetails details of the product that is transferred.
+type ProductDetails struct {
+	// ProductType - Type of the product that is transferred. Possible values include: 'ProductTypeAzureSubscription', 'ProductTypeAzureReservation'
+	ProductType ProductType `json:"productType,omitempty"`
+	// ProductID - The ID of the product that is transferred.
+	ProductID *string `json:"productId,omitempty"`
 }
 
 // ProductProperties the properties of a product.
@@ -4168,6 +4567,280 @@ func (pp PropertyProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// RebillDetails the rebill details of an invoice.
+type RebillDetails struct {
+	// CreditNoteDocumentID - READ-ONLY; The ID of credit note.
+	CreditNoteDocumentID *string `json:"creditNoteDocumentId,omitempty"`
+	// InvoiceDocumentID - READ-ONLY; The ID of invoice.
+	InvoiceDocumentID *string `json:"invoiceDocumentId,omitempty"`
+	// RebillDetails - READ-ONLY; Rebill details for an invoice.
+	RebillDetails map[string]*RebillDetails `json:"rebillDetails"`
+}
+
+// MarshalJSON is the custom marshaler for RebillDetails.
+func (rd RebillDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
+}
+
+// RecipientTransferDetails details of the transfer.
+type RecipientTransferDetails struct {
+	autorest.Response `json:"-"`
+	// RecipientTransferProperties - Details of the transfer.
+	*RecipientTransferProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for RecipientTransferDetails.
+func (rtd RecipientTransferDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if rtd.RecipientTransferProperties != nil {
+		objectMap["properties"] = rtd.RecipientTransferProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for RecipientTransferDetails struct.
+func (rtd *RecipientTransferDetails) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var recipientTransferProperties RecipientTransferProperties
+				err = json.Unmarshal(*v, &recipientTransferProperties)
+				if err != nil {
+					return err
+				}
+				rtd.RecipientTransferProperties = &recipientTransferProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				rtd.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				rtd.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				rtd.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// RecipientTransferDetailsListResult the list of transfers received by caller.
+type RecipientTransferDetailsListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; The list of transfers received by caller.
+	Value *[]RecipientTransferDetails `json:"value,omitempty"`
+	// NextLink - READ-ONLY; The link (url) to the next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// RecipientTransferDetailsListResultIterator provides access to a complete listing of RecipientTransferDetails
+// values.
+type RecipientTransferDetailsListResultIterator struct {
+	i    int
+	page RecipientTransferDetailsListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *RecipientTransferDetailsListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/RecipientTransferDetailsListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *RecipientTransferDetailsListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter RecipientTransferDetailsListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter RecipientTransferDetailsListResultIterator) Response() RecipientTransferDetailsListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter RecipientTransferDetailsListResultIterator) Value() RecipientTransferDetails {
+	if !iter.page.NotDone() {
+		return RecipientTransferDetails{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the RecipientTransferDetailsListResultIterator type.
+func NewRecipientTransferDetailsListResultIterator(page RecipientTransferDetailsListResultPage) RecipientTransferDetailsListResultIterator {
+	return RecipientTransferDetailsListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (rtdlr RecipientTransferDetailsListResult) IsEmpty() bool {
+	return rtdlr.Value == nil || len(*rtdlr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (rtdlr RecipientTransferDetailsListResult) hasNextLink() bool {
+	return rtdlr.NextLink != nil && len(*rtdlr.NextLink) != 0
+}
+
+// recipientTransferDetailsListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (rtdlr RecipientTransferDetailsListResult) recipientTransferDetailsListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !rtdlr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(rtdlr.NextLink)))
+}
+
+// RecipientTransferDetailsListResultPage contains a page of RecipientTransferDetails values.
+type RecipientTransferDetailsListResultPage struct {
+	fn    func(context.Context, RecipientTransferDetailsListResult) (RecipientTransferDetailsListResult, error)
+	rtdlr RecipientTransferDetailsListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *RecipientTransferDetailsListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/RecipientTransferDetailsListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.rtdlr)
+		if err != nil {
+			return err
+		}
+		page.rtdlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *RecipientTransferDetailsListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page RecipientTransferDetailsListResultPage) NotDone() bool {
+	return !page.rtdlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page RecipientTransferDetailsListResultPage) Response() RecipientTransferDetailsListResult {
+	return page.rtdlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page RecipientTransferDetailsListResultPage) Values() []RecipientTransferDetails {
+	if page.rtdlr.IsEmpty() {
+		return nil
+	}
+	return *page.rtdlr.Value
+}
+
+// Creates a new instance of the RecipientTransferDetailsListResultPage type.
+func NewRecipientTransferDetailsListResultPage(getNextPage func(context.Context, RecipientTransferDetailsListResult) (RecipientTransferDetailsListResult, error)) RecipientTransferDetailsListResultPage {
+	return RecipientTransferDetailsListResultPage{fn: getNextPage}
+}
+
+// RecipientTransferProperties transfer Details.
+type RecipientTransferProperties struct {
+	// CreationTime - READ-ONLY; The time at which the transfer request was created.
+	CreationTime *date.Time `json:"creationTime,omitempty"`
+	// ExpirationTime - READ-ONLY; The time at which the transfer request expires.
+	ExpirationTime *date.Time `json:"expirationTime,omitempty"`
+	// AllowedProductType - READ-ONLY; Type of subscriptions that can be transferred.
+	AllowedProductType *[]EligibleProductType `json:"allowedProductType,omitempty"`
+	// TransferStatus - READ-ONLY; Overall transfer status. Possible values include: 'TransferStatusPending', 'TransferStatusInProgress', 'TransferStatusCompleted', 'TransferStatusCompletedWithErrors', 'TransferStatusFailed', 'TransferStatusCanceled', 'TransferStatusDeclined'
+	TransferStatus TransferStatus `json:"transferStatus,omitempty"`
+	// RecipientEmailID - READ-ONLY; The email ID of the user to whom the transfer request was sent.
+	RecipientEmailID *string `json:"recipientEmailId,omitempty"`
+	// InitiatorEmailID - READ-ONLY; The email ID of the user who sent the transfer request.
+	InitiatorEmailID *string `json:"initiatorEmailId,omitempty"`
+	// ResellerID - READ-ONLY; Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account.
+	ResellerID *string `json:"resellerId,omitempty"`
+	// ResellerName - READ-ONLY; Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account.
+	ResellerName *string `json:"resellerName,omitempty"`
+	// InitiatorCustomerType - READ-ONLY; The type of customer who sent the transfer request.
+	InitiatorCustomerType *string `json:"initiatorCustomerType,omitempty"`
+	// CanceledBy - READ-ONLY; The email ID of the user who canceled the transfer request.
+	CanceledBy *string `json:"canceledBy,omitempty"`
+	// LastModifiedTime - READ-ONLY; The time at which the transfer request was last modified.
+	LastModifiedTime *date.Time `json:"lastModifiedTime,omitempty"`
+	// DetailedTransferStatus - READ-ONLY; Detailed transfer status.
+	DetailedTransferStatus *[]DetailedTransferStatus `json:"detailedTransferStatus,omitempty"`
+}
+
 // Reseller details of the reseller.
 type Reseller struct {
 	// ResellerID - READ-ONLY; The MPN ID of the reseller.
@@ -4829,6 +5502,29 @@ func (sp SubscriptionProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// SubscriptionsChangeInvoiceSectionFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SubscriptionsChangeInvoiceSectionFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SubscriptionsChangeInvoiceSectionFuture) Result(client SubscriptionsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "billing.SubscriptionsChangeInvoiceSectionFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("billing.SubscriptionsChangeInvoiceSectionFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // SubscriptionsListResult the list of billing subscriptions.
 type SubscriptionsListResult struct {
 	autorest.Response `json:"-"`
@@ -5335,10 +6031,271 @@ type TransferBillingSubscriptionRequestProperties struct {
 	DestinationInvoiceSectionID *string `json:"destinationInvoiceSectionId,omitempty"`
 }
 
+// TransferDetails details of the transfer.
+type TransferDetails struct {
+	autorest.Response `json:"-"`
+	// TransferProperties - Details of the transfer.
+	*TransferProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for TransferDetails.
+func (td TransferDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if td.TransferProperties != nil {
+		objectMap["properties"] = td.TransferProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for TransferDetails struct.
+func (td *TransferDetails) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var transferProperties TransferProperties
+				err = json.Unmarshal(*v, &transferProperties)
+				if err != nil {
+					return err
+				}
+				td.TransferProperties = &transferProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				td.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				td.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				td.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// TransferDetailsListResult the list of transfers initiated by caller.
+type TransferDetailsListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; The list of transfers initiated by caller.
+	Value *[]TransferDetails `json:"value,omitempty"`
+	// NextLink - READ-ONLY; The link (url) to the next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// TransferDetailsListResultIterator provides access to a complete listing of TransferDetails values.
+type TransferDetailsListResultIterator struct {
+	i    int
+	page TransferDetailsListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *TransferDetailsListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/TransferDetailsListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *TransferDetailsListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter TransferDetailsListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter TransferDetailsListResultIterator) Response() TransferDetailsListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter TransferDetailsListResultIterator) Value() TransferDetails {
+	if !iter.page.NotDone() {
+		return TransferDetails{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the TransferDetailsListResultIterator type.
+func NewTransferDetailsListResultIterator(page TransferDetailsListResultPage) TransferDetailsListResultIterator {
+	return TransferDetailsListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (tdlr TransferDetailsListResult) IsEmpty() bool {
+	return tdlr.Value == nil || len(*tdlr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (tdlr TransferDetailsListResult) hasNextLink() bool {
+	return tdlr.NextLink != nil && len(*tdlr.NextLink) != 0
+}
+
+// transferDetailsListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (tdlr TransferDetailsListResult) transferDetailsListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !tdlr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(tdlr.NextLink)))
+}
+
+// TransferDetailsListResultPage contains a page of TransferDetails values.
+type TransferDetailsListResultPage struct {
+	fn   func(context.Context, TransferDetailsListResult) (TransferDetailsListResult, error)
+	tdlr TransferDetailsListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *TransferDetailsListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/TransferDetailsListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.tdlr)
+		if err != nil {
+			return err
+		}
+		page.tdlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *TransferDetailsListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page TransferDetailsListResultPage) NotDone() bool {
+	return !page.tdlr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page TransferDetailsListResultPage) Response() TransferDetailsListResult {
+	return page.tdlr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page TransferDetailsListResultPage) Values() []TransferDetails {
+	if page.tdlr.IsEmpty() {
+		return nil
+	}
+	return *page.tdlr.Value
+}
+
+// Creates a new instance of the TransferDetailsListResultPage type.
+func NewTransferDetailsListResultPage(getNextPage func(context.Context, TransferDetailsListResult) (TransferDetailsListResult, error)) TransferDetailsListResultPage {
+	return TransferDetailsListResultPage{fn: getNextPage}
+}
+
 // TransferProductRequestProperties the properties of the product to initiate a transfer.
 type TransferProductRequestProperties struct {
 	// DestinationInvoiceSectionID - The destination invoice section id.
 	DestinationInvoiceSectionID *string `json:"destinationInvoiceSectionId,omitempty"`
+}
+
+// TransferProperties transfer details
+type TransferProperties struct {
+	// CreationTime - READ-ONLY; The time at which the transfer request was created.
+	CreationTime *date.Time `json:"creationTime,omitempty"`
+	// ExpirationTime - READ-ONLY; The time at which the transfer request expires.
+	ExpirationTime *date.Time `json:"expirationTime,omitempty"`
+	// InvoiceSectionID - READ-ONLY; The ID of the invoice section to which the product is billed after the transfer request is completed.
+	InvoiceSectionID *string `json:"invoiceSectionId,omitempty"`
+	// BillingAccountID - READ-ONLY; The ID of the billing account to which the product is billed after the transfer request is completed.
+	BillingAccountID *string `json:"billingAccountId,omitempty"`
+	// ResellerID - READ-ONLY; Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account.
+	ResellerID *string `json:"resellerId,omitempty"`
+	// ResellerName - READ-ONLY; Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account.
+	ResellerName *string `json:"resellerName,omitempty"`
+	// InitiatorCustomerType - READ-ONLY; The type of customer who sent the transfer request.
+	InitiatorCustomerType *string `json:"initiatorCustomerType,omitempty"`
+	// BillingProfileID - READ-ONLY; The ID of the billing profile to which the product will be billed after the transfer.
+	BillingProfileID *string `json:"billingProfileId,omitempty"`
+	// TransferStatus - READ-ONLY; Overall transfer status. Possible values include: 'TransferStatusPending', 'TransferStatusInProgress', 'TransferStatusCompleted', 'TransferStatusCompletedWithErrors', 'TransferStatusFailed', 'TransferStatusCanceled', 'TransferStatusDeclined'
+	TransferStatus TransferStatus `json:"transferStatus,omitempty"`
+	// RecipientEmailID - READ-ONLY; The email ID of the user to whom the transfer request was sent.
+	RecipientEmailID *string `json:"recipientEmailId,omitempty"`
+	// InitiatorEmailID - READ-ONLY; The email ID of the user who sent the transfer request.
+	InitiatorEmailID *string `json:"initiatorEmailId,omitempty"`
+	// CanceledBy - READ-ONLY; The email ID of the user who canceled the transfer request.
+	CanceledBy *string `json:"canceledBy,omitempty"`
+	// LastModifiedTime - READ-ONLY; The time at which the transfer request was last modified.
+	LastModifiedTime *date.Time `json:"lastModifiedTime,omitempty"`
+	// DetailedTransferStatus - READ-ONLY; Detailed transfer status.
+	DetailedTransferStatus *[]DetailedTransferStatus `json:"detailedTransferStatus,omitempty"`
 }
 
 // ValidateAddressResponse result of the address validation
@@ -5406,4 +6363,79 @@ func (vster ValidateSubscriptionTransferEligibilityResult) MarshalJSON() ([]byte
 		objectMap["errorDetails"] = vster.ErrorDetails
 	}
 	return json.Marshal(objectMap)
+}
+
+// ValidateTransferListResponse result of transfer validation.
+type ValidateTransferListResponse struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; The list of transfer validation results.
+	Value *[]ValidateTransferResponse `json:"value,omitempty"`
+}
+
+// ValidateTransferResponse transfer validation response.
+type ValidateTransferResponse struct {
+	// ValidateTransferResponseProperties - The properties of transfer validation response.
+	*ValidateTransferResponseProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ValidateTransferResponse.
+func (vtr ValidateTransferResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vtr.ValidateTransferResponseProperties != nil {
+		objectMap["properties"] = vtr.ValidateTransferResponseProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ValidateTransferResponse struct.
+func (vtr *ValidateTransferResponse) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var validateTransferResponseProperties ValidateTransferResponseProperties
+				err = json.Unmarshal(*v, &validateTransferResponseProperties)
+				if err != nil {
+					return err
+				}
+				vtr.ValidateTransferResponseProperties = &validateTransferResponseProperties
+			}
+		}
+	}
+
+	return nil
+}
+
+// ValidateTransferResponseProperties the properties of transfer validation response.
+type ValidateTransferResponseProperties struct {
+	// Status - READ-ONLY; The status of validation
+	Status *string `json:"status,omitempty"`
+	// ProductID - READ-ONLY; The product id for which this result applies.
+	ProductID *string `json:"productId,omitempty"`
+	// Results - The array of validation results.
+	Results *[]ValidationResultProperties `json:"results,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ValidateTransferResponseProperties.
+func (vtrp ValidateTransferResponseProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vtrp.Results != nil {
+		objectMap["results"] = vtrp.Results
+	}
+	return json.Marshal(objectMap)
+}
+
+// ValidationResultProperties the properties of the validation result.
+type ValidationResultProperties struct {
+	// Level - READ-ONLY; Result Level.
+	Level *string `json:"level,omitempty"`
+	// Code - READ-ONLY; Result Code.
+	Code *string `json:"code,omitempty"`
+	// Message - READ-ONLY; The validation message.
+	Message *string `json:"message,omitempty"`
 }
