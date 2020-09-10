@@ -176,6 +176,23 @@ func PossibleDocumentTypeValues() []DocumentType {
 	return []DocumentType{DocumentTypeCreditNote, DocumentTypeInvoice, DocumentTypeTaxReceipt, DocumentTypeVoidNote}
 }
 
+// EligibleProductType enumerates the values for eligible product type.
+type EligibleProductType string
+
+const (
+	// AzureReservation ...
+	AzureReservation EligibleProductType = "AzureReservation"
+	// DevTestAzureSubscription ...
+	DevTestAzureSubscription EligibleProductType = "DevTestAzureSubscription"
+	// StandardAzureSubscription ...
+	StandardAzureSubscription EligibleProductType = "StandardAzureSubscription"
+)
+
+// PossibleEligibleProductTypeValues returns an array of possible values for the EligibleProductType const type.
+func PossibleEligibleProductTypeValues() []EligibleProductType {
+	return []EligibleProductType{AzureReservation, DevTestAzureSubscription, StandardAzureSubscription}
+}
+
 // Frequency enumerates the values for frequency.
 type Frequency string
 
@@ -191,6 +208,21 @@ const (
 // PossibleFrequencyValues returns an array of possible values for the Frequency const type.
 func PossibleFrequencyValues() []Frequency {
 	return []Frequency{Monthly, OneTime, UsageBased}
+}
+
+// InvoiceDocumentType enumerates the values for invoice document type.
+type InvoiceDocumentType string
+
+const (
+	// InvoiceDocumentTypeCreditNote ...
+	InvoiceDocumentTypeCreditNote InvoiceDocumentType = "CreditNote"
+	// InvoiceDocumentTypeInvoice ...
+	InvoiceDocumentTypeInvoice InvoiceDocumentType = "Invoice"
+)
+
+// PossibleInvoiceDocumentTypeValues returns an array of possible values for the InvoiceDocumentType const type.
+func PossibleInvoiceDocumentTypeValues() []InvoiceDocumentType {
+	return []InvoiceDocumentType{InvoiceDocumentTypeCreditNote, InvoiceDocumentTypeInvoice}
 }
 
 // InvoiceSectionState enumerates the values for invoice section state.
@@ -218,11 +250,13 @@ const (
 	OverDue InvoiceStatus = "OverDue"
 	// Paid ...
 	Paid InvoiceStatus = "Paid"
+	// Void ...
+	Void InvoiceStatus = "Void"
 )
 
 // PossibleInvoiceStatusValues returns an array of possible values for the InvoiceStatus const type.
 func PossibleInvoiceStatusValues() []InvoiceStatus {
-	return []InvoiceStatus{Due, OverDue, Paid}
+	return []InvoiceStatus{Due, OverDue, Paid, Void}
 }
 
 // InvoiceType enumerates the values for invoice type.
@@ -305,6 +339,25 @@ func PossibleProductStatusTypeValues() []ProductStatusType {
 	return []ProductStatusType{ProductStatusTypeActive, ProductStatusTypeAutoRenew, ProductStatusTypeCancelled, ProductStatusTypeDisabled, ProductStatusTypeExpired, ProductStatusTypeExpiring, ProductStatusTypeInactive, ProductStatusTypePastDue}
 }
 
+// ProductTransferStatus enumerates the values for product transfer status.
+type ProductTransferStatus string
+
+const (
+	// Completed ...
+	Completed ProductTransferStatus = "Completed"
+	// Failed ...
+	Failed ProductTransferStatus = "Failed"
+	// InProgress ...
+	InProgress ProductTransferStatus = "InProgress"
+	// NotStarted ...
+	NotStarted ProductTransferStatus = "NotStarted"
+)
+
+// PossibleProductTransferStatusValues returns an array of possible values for the ProductTransferStatus const type.
+func PossibleProductTransferStatusValues() []ProductTransferStatus {
+	return []ProductTransferStatus{Completed, Failed, InProgress, NotStarted}
+}
+
 // ProductTransferValidationErrorCode enumerates the values for product transfer validation error code.
 type ProductTransferValidationErrorCode string
 
@@ -332,6 +385,21 @@ const (
 // PossibleProductTransferValidationErrorCodeValues returns an array of possible values for the ProductTransferValidationErrorCode const type.
 func PossibleProductTransferValidationErrorCodeValues() []ProductTransferValidationErrorCode {
 	return []ProductTransferValidationErrorCode{CrossBillingAccountNotAllowed, DestinationBillingProfilePastDue, InsufficientPermissionOnDestination, InsufficientPermissionOnSource, InvalidSource, NotAvailableForDestinationMarket, OneTimePurchaseProductTransferNotAllowed, ProductNotActive, ProductTypeNotSupported}
+}
+
+// ProductType enumerates the values for product type.
+type ProductType string
+
+const (
+	// ProductTypeAzureReservation ...
+	ProductTypeAzureReservation ProductType = "AzureReservation"
+	// ProductTypeAzureSubscription ...
+	ProductTypeAzureSubscription ProductType = "AzureSubscription"
+)
+
+// PossibleProductTypeValues returns an array of possible values for the ProductType const type.
+func PossibleProductTypeValues() []ProductType {
+	return []ProductType{ProductTypeAzureReservation, ProductTypeAzureSubscription}
 }
 
 // ProfileSpendingLimit enumerates the values for profile spending limit.
@@ -575,6 +643,31 @@ const (
 // PossibleTransactionTypeKindValues returns an array of possible values for the TransactionTypeKind const type.
 func PossibleTransactionTypeKindValues() []TransactionTypeKind {
 	return []TransactionTypeKind{All, Reservation}
+}
+
+// TransferStatus enumerates the values for transfer status.
+type TransferStatus string
+
+const (
+	// TransferStatusCanceled ...
+	TransferStatusCanceled TransferStatus = "Canceled"
+	// TransferStatusCompleted ...
+	TransferStatusCompleted TransferStatus = "Completed"
+	// TransferStatusCompletedWithErrors ...
+	TransferStatusCompletedWithErrors TransferStatus = "CompletedWithErrors"
+	// TransferStatusDeclined ...
+	TransferStatusDeclined TransferStatus = "Declined"
+	// TransferStatusFailed ...
+	TransferStatusFailed TransferStatus = "Failed"
+	// TransferStatusInProgress ...
+	TransferStatusInProgress TransferStatus = "InProgress"
+	// TransferStatusPending ...
+	TransferStatusPending TransferStatus = "Pending"
+)
+
+// PossibleTransferStatusValues returns an array of possible values for the TransferStatus const type.
+func PossibleTransferStatusValues() []TransferStatus {
+	return []TransferStatus{TransferStatusCanceled, TransferStatusCompleted, TransferStatusCompletedWithErrors, TransferStatusDeclined, TransferStatusFailed, TransferStatusInProgress, TransferStatusPending}
 }
 
 // ViewCharges enumerates the values for view charges.
