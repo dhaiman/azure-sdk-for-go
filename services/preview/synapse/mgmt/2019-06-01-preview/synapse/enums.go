@@ -426,11 +426,15 @@ const (
 	NodeSizeNone NodeSize = "None"
 	// NodeSizeSmall ...
 	NodeSizeSmall NodeSize = "Small"
+	// NodeSizeXLarge ...
+	NodeSizeXLarge NodeSize = "XLarge"
+	// NodeSizeXXLarge ...
+	NodeSizeXXLarge NodeSize = "XXLarge"
 )
 
 // PossibleNodeSizeValues returns an array of possible values for the NodeSize const type.
 func PossibleNodeSizeValues() []NodeSize {
-	return []NodeSize{NodeSizeLarge, NodeSizeMedium, NodeSizeNone, NodeSizeSmall}
+	return []NodeSize{NodeSizeLarge, NodeSizeMedium, NodeSizeNone, NodeSizeSmall, NodeSizeXLarge, NodeSizeXXLarge}
 }
 
 // NodeSizeFamily enumerates the values for node size family.
@@ -730,6 +734,21 @@ const (
 // PossibleStatusValues returns an array of possible values for the Status const type.
 func PossibleStatusValues() []Status {
 	return []Status{StatusApproved, StatusDisconnected, StatusPending, StatusRejected}
+}
+
+// StorageAccountType enumerates the values for storage account type.
+type StorageAccountType string
+
+const (
+	// GRS ...
+	GRS StorageAccountType = "GRS"
+	// LRS ...
+	LRS StorageAccountType = "LRS"
+)
+
+// PossibleStorageAccountTypeValues returns an array of possible values for the StorageAccountType const type.
+func PossibleStorageAccountTypeValues() []StorageAccountType {
+	return []StorageAccountType{GRS, LRS}
 }
 
 // TransparentDataEncryptionStatus enumerates the values for transparent data encryption status.
