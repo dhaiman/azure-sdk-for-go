@@ -418,8 +418,8 @@ type OperationStatus struct {
 	CreatedTime *date.Time `json:"createdTime,omitempty"`
 	// LastActionTime - A combined UTC date and time string that describes the last time the operation (take or apply a snapshot) is actively migrating data. The lastActionTime will keep increasing until the operation finishes. E.g. 2018-12-25T11:51:27.8705696Z.
 	LastActionTime *date.Time `json:"lastActionTime,omitempty"`
-	// ResourceLocation - When the operation succeeds successfully, for snapshot taking operation the snapshot id will be included in this field, and for snapshot applying operation, the path to get the target object will be returned in this field.
-	ResourceLocation *string `json:"resourceLocation,omitempty"`
+	// Location - When the operation succeeds successfully, for snapshot taking operation the snapshot id will be included in this field, and for snapshot applying operation, the path to get the target object will be returned in this field.
+	Location *string `json:"location,omitempty"`
 	// Message - Show failure message when operation fails (omitted when operation succeeds).
 	Message *string `json:"message,omitempty"`
 }
