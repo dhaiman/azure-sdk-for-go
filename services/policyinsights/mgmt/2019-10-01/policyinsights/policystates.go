@@ -33,14 +33,14 @@ type PolicyStatesClient struct {
 }
 
 // NewPolicyStatesClient creates an instance of the PolicyStatesClient client.
-func NewPolicyStatesClient() PolicyStatesClient {
-	return NewPolicyStatesClientWithBaseURI(DefaultBaseURI)
+func NewPolicyStatesClient(subscriptionID2 string) PolicyStatesClient {
+	return NewPolicyStatesClientWithBaseURI(DefaultBaseURI, subscriptionID2)
 }
 
 // NewPolicyStatesClientWithBaseURI creates an instance of the PolicyStatesClient client using a custom endpoint.  Use
 // this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewPolicyStatesClientWithBaseURI(baseURI string) PolicyStatesClient {
-	return PolicyStatesClient{NewWithBaseURI(baseURI)}
+func NewPolicyStatesClientWithBaseURI(baseURI string, subscriptionID2 string) PolicyStatesClient {
+	return PolicyStatesClient{NewWithBaseURI(baseURI, subscriptionID2)}
 }
 
 // ListQueryResultsForManagementGroup queries policy states for the resources under the management group.

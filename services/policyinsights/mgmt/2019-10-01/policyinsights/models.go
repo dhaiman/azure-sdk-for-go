@@ -31,6 +31,40 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/policyinsights/mgmt/2019-10-01/policyinsights"
 
+// CheckRestrictionsRequest the check policy restrictions parameters describing the resource that is being
+// evaluated.
+type CheckRestrictionsRequest struct {
+	// ResourceDetails - The information about the resource that will be evaluated.
+	ResourceDetails *CheckRestrictionsResourceDetails `json:"resourceDetails,omitempty"`
+	// PendingFields - The list of fields and values that should be evaluated for potential restrictions.
+	PendingFields *[]PendingField `json:"pendingFields,omitempty"`
+}
+
+// CheckRestrictionsResourceDetails the information about the resource that will be evaluated.
+type CheckRestrictionsResourceDetails struct {
+	// ResourceContent - The resource content. This should include whatever properties are already known and can be a partial set of all resource properties.
+	ResourceContent interface{} `json:"resourceContent,omitempty"`
+	// APIVersion - The api-version of the resource content.
+	APIVersion *string `json:"apiVersion,omitempty"`
+	// Scope - The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID.
+	Scope *string `json:"scope,omitempty"`
+}
+
+// CheckRestrictionsResult the result of a check policy restrictions evaluation on a resource.
+type CheckRestrictionsResult struct {
+	autorest.Response `json:"-"`
+	// FieldRestrictions - READ-ONLY; The restrictions that will be placed on various fields in the resource by policy.
+	FieldRestrictions *[]FieldRestrictions `json:"fieldRestrictions,omitempty"`
+	// ContentEvaluationResult - READ-ONLY; Evaluation results for the provided partial resource content.
+	ContentEvaluationResult *CheckRestrictionsResultContentEvaluationResult `json:"contentEvaluationResult,omitempty"`
+}
+
+// CheckRestrictionsResultContentEvaluationResult evaluation results for the provided partial resource content.
+type CheckRestrictionsResultContentEvaluationResult struct {
+	// PolicyEvaluations - Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is.
+	PolicyEvaluations *[]PolicyEvaluationResult `json:"policyEvaluations,omitempty"`
+}
+
 // ComplianceDetail the compliance state rollup.
 type ComplianceDetail struct {
 	// ComplianceState - The compliance state.
@@ -317,6 +351,8 @@ type ExpressionEvaluationDetails struct {
 	Result *string `json:"result,omitempty"`
 	// Expression - Expression evaluated.
 	Expression *string `json:"expression,omitempty"`
+	// ExpressionKind - READ-ONLY; The kind of expression that was evaluated.
+	ExpressionKind *string `json:"expressionKind,omitempty"`
 	// Path - Property path if the expression is a field or an alias.
 	Path *string `json:"path,omitempty"`
 	// ExpressionValue - Value of the expression.
@@ -325,6 +361,59 @@ type ExpressionEvaluationDetails struct {
 	TargetValue interface{} `json:"targetValue,omitempty"`
 	// Operator - Operator to compare the expression value and the target value.
 	Operator *string `json:"operator,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ExpressionEvaluationDetails.
+func (eed ExpressionEvaluationDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if eed.Result != nil {
+		objectMap["result"] = eed.Result
+	}
+	if eed.Expression != nil {
+		objectMap["expression"] = eed.Expression
+	}
+	if eed.Path != nil {
+		objectMap["path"] = eed.Path
+	}
+	if eed.ExpressionValue != nil {
+		objectMap["expressionValue"] = eed.ExpressionValue
+	}
+	if eed.TargetValue != nil {
+		objectMap["targetValue"] = eed.TargetValue
+	}
+	if eed.Operator != nil {
+		objectMap["operator"] = eed.Operator
+	}
+	return json.Marshal(objectMap)
+}
+
+// FieldRestriction the restrictions on a field imposed by a specific policy.
+type FieldRestriction struct {
+	// Result - READ-ONLY; The type of restriction that is imposed on the field. Possible values include: 'Required', 'Removed', 'Deny'
+	Result FieldRestrictionResult `json:"result,omitempty"`
+	// DefaultValue - READ-ONLY; The value that policy will set for the field if the user does not provide a value.
+	DefaultValue *string `json:"defaultValue,omitempty"`
+	// Values - READ-ONLY; The values that policy either requires or denies for the field.
+	Values *[]string `json:"values,omitempty"`
+	// Policy - READ-ONLY; The details of the policy that is causing the field restriction.
+	Policy *PolicyReference `json:"policy,omitempty"`
+}
+
+// FieldRestrictions the restrictions that will be placed on a field in the resource by policy.
+type FieldRestrictions struct {
+	// Field - READ-ONLY; The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias.
+	Field *string `json:"field,omitempty"`
+	// Restrictions - The restrictions placed on that field by policy.
+	Restrictions *[]FieldRestriction `json:"restrictions,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for FieldRestrictions.
+func (fr FieldRestrictions) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if fr.Restrictions != nil {
+		objectMap["restrictions"] = fr.Restrictions
+	}
+	return json.Marshal(objectMap)
 }
 
 // IfNotExistsEvaluationDetails evaluation details of IfNotExists effect.
@@ -362,6 +451,14 @@ type OperationsListResults struct {
 	OdataCount *int32 `json:"@odata.count,omitempty"`
 	// Value - List of available operations.
 	Value *[]Operation `json:"value,omitempty"`
+}
+
+// PendingField a field that should be evaluated against Azure Policy to determine restrictions.
+type PendingField struct {
+	// Field - The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias.
+	Field *string `json:"field,omitempty"`
+	// Values - The list of potential values for the field that should be evaluated against Azure Policy.
+	Values *[]string `json:"values,omitempty"`
 }
 
 // PolicyAssignmentSummary policy assignment summary.
@@ -414,6 +511,16 @@ type PolicyEvaluationDetails struct {
 	EvaluatedExpressions *[]ExpressionEvaluationDetails `json:"evaluatedExpressions,omitempty"`
 	// IfNotExistsDetails - Evaluation details of IfNotExists effect.
 	IfNotExistsDetails *IfNotExistsEvaluationDetails `json:"ifNotExistsDetails,omitempty"`
+}
+
+// PolicyEvaluationResult the result of a non-compliant policy evaluation against the given resource content.
+type PolicyEvaluationResult struct {
+	// PolicyInfo - READ-ONLY; The details of the policy that was evaluated.
+	PolicyInfo *PolicyReference `json:"policyInfo,omitempty"`
+	// EvaluationResult - READ-ONLY; The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered.
+	EvaluationResult *string `json:"evaluationResult,omitempty"`
+	// EvaluationDetails - READ-ONLY; The detailed results of the policy expressions and values that were evaluated.
+	EvaluationDetails *PolicyEvaluationDetails `json:"evaluationDetails,omitempty"`
 }
 
 // PolicyEvent policy event record.
@@ -1324,6 +1431,18 @@ type PolicyMetadataSlimProperties struct {
 	AdditionalContentURL *string `json:"additionalContentUrl,omitempty"`
 	// Metadata - READ-ONLY; Additional metadata.
 	Metadata interface{} `json:"metadata,omitempty"`
+}
+
+// PolicyReference resource identifiers for a policy.
+type PolicyReference struct {
+	// PolicyDefinitionID - READ-ONLY; The resource identifier of the policy definition.
+	PolicyDefinitionID *string `json:"policyDefinitionId,omitempty"`
+	// PolicySetDefinitionID - READ-ONLY; The resource identifier of the policy set definition.
+	PolicySetDefinitionID *string `json:"policySetDefinitionId,omitempty"`
+	// PolicyDefinitionReferenceID - READ-ONLY; The reference identifier of a specific policy definition within a policy set definition.
+	PolicyDefinitionReferenceID *string `json:"policyDefinitionReferenceId,omitempty"`
+	// PolicyAssignmentID - READ-ONLY; The resource identifier of the policy assignment.
+	PolicyAssignmentID *string `json:"policyAssignmentId,omitempty"`
 }
 
 // PolicyState policy state record.

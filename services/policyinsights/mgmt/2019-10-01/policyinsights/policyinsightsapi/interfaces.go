@@ -144,3 +144,11 @@ type PolicyMetadataClientAPI interface {
 }
 
 var _ PolicyMetadataClientAPI = (*policyinsights.PolicyMetadataClient)(nil)
+
+// PolicyRestrictionsClientAPI contains the set of methods on the PolicyRestrictionsClient type.
+type PolicyRestrictionsClientAPI interface {
+	CheckAtResourceGroupScope(ctx context.Context, subscriptionID string, resourceGroupName string, parameters policyinsights.CheckRestrictionsRequest) (result policyinsights.CheckRestrictionsResult, err error)
+	CheckAtSubscriptionScope(ctx context.Context, subscriptionID string, parameters policyinsights.CheckRestrictionsRequest) (result policyinsights.CheckRestrictionsResult, err error)
+}
+
+var _ PolicyRestrictionsClientAPI = (*policyinsights.PolicyRestrictionsClient)(nil)

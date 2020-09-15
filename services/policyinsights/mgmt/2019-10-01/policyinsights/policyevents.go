@@ -33,14 +33,14 @@ type PolicyEventsClient struct {
 }
 
 // NewPolicyEventsClient creates an instance of the PolicyEventsClient client.
-func NewPolicyEventsClient() PolicyEventsClient {
-	return NewPolicyEventsClientWithBaseURI(DefaultBaseURI)
+func NewPolicyEventsClient(subscriptionID2 string) PolicyEventsClient {
+	return NewPolicyEventsClientWithBaseURI(DefaultBaseURI, subscriptionID2)
 }
 
 // NewPolicyEventsClientWithBaseURI creates an instance of the PolicyEventsClient client using a custom endpoint.  Use
 // this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewPolicyEventsClientWithBaseURI(baseURI string) PolicyEventsClient {
-	return PolicyEventsClient{NewWithBaseURI(baseURI)}
+func NewPolicyEventsClientWithBaseURI(baseURI string, subscriptionID2 string) PolicyEventsClient {
+	return PolicyEventsClient{NewWithBaseURI(baseURI, subscriptionID2)}
 }
 
 // ListQueryResultsForManagementGroup queries policy events for the resources under the management group.

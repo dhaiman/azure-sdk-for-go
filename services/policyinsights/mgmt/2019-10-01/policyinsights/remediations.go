@@ -32,14 +32,14 @@ type RemediationsClient struct {
 }
 
 // NewRemediationsClient creates an instance of the RemediationsClient client.
-func NewRemediationsClient() RemediationsClient {
-	return NewRemediationsClientWithBaseURI(DefaultBaseURI)
+func NewRemediationsClient(subscriptionID2 string) RemediationsClient {
+	return NewRemediationsClientWithBaseURI(DefaultBaseURI, subscriptionID2)
 }
 
 // NewRemediationsClientWithBaseURI creates an instance of the RemediationsClient client using a custom endpoint.  Use
 // this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewRemediationsClientWithBaseURI(baseURI string) RemediationsClient {
-	return RemediationsClient{NewWithBaseURI(baseURI)}
+func NewRemediationsClientWithBaseURI(baseURI string, subscriptionID2 string) RemediationsClient {
+	return RemediationsClient{NewWithBaseURI(baseURI, subscriptionID2)}
 }
 
 // CancelAtManagementGroup cancels a remediation at management group scope.
