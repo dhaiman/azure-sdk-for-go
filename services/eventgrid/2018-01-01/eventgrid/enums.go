@@ -70,6 +70,21 @@ func PossibleAsyncStatusValues() []AsyncStatus {
 	return []AsyncStatus{AsyncStatusCompleted, AsyncStatusFailed, AsyncStatusStarted}
 }
 
+// EventType enumerates the values for event type.
+type EventType string
+
+const (
+	// EventTypeEventGridReceivedEvent ...
+	EventTypeEventGridReceivedEvent EventType = "EventGridReceivedEvent"
+	// EventTypeMicrosoftStorageBlobCreated ...
+	EventTypeMicrosoftStorageBlobCreated EventType = "Microsoft.Storage.BlobCreated"
+)
+
+// PossibleEventTypeValues returns an array of possible values for the EventType const type.
+func PossibleEventTypeValues() []EventType {
+	return []EventType{EventTypeEventGridReceivedEvent, EventTypeMicrosoftStorageBlobCreated}
+}
+
 // MediaJobErrorCategory enumerates the values for media job error category.
 type MediaJobErrorCategory string
 
