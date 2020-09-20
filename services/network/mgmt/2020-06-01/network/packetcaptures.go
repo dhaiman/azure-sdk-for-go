@@ -63,6 +63,18 @@ func (client PacketCapturesClient) Create(ctx context.Context, resourceGroupName
 		{TargetValue: parameters,
 			Constraints: []validation.Constraint{{Target: "parameters.PacketCaptureParameters", Name: validation.Null, Rule: true,
 				Chain: []validation.Constraint{{Target: "parameters.PacketCaptureParameters.Target", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.PacketCaptureParameters.BytesToCapturePerPacket", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.PacketCaptureParameters.BytesToCapturePerPacket", Name: validation.InclusiveMaximum, Rule: int64(4294967295), Chain: nil},
+							{Target: "parameters.PacketCaptureParameters.BytesToCapturePerPacket", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil},
+						}},
+					{Target: "parameters.PacketCaptureParameters.TotalBytesPerSession", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.PacketCaptureParameters.TotalBytesPerSession", Name: validation.InclusiveMaximum, Rule: int64(4294967295), Chain: nil},
+							{Target: "parameters.PacketCaptureParameters.TotalBytesPerSession", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil},
+						}},
+					{Target: "parameters.PacketCaptureParameters.TimeLimitInSeconds", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.PacketCaptureParameters.TimeLimitInSeconds", Name: validation.InclusiveMaximum, Rule: int64(18000), Chain: nil},
+							{Target: "parameters.PacketCaptureParameters.TimeLimitInSeconds", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil},
+						}},
 					{Target: "parameters.PacketCaptureParameters.StorageLocation", Name: validation.Null, Rule: true, Chain: nil},
 				}}}}}); err != nil {
 		return result, validation.NewError("network.PacketCapturesClient", "Create", err.Error())

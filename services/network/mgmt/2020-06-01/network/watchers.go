@@ -62,8 +62,18 @@ func (client WatchersClient) CheckConnectivity(ctx context.Context, resourceGrou
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: parameters,
 			Constraints: []validation.Constraint{{Target: "parameters.Source", Name: validation.Null, Rule: true,
-				Chain: []validation.Constraint{{Target: "parameters.Source.ResourceID", Name: validation.Null, Rule: true, Chain: nil}}},
-				{Target: "parameters.Destination", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+				Chain: []validation.Constraint{{Target: "parameters.Source.ResourceID", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "parameters.Source.Port", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.Source.Port", Name: validation.InclusiveMaximum, Rule: int64(65535), Chain: nil},
+							{Target: "parameters.Source.Port", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil},
+						}},
+				}},
+				{Target: "parameters.Destination", Name: validation.Null, Rule: true,
+					Chain: []validation.Constraint{{Target: "parameters.Destination.Port", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "parameters.Destination.Port", Name: validation.InclusiveMaximum, Rule: int64(65535), Chain: nil},
+							{Target: "parameters.Destination.Port", Name: validation.InclusiveMinimum, Rule: int64(0), Chain: nil},
+						}},
+					}}}}}); err != nil {
 		return result, validation.NewError("network.WatchersClient", "CheckConnectivity", err.Error())
 	}
 
