@@ -217,3 +217,14 @@ type ManagedPrivateEndpointsClientAPI interface {
 }
 
 var _ ManagedPrivateEndpointsClientAPI = (*datafactory.ManagedPrivateEndpointsClient)(nil)
+
+// CredentialOperationsClientAPI contains the set of methods on the CredentialOperationsClient type.
+type CredentialOperationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, factoryName string, credentialName string, credential datafactory.CredentialResource, ifMatch string) (result datafactory.CredentialResource, err error)
+	Delete(ctx context.Context, resourceGroupName string, factoryName string, credentialName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, factoryName string, credentialName string, ifNoneMatch string) (result datafactory.CredentialResource, err error)
+	ListByFactory(ctx context.Context, resourceGroupName string, factoryName string) (result datafactory.CredentialListResponsePage, err error)
+	ListByFactoryComplete(ctx context.Context, resourceGroupName string, factoryName string) (result datafactory.CredentialListResponseIterator, err error)
+}
+
+var _ CredentialOperationsClientAPI = (*datafactory.CredentialOperationsClient)(nil)
