@@ -464,6 +464,8 @@ type BigDataPoolResourceProperties struct {
 	CreationDate *date.Time `json:"creationDate,omitempty"`
 	// AutoPause - Auto-pausing properties
 	AutoPause *AutoPauseProperties `json:"autoPause,omitempty"`
+	// IsComputeIsolationEnabled - Whether compute isolation is required or not.
+	IsComputeIsolationEnabled *bool `json:"isComputeIsolationEnabled,omitempty"`
 	// SparkEventsFolder - The Spark events folder
 	SparkEventsFolder *string `json:"sparkEventsFolder,omitempty"`
 	// NodeCount - The number of nodes in the Big Data pool.
@@ -474,7 +476,7 @@ type BigDataPoolResourceProperties struct {
 	SparkVersion *string `json:"sparkVersion,omitempty"`
 	// DefaultSparkLogFolder - The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
-	// NodeSize - The level of compute power that each node in the Big Data pool has. Possible values include: 'NodeSizeNone', 'NodeSizeSmall', 'NodeSizeMedium', 'NodeSizeLarge'
+	// NodeSize - The level of compute power that each node in the Big Data pool has. Possible values include: 'NodeSizeNone', 'NodeSizeSmall', 'NodeSizeMedium', 'NodeSizeLarge', 'NodeSizeXLarge', 'NodeSizeXXLarge'
 	NodeSize NodeSize `json:"nodeSize,omitempty"`
 	// NodeSizeFamily - The kind of nodes that the Big Data pool provides. Possible values include: 'NodeSizeFamilyNone', 'NodeSizeFamilyMemoryOptimized'
 	NodeSizeFamily NodeSizeFamily `json:"nodeSizeFamily,omitempty"`
@@ -2061,14 +2063,14 @@ type IntegrationRuntimeResource struct {
 	autorest.Response `json:"-"`
 	// Properties - Integration runtime properties.
 	Properties BasicIntegrationRuntime `json:"properties,omitempty"`
-	// ID - READ-ONLY; The resource identifier.
-	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; The resource name.
-	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The resource type.
-	Type *string `json:"type,omitempty"`
-	// Etag - READ-ONLY; Etag identifies change in the resource.
+	// Etag - READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for IntegrationRuntimeResource.
@@ -2094,6 +2096,15 @@ func (irr *IntegrationRuntimeResource) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				irr.Properties = properties
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				irr.Etag = &etag
 			}
 		case "id":
 			if v != nil {
@@ -2122,19 +2133,62 @@ func (irr *IntegrationRuntimeResource) UnmarshalJSON(body []byte) error {
 				}
 				irr.Type = &typeVar
 			}
-		case "etag":
-			if v != nil {
-				var etag string
-				err = json.Unmarshal(*v, &etag)
-				if err != nil {
-					return err
-				}
-				irr.Etag = &etag
-			}
 		}
 	}
 
 	return nil
+}
+
+// IntegrationRuntimesCreateFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type IntegrationRuntimesCreateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *IntegrationRuntimesCreateFuture) Result(client IntegrationRuntimesClient) (irr IntegrationRuntimeResource, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.IntegrationRuntimesCreateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.IntegrationRuntimesCreateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if irr.Response.Response, err = future.GetResult(sender); err == nil && irr.Response.Response.StatusCode != http.StatusNoContent {
+		irr, err = client.CreateResponder(irr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "synapse.IntegrationRuntimesCreateFuture", "Result", irr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// IntegrationRuntimesDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type IntegrationRuntimesDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *IntegrationRuntimesDeleteFuture) Result(client IntegrationRuntimesClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.IntegrationRuntimesDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.IntegrationRuntimesDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // IntegrationRuntimeSsisCatalogInfo catalog information for managed dedicated integration runtime.
@@ -5969,6 +6023,8 @@ type Sku struct {
 	Tier *string `json:"tier,omitempty"`
 	// Name - The SKU name
 	Name *string `json:"name,omitempty"`
+	// Capacity - If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+	Capacity *int32 `json:"capacity,omitempty"`
 }
 
 // SQLPool a SQL Analytics pool
@@ -8283,6 +8339,58 @@ func (future *SQLPoolVulnerabilityAssessmentScansInitiateScanFuture) Result(clie
 	return
 }
 
+// SQLPoolWorkloadClassifiersCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SQLPoolWorkloadClassifiersCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLPoolWorkloadClassifiersCreateOrUpdateFuture) Result(client SQLPoolWorkloadClassifiersClient) (wc WorkloadClassifier, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.SQLPoolWorkloadClassifiersCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.SQLPoolWorkloadClassifiersCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if wc.Response.Response, err = future.GetResult(sender); err == nil && wc.Response.Response.StatusCode != http.StatusNoContent {
+		wc, err = client.CreateOrUpdateResponder(wc.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "synapse.SQLPoolWorkloadClassifiersCreateOrUpdateFuture", "Result", wc.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// SQLPoolWorkloadClassifiersDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type SQLPoolWorkloadClassifiersDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *SQLPoolWorkloadClassifiersDeleteFuture) Result(client SQLPoolWorkloadClassifiersClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.SQLPoolWorkloadClassifiersDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.SQLPoolWorkloadClassifiersDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // SsisEnvironment ssis environment.
 type SsisEnvironment struct {
 	// FolderID - Folder id which contains environment.
@@ -8808,16 +8916,16 @@ type SsisVariable struct {
 	SensitiveValue *string `json:"sensitiveValue,omitempty"`
 }
 
-// SubResource azure Synapse nested resource, which belongs to a factory.
+// SubResource azure Synapse nested resource, which belongs to a workspace.
 type SubResource struct {
-	// ID - READ-ONLY; The resource identifier.
-	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; The resource name.
-	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The resource type.
-	Type *string `json:"type,omitempty"`
-	// Etag - READ-ONLY; Etag identifies change in the resource.
+	// Etag - READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
 }
 
 // TopQueries a database query.
@@ -9247,6 +9355,550 @@ type VulnerabilityAssessmentScanRecordProperties struct {
 	StorageContainerPath *string `json:"storageContainerPath,omitempty"`
 	// NumberOfFailedSecurityChecks - READ-ONLY; The number of failed security checks.
 	NumberOfFailedSecurityChecks *int32 `json:"numberOfFailedSecurityChecks,omitempty"`
+}
+
+// WorkloadClassifier workload classifier operations for a data warehouse
+type WorkloadClassifier struct {
+	autorest.Response `json:"-"`
+	// WorkloadClassifierProperties - Resource properties.
+	*WorkloadClassifierProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for WorkloadClassifier.
+func (wc WorkloadClassifier) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if wc.WorkloadClassifierProperties != nil {
+		objectMap["properties"] = wc.WorkloadClassifierProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for WorkloadClassifier struct.
+func (wc *WorkloadClassifier) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var workloadClassifierProperties WorkloadClassifierProperties
+				err = json.Unmarshal(*v, &workloadClassifierProperties)
+				if err != nil {
+					return err
+				}
+				wc.WorkloadClassifierProperties = &workloadClassifierProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				wc.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				wc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				wc.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// WorkloadClassifierListResult a list of workload classifiers for a workload group.
+type WorkloadClassifierListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; Array of results.
+	Value *[]WorkloadClassifier `json:"value,omitempty"`
+	// NextLink - READ-ONLY; Link to retrieve next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// WorkloadClassifierListResultIterator provides access to a complete listing of WorkloadClassifier values.
+type WorkloadClassifierListResultIterator struct {
+	i    int
+	page WorkloadClassifierListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *WorkloadClassifierListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadClassifierListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *WorkloadClassifierListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter WorkloadClassifierListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter WorkloadClassifierListResultIterator) Response() WorkloadClassifierListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter WorkloadClassifierListResultIterator) Value() WorkloadClassifier {
+	if !iter.page.NotDone() {
+		return WorkloadClassifier{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the WorkloadClassifierListResultIterator type.
+func NewWorkloadClassifierListResultIterator(page WorkloadClassifierListResultPage) WorkloadClassifierListResultIterator {
+	return WorkloadClassifierListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (wclr WorkloadClassifierListResult) IsEmpty() bool {
+	return wclr.Value == nil || len(*wclr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (wclr WorkloadClassifierListResult) hasNextLink() bool {
+	return wclr.NextLink != nil && len(*wclr.NextLink) != 0
+}
+
+// workloadClassifierListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (wclr WorkloadClassifierListResult) workloadClassifierListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !wclr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(wclr.NextLink)))
+}
+
+// WorkloadClassifierListResultPage contains a page of WorkloadClassifier values.
+type WorkloadClassifierListResultPage struct {
+	fn   func(context.Context, WorkloadClassifierListResult) (WorkloadClassifierListResult, error)
+	wclr WorkloadClassifierListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *WorkloadClassifierListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadClassifierListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.wclr)
+		if err != nil {
+			return err
+		}
+		page.wclr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *WorkloadClassifierListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page WorkloadClassifierListResultPage) NotDone() bool {
+	return !page.wclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page WorkloadClassifierListResultPage) Response() WorkloadClassifierListResult {
+	return page.wclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page WorkloadClassifierListResultPage) Values() []WorkloadClassifier {
+	if page.wclr.IsEmpty() {
+		return nil
+	}
+	return *page.wclr.Value
+}
+
+// Creates a new instance of the WorkloadClassifierListResultPage type.
+func NewWorkloadClassifierListResultPage(getNextPage func(context.Context, WorkloadClassifierListResult) (WorkloadClassifierListResult, error)) WorkloadClassifierListResultPage {
+	return WorkloadClassifierListResultPage{fn: getNextPage}
+}
+
+// WorkloadClassifierProperties workload classifier definition. For more information look at
+// sys.workload_management_workload_classifiers (DMV).
+type WorkloadClassifierProperties struct {
+	// MemberName - The workload classifier member name.
+	MemberName *string `json:"memberName,omitempty"`
+	// Label - The workload classifier label.
+	Label *string `json:"label,omitempty"`
+	// Context - The workload classifier context.
+	Context *string `json:"context,omitempty"`
+	// StartTime - The workload classifier start time for classification.
+	StartTime *date.Time `json:"startTime,omitempty"`
+	// EndTime - The workload classifier end time for classification.
+	EndTime *date.Time `json:"endTime,omitempty"`
+	// Importance - The workload classifier importance. There are five levels of importance: low, below_normal, normal, above_normal, and high.
+	Importance *string `json:"importance,omitempty"`
+}
+
+// WorkloadGroup workload group operations for a SQL pool.
+type WorkloadGroup struct {
+	autorest.Response `json:"-"`
+	// WorkloadGroupProperties - Resource properties.
+	*WorkloadGroupProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for WorkloadGroup.
+func (wg WorkloadGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if wg.WorkloadGroupProperties != nil {
+		objectMap["properties"] = wg.WorkloadGroupProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for WorkloadGroup struct.
+func (wg *WorkloadGroup) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var workloadGroupProperties WorkloadGroupProperties
+				err = json.Unmarshal(*v, &workloadGroupProperties)
+				if err != nil {
+					return err
+				}
+				wg.WorkloadGroupProperties = &workloadGroupProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				wg.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				wg.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				wg.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// WorkloadGroupListResult a list of workload groups.
+type WorkloadGroupListResult struct {
+	autorest.Response `json:"-"`
+	// Value - READ-ONLY; Array of results.
+	Value *[]WorkloadGroup `json:"value,omitempty"`
+	// NextLink - READ-ONLY; Link to retrieve next page of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// WorkloadGroupListResultIterator provides access to a complete listing of WorkloadGroup values.
+type WorkloadGroupListResultIterator struct {
+	i    int
+	page WorkloadGroupListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *WorkloadGroupListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *WorkloadGroupListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter WorkloadGroupListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter WorkloadGroupListResultIterator) Response() WorkloadGroupListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter WorkloadGroupListResultIterator) Value() WorkloadGroup {
+	if !iter.page.NotDone() {
+		return WorkloadGroup{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the WorkloadGroupListResultIterator type.
+func NewWorkloadGroupListResultIterator(page WorkloadGroupListResultPage) WorkloadGroupListResultIterator {
+	return WorkloadGroupListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (wglr WorkloadGroupListResult) IsEmpty() bool {
+	return wglr.Value == nil || len(*wglr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (wglr WorkloadGroupListResult) hasNextLink() bool {
+	return wglr.NextLink != nil && len(*wglr.NextLink) != 0
+}
+
+// workloadGroupListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (wglr WorkloadGroupListResult) workloadGroupListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !wglr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(wglr.NextLink)))
+}
+
+// WorkloadGroupListResultPage contains a page of WorkloadGroup values.
+type WorkloadGroupListResultPage struct {
+	fn   func(context.Context, WorkloadGroupListResult) (WorkloadGroupListResult, error)
+	wglr WorkloadGroupListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *WorkloadGroupListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WorkloadGroupListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.wglr)
+		if err != nil {
+			return err
+		}
+		page.wglr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *WorkloadGroupListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page WorkloadGroupListResultPage) NotDone() bool {
+	return !page.wglr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page WorkloadGroupListResultPage) Response() WorkloadGroupListResult {
+	return page.wglr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page WorkloadGroupListResultPage) Values() []WorkloadGroup {
+	if page.wglr.IsEmpty() {
+		return nil
+	}
+	return *page.wglr.Value
+}
+
+// Creates a new instance of the WorkloadGroupListResultPage type.
+func NewWorkloadGroupListResultPage(getNextPage func(context.Context, WorkloadGroupListResult) (WorkloadGroupListResult, error)) WorkloadGroupListResultPage {
+	return WorkloadGroupListResultPage{fn: getNextPage}
+}
+
+// WorkloadGroupProperties workload group definition. For more information look at
+// sys.workload_management_workload_groups (DMV).
+type WorkloadGroupProperties struct {
+	// MinResourcePercent - The workload group minimum percentage resource.
+	MinResourcePercent *int32 `json:"minResourcePercent,omitempty"`
+	// MaxResourcePercent - The workload group cap percentage resource.
+	MaxResourcePercent *int32 `json:"maxResourcePercent,omitempty"`
+	// MinResourcePercentPerRequest - The workload group request minimum grant percentage.
+	MinResourcePercentPerRequest *float64 `json:"minResourcePercentPerRequest,omitempty"`
+	// MaxResourcePercentPerRequest - The workload group request maximum grant percentage.
+	MaxResourcePercentPerRequest *float64 `json:"maxResourcePercentPerRequest,omitempty"`
+	// Importance - The workload group importance level. There are five levels of importance: low, below_normal, normal, above_normal, and high.
+	Importance *string `json:"importance,omitempty"`
+	// QueryExecutionTimeout - The workload group query execution timeout in seconds.
+	QueryExecutionTimeout *int32 `json:"queryExecutionTimeout,omitempty"`
+}
+
+// WorkloadGroupsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type WorkloadGroupsCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *WorkloadGroupsCreateOrUpdateFuture) Result(client WorkloadGroupsClient) (wg WorkloadGroup, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.WorkloadGroupsCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.WorkloadGroupsCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if wg.Response.Response, err = future.GetResult(sender); err == nil && wg.Response.Response.StatusCode != http.StatusNoContent {
+		wg, err = client.CreateOrUpdateResponder(wg.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "synapse.WorkloadGroupsCreateOrUpdateFuture", "Result", wg.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// WorkloadGroupsDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type WorkloadGroupsDeleteFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *WorkloadGroupsDeleteFuture) Result(client WorkloadGroupsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "synapse.WorkloadGroupsDeleteFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("synapse.WorkloadGroupsDeleteFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // Workspace a workspace
@@ -9749,6 +10401,8 @@ type WorkspaceProperties struct {
 	ManagedVirtualNetwork *string `json:"managedVirtualNetwork,omitempty"`
 	// PrivateEndpointConnections - Private endpoint connections to the workspace
 	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+	// ExtraProperties - READ-ONLY; Workspace level configs and feature flags
+	ExtraProperties map[string]interface{} `json:"extraProperties"`
 }
 
 // MarshalJSON is the custom marshaler for WorkspaceProperties.

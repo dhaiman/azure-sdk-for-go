@@ -232,6 +232,34 @@ type SQLPoolVulnerabilityAssessmentRuleBaselinesClientAPI interface {
 
 var _ SQLPoolVulnerabilityAssessmentRuleBaselinesClientAPI = (*synapse.SQLPoolVulnerabilityAssessmentRuleBaselinesClient)(nil)
 
+// SQLPoolWorkloadGroupsClientAPI contains the set of methods on the SQLPoolWorkloadGroupsClient type.
+type SQLPoolWorkloadGroupsClientAPI interface {
+	Get(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string) (result synapse.WorkloadGroup, err error)
+	ListBySQLPool(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string) (result synapse.WorkloadGroupListResultPage, err error)
+	ListBySQLPoolComplete(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string) (result synapse.WorkloadGroupListResultIterator, err error)
+}
+
+var _ SQLPoolWorkloadGroupsClientAPI = (*synapse.SQLPoolWorkloadGroupsClient)(nil)
+
+// WorkloadGroupsClientAPI contains the set of methods on the WorkloadGroupsClient type.
+type WorkloadGroupsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string, parameters synapse.WorkloadGroup) (result synapse.WorkloadGroupsCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string) (result synapse.WorkloadGroupsDeleteFuture, err error)
+}
+
+var _ WorkloadGroupsClientAPI = (*synapse.WorkloadGroupsClient)(nil)
+
+// SQLPoolWorkloadClassifiersClientAPI contains the set of methods on the SQLPoolWorkloadClassifiersClient type.
+type SQLPoolWorkloadClassifiersClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string, workloadClassifierName string, parameters synapse.WorkloadClassifier) (result synapse.SQLPoolWorkloadClassifiersCreateOrUpdateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string, workloadClassifierName string) (result synapse.SQLPoolWorkloadClassifiersDeleteFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string, workloadClassifierName string) (result synapse.WorkloadClassifier, err error)
+	ListByWorkloadGroup(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string) (result synapse.WorkloadClassifierListResultPage, err error)
+	ListByWorkloadGroupComplete(ctx context.Context, resourceGroupName string, workspaceName string, SQLPoolName string, workloadGroupName string) (result synapse.WorkloadClassifierListResultIterator, err error)
+}
+
+var _ SQLPoolWorkloadClassifiersClientAPI = (*synapse.SQLPoolWorkloadClassifiersClient)(nil)
+
 // WorkspacesClientAPI contains the set of methods on the WorkspacesClient type.
 type WorkspacesClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, workspaceInfo synapse.Workspace) (result synapse.WorkspacesCreateOrUpdateFuture, err error)
@@ -265,8 +293,8 @@ var _ WorkspaceManagedIdentitySQLControlSettingsClientAPI = (*synapse.WorkspaceM
 
 // IntegrationRuntimesClientAPI contains the set of methods on the IntegrationRuntimesClient type.
 type IntegrationRuntimesClientAPI interface {
-	Create(ctx context.Context, resourceGroupName string, workspaceName string, integrationRuntimeName string, integrationRuntime synapse.IntegrationRuntimeResource, ifMatch string) (result synapse.IntegrationRuntimeResource, err error)
-	Delete(ctx context.Context, resourceGroupName string, workspaceName string, integrationRuntimeName string) (result autorest.Response, err error)
+	Create(ctx context.Context, resourceGroupName string, workspaceName string, integrationRuntimeName string, integrationRuntime synapse.IntegrationRuntimeResource, ifMatch string) (result synapse.IntegrationRuntimesCreateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, workspaceName string, integrationRuntimeName string) (result synapse.IntegrationRuntimesDeleteFuture, err error)
 	Get(ctx context.Context, resourceGroupName string, workspaceName string, integrationRuntimeName string, ifNoneMatch string) (result synapse.IntegrationRuntimeResource, err error)
 	ListByWorkspace(ctx context.Context, resourceGroupName string, workspaceName string) (result synapse.IntegrationRuntimeListResponsePage, err error)
 	ListByWorkspaceComplete(ctx context.Context, resourceGroupName string, workspaceName string) (result synapse.IntegrationRuntimeListResponseIterator, err error)
