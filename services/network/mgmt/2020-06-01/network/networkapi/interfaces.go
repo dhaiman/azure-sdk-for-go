@@ -147,6 +147,14 @@ type AzureFirewallFqdnTagsClientAPI interface {
 
 var _ AzureFirewallFqdnTagsClientAPI = (*network.AzureFirewallFqdnTagsClient)(nil)
 
+// AzureWebCategoriesClientAPI contains the set of methods on the AzureWebCategoriesClient type.
+type AzureWebCategoriesClientAPI interface {
+	ListAll(ctx context.Context) (result network.AzureWebCategoryListResultPage, err error)
+	ListAllComplete(ctx context.Context) (result network.AzureWebCategoryListResultIterator, err error)
+}
+
+var _ AzureWebCategoriesClientAPI = (*network.AzureWebCategoriesClient)(nil)
+
 // BastionHostsClientAPI contains the set of methods on the BastionHostsClient type.
 type BastionHostsClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters network.BastionHost) (result network.BastionHostsCreateOrUpdateFuture, err error)
@@ -627,6 +635,13 @@ type VirtualApplianceSkusClientAPI interface {
 }
 
 var _ VirtualApplianceSkusClientAPI = (*network.VirtualApplianceSkusClient)(nil)
+
+// InboundSecurityRuleClientAPI contains the set of methods on the InboundSecurityRuleClient type.
+type InboundSecurityRuleClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, ruleCollectionName string, parameters network.InboundSecurityRule) (result network.InboundSecurityRuleCreateOrUpdateFuture, err error)
+}
+
+var _ InboundSecurityRuleClientAPI = (*network.InboundSecurityRuleClient)(nil)
 
 // WatchersClientAPI contains the set of methods on the WatchersClient type.
 type WatchersClientAPI interface {
@@ -1253,6 +1268,8 @@ var _ VirtualHubBgpConnectionClientAPI = (*network.VirtualHubBgpConnectionClient
 type VirtualHubBgpConnectionsClientAPI interface {
 	List(ctx context.Context, resourceGroupName string, virtualHubName string) (result network.ListVirtualHubBgpConnectionResultsPage, err error)
 	ListComplete(ctx context.Context, resourceGroupName string, virtualHubName string) (result network.ListVirtualHubBgpConnectionResultsIterator, err error)
+	ListAdvertisedRoutes(ctx context.Context, resourceGroupName string, hubName string, connectionName string) (result network.VirtualHubBgpConnectionsListAdvertisedRoutesFuture, err error)
+	ListLearnedRoutes(ctx context.Context, resourceGroupName string, hubName string, connectionName string) (result network.VirtualHubBgpConnectionsListLearnedRoutesFuture, err error)
 }
 
 var _ VirtualHubBgpConnectionsClientAPI = (*network.VirtualHubBgpConnectionsClient)(nil)

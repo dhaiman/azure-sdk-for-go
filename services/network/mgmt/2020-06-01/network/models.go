@@ -6972,6 +6972,282 @@ type AzureReachabilityReportParameters struct {
 	EndTime *date.Time `json:"endTime,omitempty"`
 }
 
+// AzureWebCategory azure Web Category Resource.
+type AzureWebCategory struct {
+	// AzureWebCategoryPropertiesFormat - Properties of the Azure Web Category.
+	*AzureWebCategoryPropertiesFormat `json:"properties,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty"`
+	// Location - Resource location.
+	Location *string `json:"location,omitempty"`
+	// Tags - Resource tags.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for AzureWebCategory.
+func (awc AzureWebCategory) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if awc.AzureWebCategoryPropertiesFormat != nil {
+		objectMap["properties"] = awc.AzureWebCategoryPropertiesFormat
+	}
+	if awc.ID != nil {
+		objectMap["id"] = awc.ID
+	}
+	if awc.Location != nil {
+		objectMap["location"] = awc.Location
+	}
+	if awc.Tags != nil {
+		objectMap["tags"] = awc.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for AzureWebCategory struct.
+func (awc *AzureWebCategory) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var azureWebCategoryPropertiesFormat AzureWebCategoryPropertiesFormat
+				err = json.Unmarshal(*v, &azureWebCategoryPropertiesFormat)
+				if err != nil {
+					return err
+				}
+				awc.AzureWebCategoryPropertiesFormat = &azureWebCategoryPropertiesFormat
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				awc.Etag = &etag
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				awc.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				awc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				awc.Type = &typeVar
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				awc.Location = &location
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				awc.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
+
+// AzureWebCategoryListResult response for ListAzureWebCategories API service call.
+type AzureWebCategoryListResult struct {
+	autorest.Response `json:"-"`
+	// Value - List of Azure Web Categorys for a given Subscription.
+	Value *[]AzureWebCategory `json:"value,omitempty"`
+	// NextLink - URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// AzureWebCategoryListResultIterator provides access to a complete listing of AzureWebCategory values.
+type AzureWebCategoryListResultIterator struct {
+	i    int
+	page AzureWebCategoryListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *AzureWebCategoryListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AzureWebCategoryListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *AzureWebCategoryListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter AzureWebCategoryListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter AzureWebCategoryListResultIterator) Response() AzureWebCategoryListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter AzureWebCategoryListResultIterator) Value() AzureWebCategory {
+	if !iter.page.NotDone() {
+		return AzureWebCategory{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the AzureWebCategoryListResultIterator type.
+func NewAzureWebCategoryListResultIterator(page AzureWebCategoryListResultPage) AzureWebCategoryListResultIterator {
+	return AzureWebCategoryListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (awclr AzureWebCategoryListResult) IsEmpty() bool {
+	return awclr.Value == nil || len(*awclr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (awclr AzureWebCategoryListResult) hasNextLink() bool {
+	return awclr.NextLink != nil && len(*awclr.NextLink) != 0
+}
+
+// azureWebCategoryListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (awclr AzureWebCategoryListResult) azureWebCategoryListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !awclr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(awclr.NextLink)))
+}
+
+// AzureWebCategoryListResultPage contains a page of AzureWebCategory values.
+type AzureWebCategoryListResultPage struct {
+	fn    func(context.Context, AzureWebCategoryListResult) (AzureWebCategoryListResult, error)
+	awclr AzureWebCategoryListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *AzureWebCategoryListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AzureWebCategoryListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.awclr)
+		if err != nil {
+			return err
+		}
+		page.awclr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *AzureWebCategoryListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page AzureWebCategoryListResultPage) NotDone() bool {
+	return !page.awclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page AzureWebCategoryListResultPage) Response() AzureWebCategoryListResult {
+	return page.awclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page AzureWebCategoryListResultPage) Values() []AzureWebCategory {
+	if page.awclr.IsEmpty() {
+		return nil
+	}
+	return *page.awclr.Value
+}
+
+// Creates a new instance of the AzureWebCategoryListResultPage type.
+func NewAzureWebCategoryListResultPage(getNextPage func(context.Context, AzureWebCategoryListResult) (AzureWebCategoryListResult, error)) AzureWebCategoryListResultPage {
+	return AzureWebCategoryListResultPage{fn: getNextPage}
+}
+
+// AzureWebCategoryPropertiesFormat azure Web Category Properties.
+type AzureWebCategoryPropertiesFormat struct {
+	// Group - READ-ONLY; The name of the group that the category belongs to.
+	Group *string `json:"group,omitempty"`
+}
+
 // BackendAddressPool pool of backend IP addresses.
 type BackendAddressPool struct {
 	autorest.Response `json:"-"`
@@ -17364,8 +17640,8 @@ type HopLink struct {
 	*HopLinkProperties `json:"properties,omitempty"`
 	// Issues - READ-ONLY; List of issues.
 	Issues *[]ConnectivityIssue `json:"issues,omitempty"`
-	// Context - READ-ONLY; Provides additional context on the issue.
-	Context *[]map[string]*string `json:"context,omitempty"`
+	// Context - READ-ONLY; Provides additional context on links.
+	Context map[string]*string `json:"context"`
 	// ResourceID - READ-ONLY; Resource ID.
 	ResourceID *string `json:"resourceId,omitempty"`
 }
@@ -17426,12 +17702,12 @@ func (hl *HopLink) UnmarshalJSON(body []byte) error {
 			}
 		case "context":
 			if v != nil {
-				var context []map[string]*string
+				var context map[string]*string
 				err = json.Unmarshal(*v, &context)
 				if err != nil {
 					return err
 				}
-				hl.Context = &context
+				hl.Context = context
 			}
 		case "resourceId":
 			if v != nil {
@@ -18459,6 +18735,152 @@ func (future *InboundNatRulesDeleteFuture) Result(client InboundNatRulesClient) 
 	}
 	ar.Response = future.Response()
 	return
+}
+
+// InboundSecurityRule NVA Inbound Security Rule resource.
+type InboundSecurityRule struct {
+	autorest.Response `json:"-"`
+	// InboundSecurityRuleProperties - The properties of the Inbound Security Rules.
+	*InboundSecurityRuleProperties `json:"properties,omitempty"`
+	// Name - Name of security rule collection.
+	Name *string `json:"name,omitempty"`
+	// Etag - READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty"`
+	// Type - READ-ONLY; NVA inbound security rule type.
+	Type *string `json:"type,omitempty"`
+	// ID - Resource ID.
+	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for InboundSecurityRule.
+func (isr InboundSecurityRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if isr.InboundSecurityRuleProperties != nil {
+		objectMap["properties"] = isr.InboundSecurityRuleProperties
+	}
+	if isr.Name != nil {
+		objectMap["name"] = isr.Name
+	}
+	if isr.ID != nil {
+		objectMap["id"] = isr.ID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for InboundSecurityRule struct.
+func (isr *InboundSecurityRule) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var inboundSecurityRuleProperties InboundSecurityRuleProperties
+				err = json.Unmarshal(*v, &inboundSecurityRuleProperties)
+				if err != nil {
+					return err
+				}
+				isr.InboundSecurityRuleProperties = &inboundSecurityRuleProperties
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				isr.Name = &name
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				isr.Etag = &etag
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				isr.Type = &typeVar
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				isr.ID = &ID
+			}
+		}
+	}
+
+	return nil
+}
+
+// InboundSecurityRuleCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type InboundSecurityRuleCreateOrUpdateFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *InboundSecurityRuleCreateOrUpdateFuture) Result(client InboundSecurityRuleClient) (isr InboundSecurityRule, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.InboundSecurityRuleCreateOrUpdateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.InboundSecurityRuleCreateOrUpdateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if isr.Response.Response, err = future.GetResult(sender); err == nil && isr.Response.Response.StatusCode != http.StatusNoContent {
+		isr, err = client.CreateOrUpdateResponder(isr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.InboundSecurityRuleCreateOrUpdateFuture", "Result", isr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// InboundSecurityRuleProperties properties of the Inbound Security Rules resource.
+type InboundSecurityRuleProperties struct {
+	// Rules - List of allowed rules.
+	Rules *[]InboundSecurityRules `json:"rules,omitempty"`
+	// ProvisioningState - READ-ONLY; The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for InboundSecurityRuleProperties.
+func (isrp InboundSecurityRuleProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if isrp.Rules != nil {
+		objectMap["rules"] = isrp.Rules
+	}
+	return json.Marshal(objectMap)
+}
+
+// InboundSecurityRules properties of the Inbound Security Rules resource.
+type InboundSecurityRules struct {
+	// Protocol - Protocol. This should be either TCP or UDP. Possible values include: 'InboundSecurityRulesProtocolTCP', 'InboundSecurityRulesProtocolUDP'
+	Protocol InboundSecurityRulesProtocol `json:"protocol,omitempty"`
+	// SourceAddressPrefix - The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed.
+	SourceAddressPrefix *string `json:"sourceAddressPrefix,omitempty"`
+	// DestinationPortRange - NVA port ranges to be opened up. One needs to provide specific ports.
+	DestinationPortRange *int32 `json:"destinationPortRange,omitempty"`
 }
 
 // IntentPolicy network Intent Policy resource.
@@ -27258,6 +27680,31 @@ func (perccpf PeerExpressRouteCircuitConnectionPropertiesFormat) MarshalJSON() (
 	return json.Marshal(objectMap)
 }
 
+// PeerRoute peer routing details.
+type PeerRoute struct {
+	// LocalAddress - READ-ONLY; The peer's local address.
+	LocalAddress *string `json:"localAddress,omitempty"`
+	// NetworkProperty - READ-ONLY; The route's network prefix.
+	NetworkProperty *string `json:"network,omitempty"`
+	// NextHop - READ-ONLY; The route's next hop.
+	NextHop *string `json:"nextHop,omitempty"`
+	// SourcePeer - READ-ONLY; The peer this route was learned from.
+	SourcePeer *string `json:"sourcePeer,omitempty"`
+	// Origin - READ-ONLY; The source this route was learned from.
+	Origin *string `json:"origin,omitempty"`
+	// AsPath - READ-ONLY; The route's AS path sequence.
+	AsPath *string `json:"asPath,omitempty"`
+	// Weight - READ-ONLY; The route's weight.
+	Weight *int32 `json:"weight,omitempty"`
+}
+
+// PeerRouteList list of virtual router peer routes.
+type PeerRouteList struct {
+	autorest.Response `json:"-"`
+	// Value - List of peer routes.
+	Value *[]PeerRoute `json:"value,omitempty"`
+}
+
 // PolicySettings defines contents of a web application firewall global configuration.
 type PolicySettings struct {
 	// State - The state of the policy. Possible values include: 'WebApplicationFirewallEnabledStateDisabled', 'WebApplicationFirewallEnabledStateEnabled'
@@ -35309,6 +35756,8 @@ type VirtualAppliancePropertiesFormat struct {
 	VirtualApplianceNics *[]VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty"`
 	// VirtualApplianceSites - READ-ONLY; List of references to VirtualApplianceSite.
 	VirtualApplianceSites *[]SubResource `json:"virtualApplianceSites,omitempty"`
+	// InboundSecurityRules - READ-ONLY; List of references to InboundSecurityRules.
+	InboundSecurityRules *[]SubResource `json:"inboundSecurityRules,omitempty"`
 	// ProvisioningState - READ-ONLY; The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
 	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 }
@@ -36181,6 +36630,64 @@ func (future *VirtualHubBgpConnectionDeleteFuture) Result(client VirtualHubBgpCo
 		return
 	}
 	ar.Response = future.Response()
+	return
+}
+
+// VirtualHubBgpConnectionsListAdvertisedRoutesFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
+type VirtualHubBgpConnectionsListAdvertisedRoutesFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualHubBgpConnectionsListAdvertisedRoutesFuture) Result(client VirtualHubBgpConnectionsClient) (prl PeerRouteList, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.VirtualHubBgpConnectionsListAdvertisedRoutesFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.VirtualHubBgpConnectionsListAdvertisedRoutesFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prl.Response.Response, err = future.GetResult(sender); err == nil && prl.Response.Response.StatusCode != http.StatusNoContent {
+		prl, err = client.ListAdvertisedRoutesResponder(prl.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.VirtualHubBgpConnectionsListAdvertisedRoutesFuture", "Result", prl.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// VirtualHubBgpConnectionsListLearnedRoutesFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
+type VirtualHubBgpConnectionsListLearnedRoutesFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *VirtualHubBgpConnectionsListLearnedRoutesFuture) Result(client VirtualHubBgpConnectionsClient) (prl PeerRouteList, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.VirtualHubBgpConnectionsListLearnedRoutesFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("network.VirtualHubBgpConnectionsListLearnedRoutesFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prl.Response.Response, err = future.GetResult(sender); err == nil && prl.Response.Response.StatusCode != http.StatusNoContent {
+		prl, err = client.ListLearnedRoutesResponder(prl.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "network.VirtualHubBgpConnectionsListLearnedRoutesFuture", "Result", prl.Response.Response, "Failure responding to request")
+		}
+	}
 	return
 }
 
