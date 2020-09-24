@@ -68,3 +68,14 @@ type OperationsClientAPI interface {
 }
 
 var _ OperationsClientAPI = (*keyvault.OperationsClient)(nil)
+
+// SecretsClientAPI contains the set of methods on the SecretsClient type.
+type SecretsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, vaultName string, secretName string, parameters keyvault.SecretCreateOrUpdateParameters) (result keyvault.Secret, err error)
+	Get(ctx context.Context, resourceGroupName string, vaultName string, secretName string) (result keyvault.Secret, err error)
+	List(ctx context.Context, resourceGroupName string, vaultName string, top *int32) (result keyvault.SecretListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, vaultName string, top *int32) (result keyvault.SecretListResultIterator, err error)
+	Update(ctx context.Context, resourceGroupName string, vaultName string, secretName string, parameters keyvault.SecretPatchParameters) (result keyvault.Secret, err error)
+}
+
+var _ SecretsClientAPI = (*keyvault.SecretsClient)(nil)

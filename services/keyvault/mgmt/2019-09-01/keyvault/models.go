@@ -32,295 +32,8 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/keyvault/mgmt/2019-09-01/keyvault"
 
-// AccessPolicyUpdateKind enumerates the values for access policy update kind.
-type AccessPolicyUpdateKind string
-
-const (
-	// Add ...
-	Add AccessPolicyUpdateKind = "add"
-	// Remove ...
-	Remove AccessPolicyUpdateKind = "remove"
-	// Replace ...
-	Replace AccessPolicyUpdateKind = "replace"
-)
-
-// PossibleAccessPolicyUpdateKindValues returns an array of possible values for the AccessPolicyUpdateKind const type.
-func PossibleAccessPolicyUpdateKindValues() []AccessPolicyUpdateKind {
-	return []AccessPolicyUpdateKind{Add, Remove, Replace}
-}
-
-// CertificatePermissions enumerates the values for certificate permissions.
-type CertificatePermissions string
-
-const (
-	// Backup ...
-	Backup CertificatePermissions = "backup"
-	// Create ...
-	Create CertificatePermissions = "create"
-	// Delete ...
-	Delete CertificatePermissions = "delete"
-	// Deleteissuers ...
-	Deleteissuers CertificatePermissions = "deleteissuers"
-	// Get ...
-	Get CertificatePermissions = "get"
-	// Getissuers ...
-	Getissuers CertificatePermissions = "getissuers"
-	// Import ...
-	Import CertificatePermissions = "import"
-	// List ...
-	List CertificatePermissions = "list"
-	// Listissuers ...
-	Listissuers CertificatePermissions = "listissuers"
-	// Managecontacts ...
-	Managecontacts CertificatePermissions = "managecontacts"
-	// Manageissuers ...
-	Manageissuers CertificatePermissions = "manageissuers"
-	// Purge ...
-	Purge CertificatePermissions = "purge"
-	// Recover ...
-	Recover CertificatePermissions = "recover"
-	// Restore ...
-	Restore CertificatePermissions = "restore"
-	// Setissuers ...
-	Setissuers CertificatePermissions = "setissuers"
-	// Update ...
-	Update CertificatePermissions = "update"
-)
-
-// PossibleCertificatePermissionsValues returns an array of possible values for the CertificatePermissions const type.
-func PossibleCertificatePermissionsValues() []CertificatePermissions {
-	return []CertificatePermissions{Backup, Create, Delete, Deleteissuers, Get, Getissuers, Import, List, Listissuers, Managecontacts, Manageissuers, Purge, Recover, Restore, Setissuers, Update}
-}
-
-// CreateMode enumerates the values for create mode.
-type CreateMode string
-
-const (
-	// CreateModeDefault ...
-	CreateModeDefault CreateMode = "default"
-	// CreateModeRecover ...
-	CreateModeRecover CreateMode = "recover"
-)
-
-// PossibleCreateModeValues returns an array of possible values for the CreateMode const type.
-func PossibleCreateModeValues() []CreateMode {
-	return []CreateMode{CreateModeDefault, CreateModeRecover}
-}
-
-// KeyPermissions enumerates the values for key permissions.
-type KeyPermissions string
-
-const (
-	// KeyPermissionsBackup ...
-	KeyPermissionsBackup KeyPermissions = "backup"
-	// KeyPermissionsCreate ...
-	KeyPermissionsCreate KeyPermissions = "create"
-	// KeyPermissionsDecrypt ...
-	KeyPermissionsDecrypt KeyPermissions = "decrypt"
-	// KeyPermissionsDelete ...
-	KeyPermissionsDelete KeyPermissions = "delete"
-	// KeyPermissionsEncrypt ...
-	KeyPermissionsEncrypt KeyPermissions = "encrypt"
-	// KeyPermissionsGet ...
-	KeyPermissionsGet KeyPermissions = "get"
-	// KeyPermissionsImport ...
-	KeyPermissionsImport KeyPermissions = "import"
-	// KeyPermissionsList ...
-	KeyPermissionsList KeyPermissions = "list"
-	// KeyPermissionsPurge ...
-	KeyPermissionsPurge KeyPermissions = "purge"
-	// KeyPermissionsRecover ...
-	KeyPermissionsRecover KeyPermissions = "recover"
-	// KeyPermissionsRestore ...
-	KeyPermissionsRestore KeyPermissions = "restore"
-	// KeyPermissionsSign ...
-	KeyPermissionsSign KeyPermissions = "sign"
-	// KeyPermissionsUnwrapKey ...
-	KeyPermissionsUnwrapKey KeyPermissions = "unwrapKey"
-	// KeyPermissionsUpdate ...
-	KeyPermissionsUpdate KeyPermissions = "update"
-	// KeyPermissionsVerify ...
-	KeyPermissionsVerify KeyPermissions = "verify"
-	// KeyPermissionsWrapKey ...
-	KeyPermissionsWrapKey KeyPermissions = "wrapKey"
-)
-
-// PossibleKeyPermissionsValues returns an array of possible values for the KeyPermissions const type.
-func PossibleKeyPermissionsValues() []KeyPermissions {
-	return []KeyPermissions{KeyPermissionsBackup, KeyPermissionsCreate, KeyPermissionsDecrypt, KeyPermissionsDelete, KeyPermissionsEncrypt, KeyPermissionsGet, KeyPermissionsImport, KeyPermissionsList, KeyPermissionsPurge, KeyPermissionsRecover, KeyPermissionsRestore, KeyPermissionsSign, KeyPermissionsUnwrapKey, KeyPermissionsUpdate, KeyPermissionsVerify, KeyPermissionsWrapKey}
-}
-
-// NetworkRuleAction enumerates the values for network rule action.
-type NetworkRuleAction string
-
-const (
-	// Allow ...
-	Allow NetworkRuleAction = "Allow"
-	// Deny ...
-	Deny NetworkRuleAction = "Deny"
-)
-
-// PossibleNetworkRuleActionValues returns an array of possible values for the NetworkRuleAction const type.
-func PossibleNetworkRuleActionValues() []NetworkRuleAction {
-	return []NetworkRuleAction{Allow, Deny}
-}
-
-// NetworkRuleBypassOptions enumerates the values for network rule bypass options.
-type NetworkRuleBypassOptions string
-
-const (
-	// AzureServices ...
-	AzureServices NetworkRuleBypassOptions = "AzureServices"
-	// None ...
-	None NetworkRuleBypassOptions = "None"
-)
-
-// PossibleNetworkRuleBypassOptionsValues returns an array of possible values for the NetworkRuleBypassOptions const type.
-func PossibleNetworkRuleBypassOptionsValues() []NetworkRuleBypassOptions {
-	return []NetworkRuleBypassOptions{AzureServices, None}
-}
-
-// PrivateEndpointConnectionProvisioningState enumerates the values for private endpoint connection
-// provisioning state.
-type PrivateEndpointConnectionProvisioningState string
-
-const (
-	// Creating ...
-	Creating PrivateEndpointConnectionProvisioningState = "Creating"
-	// Deleting ...
-	Deleting PrivateEndpointConnectionProvisioningState = "Deleting"
-	// Disconnected ...
-	Disconnected PrivateEndpointConnectionProvisioningState = "Disconnected"
-	// Failed ...
-	Failed PrivateEndpointConnectionProvisioningState = "Failed"
-	// Succeeded ...
-	Succeeded PrivateEndpointConnectionProvisioningState = "Succeeded"
-	// Updating ...
-	Updating PrivateEndpointConnectionProvisioningState = "Updating"
-)
-
-// PossiblePrivateEndpointConnectionProvisioningStateValues returns an array of possible values for the PrivateEndpointConnectionProvisioningState const type.
-func PossiblePrivateEndpointConnectionProvisioningStateValues() []PrivateEndpointConnectionProvisioningState {
-	return []PrivateEndpointConnectionProvisioningState{Creating, Deleting, Disconnected, Failed, Succeeded, Updating}
-}
-
-// PrivateEndpointServiceConnectionStatus enumerates the values for private endpoint service connection status.
-type PrivateEndpointServiceConnectionStatus string
-
-const (
-	// PrivateEndpointServiceConnectionStatusApproved ...
-	PrivateEndpointServiceConnectionStatusApproved PrivateEndpointServiceConnectionStatus = "Approved"
-	// PrivateEndpointServiceConnectionStatusDisconnected ...
-	PrivateEndpointServiceConnectionStatusDisconnected PrivateEndpointServiceConnectionStatus = "Disconnected"
-	// PrivateEndpointServiceConnectionStatusPending ...
-	PrivateEndpointServiceConnectionStatusPending PrivateEndpointServiceConnectionStatus = "Pending"
-	// PrivateEndpointServiceConnectionStatusRejected ...
-	PrivateEndpointServiceConnectionStatusRejected PrivateEndpointServiceConnectionStatus = "Rejected"
-)
-
-// PossiblePrivateEndpointServiceConnectionStatusValues returns an array of possible values for the PrivateEndpointServiceConnectionStatus const type.
-func PossiblePrivateEndpointServiceConnectionStatusValues() []PrivateEndpointServiceConnectionStatus {
-	return []PrivateEndpointServiceConnectionStatus{PrivateEndpointServiceConnectionStatusApproved, PrivateEndpointServiceConnectionStatusDisconnected, PrivateEndpointServiceConnectionStatusPending, PrivateEndpointServiceConnectionStatusRejected}
-}
-
-// Reason enumerates the values for reason.
-type Reason string
-
-const (
-	// AccountNameInvalid ...
-	AccountNameInvalid Reason = "AccountNameInvalid"
-	// AlreadyExists ...
-	AlreadyExists Reason = "AlreadyExists"
-)
-
-// PossibleReasonValues returns an array of possible values for the Reason const type.
-func PossibleReasonValues() []Reason {
-	return []Reason{AccountNameInvalid, AlreadyExists}
-}
-
-// SecretPermissions enumerates the values for secret permissions.
-type SecretPermissions string
-
-const (
-	// SecretPermissionsBackup ...
-	SecretPermissionsBackup SecretPermissions = "backup"
-	// SecretPermissionsDelete ...
-	SecretPermissionsDelete SecretPermissions = "delete"
-	// SecretPermissionsGet ...
-	SecretPermissionsGet SecretPermissions = "get"
-	// SecretPermissionsList ...
-	SecretPermissionsList SecretPermissions = "list"
-	// SecretPermissionsPurge ...
-	SecretPermissionsPurge SecretPermissions = "purge"
-	// SecretPermissionsRecover ...
-	SecretPermissionsRecover SecretPermissions = "recover"
-	// SecretPermissionsRestore ...
-	SecretPermissionsRestore SecretPermissions = "restore"
-	// SecretPermissionsSet ...
-	SecretPermissionsSet SecretPermissions = "set"
-)
-
-// PossibleSecretPermissionsValues returns an array of possible values for the SecretPermissions const type.
-func PossibleSecretPermissionsValues() []SecretPermissions {
-	return []SecretPermissions{SecretPermissionsBackup, SecretPermissionsDelete, SecretPermissionsGet, SecretPermissionsList, SecretPermissionsPurge, SecretPermissionsRecover, SecretPermissionsRestore, SecretPermissionsSet}
-}
-
-// SkuName enumerates the values for sku name.
-type SkuName string
-
-const (
-	// Premium ...
-	Premium SkuName = "premium"
-	// Standard ...
-	Standard SkuName = "standard"
-)
-
-// PossibleSkuNameValues returns an array of possible values for the SkuName const type.
-func PossibleSkuNameValues() []SkuName {
-	return []SkuName{Premium, Standard}
-}
-
-// StoragePermissions enumerates the values for storage permissions.
-type StoragePermissions string
-
-const (
-	// StoragePermissionsBackup ...
-	StoragePermissionsBackup StoragePermissions = "backup"
-	// StoragePermissionsDelete ...
-	StoragePermissionsDelete StoragePermissions = "delete"
-	// StoragePermissionsDeletesas ...
-	StoragePermissionsDeletesas StoragePermissions = "deletesas"
-	// StoragePermissionsGet ...
-	StoragePermissionsGet StoragePermissions = "get"
-	// StoragePermissionsGetsas ...
-	StoragePermissionsGetsas StoragePermissions = "getsas"
-	// StoragePermissionsList ...
-	StoragePermissionsList StoragePermissions = "list"
-	// StoragePermissionsListsas ...
-	StoragePermissionsListsas StoragePermissions = "listsas"
-	// StoragePermissionsPurge ...
-	StoragePermissionsPurge StoragePermissions = "purge"
-	// StoragePermissionsRecover ...
-	StoragePermissionsRecover StoragePermissions = "recover"
-	// StoragePermissionsRegeneratekey ...
-	StoragePermissionsRegeneratekey StoragePermissions = "regeneratekey"
-	// StoragePermissionsRestore ...
-	StoragePermissionsRestore StoragePermissions = "restore"
-	// StoragePermissionsSet ...
-	StoragePermissionsSet StoragePermissions = "set"
-	// StoragePermissionsSetsas ...
-	StoragePermissionsSetsas StoragePermissions = "setsas"
-	// StoragePermissionsUpdate ...
-	StoragePermissionsUpdate StoragePermissions = "update"
-)
-
-// PossibleStoragePermissionsValues returns an array of possible values for the StoragePermissions const type.
-func PossibleStoragePermissionsValues() []StoragePermissions {
-	return []StoragePermissions{StoragePermissionsBackup, StoragePermissionsDelete, StoragePermissionsDeletesas, StoragePermissionsGet, StoragePermissionsGetsas, StoragePermissionsList, StoragePermissionsListsas, StoragePermissionsPurge, StoragePermissionsRecover, StoragePermissionsRegeneratekey, StoragePermissionsRestore, StoragePermissionsSet, StoragePermissionsSetsas, StoragePermissionsUpdate}
-}
-
-// AccessPolicyEntry an identity that have access to the key vault. All identities in the array must use
-// the same tenant ID as the key vault's tenant ID.
+// AccessPolicyEntry an identity that have access to the key vault. All identities in the array must use the
+// same tenant ID as the key vault's tenant ID.
 type AccessPolicyEntry struct {
 	// TenantID - The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault.
 	TenantID *uuid.UUID `json:"tenantId,omitempty"`
@@ -330,6 +43,35 @@ type AccessPolicyEntry struct {
 	ApplicationID *uuid.UUID `json:"applicationId,omitempty"`
 	// Permissions - Permissions the identity has for keys, secrets and certificates.
 	Permissions *Permissions `json:"permissions,omitempty"`
+}
+
+// Attributes the object attributes managed by the KeyVault service.
+type Attributes struct {
+	// Enabled - Determines whether the object is enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+	// NotBefore - Not before date in seconds since 1970-01-01T00:00:00Z.
+	NotBefore *date.UnixTime `json:"nbf,omitempty"`
+	// Expires - Expiry date in seconds since 1970-01-01T00:00:00Z.
+	Expires *date.UnixTime `json:"exp,omitempty"`
+	// Created - READ-ONLY; Creation time in seconds since 1970-01-01T00:00:00Z.
+	Created *date.UnixTime `json:"created,omitempty"`
+	// Updated - READ-ONLY; Last updated time in seconds since 1970-01-01T00:00:00Z.
+	Updated *date.UnixTime `json:"updated,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Attributes.
+func (a Attributes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if a.Enabled != nil {
+		objectMap["enabled"] = a.Enabled
+	}
+	if a.NotBefore != nil {
+		objectMap["nbf"] = a.NotBefore
+	}
+	if a.Expires != nil {
+		objectMap["exp"] = a.Expires
+	}
+	return json.Marshal(objectMap)
 }
 
 // CheckNameAvailabilityResult the CheckNameAvailability operation response.
@@ -367,6 +109,15 @@ type DeletedVault struct {
 	Type *string `json:"type,omitempty"`
 	// Properties - Properties of the vault
 	Properties *DeletedVaultProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DeletedVault.
+func (dv DeletedVault) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if dv.Properties != nil {
+		objectMap["properties"] = dv.Properties
+	}
+	return json.Marshal(objectMap)
 }
 
 // DeletedVaultListResult list of vaults
@@ -446,10 +197,15 @@ func (dvlr DeletedVaultListResult) IsEmpty() bool {
 	return dvlr.Value == nil || len(*dvlr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (dvlr DeletedVaultListResult) hasNextLink() bool {
+	return dvlr.NextLink != nil && len(*dvlr.NextLink) != 0
+}
+
 // deletedVaultListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (dvlr DeletedVaultListResult) deletedVaultListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if dvlr.NextLink == nil || len(to.String(dvlr.NextLink)) < 1 {
+	if !dvlr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -477,11 +233,16 @@ func (page *DeletedVaultListResultPage) NextWithContext(ctx context.Context) (er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.dvlr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.dvlr)
+		if err != nil {
+			return err
+		}
+		page.dvlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.dvlr = next
 	return nil
 }
 
@@ -656,8 +417,8 @@ type OperationDisplay struct {
 	Description *string `json:"description,omitempty"`
 }
 
-// OperationListResult result of the request to list Storage operations. It contains a list of operations
-// and a URL link to get the next set of results.
+// OperationListResult result of the request to list Storage operations. It contains a list of operations and a
+// URL link to get the next set of results.
 type OperationListResult struct {
 	autorest.Response `json:"-"`
 	// Value - List of Storage operations supported by the Storage resource provider.
@@ -734,10 +495,15 @@ func (olr OperationListResult) IsEmpty() bool {
 	return olr.Value == nil || len(*olr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (olr OperationListResult) hasNextLink() bool {
+	return olr.NextLink != nil && len(*olr.NextLink) != 0
+}
+
 // operationListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (olr OperationListResult) operationListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if olr.NextLink == nil || len(to.String(olr.NextLink)) < 1 {
+	if !olr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -765,11 +531,16 @@ func (page *OperationListResultPage) NextWithContext(ctx context.Context) (err e
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.olr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.olr)
+		if err != nil {
+			return err
+		}
+		page.olr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.olr = next
 	return nil
 }
 
@@ -1111,6 +882,15 @@ type PrivateLinkResourceProperties struct {
 	RequiredZoneNames *[]string `json:"requiredZoneNames,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for PrivateLinkResourceProperties.
+func (plrp PrivateLinkResourceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if plrp.RequiredZoneNames != nil {
+		objectMap["requiredZoneNames"] = plrp.RequiredZoneNames
+	}
+	return json.Marshal(objectMap)
+}
+
 // PrivateLinkServiceConnectionState an object that represents the approval state of the private link
 // connection.
 type PrivateLinkServiceConnectionState struct {
@@ -1219,10 +999,15 @@ func (rlr ResourceListResult) IsEmpty() bool {
 	return rlr.Value == nil || len(*rlr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (rlr ResourceListResult) hasNextLink() bool {
+	return rlr.NextLink != nil && len(*rlr.NextLink) != 0
+}
+
 // resourceListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (rlr ResourceListResult) resourceListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if rlr.NextLink == nil || len(to.String(rlr.NextLink)) < 1 {
+	if !rlr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1250,11 +1035,16 @@ func (page *ResourceListResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.rlr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.rlr)
+		if err != nil {
+			return err
+		}
+		page.rlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.rlr = next
 	return nil
 }
 
@@ -1286,6 +1076,296 @@ func (page ResourceListResultPage) Values() []Resource {
 // Creates a new instance of the ResourceListResultPage type.
 func NewResourceListResultPage(getNextPage func(context.Context, ResourceListResult) (ResourceListResult, error)) ResourceListResultPage {
 	return ResourceListResultPage{fn: getNextPage}
+}
+
+// Secret resource information with extended details.
+type Secret struct {
+	autorest.Response `json:"-"`
+	// Properties - Properties of the secret
+	Properties *SecretProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Fully qualified identifier of the key vault resource.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Name of the key vault resource.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type of the key vault resource.
+	Type *string `json:"type,omitempty"`
+	// Location - READ-ONLY; Azure location of the key vault resource.
+	Location *string `json:"location,omitempty"`
+	// Tags - READ-ONLY; Tags assigned to the key vault resource.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for Secret.
+func (s Secret) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if s.Properties != nil {
+		objectMap["properties"] = s.Properties
+	}
+	return json.Marshal(objectMap)
+}
+
+// SecretAttributes the secret management attributes.
+type SecretAttributes struct {
+	// Enabled - Determines whether the object is enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+	// NotBefore - Not before date in seconds since 1970-01-01T00:00:00Z.
+	NotBefore *date.UnixTime `json:"nbf,omitempty"`
+	// Expires - Expiry date in seconds since 1970-01-01T00:00:00Z.
+	Expires *date.UnixTime `json:"exp,omitempty"`
+	// Created - READ-ONLY; Creation time in seconds since 1970-01-01T00:00:00Z.
+	Created *date.UnixTime `json:"created,omitempty"`
+	// Updated - READ-ONLY; Last updated time in seconds since 1970-01-01T00:00:00Z.
+	Updated *date.UnixTime `json:"updated,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecretAttributes.
+func (sa SecretAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sa.Enabled != nil {
+		objectMap["enabled"] = sa.Enabled
+	}
+	if sa.NotBefore != nil {
+		objectMap["nbf"] = sa.NotBefore
+	}
+	if sa.Expires != nil {
+		objectMap["exp"] = sa.Expires
+	}
+	return json.Marshal(objectMap)
+}
+
+// SecretCreateOrUpdateParameters parameters for creating or updating a secret
+type SecretCreateOrUpdateParameters struct {
+	// Tags - The tags that will be assigned to the secret.
+	Tags map[string]*string `json:"tags"`
+	// Properties - Properties of the secret
+	Properties *SecretProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecretCreateOrUpdateParameters.
+func (scoup SecretCreateOrUpdateParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if scoup.Tags != nil {
+		objectMap["tags"] = scoup.Tags
+	}
+	if scoup.Properties != nil {
+		objectMap["properties"] = scoup.Properties
+	}
+	return json.Marshal(objectMap)
+}
+
+// SecretListResult list of secrets
+type SecretListResult struct {
+	autorest.Response `json:"-"`
+	// Value - The list of secrets.
+	Value *[]Secret `json:"value,omitempty"`
+	// NextLink - The URL to get the next set of secrets.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// SecretListResultIterator provides access to a complete listing of Secret values.
+type SecretListResultIterator struct {
+	i    int
+	page SecretListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *SecretListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecretListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *SecretListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter SecretListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter SecretListResultIterator) Response() SecretListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter SecretListResultIterator) Value() Secret {
+	if !iter.page.NotDone() {
+		return Secret{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the SecretListResultIterator type.
+func NewSecretListResultIterator(page SecretListResultPage) SecretListResultIterator {
+	return SecretListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (slr SecretListResult) IsEmpty() bool {
+	return slr.Value == nil || len(*slr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (slr SecretListResult) hasNextLink() bool {
+	return slr.NextLink != nil && len(*slr.NextLink) != 0
+}
+
+// secretListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (slr SecretListResult) secretListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !slr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(slr.NextLink)))
+}
+
+// SecretListResultPage contains a page of Secret values.
+type SecretListResultPage struct {
+	fn  func(context.Context, SecretListResult) (SecretListResult, error)
+	slr SecretListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *SecretListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/SecretListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.slr)
+		if err != nil {
+			return err
+		}
+		page.slr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *SecretListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page SecretListResultPage) NotDone() bool {
+	return !page.slr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page SecretListResultPage) Response() SecretListResult {
+	return page.slr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page SecretListResultPage) Values() []Secret {
+	if page.slr.IsEmpty() {
+		return nil
+	}
+	return *page.slr.Value
+}
+
+// Creates a new instance of the SecretListResultPage type.
+func NewSecretListResultPage(getNextPage func(context.Context, SecretListResult) (SecretListResult, error)) SecretListResultPage {
+	return SecretListResultPage{fn: getNextPage}
+}
+
+// SecretPatchParameters parameters for patching a secret
+type SecretPatchParameters struct {
+	// Tags - The tags that will be assigned to the secret.
+	Tags map[string]*string `json:"tags"`
+	// Properties - Properties of the secret
+	Properties *SecretPatchProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecretPatchParameters.
+func (spp SecretPatchParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if spp.Tags != nil {
+		objectMap["tags"] = spp.Tags
+	}
+	if spp.Properties != nil {
+		objectMap["properties"] = spp.Properties
+	}
+	return json.Marshal(objectMap)
+}
+
+// SecretPatchProperties properties of the secret
+type SecretPatchProperties struct {
+	// Value - The value of the secret.
+	Value *string `json:"value,omitempty"`
+	// ContentType - The content type of the secret.
+	ContentType *string `json:"contentType,omitempty"`
+	// Attributes - The attributes of the secret.
+	Attributes *SecretAttributes `json:"attributes,omitempty"`
+}
+
+// SecretProperties properties of the secret
+type SecretProperties struct {
+	// Value - The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
+	Value *string `json:"value,omitempty"`
+	// ContentType - The content type of the secret.
+	ContentType *string `json:"contentType,omitempty"`
+	// Attributes - The attributes of the secret.
+	Attributes *SecretAttributes `json:"attributes,omitempty"`
+	// SecretURI - READ-ONLY; The URI to retrieve the current version of the secret.
+	SecretURI *string `json:"secretUri,omitempty"`
+	// SecretURIWithVersion - READ-ONLY; The URI to retrieve the specific version of the secret.
+	SecretURIWithVersion *string `json:"secretUriWithVersion,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SecretProperties.
+func (sp SecretProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.Value != nil {
+		objectMap["value"] = sp.Value
+	}
+	if sp.ContentType != nil {
+		objectMap["contentType"] = sp.ContentType
+	}
+	if sp.Attributes != nil {
+		objectMap["attributes"] = sp.Attributes
+	}
+	return json.Marshal(objectMap)
 }
 
 // ServiceSpecification one property of operation, include log specifications.
@@ -1347,6 +1427,15 @@ type VaultAccessPolicyParameters struct {
 	Location *string `json:"location,omitempty"`
 	// Properties - Properties of the access policy
 	Properties *VaultAccessPolicyProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for VaultAccessPolicyParameters.
+func (vapp VaultAccessPolicyParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vapp.Properties != nil {
+		objectMap["properties"] = vapp.Properties
+	}
+	return json.Marshal(objectMap)
 }
 
 // VaultAccessPolicyProperties properties of the vault access policy
@@ -1465,10 +1554,15 @@ func (vlr VaultListResult) IsEmpty() bool {
 	return vlr.Value == nil || len(*vlr.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (vlr VaultListResult) hasNextLink() bool {
+	return vlr.NextLink != nil && len(*vlr.NextLink) != 0
+}
+
 // vaultListResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (vlr VaultListResult) vaultListResultPreparer(ctx context.Context) (*http.Request, error) {
-	if vlr.NextLink == nil || len(to.String(vlr.NextLink)) < 1 {
+	if !vlr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -1496,11 +1590,16 @@ func (page *VaultListResultPage) NextWithContext(ctx context.Context) (err error
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.vlr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.vlr)
+		if err != nil {
+			return err
+		}
+		page.vlr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
 	}
-	page.vlr = next
 	return nil
 }
 
@@ -1612,6 +1711,51 @@ type VaultProperties struct {
 	NetworkAcls *NetworkRuleSet `json:"networkAcls,omitempty"`
 	// PrivateEndpointConnections - READ-ONLY; List of private endpoint connections associated with the key vault.
 	PrivateEndpointConnections *[]PrivateEndpointConnectionItem `json:"privateEndpointConnections,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for VaultProperties.
+func (vp VaultProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if vp.TenantID != nil {
+		objectMap["tenantId"] = vp.TenantID
+	}
+	if vp.Sku != nil {
+		objectMap["sku"] = vp.Sku
+	}
+	if vp.AccessPolicies != nil {
+		objectMap["accessPolicies"] = vp.AccessPolicies
+	}
+	if vp.VaultURI != nil {
+		objectMap["vaultUri"] = vp.VaultURI
+	}
+	if vp.EnabledForDeployment != nil {
+		objectMap["enabledForDeployment"] = vp.EnabledForDeployment
+	}
+	if vp.EnabledForDiskEncryption != nil {
+		objectMap["enabledForDiskEncryption"] = vp.EnabledForDiskEncryption
+	}
+	if vp.EnabledForTemplateDeployment != nil {
+		objectMap["enabledForTemplateDeployment"] = vp.EnabledForTemplateDeployment
+	}
+	if vp.EnableSoftDelete != nil {
+		objectMap["enableSoftDelete"] = vp.EnableSoftDelete
+	}
+	if vp.SoftDeleteRetentionInDays != nil {
+		objectMap["softDeleteRetentionInDays"] = vp.SoftDeleteRetentionInDays
+	}
+	if vp.EnableRbacAuthorization != nil {
+		objectMap["enableRbacAuthorization"] = vp.EnableRbacAuthorization
+	}
+	if vp.CreateMode != "" {
+		objectMap["createMode"] = vp.CreateMode
+	}
+	if vp.EnablePurgeProtection != nil {
+		objectMap["enablePurgeProtection"] = vp.EnablePurgeProtection
+	}
+	if vp.NetworkAcls != nil {
+		objectMap["networkAcls"] = vp.NetworkAcls
+	}
+	return json.Marshal(objectMap)
 }
 
 // VaultsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
