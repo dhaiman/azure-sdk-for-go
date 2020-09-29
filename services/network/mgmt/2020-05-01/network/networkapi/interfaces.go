@@ -878,7 +878,6 @@ type VirtualNetworksClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters network.VirtualNetwork) (result network.VirtualNetworksCreateOrUpdateFuture, err error)
 	Delete(ctx context.Context, resourceGroupName string, virtualNetworkName string) (result network.VirtualNetworksDeleteFuture, err error)
 	Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, expand string) (result network.VirtualNetwork, err error)
-	GetBastionHosts(ctx context.Context, resourceGroupName string, virtualNetworkName string) (result network.BastionHostListResult, err error)
 	List(ctx context.Context, resourceGroupName string) (result network.VirtualNetworkListResultPage, err error)
 	ListComplete(ctx context.Context, resourceGroupName string) (result network.VirtualNetworkListResultIterator, err error)
 	ListAll(ctx context.Context) (result network.VirtualNetworkListResultPage, err error)
@@ -1245,16 +1244,3 @@ type HubRouteTablesClientAPI interface {
 }
 
 var _ HubRouteTablesClientAPI = (*network.HubRouteTablesClient)(nil)
-
-// WebApplicationFirewallPoliciesClientAPI contains the set of methods on the WebApplicationFirewallPoliciesClient type.
-type WebApplicationFirewallPoliciesClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters network.WebApplicationFirewallPolicy) (result network.WebApplicationFirewallPolicy, err error)
-	Delete(ctx context.Context, resourceGroupName string, policyName string) (result network.WebApplicationFirewallPoliciesDeleteFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, policyName string) (result network.WebApplicationFirewallPolicy, err error)
-	List(ctx context.Context, resourceGroupName string) (result network.WebApplicationFirewallPolicyListResultPage, err error)
-	ListComplete(ctx context.Context, resourceGroupName string) (result network.WebApplicationFirewallPolicyListResultIterator, err error)
-	ListAll(ctx context.Context) (result network.WebApplicationFirewallPolicyListResultPage, err error)
-	ListAllComplete(ctx context.Context) (result network.WebApplicationFirewallPolicyListResultIterator, err error)
-}
-
-var _ WebApplicationFirewallPoliciesClientAPI = (*network.WebApplicationFirewallPoliciesClient)(nil)
