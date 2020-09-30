@@ -2992,6 +2992,8 @@ type WhatIfChange struct {
 
 // WhatIfOperationProperties deployment operation properties.
 type WhatIfOperationProperties struct {
+	// CorrelationID - The correlation ID of the What-If operation.
+	CorrelationID *string `json:"correlationId,omitempty"`
 	// Changes - List of resource changes predicted by What-If operation.
 	Changes *[]WhatIfChange `json:"changes,omitempty"`
 }
