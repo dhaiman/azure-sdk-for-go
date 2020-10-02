@@ -421,3 +421,81 @@ func (client ExpressRouteGatewaysClient) ListBySubscriptionResponder(resp *http.
 	result.Response = autorest.Response{Response: resp}
 	return
 }
+
+// UpdateTags updates express route gateway tags.
+// Parameters:
+// resourceGroupName - the resource group name of the ExpressRouteGateway.
+// expressRouteGatewayName - the name of the gateway.
+// expressRouteGatewayParameters - parameters supplied to update a virtual wan express route gateway tags.
+func (client ExpressRouteGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, expressRouteGatewayParameters TagsObject) (result ExpressRouteGatewaysUpdateTagsFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExpressRouteGatewaysClient.UpdateTags")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.UpdateTagsPreparer(ctx, resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.ExpressRouteGatewaysClient", "UpdateTags", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.UpdateTagsSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "network.ExpressRouteGatewaysClient", "UpdateTags", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// UpdateTagsPreparer prepares the UpdateTags request.
+func (client ExpressRouteGatewaysClient) UpdateTagsPreparer(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, expressRouteGatewayParameters TagsObject) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"expressRouteGatewayName": autorest.Encode("path", expressRouteGatewayName),
+		"resourceGroupName":       autorest.Encode("path", resourceGroupName),
+		"subscriptionId":          autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-06-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPatch(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}", pathParameters),
+		autorest.WithJSON(expressRouteGatewayParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// UpdateTagsSender sends the UpdateTags request. The method will close the
+// http.Response Body if it receives an error.
+func (client ExpressRouteGatewaysClient) UpdateTagsSender(req *http.Request) (future ExpressRouteGatewaysUpdateTagsFuture, err error) {
+	var resp *http.Response
+	resp, err = client.Send(req, azure.DoRetryWithRegistration(client.Client))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// UpdateTagsResponder handles the response to the UpdateTags request. The method always
+// closes the http.Response Body.
+func (client ExpressRouteGatewaysClient) UpdateTagsResponder(resp *http.Response) (result ExpressRouteGateway, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
