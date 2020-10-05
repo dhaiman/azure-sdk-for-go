@@ -96,7 +96,7 @@ func (client FirewallPolicyRuleCollectionGroupsClient) CreateOrUpdatePreparer(ct
 		"subscriptionId":          autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -177,7 +177,7 @@ func (client FirewallPolicyRuleCollectionGroupsClient) DeletePreparer(ctx contex
 		"subscriptionId":          autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -259,7 +259,7 @@ func (client FirewallPolicyRuleCollectionGroupsClient) GetPreparer(ctx context.C
 		"subscriptionId":          autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
@@ -338,7 +338,7 @@ func (client FirewallPolicyRuleCollectionGroupsClient) ListPreparer(ctx context.
 		"subscriptionId":     autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2020-06-01"
+	const APIVersion = "2020-08-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}
