@@ -572,6 +572,10 @@ type GraphQueryResource struct {
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Azure resource name. This is GUID value. The display name should be assigned within properties field.
 	Name *string `json:"name,omitempty"`
+	// SubscriptionID - READ-ONLY; The Id of the subscription to which the resource belongs.
+	SubscriptionID *string `json:"subscriptionId,omitempty"`
+	// ResourceGroup - READ-ONLY; The name of the resource group this resource belongs to.
+	ResourceGroup *string `json:"resourceGroup,omitempty"`
 	// Location - The location of the resource
 	Location *string `json:"location,omitempty"`
 	// Type - READ-ONLY; Azure resource type
@@ -635,6 +639,24 @@ func (gqr *GraphQueryResource) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				gqr.Name = &name
+			}
+		case "subscriptionId":
+			if v != nil {
+				var subscriptionID string
+				err = json.Unmarshal(*v, &subscriptionID)
+				if err != nil {
+					return err
+				}
+				gqr.SubscriptionID = &subscriptionID
+			}
+		case "resourceGroup":
+			if v != nil {
+				var resourceGroup string
+				err = json.Unmarshal(*v, &resourceGroup)
+				if err != nil {
+					return err
+				}
+				gqr.ResourceGroup = &resourceGroup
 			}
 		case "location":
 			if v != nil {
@@ -1037,6 +1059,10 @@ type Resource struct {
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Azure resource name. This is GUID value. The display name should be assigned within properties field.
 	Name *string `json:"name,omitempty"`
+	// SubscriptionID - READ-ONLY; The Id of the subscription to which the resource belongs.
+	SubscriptionID *string `json:"subscriptionId,omitempty"`
+	// ResourceGroup - READ-ONLY; The name of the resource group this resource belongs to.
+	ResourceGroup *string `json:"resourceGroup,omitempty"`
 	// Location - The location of the resource
 	Location *string `json:"location,omitempty"`
 	// Type - READ-ONLY; Azure resource type
