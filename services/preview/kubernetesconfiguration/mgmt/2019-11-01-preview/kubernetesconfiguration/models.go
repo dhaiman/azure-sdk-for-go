@@ -294,7 +294,7 @@ type Result struct {
 	SampleProperty *string `json:"sampleProperty,omitempty"`
 }
 
-// SourceControlConfiguration the SourceControl Configuration object.
+// SourceControlConfiguration the SourceControl Configuration object returned in Get & Put response.
 type SourceControlConfiguration struct {
 	autorest.Response `json:"-"`
 	// SourceControlConfigurationProperties - Properties to create a Source Control Configuration resource
@@ -365,6 +365,140 @@ func (scc *SourceControlConfiguration) UnmarshalJSON(body []byte) error {
 	}
 
 	return nil
+}
+
+// SourceControlConfigurationForCreate the SourceControl Configuration object to create a new configuration.
+type SourceControlConfigurationForCreate struct {
+	// SourceControlConfigurationForCreateProperties - Properties to create a Source Control Configuration resource
+	*SourceControlConfigurationForCreateProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SourceControlConfigurationForCreate.
+func (sccfc SourceControlConfigurationForCreate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sccfc.SourceControlConfigurationForCreateProperties != nil {
+		objectMap["properties"] = sccfc.SourceControlConfigurationForCreateProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for SourceControlConfigurationForCreate struct.
+func (sccfc *SourceControlConfigurationForCreate) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var sourceControlConfigurationForCreateProperties SourceControlConfigurationForCreateProperties
+				err = json.Unmarshal(*v, &sourceControlConfigurationForCreateProperties)
+				if err != nil {
+					return err
+				}
+				sccfc.SourceControlConfigurationForCreateProperties = &sourceControlConfigurationForCreateProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				sccfc.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				sccfc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				sccfc.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// SourceControlConfigurationForCreateProperties properties to create a Source Control Configuration resource
+type SourceControlConfigurationForCreateProperties struct {
+	// RepositoryURL - Url of the SourceControl Repository.
+	RepositoryURL *string `json:"repositoryUrl,omitempty"`
+	// OperatorNamespace - The namespace to which this operator is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only.
+	OperatorNamespace *string `json:"operatorNamespace,omitempty"`
+	// OperatorInstanceName - Instance name of the operator - identifying the specific configuration.
+	OperatorInstanceName *string `json:"operatorInstanceName,omitempty"`
+	// OperatorType - Type of the operator. Possible values include: 'Flux'
+	OperatorType OperatorType `json:"operatorType,omitempty"`
+	// OperatorParams - Any Parameters for the Operator instance in string format.
+	OperatorParams *string `json:"operatorParams,omitempty"`
+	// ConfigurationProtectedSettings - Name-value pairs of protected configuration settings for the configuration
+	ConfigurationProtectedSettings map[string]*string `json:"configurationProtectedSettings"`
+	// OperatorScope - Scope at which the operator will be installed. Possible values include: 'Cluster', 'Namespace'
+	OperatorScope OperatorScope `json:"operatorScope,omitempty"`
+	// RepositoryPublicKey - READ-ONLY; Public Key associated with this SourceControl configuration (either generated within the cluster or provided by the user).
+	RepositoryPublicKey *string `json:"repositoryPublicKey,omitempty"`
+	// SSHKnownHostsContents - Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances
+	SSHKnownHostsContents *string `json:"sshKnownHostsContents,omitempty"`
+	// EnableHelmOperator - Option to enable Helm Operator for this git configuration. Possible values include: 'True', 'False'
+	EnableHelmOperator EnableHelmOperator `json:"enableHelmOperator,omitempty"`
+	// HelmOperatorProperties - Properties for Helm operator.
+	HelmOperatorProperties *HelmOperatorProperties `json:"helmOperatorProperties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SourceControlConfigurationForCreateProperties.
+func (sccfc SourceControlConfigurationForCreateProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sccfc.RepositoryURL != nil {
+		objectMap["repositoryUrl"] = sccfc.RepositoryURL
+	}
+	if sccfc.OperatorNamespace != nil {
+		objectMap["operatorNamespace"] = sccfc.OperatorNamespace
+	}
+	if sccfc.OperatorInstanceName != nil {
+		objectMap["operatorInstanceName"] = sccfc.OperatorInstanceName
+	}
+	if sccfc.OperatorType != "" {
+		objectMap["operatorType"] = sccfc.OperatorType
+	}
+	if sccfc.OperatorParams != nil {
+		objectMap["operatorParams"] = sccfc.OperatorParams
+	}
+	if sccfc.ConfigurationProtectedSettings != nil {
+		objectMap["configurationProtectedSettings"] = sccfc.ConfigurationProtectedSettings
+	}
+	if sccfc.OperatorScope != "" {
+		objectMap["operatorScope"] = sccfc.OperatorScope
+	}
+	if sccfc.SSHKnownHostsContents != nil {
+		objectMap["sshKnownHostsContents"] = sccfc.SSHKnownHostsContents
+	}
+	if sccfc.EnableHelmOperator != "" {
+		objectMap["enableHelmOperator"] = sccfc.EnableHelmOperator
+	}
+	if sccfc.HelmOperatorProperties != nil {
+		objectMap["helmOperatorProperties"] = sccfc.HelmOperatorProperties
+	}
+	return json.Marshal(objectMap)
 }
 
 // SourceControlConfigurationList result of the request to list Source Control Configurations.  It contains a
@@ -541,6 +675,8 @@ type SourceControlConfigurationProperties struct {
 	OperatorScope OperatorScope `json:"operatorScope,omitempty"`
 	// RepositoryPublicKey - READ-ONLY; Public Key associated with this SourceControl configuration (either generated within the cluster or provided by the user).
 	RepositoryPublicKey *string `json:"repositoryPublicKey,omitempty"`
+	// SSHKnownHostsContents - Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances
+	SSHKnownHostsContents *string `json:"sshKnownHostsContents,omitempty"`
 	// EnableHelmOperator - Option to enable Helm Operator for this git configuration. Possible values include: 'True', 'False'
 	EnableHelmOperator EnableHelmOperator `json:"enableHelmOperator,omitempty"`
 	// HelmOperatorProperties - Properties for Helm operator.
@@ -571,6 +707,9 @@ func (scc SourceControlConfigurationProperties) MarshalJSON() ([]byte, error) {
 	}
 	if scc.OperatorScope != "" {
 		objectMap["operatorScope"] = scc.OperatorScope
+	}
+	if scc.SSHKnownHostsContents != nil {
+		objectMap["sshKnownHostsContents"] = scc.SSHKnownHostsContents
 	}
 	if scc.EnableHelmOperator != "" {
 		objectMap["enableHelmOperator"] = scc.EnableHelmOperator

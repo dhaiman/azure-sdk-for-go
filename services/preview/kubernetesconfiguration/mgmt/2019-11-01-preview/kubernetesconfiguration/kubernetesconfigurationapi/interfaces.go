@@ -24,7 +24,7 @@ import (
 
 // SourceControlConfigurationsClientAPI contains the set of methods on the SourceControlConfigurationsClient type.
 type SourceControlConfigurationsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration kubernetesconfiguration.SourceControlConfiguration) (result kubernetesconfiguration.SourceControlConfiguration, err error)
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration kubernetesconfiguration.SourceControlConfigurationForCreate) (result kubernetesconfiguration.SourceControlConfiguration, err error)
 	Delete(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string) (result kubernetesconfiguration.SourceControlConfigurationsDeleteFuture, err error)
 	Get(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string) (result kubernetesconfiguration.SourceControlConfiguration, err error)
 	List(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string) (result kubernetesconfiguration.SourceControlConfigurationListPage, err error)

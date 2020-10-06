@@ -53,7 +53,7 @@ func NewSourceControlConfigurationsClientWithBaseURI(baseURI string, subscriptio
 // clusterName - the name of the kubernetes cluster.
 // sourceControlConfigurationName - name of the Source Control Configuration.
 // sourceControlConfiguration - properties necessary to Create KubernetesConfiguration.
-func (client SourceControlConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration SourceControlConfiguration) (result SourceControlConfiguration, err error) {
+func (client SourceControlConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration SourceControlConfigurationForCreate) (result SourceControlConfiguration, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/SourceControlConfigurationsClient.CreateOrUpdate")
 		defer func() {
@@ -86,7 +86,7 @@ func (client SourceControlConfigurationsClient) CreateOrUpdate(ctx context.Conte
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client SourceControlConfigurationsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration SourceControlConfiguration) (*http.Request, error) {
+func (client SourceControlConfigurationsClient) CreateOrUpdatePreparer(ctx context.Context, resourceGroupName string, clusterRp string, clusterResourceName string, clusterName string, sourceControlConfigurationName string, sourceControlConfiguration SourceControlConfigurationForCreate) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"clusterName":                    autorest.Encode("path", clusterName),
 		"clusterResourceName":            autorest.Encode("path", clusterResourceName),
