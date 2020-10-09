@@ -82,13 +82,15 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 type Reason string
 
 const (
-	// AlreadyExists ...
-	AlreadyExists Reason = "AlreadyExists"
-	// Invalid ...
-	Invalid Reason = "Invalid"
+	// InvalidName ...
+	InvalidName Reason = "InvalidName"
+	// NameConflict ...
+	NameConflict Reason = "NameConflict"
+	// NameIsAvailable ...
+	NameIsAvailable Reason = "NameIsAvailable"
 )
 
 // PossibleReasonValues returns an array of possible values for the Reason const type.
 func PossibleReasonValues() []Reason {
-	return []Reason{AlreadyExists, Invalid}
+	return []Reason{InvalidName, NameConflict, NameIsAvailable}
 }

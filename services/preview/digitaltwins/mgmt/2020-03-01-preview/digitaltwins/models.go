@@ -44,11 +44,9 @@ type CheckNameResult struct {
 	autorest.Response `json:"-"`
 	// NameAvailable - Specifies a Boolean value that indicates if the name is available.
 	NameAvailable *bool `json:"nameAvailable,omitempty"`
-	// Name - The name that was checked.
-	Name *string `json:"name,omitempty"`
 	// Message - Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated.
 	Message *string `json:"message,omitempty"`
-	// Reason - Message providing the reason why the given name is invalid. Possible values include: 'Invalid', 'AlreadyExists'
+	// Reason - Message providing the reason why the given name is invalid. Possible values include: 'NameIsAvailable', 'NameConflict', 'InvalidName'
 	Reason Reason `json:"reason,omitempty"`
 }
 
@@ -922,6 +920,10 @@ type Operation struct {
 	Name *string `json:"name,omitempty"`
 	// Display - Operation properties display
 	Display *OperationDisplay `json:"display,omitempty"`
+	// Origin - READ-ONLY; The intended executor of the operation.
+	Origin *string `json:"origin,omitempty"`
+	// IsDataAction - READ-ONLY; If the operation is a data action (for data plane rbac).
+	IsDataAction *bool `json:"isDataAction,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Operation.
@@ -1233,32 +1235,4 @@ func (sb ServiceBus) AsBasicEndpointResourceProperties() (BasicEndpointResourceP
 type SkuInfo struct {
 	// Name - The name of the SKU.
 	Name *string `json:"name,omitempty"`
-}
-
-// UpdateFuture an abstraction for monitoring and retrieving the results of a long-running operation.
-type UpdateFuture struct {
-	azure.Future
-}
-
-// Result returns the result of the asynchronous operation.
-// If the operation has not completed it will return an error.
-func (future *UpdateFuture) Result(client Client) (d Description, err error) {
-	var done bool
-	done, err = future.DoneWithContext(context.Background(), client)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "digitaltwins.UpdateFuture", "Result", future.Response(), "Polling failure")
-		return
-	}
-	if !done {
-		err = azure.NewAsyncOpIncompleteError("digitaltwins.UpdateFuture")
-		return
-	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if d.Response.Response, err = future.GetResult(sender); err == nil && d.Response.Response.StatusCode != http.StatusNoContent {
-		d, err = client.UpdateResponder(d.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "digitaltwins.UpdateFuture", "Result", d.Response.Response, "Failure responding to request")
-		}
-	}
-	return
 }

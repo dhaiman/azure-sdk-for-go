@@ -64,12 +64,13 @@ func (client EndpointClient) CreateOrUpdate(ctx context.Context, resourceGroupNa
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 64, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceName,
-			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "resourceName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
+			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 63, Chain: nil},
+				{Target: "resourceName", Name: validation.MinLength, Rule: 3, Chain: nil}}},
 		{TargetValue: endpointName,
-			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "endpointName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "endpointName", Name: validation.Pattern, Rule: `^[A-Za-z0-9-._]{1,64}$`, Chain: nil}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 49, Chain: nil},
+				{Target: "endpointName", Name: validation.MinLength, Rule: 2, Chain: nil}}},
+		{TargetValue: endpointDescription,
+			Constraints: []validation.Constraint{{Target: "endpointDescription.Properties", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("digitaltwins.EndpointClient", "CreateOrUpdate", err.Error())
 	}
 
@@ -157,12 +158,11 @@ func (client EndpointClient) Delete(ctx context.Context, resourceGroupName strin
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 64, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceName,
-			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "resourceName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
+			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 63, Chain: nil},
+				{Target: "resourceName", Name: validation.MinLength, Rule: 3, Chain: nil}}},
 		{TargetValue: endpointName,
-			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "endpointName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "endpointName", Name: validation.Pattern, Rule: `^[A-Za-z0-9-._]{1,64}$`, Chain: nil}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 49, Chain: nil},
+				{Target: "endpointName", Name: validation.MinLength, Rule: 2, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("digitaltwins.EndpointClient", "Delete", err.Error())
 	}
 
@@ -248,12 +248,11 @@ func (client EndpointClient) Get(ctx context.Context, resourceGroupName string, 
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 64, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceName,
-			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "resourceName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
+			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 63, Chain: nil},
+				{Target: "resourceName", Name: validation.MinLength, Rule: 3, Chain: nil}}},
 		{TargetValue: endpointName,
-			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "endpointName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "endpointName", Name: validation.Pattern, Rule: `^[A-Za-z0-9-._]{1,64}$`, Chain: nil}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "endpointName", Name: validation.MaxLength, Rule: 49, Chain: nil},
+				{Target: "endpointName", Name: validation.MinLength, Rule: 2, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("digitaltwins.EndpointClient", "Get", err.Error())
 	}
 
@@ -338,8 +337,8 @@ func (client EndpointClient) List(ctx context.Context, resourceGroupName string,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 64, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
 		{TargetValue: resourceName,
-			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 64, Chain: nil},
-				{Target: "resourceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
+			Constraints: []validation.Constraint{{Target: "resourceName", Name: validation.MaxLength, Rule: 63, Chain: nil},
+				{Target: "resourceName", Name: validation.MinLength, Rule: 3, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("digitaltwins.EndpointClient", "List", err.Error())
 	}
 
