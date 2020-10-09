@@ -769,6 +769,35 @@ type OperationResponse struct {
 	Origin  *string           `json:"origin,omitempty"`
 }
 
+// OperationResultsGetFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type OperationResultsGetFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *OperationResultsGetFuture) Result(client OperationResultsClient) (so SetObject, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "reservations.OperationResultsGetFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("reservations.OperationResultsGetFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
+		so, err = client.GetResponder(so.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "reservations.OperationResultsGetFuture", "Result", so.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // OrderBillingPlanInformation information describing the type of billing plan for this reservation.
 type OrderBillingPlanInformation struct {
 	// PricingCurrencyTotal - Amount of money to be paid for the Order. Tax is not included.
@@ -1165,7 +1194,7 @@ type Properties struct {
 
 // PropertiesType ...
 type PropertiesType struct {
-	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySQL', 'MariaDb', 'PostgreSQL', 'DedicatedHost', 'SapHana', 'SQLAzureHybridBenefit'
 	ReservedResourceType ReservedResourceType `json:"reservedResourceType,omitempty"`
 	// InstanceFlexibility - Possible values include: 'On', 'Off'
 	InstanceFlexibility InstanceFlexibility `json:"instanceFlexibility,omitempty"`
@@ -1334,7 +1363,7 @@ func (pr *PurchaseRequest) UnmarshalJSON(body []byte) error {
 
 // PurchaseRequestProperties ...
 type PurchaseRequestProperties struct {
-	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+	// ReservedResourceType - Possible values include: 'VirtualMachines', 'SQLDatabases', 'SuseLinux', 'CosmosDb', 'RedHat', 'SQLDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySQL', 'MariaDb', 'PostgreSQL', 'DedicatedHost', 'SapHana', 'SQLAzureHybridBenefit'
 	ReservedResourceType ReservedResourceType `json:"reservedResourceType,omitempty"`
 	BillingScopeID       *string              `json:"billingScopeId,omitempty"`
 	// Term - Possible values include: 'P1Y', 'P3Y'
