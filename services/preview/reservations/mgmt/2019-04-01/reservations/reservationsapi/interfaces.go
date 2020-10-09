@@ -63,3 +63,10 @@ type OperationClientAPI interface {
 }
 
 var _ OperationClientAPI = (*reservations.OperationClient)(nil)
+
+// OperationResultsClientAPI contains the set of methods on the OperationResultsClient type.
+type OperationResultsClientAPI interface {
+	Get(ctx context.Context, operationResultID string) (result reservations.OperationResultsGetFuture, err error)
+}
+
+var _ OperationResultsClientAPI = (*reservations.OperationResultsClient)(nil)
