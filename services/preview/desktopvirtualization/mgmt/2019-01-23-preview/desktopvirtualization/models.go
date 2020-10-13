@@ -1357,6 +1357,14 @@ type HostPoolPatchProperties struct {
 	RegistrationInfo *RegistrationInfoPatch `json:"registrationInfo,omitempty"`
 	// SsoContext - Path to keyvault containing ssoContext secret.
 	SsoContext *string `json:"ssoContext,omitempty"`
+	// SsoadfsAuthority - URL to customer ADFS server for signing WVD SSO certificates.
+	SsoadfsAuthority *string `json:"ssoadfsAuthority,omitempty"`
+	// SsoClientID - ClientId for the registered Relying Party used to issue WVD SSO certificates.
+	SsoClientID *string `json:"ssoClientId,omitempty"`
+	// SsoClientSecretKeyVaultPath - Path to Azure KeyVault storing the secret used for communication to ADFS.
+	SsoClientSecretKeyVaultPath *string `json:"ssoClientSecretKeyVaultPath,omitempty"`
+	// SsoSecretType - The type of single sign on Secret Type. Possible values include: 'SharedKey', 'Certificate', 'SharedKeyInKeyVault', 'CertificateInKeyVault'
+	SsoSecretType SSOSecretType `json:"ssoSecretType,omitempty"`
 	// PreferredAppGroupType - The type of preferred application group type, default to Desktop Application Group. Possible values include: 'PreferredAppGroupTypeNone', 'PreferredAppGroupTypeDesktop', 'PreferredAppGroupTypeRailApplications'
 	PreferredAppGroupType PreferredAppGroupType `json:"preferredAppGroupType,omitempty"`
 }
@@ -1389,6 +1397,14 @@ type HostPoolProperties struct {
 	ApplicationGroupReferences *[]string `json:"applicationGroupReferences,omitempty"`
 	// SsoContext - Path to keyvault containing ssoContext secret.
 	SsoContext *string `json:"ssoContext,omitempty"`
+	// SsoadfsAuthority - URL to customer ADFS server for signing WVD SSO certificates.
+	SsoadfsAuthority *string `json:"ssoadfsAuthority,omitempty"`
+	// SsoClientID - ClientId for the registered Relying Party used to issue WVD SSO certificates.
+	SsoClientID *string `json:"ssoClientId,omitempty"`
+	// SsoClientSecretKeyVaultPath - Path to Azure KeyVault storing the secret used for communication to ADFS.
+	SsoClientSecretKeyVaultPath *string `json:"ssoClientSecretKeyVaultPath,omitempty"`
+	// SsoSecretType - The type of single sign on Secret Type. Possible values include: 'SharedKey', 'Certificate', 'SharedKeyInKeyVault', 'CertificateInKeyVault'
+	SsoSecretType SSOSecretType `json:"ssoSecretType,omitempty"`
 	// PreferredAppGroupType - The type of preferred application group type, default to Desktop Application Group. Possible values include: 'PreferredAppGroupTypeNone', 'PreferredAppGroupTypeDesktop', 'PreferredAppGroupTypeRailApplications'
 	PreferredAppGroupType PreferredAppGroupType `json:"preferredAppGroupType,omitempty"`
 }
@@ -1431,6 +1447,18 @@ func (hpp HostPoolProperties) MarshalJSON() ([]byte, error) {
 	}
 	if hpp.SsoContext != nil {
 		objectMap["ssoContext"] = hpp.SsoContext
+	}
+	if hpp.SsoadfsAuthority != nil {
+		objectMap["ssoadfsAuthority"] = hpp.SsoadfsAuthority
+	}
+	if hpp.SsoClientID != nil {
+		objectMap["ssoClientId"] = hpp.SsoClientID
+	}
+	if hpp.SsoClientSecretKeyVaultPath != nil {
+		objectMap["ssoClientSecretKeyVaultPath"] = hpp.SsoClientSecretKeyVaultPath
+	}
+	if hpp.SsoSecretType != "" {
+		objectMap["ssoSecretType"] = hpp.SsoSecretType
 	}
 	if hpp.PreferredAppGroupType != "" {
 		objectMap["preferredAppGroupType"] = hpp.PreferredAppGroupType
