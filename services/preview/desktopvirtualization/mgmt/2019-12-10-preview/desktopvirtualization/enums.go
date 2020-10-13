@@ -168,6 +168,25 @@ func PossibleSessionStateValues() []SessionState {
 	return []SessionState{Active, Disconnected, LogOff, Pending, Unknown, UserProfileDiskMounted}
 }
 
+// SSOSecretType enumerates the values for sso secret type.
+type SSOSecretType string
+
+const (
+	// Certificate ...
+	Certificate SSOSecretType = "Certificate"
+	// CertificateInKeyVault ...
+	CertificateInKeyVault SSOSecretType = "CertificateInKeyVault"
+	// SharedKey ...
+	SharedKey SSOSecretType = "SharedKey"
+	// SharedKeyInKeyVault ...
+	SharedKeyInKeyVault SSOSecretType = "SharedKeyInKeyVault"
+)
+
+// PossibleSSOSecretTypeValues returns an array of possible values for the SSOSecretType const type.
+func PossibleSSOSecretTypeValues() []SSOSecretType {
+	return []SSOSecretType{Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault}
+}
+
 // Status enumerates the values for status.
 type Status string
 
