@@ -102,6 +102,326 @@ type AadSolutionProperties struct {
 	ConnectivityState AadConnectivityState `json:"connectivityState,omitempty"`
 }
 
+// AccountEntity represents an account. The account can be either a domain account, a local account, or an AAD
+// account.
+type AccountEntity struct {
+	// Name - The name of the account.
+	Name *string `json:"name,omitempty"`
+	// NtDomain - The NETBIOS domain name – domain\username.
+	NtDomain *string `json:"ntDomain,omitempty"`
+	// DNSDomain - The fully qualified DNS name.
+	DNSDomain *string `json:"dnsDomain,omitempty"`
+	// UpnSuffix - The user principal name suffix for the account. In some cases it is also the domain name.
+	UpnSuffix *string `json:"upnSuffix,omitempty"`
+	// Sid - The account security identifier.
+	Sid *string `json:"sid,omitempty"`
+	// AadTenantID - The Azure Active Directory tenant ID.
+	AadTenantID *string `json:"aadTenantId,omitempty"`
+	// AadUserID - The Azure Active Directory user ID.
+	AadUserID *string `json:"aadUserId,omitempty"`
+	// Puid -  The Azure Active Directory passport user ID.
+	Puid *string `json:"puid,omitempty"`
+	// DisplayName - The display name of the account.
+	DisplayName *string `json:"displayName,omitempty"`
+	// IsDomainJoined - Determines whether this is a domain account.
+	IsDomainJoined *bool `json:"isDomainJoined,omitempty"`
+	// ObjectGUID - The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by Active Directory.
+	ObjectGUID *string     `json:"objectGuid,omitempty"`
+	Host       *HostEntity `json:"host,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AccountEntity.
+func (ae AccountEntity) MarshalJSON() ([]byte, error) {
+	ae.Type = TypeAccount
+	objectMap := make(map[string]interface{})
+	if ae.Name != nil {
+		objectMap["name"] = ae.Name
+	}
+	if ae.NtDomain != nil {
+		objectMap["ntDomain"] = ae.NtDomain
+	}
+	if ae.DNSDomain != nil {
+		objectMap["dnsDomain"] = ae.DNSDomain
+	}
+	if ae.UpnSuffix != nil {
+		objectMap["upnSuffix"] = ae.UpnSuffix
+	}
+	if ae.Sid != nil {
+		objectMap["sid"] = ae.Sid
+	}
+	if ae.AadTenantID != nil {
+		objectMap["aadTenantId"] = ae.AadTenantID
+	}
+	if ae.AadUserID != nil {
+		objectMap["aadUserId"] = ae.AadUserID
+	}
+	if ae.Puid != nil {
+		objectMap["puid"] = ae.Puid
+	}
+	if ae.DisplayName != nil {
+		objectMap["displayName"] = ae.DisplayName
+	}
+	if ae.IsDomainJoined != nil {
+		objectMap["isDomainJoined"] = ae.IsDomainJoined
+	}
+	if ae.ObjectGUID != nil {
+		objectMap["objectGuid"] = ae.ObjectGUID
+	}
+	if ae.Host != nil {
+		objectMap["host"] = ae.Host
+	}
+	if ae.Type != "" {
+		objectMap["type"] = ae.Type
+	}
+	for k, v := range ae.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return &ae, true
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for AccountEntity.
+func (ae AccountEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &ae, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for AccountEntity struct.
+func (ae *AccountEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				ae.Name = &name
+			}
+		case "ntDomain":
+			if v != nil {
+				var ntDomain string
+				err = json.Unmarshal(*v, &ntDomain)
+				if err != nil {
+					return err
+				}
+				ae.NtDomain = &ntDomain
+			}
+		case "dnsDomain":
+			if v != nil {
+				var DNSDomain string
+				err = json.Unmarshal(*v, &DNSDomain)
+				if err != nil {
+					return err
+				}
+				ae.DNSDomain = &DNSDomain
+			}
+		case "upnSuffix":
+			if v != nil {
+				var upnSuffix string
+				err = json.Unmarshal(*v, &upnSuffix)
+				if err != nil {
+					return err
+				}
+				ae.UpnSuffix = &upnSuffix
+			}
+		case "sid":
+			if v != nil {
+				var sid string
+				err = json.Unmarshal(*v, &sid)
+				if err != nil {
+					return err
+				}
+				ae.Sid = &sid
+			}
+		case "aadTenantId":
+			if v != nil {
+				var aadTenantID string
+				err = json.Unmarshal(*v, &aadTenantID)
+				if err != nil {
+					return err
+				}
+				ae.AadTenantID = &aadTenantID
+			}
+		case "aadUserId":
+			if v != nil {
+				var aadUserID string
+				err = json.Unmarshal(*v, &aadUserID)
+				if err != nil {
+					return err
+				}
+				ae.AadUserID = &aadUserID
+			}
+		case "puid":
+			if v != nil {
+				var puid string
+				err = json.Unmarshal(*v, &puid)
+				if err != nil {
+					return err
+				}
+				ae.Puid = &puid
+			}
+		case "displayName":
+			if v != nil {
+				var displayName string
+				err = json.Unmarshal(*v, &displayName)
+				if err != nil {
+					return err
+				}
+				ae.DisplayName = &displayName
+			}
+		case "isDomainJoined":
+			if v != nil {
+				var isDomainJoined bool
+				err = json.Unmarshal(*v, &isDomainJoined)
+				if err != nil {
+					return err
+				}
+				ae.IsDomainJoined = &isDomainJoined
+			}
+		case "objectGuid":
+			if v != nil {
+				var objectGUID string
+				err = json.Unmarshal(*v, &objectGUID)
+				if err != nil {
+					return err
+				}
+				ae.ObjectGUID = &objectGUID
+			}
+		case "host":
+			if v != nil {
+				var host HostEntity
+				err = json.Unmarshal(*v, &host)
+				if err != nil {
+					return err
+				}
+				ae.Host = &host
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if ae.AdditionalProperties == nil {
+					ae.AdditionalProperties = make(map[string]interface{})
+				}
+				ae.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ae.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // ActiveConnectionsNotInAllowedRange number of active connections is not in allowed range.
 type ActiveConnectionsNotInAllowedRange struct {
 	// TimeWindowSize - The time window size in iso8601 format.
@@ -943,21 +1263,243 @@ func (a *Alert) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// BasicAlertEntity changing set of properties depending on the entity type.
+type BasicAlertEntity interface {
+	AsIPEntity() (*IPEntity, bool)
+	AsIoTDeviceEntity() (*IoTDeviceEntity, bool)
+	AsHostEntity() (*HostEntity, bool)
+	AsAccountEntity() (*AccountEntity, bool)
+	AsAlertsEntity() (*AlertsEntity, bool)
+	AsCloudApplicationEntity() (*CloudApplicationEntity, bool)
+	AsDNSEntity() (*DNSEntity, bool)
+	AsFileHashEntity() (*FileHashEntity, bool)
+	AsFileEntity() (*FileEntity, bool)
+	AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool)
+	AsMailboxEntity() (*MailboxEntity, bool)
+	AsProcessEntity() (*ProcessEntity, bool)
+	AsMalwareEntity() (*MalwareEntity, bool)
+	AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool)
+	AsRegistryKeyEntity() (*RegistryKeyEntity, bool)
+	AsRegistryValueEntity() (*RegistryValueEntity, bool)
+	AsGroupEntity() (*GroupEntity, bool)
+	AsAlertEntity() (*AlertEntity, bool)
+}
+
 // AlertEntity changing set of properties depending on the entity type.
 type AlertEntity struct {
 	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
 	AdditionalProperties map[string]interface{} `json:""`
-	// Type - READ-ONLY; Type of entity
-	Type *string `json:"type,omitempty"`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+func unmarshalBasicAlertEntity(body []byte) (BasicAlertEntity, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["type"] {
+	case string(TypeIP):
+		var ie IPEntity
+		err := json.Unmarshal(body, &ie)
+		return ie, err
+	case string(TypeIotdevice):
+		var itde IoTDeviceEntity
+		err := json.Unmarshal(body, &itde)
+		return itde, err
+	case string(TypeHost):
+		var he HostEntity
+		err := json.Unmarshal(body, &he)
+		return he, err
+	case string(TypeAccount):
+		var ae AccountEntity
+		err := json.Unmarshal(body, &ae)
+		return ae, err
+	case string(TypeAlerts):
+		var ae AlertsEntity
+		err := json.Unmarshal(body, &ae)
+		return ae, err
+	case string(TypeCloudApplication):
+		var cae CloudApplicationEntity
+		err := json.Unmarshal(body, &cae)
+		return cae, err
+	case string(TypeDNS):
+		var de DNSEntity
+		err := json.Unmarshal(body, &de)
+		return de, err
+	case string(TypeFilehash):
+		var fhe FileHashEntity
+		err := json.Unmarshal(body, &fhe)
+		return fhe, err
+	case string(TypeFile):
+		var fe FileEntity
+		err := json.Unmarshal(body, &fe)
+		return fe, err
+	case string(TypeHostLogonSession):
+		var hlse HostLogonSessionEntity
+		err := json.Unmarshal(body, &hlse)
+		return hlse, err
+	case string(TypeMailbox):
+		var me MailboxEntity
+		err := json.Unmarshal(body, &me)
+		return me, err
+	case string(TypeProcess):
+		var peVar ProcessEntity
+		err := json.Unmarshal(body, &peVar)
+		return peVar, err
+	case string(TypeMalware):
+		var me MalwareEntity
+		err := json.Unmarshal(body, &me)
+		return me, err
+	case string(TypeNetworkConnection):
+		var nce NetworkConnectionEntity
+		err := json.Unmarshal(body, &nce)
+		return nce, err
+	case string(TypeRegistryKey):
+		var rke RegistryKeyEntity
+		err := json.Unmarshal(body, &rke)
+		return rke, err
+	case string(TypeRegistryValue):
+		var rve RegistryValueEntity
+		err := json.Unmarshal(body, &rve)
+		return rve, err
+	case string(TypeSecurityGroup):
+		var ge GroupEntity
+		err := json.Unmarshal(body, &ge)
+		return ge, err
+	default:
+		var ae AlertEntity
+		err := json.Unmarshal(body, &ae)
+		return ae, err
+	}
+}
+func unmarshalBasicAlertEntityArray(body []byte) ([]BasicAlertEntity, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	aeArray := make([]BasicAlertEntity, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		ae, err := unmarshalBasicAlertEntity(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		aeArray[index] = ae
+	}
+	return aeArray, nil
 }
 
 // MarshalJSON is the custom marshaler for AlertEntity.
 func (ae AlertEntity) MarshalJSON() ([]byte, error) {
+	ae.Type = TypeAlertEntity
 	objectMap := make(map[string]interface{})
+	if ae.Type != "" {
+		objectMap["type"] = ae.Type
+	}
 	for k, v := range ae.AdditionalProperties {
 		objectMap[k] = v
 	}
 	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return &ae, true
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for AlertEntity.
+func (ae AlertEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &ae, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for AlertEntity struct.
@@ -983,12 +1525,12 @@ func (ae *AlertEntity) UnmarshalJSON(body []byte) error {
 			}
 		case "type":
 			if v != nil {
-				var typeVar string
+				var typeVar TypeBasicAlertEntity
 				err = json.Unmarshal(*v, &typeVar)
 				if err != nil {
 					return err
 				}
-				ae.Type = &typeVar
+				ae.Type = typeVar
 			}
 		}
 	}
@@ -1183,27 +1725,27 @@ type AlertProperties struct {
 	EndTimeUtc *date.Time `json:"endTimeUtc,omitempty"`
 	// ResourceIdentifiers - READ-ONLY; The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
 	ResourceIdentifiers *[]BasicResourceIdentifier `json:"resourceIdentifiers,omitempty"`
-	// RemediationSteps - READ-ONLY; Manual action items to take to remediate the alert.
+	// RemediationSteps - READ-ONLY; Manual actions to take to remediate the alert.
 	RemediationSteps *[]string `json:"remediationSteps,omitempty"`
 	// VendorName - READ-ONLY; The name of the vendor that raises the alert.
 	VendorName *string `json:"vendorName,omitempty"`
-	// Status - READ-ONLY; The life cycle status of the alert. Possible values include: 'Active', 'Resolved', 'Dismissed'
+	// Status - READ-ONLY; The lifecycle status of the alert. Possible values include: 'Active', 'Resolved', 'Dismissed'
 	Status AlertStatus `json:"status,omitempty"`
 	// ExtendedLinks - READ-ONLY; Links related to the alert
 	ExtendedLinks *[]map[string]*string `json:"extendedLinks,omitempty"`
-	// AlertURI - READ-ONLY; A direct link to the alert page in Azure Portal.
+	// AlertURI - READ-ONLY; A direct link to the alert page in the Azure portal.
 	AlertURI *string `json:"alertUri,omitempty"`
 	// TimeGeneratedUtc - READ-ONLY; The UTC time the alert was generated in ISO8601 format.
 	TimeGeneratedUtc *date.Time `json:"timeGeneratedUtc,omitempty"`
-	// ProductName - READ-ONLY; The name of the product which published this alert (Azure Security Center, Azure ATP, Microsoft Defender ATP, O365 ATP, MCAS, and so on).
+	// ProductName - READ-ONLY; The name of the product which published this alert (Azure Security Center, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office 365, MCAS, and so on).
 	ProductName *string `json:"productName,omitempty"`
 	// ProcessingEndTimeUtc - READ-ONLY; The UTC processing end time of the alert in ISO8601 format.
 	ProcessingEndTimeUtc *date.Time `json:"processingEndTimeUtc,omitempty"`
 	// Entities - READ-ONLY; A list of entities related to the alert.
-	Entities *[]AlertEntity `json:"entities,omitempty"`
+	Entities *[]BasicAlertEntity `json:"entities,omitempty"`
 	// IsIncident - READ-ONLY; This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert.
 	IsIncident *bool `json:"isIncident,omitempty"`
-	// CorrelationKey - READ-ONLY; Key for corelating related alerts. Alerts with the same correlation key considered to be related.
+	// CorrelationKey - READ-ONLY; Key for correlating related alerts. Alerts with the same correlation key are considered as related.
 	CorrelationKey *string `json:"correlationKey,omitempty"`
 	// ExtendedProperties - Custom properties for the alert.
 	ExtendedProperties map[string]*string `json:"extendedProperties"`
@@ -1392,8 +1934,7 @@ func (ap *AlertProperties) UnmarshalJSON(body []byte) error {
 			}
 		case "entities":
 			if v != nil {
-				var entities []AlertEntity
-				err = json.Unmarshal(*v, &entities)
+				entities, err := unmarshalBasicAlertEntityArray(*v)
 				if err != nil {
 					return err
 				}
@@ -1434,6 +1975,256 @@ func (ap *AlertProperties) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				ap.CompromisedEntity = &compromisedEntity
+			}
+		}
+	}
+
+	return nil
+}
+
+// AlertsEntity represents alerts that are related to a given alert.
+type AlertsEntity struct {
+	// DisplayName - The display name for the related alert.
+	DisplayName *string `json:"displayName,omitempty"`
+	// CompromisedEntity - The display name of the compromised entity for the alert.
+	CompromisedEntity *string `json:"compromisedEntity,omitempty"`
+	// Count - The number of related alerts grouped into the incident.
+	Count *int32 `json:"count,omitempty"`
+	// Severity - The related alert severity.
+	Severity *string `json:"severity,omitempty"`
+	// AlertType - The related alert type.
+	AlertType *string `json:"alertType,omitempty"`
+	// VendorName - The related alert vendor name.
+	VendorName *string `json:"vendorName,omitempty"`
+	// SystemAlertIds - The related alerts identifiers.
+	SystemAlertIds *[]string `json:"systemAlertIds,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AlertsEntity.
+func (ae AlertsEntity) MarshalJSON() ([]byte, error) {
+	ae.Type = TypeAlerts
+	objectMap := make(map[string]interface{})
+	if ae.DisplayName != nil {
+		objectMap["displayName"] = ae.DisplayName
+	}
+	if ae.CompromisedEntity != nil {
+		objectMap["compromisedEntity"] = ae.CompromisedEntity
+	}
+	if ae.Count != nil {
+		objectMap["count"] = ae.Count
+	}
+	if ae.Severity != nil {
+		objectMap["severity"] = ae.Severity
+	}
+	if ae.AlertType != nil {
+		objectMap["alertType"] = ae.AlertType
+	}
+	if ae.VendorName != nil {
+		objectMap["vendorName"] = ae.VendorName
+	}
+	if ae.SystemAlertIds != nil {
+		objectMap["systemAlertIds"] = ae.SystemAlertIds
+	}
+	if ae.Type != "" {
+		objectMap["type"] = ae.Type
+	}
+	for k, v := range ae.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return &ae, true
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for AlertsEntity.
+func (ae AlertsEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &ae, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for AlertsEntity struct.
+func (ae *AlertsEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "displayName":
+			if v != nil {
+				var displayName string
+				err = json.Unmarshal(*v, &displayName)
+				if err != nil {
+					return err
+				}
+				ae.DisplayName = &displayName
+			}
+		case "compromisedEntity":
+			if v != nil {
+				var compromisedEntity string
+				err = json.Unmarshal(*v, &compromisedEntity)
+				if err != nil {
+					return err
+				}
+				ae.CompromisedEntity = &compromisedEntity
+			}
+		case "count":
+			if v != nil {
+				var count int32
+				err = json.Unmarshal(*v, &count)
+				if err != nil {
+					return err
+				}
+				ae.Count = &count
+			}
+		case "severity":
+			if v != nil {
+				var severity string
+				err = json.Unmarshal(*v, &severity)
+				if err != nil {
+					return err
+				}
+				ae.Severity = &severity
+			}
+		case "alertType":
+			if v != nil {
+				var alertType string
+				err = json.Unmarshal(*v, &alertType)
+				if err != nil {
+					return err
+				}
+				ae.AlertType = &alertType
+			}
+		case "vendorName":
+			if v != nil {
+				var vendorName string
+				err = json.Unmarshal(*v, &vendorName)
+				if err != nil {
+					return err
+				}
+				ae.VendorName = &vendorName
+			}
+		case "systemAlertIds":
+			if v != nil {
+				var systemAlertIds []string
+				err = json.Unmarshal(*v, &systemAlertIds)
+				if err != nil {
+					return err
+				}
+				ae.SystemAlertIds = &systemAlertIds
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if ae.AdditionalProperties == nil {
+					ae.AdditionalProperties = make(map[string]interface{})
+				}
+				ae.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ae.Type = typeVar
 			}
 		}
 	}
@@ -5163,6 +5954,200 @@ func (csp *CefSolutionProperties) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// CloudApplicationEntity represents a cloud application such as Microsoft 365, Salesforce etc.
+type CloudApplicationEntity struct {
+	// AppID - The technical identifier of the application.
+	AppID *int32 `json:"appId,omitempty"`
+	// Name - The name of the related cloud application.
+	Name *string `json:"name,omitempty"`
+	// InstanceName - The user defined instance name of the cloud application.
+	InstanceName *string `json:"instanceName,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CloudApplicationEntity.
+func (cae CloudApplicationEntity) MarshalJSON() ([]byte, error) {
+	cae.Type = TypeCloudApplication
+	objectMap := make(map[string]interface{})
+	if cae.AppID != nil {
+		objectMap["appId"] = cae.AppID
+	}
+	if cae.Name != nil {
+		objectMap["name"] = cae.Name
+	}
+	if cae.InstanceName != nil {
+		objectMap["instanceName"] = cae.InstanceName
+	}
+	if cae.Type != "" {
+		objectMap["type"] = cae.Type
+	}
+	for k, v := range cae.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return &cae, true
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for CloudApplicationEntity.
+func (cae CloudApplicationEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &cae, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for CloudApplicationEntity struct.
+func (cae *CloudApplicationEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "appId":
+			if v != nil {
+				var appID int32
+				err = json.Unmarshal(*v, &appID)
+				if err != nil {
+					return err
+				}
+				cae.AppID = &appID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				cae.Name = &name
+			}
+		case "instanceName":
+			if v != nil {
+				var instanceName string
+				err = json.Unmarshal(*v, &instanceName)
+				if err != nil {
+					return err
+				}
+				cae.InstanceName = &instanceName
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if cae.AdditionalProperties == nil {
+					cae.AdditionalProperties = make(map[string]interface{})
+				}
+				cae.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				cae.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // CloudError error response structure.
 type CloudError struct {
 	// CloudErrorBody - Error data
@@ -7898,6 +8883,212 @@ type DiscoveredSecuritySolutionProperties struct {
 	Sku *string `json:"sku,omitempty"`
 }
 
+// DNSEntity represents DNS resolution query results.
+type DNSEntity struct {
+	// DomainName - The name of the DNS record associated with the alert.
+	DomainName *string `json:"domainName,omitempty"`
+	// IPAdresses - Entities of type ‘ip’ for the resolved IP address.
+	IPAdresses    *[]IPEntity `json:"ipAdresses,omitempty"`
+	DNSServerIP   *IPEntity   `json:"DnsServerIp,omitempty"`
+	HostIPAddress *IPEntity   `json:"HostIpAddress,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DNSEntity.
+func (de DNSEntity) MarshalJSON() ([]byte, error) {
+	de.Type = TypeDNS
+	objectMap := make(map[string]interface{})
+	if de.DomainName != nil {
+		objectMap["domainName"] = de.DomainName
+	}
+	if de.IPAdresses != nil {
+		objectMap["ipAdresses"] = de.IPAdresses
+	}
+	if de.DNSServerIP != nil {
+		objectMap["DnsServerIp"] = de.DNSServerIP
+	}
+	if de.HostIPAddress != nil {
+		objectMap["HostIpAddress"] = de.HostIPAddress
+	}
+	if de.Type != "" {
+		objectMap["type"] = de.Type
+	}
+	for k, v := range de.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return &de, true
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for DNSEntity.
+func (de DNSEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &de, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for DNSEntity struct.
+func (de *DNSEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "domainName":
+			if v != nil {
+				var domainName string
+				err = json.Unmarshal(*v, &domainName)
+				if err != nil {
+					return err
+				}
+				de.DomainName = &domainName
+			}
+		case "ipAdresses":
+			if v != nil {
+				var IPAdresses []IPEntity
+				err = json.Unmarshal(*v, &IPAdresses)
+				if err != nil {
+					return err
+				}
+				de.IPAdresses = &IPAdresses
+			}
+		case "DnsServerIp":
+			if v != nil {
+				var DNSServerIP IPEntity
+				err = json.Unmarshal(*v, &DNSServerIP)
+				if err != nil {
+					return err
+				}
+				de.DNSServerIP = &DNSServerIP
+			}
+		case "HostIpAddress":
+			if v != nil {
+				var hostIPAddress IPEntity
+				err = json.Unmarshal(*v, &hostIPAddress)
+				if err != nil {
+					return err
+				}
+				de.HostIPAddress = &hostIPAddress
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if de.AdditionalProperties == nil {
+					de.AdditionalProperties = make(map[string]interface{})
+				}
+				de.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				de.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // EffectiveNetworkSecurityGroups describes the Network Security Groups effective on a network interface
 type EffectiveNetworkSecurityGroups struct {
 	// NetworkInterface - The Azure resource ID of the network interface
@@ -8508,6 +9699,408 @@ func (fllniar FailedLocalLoginsNotInAllowedRange) AsBasicCustomAlertRule() (Basi
 	return &fllniar, true
 }
 
+// FileEntity represents a file that is reported as part of the security detection alert.
+type FileEntity struct {
+	// FullPath - The file's full path, combining both directory and name.
+	FullPath *string `json:"fullPath,omitempty"`
+	// Directory - The full path to the file’s directory.
+	Directory *string `json:"directory,omitempty"`
+	// Name - The file name without the path.
+	Name *string     `json:"name,omitempty"`
+	Host *HostEntity `json:"host,omitempty"`
+	// FileHashes - The file hashes associated with this file.
+	FileHashes *[]FileHashEntity `json:"fileHashes,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for FileEntity.
+func (fe FileEntity) MarshalJSON() ([]byte, error) {
+	fe.Type = TypeFile
+	objectMap := make(map[string]interface{})
+	if fe.FullPath != nil {
+		objectMap["fullPath"] = fe.FullPath
+	}
+	if fe.Directory != nil {
+		objectMap["directory"] = fe.Directory
+	}
+	if fe.Name != nil {
+		objectMap["name"] = fe.Name
+	}
+	if fe.Host != nil {
+		objectMap["host"] = fe.Host
+	}
+	if fe.FileHashes != nil {
+		objectMap["fileHashes"] = fe.FileHashes
+	}
+	if fe.Type != "" {
+		objectMap["type"] = fe.Type
+	}
+	for k, v := range fe.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsFileEntity() (*FileEntity, bool) {
+	return &fe, true
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for FileEntity.
+func (fe FileEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &fe, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for FileEntity struct.
+func (fe *FileEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "fullPath":
+			if v != nil {
+				var fullPath string
+				err = json.Unmarshal(*v, &fullPath)
+				if err != nil {
+					return err
+				}
+				fe.FullPath = &fullPath
+			}
+		case "directory":
+			if v != nil {
+				var directory string
+				err = json.Unmarshal(*v, &directory)
+				if err != nil {
+					return err
+				}
+				fe.Directory = &directory
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				fe.Name = &name
+			}
+		case "host":
+			if v != nil {
+				var host HostEntity
+				err = json.Unmarshal(*v, &host)
+				if err != nil {
+					return err
+				}
+				fe.Host = &host
+			}
+		case "fileHashes":
+			if v != nil {
+				var fileHashes []FileHashEntity
+				err = json.Unmarshal(*v, &fileHashes)
+				if err != nil {
+					return err
+				}
+				fe.FileHashes = &fileHashes
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if fe.AdditionalProperties == nil {
+					fe.AdditionalProperties = make(map[string]interface{})
+				}
+				fe.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				fe.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// FileHashEntity represents a file hash value that is reported as part of the security detection alert,
+// usually in relation to some file entity instance.
+type FileHashEntity struct {
+	// FileHashAlgorithm - The hash algorithm type.
+	FileHashAlgorithm *string `json:"fileHashAlgorithm,omitempty"`
+	// Value - The hash value.
+	Value *string `json:"value,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for FileHashEntity.
+func (fhe FileHashEntity) MarshalJSON() ([]byte, error) {
+	fhe.Type = TypeFilehash
+	objectMap := make(map[string]interface{})
+	if fhe.FileHashAlgorithm != nil {
+		objectMap["fileHashAlgorithm"] = fhe.FileHashAlgorithm
+	}
+	if fhe.Value != nil {
+		objectMap["value"] = fhe.Value
+	}
+	if fhe.Type != "" {
+		objectMap["type"] = fhe.Type
+	}
+	for k, v := range fhe.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return &fhe, true
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for FileHashEntity.
+func (fhe FileHashEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &fhe, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for FileHashEntity struct.
+func (fhe *FileHashEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "fileHashAlgorithm":
+			if v != nil {
+				var fileHashAlgorithm string
+				err = json.Unmarshal(*v, &fileHashAlgorithm)
+				if err != nil {
+					return err
+				}
+				fhe.FileHashAlgorithm = &fileHashAlgorithm
+			}
+		case "value":
+			if v != nil {
+				var value string
+				err = json.Unmarshal(*v, &value)
+				if err != nil {
+					return err
+				}
+				fhe.Value = &value
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if fhe.AdditionalProperties == nil {
+					fhe.AdditionalProperties = make(map[string]interface{})
+				}
+				fhe.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				fhe.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // FileUploadsNotInAllowedRange number of file uploads is not in allowed range.
 type FileUploadsNotInAllowedRange struct {
 	// TimeWindowSize - The time window size in iso8601 format.
@@ -8797,6 +10390,670 @@ func (gcdp GcpCredentialsDetailsProperties) AsAuthenticationDetailsProperties() 
 // AsBasicAuthenticationDetailsProperties is the BasicAuthenticationDetailsProperties implementation for GcpCredentialsDetailsProperties.
 func (gcdp GcpCredentialsDetailsProperties) AsBasicAuthenticationDetailsProperties() (BasicAuthenticationDetailsProperties, bool) {
 	return &gcdp, true
+}
+
+// GroupEntity represents a security group that is reported as part of the security detection alert. The
+// security group in most cases would be a domain group, local group, AAD group or other
+type GroupEntity struct {
+	// DistinguishedName - The group distinguished name
+	DistinguishedName *string `json:"distinguishedName,omitempty"`
+	// Sid - The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group
+	Sid *string `json:"sid,omitempty"`
+	// ObjectGUID - The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by Active Directory
+	ObjectGUID *string `json:"objectGuid,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for GroupEntity.
+func (ge GroupEntity) MarshalJSON() ([]byte, error) {
+	ge.Type = TypeSecurityGroup
+	objectMap := make(map[string]interface{})
+	if ge.DistinguishedName != nil {
+		objectMap["distinguishedName"] = ge.DistinguishedName
+	}
+	if ge.Sid != nil {
+		objectMap["sid"] = ge.Sid
+	}
+	if ge.ObjectGUID != nil {
+		objectMap["objectGuid"] = ge.ObjectGUID
+	}
+	if ge.Type != "" {
+		objectMap["type"] = ge.Type
+	}
+	for k, v := range ge.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return &ge, true
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for GroupEntity.
+func (ge GroupEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &ge, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for GroupEntity struct.
+func (ge *GroupEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "distinguishedName":
+			if v != nil {
+				var distinguishedName string
+				err = json.Unmarshal(*v, &distinguishedName)
+				if err != nil {
+					return err
+				}
+				ge.DistinguishedName = &distinguishedName
+			}
+		case "sid":
+			if v != nil {
+				var sid string
+				err = json.Unmarshal(*v, &sid)
+				if err != nil {
+					return err
+				}
+				ge.Sid = &sid
+			}
+		case "objectGuid":
+			if v != nil {
+				var objectGUID string
+				err = json.Unmarshal(*v, &objectGUID)
+				if err != nil {
+					return err
+				}
+				ge.ObjectGUID = &objectGUID
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if ge.AdditionalProperties == nil {
+					ge.AdditionalProperties = make(map[string]interface{})
+				}
+				ge.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ge.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// HostEntity represents a host that is reported as part of the alert.
+type HostEntity struct {
+	// DNSDomain - The DNS domain to which this computer belongs.
+	DNSDomain *string `json:"dnsDomain,omitempty"`
+	// NtDomain - The NT domain to which this computer belongs.
+	NtDomain *string `json:"ntDomain,omitempty"`
+	// HostName - The NT domain to which this computer belongs.
+	HostName *string `json:"hostName,omitempty"`
+	// NetBiosName - The computer name (pre-windows2000).
+	NetBiosName *string `json:"netBiosName,omitempty"`
+	// AzureID - The Azure resource ID of the VM, if known.
+	AzureID *string `json:"azureID,omitempty"`
+	// OmsAgentID - The OMS agent ID, if the computer has OMS agent installed.
+	OmsAgentID *string `json:"omsAgentID,omitempty"`
+	// OsFamily - The computer operating system.
+	OsFamily *string `json:"osFamily,omitempty"`
+	// OsVersion - The computer operating system specific version. This is a free form textual representation of the OS.
+	OsVersion *string          `json:"osVersion,omitempty"`
+	IotDevice *IoTDeviceEntity `json:"iotDevice,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for HostEntity.
+func (he HostEntity) MarshalJSON() ([]byte, error) {
+	he.Type = TypeHost
+	objectMap := make(map[string]interface{})
+	if he.DNSDomain != nil {
+		objectMap["dnsDomain"] = he.DNSDomain
+	}
+	if he.NtDomain != nil {
+		objectMap["ntDomain"] = he.NtDomain
+	}
+	if he.HostName != nil {
+		objectMap["hostName"] = he.HostName
+	}
+	if he.NetBiosName != nil {
+		objectMap["netBiosName"] = he.NetBiosName
+	}
+	if he.AzureID != nil {
+		objectMap["azureID"] = he.AzureID
+	}
+	if he.OmsAgentID != nil {
+		objectMap["omsAgentID"] = he.OmsAgentID
+	}
+	if he.OsFamily != nil {
+		objectMap["osFamily"] = he.OsFamily
+	}
+	if he.OsVersion != nil {
+		objectMap["osVersion"] = he.OsVersion
+	}
+	if he.IotDevice != nil {
+		objectMap["iotDevice"] = he.IotDevice
+	}
+	if he.Type != "" {
+		objectMap["type"] = he.Type
+	}
+	for k, v := range he.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsHostEntity() (*HostEntity, bool) {
+	return &he, true
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for HostEntity.
+func (he HostEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &he, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for HostEntity struct.
+func (he *HostEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "dnsDomain":
+			if v != nil {
+				var DNSDomain string
+				err = json.Unmarshal(*v, &DNSDomain)
+				if err != nil {
+					return err
+				}
+				he.DNSDomain = &DNSDomain
+			}
+		case "ntDomain":
+			if v != nil {
+				var ntDomain string
+				err = json.Unmarshal(*v, &ntDomain)
+				if err != nil {
+					return err
+				}
+				he.NtDomain = &ntDomain
+			}
+		case "hostName":
+			if v != nil {
+				var hostName string
+				err = json.Unmarshal(*v, &hostName)
+				if err != nil {
+					return err
+				}
+				he.HostName = &hostName
+			}
+		case "netBiosName":
+			if v != nil {
+				var netBiosName string
+				err = json.Unmarshal(*v, &netBiosName)
+				if err != nil {
+					return err
+				}
+				he.NetBiosName = &netBiosName
+			}
+		case "azureID":
+			if v != nil {
+				var azureID string
+				err = json.Unmarshal(*v, &azureID)
+				if err != nil {
+					return err
+				}
+				he.AzureID = &azureID
+			}
+		case "omsAgentID":
+			if v != nil {
+				var omsAgentID string
+				err = json.Unmarshal(*v, &omsAgentID)
+				if err != nil {
+					return err
+				}
+				he.OmsAgentID = &omsAgentID
+			}
+		case "osFamily":
+			if v != nil {
+				var osFamily string
+				err = json.Unmarshal(*v, &osFamily)
+				if err != nil {
+					return err
+				}
+				he.OsFamily = &osFamily
+			}
+		case "osVersion":
+			if v != nil {
+				var osVersion string
+				err = json.Unmarshal(*v, &osVersion)
+				if err != nil {
+					return err
+				}
+				he.OsVersion = &osVersion
+			}
+		case "iotDevice":
+			if v != nil {
+				var iotDevice IoTDeviceEntity
+				err = json.Unmarshal(*v, &iotDevice)
+				if err != nil {
+					return err
+				}
+				he.IotDevice = &iotDevice
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if he.AdditionalProperties == nil {
+					he.AdditionalProperties = make(map[string]interface{})
+				}
+				he.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				he.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// HostLogonSessionEntity represents a logon session to a host by an account.
+type HostLogonSessionEntity struct {
+	// SessionID - The session ID for the account reported in the alert.
+	SessionID *string        `json:"sessionId,omitempty"`
+	Host      *HostEntity    `json:"host,omitempty"`
+	Account   *AccountEntity `json:"account,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) MarshalJSON() ([]byte, error) {
+	hlse.Type = TypeHostLogonSession
+	objectMap := make(map[string]interface{})
+	if hlse.SessionID != nil {
+		objectMap["sessionId"] = hlse.SessionID
+	}
+	if hlse.Host != nil {
+		objectMap["host"] = hlse.Host
+	}
+	if hlse.Account != nil {
+		objectMap["account"] = hlse.Account
+	}
+	if hlse.Type != "" {
+		objectMap["type"] = hlse.Type
+	}
+	for k, v := range hlse.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return &hlse, true
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for HostLogonSessionEntity.
+func (hlse HostLogonSessionEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &hlse, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for HostLogonSessionEntity struct.
+func (hlse *HostLogonSessionEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "sessionId":
+			if v != nil {
+				var sessionID string
+				err = json.Unmarshal(*v, &sessionID)
+				if err != nil {
+					return err
+				}
+				hlse.SessionID = &sessionID
+			}
+		case "host":
+			if v != nil {
+				var host HostEntity
+				err = json.Unmarshal(*v, &host)
+				if err != nil {
+					return err
+				}
+				hlse.Host = &host
+			}
+		case "account":
+			if v != nil {
+				var account AccountEntity
+				err = json.Unmarshal(*v, &account)
+				if err != nil {
+					return err
+				}
+				hlse.Account = &account
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if hlse.AdditionalProperties == nil {
+					hlse.AdditionalProperties = make(map[string]interface{})
+				}
+				hlse.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				hlse.Type = typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // HTTPC2DMessagesNotInAllowedRange number of cloud to device messages (HTTP protocol) is not in allowed range.
@@ -10116,6 +12373,372 @@ type IotDefenderSettingsProperties struct {
 	DeviceQuota *int32 `json:"deviceQuota,omitempty"`
 	// SentinelWorkspaceResourceIds - Sentinel Workspace Resource Ids
 	SentinelWorkspaceResourceIds *[]string `json:"sentinelWorkspaceResourceIds,omitempty"`
+}
+
+// IoTDeviceEntity represents an IoT Device that is reported as part of the alert.
+type IoTDeviceEntity struct {
+	// AzureResource - ARM ID of for connected IoT Hub
+	AzureResource *IoTDeviceEntityAzureResource `json:"azureResource,omitempty"`
+	// DeviceID - The ID of the IoT Device in the IoT Hub.
+	DeviceID *string `json:"deviceId,omitempty"`
+	// DeviceName - The friendly name of the device
+	DeviceName *string `json:"deviceName,omitempty"`
+	// Manufacturer - The manufacturer of the device
+	Manufacturer *string `json:"manufacturer,omitempty"`
+	// Model - The model of the IoT device
+	Model *string `json:"model,omitempty"`
+	// FirmwareVersion - The firmware version that the device is running
+	FirmwareVersion *string `json:"firmwareVersion,omitempty"`
+	// OperatingSystem - The operating system that the device is running
+	OperatingSystem *string   `json:"operatingSystem,omitempty"`
+	IPAddress       *IPEntity `json:"ipAddress,omitempty"`
+	// MacAddress - The MAC address of the device
+	MacAddress *string `json:"macAddress,omitempty"`
+	// Protocols - The communication protocols the device is using
+	Protocols *[]string `json:"protocols,omitempty"`
+	// SerialNumber - The serial number of the device
+	SerialNumber *string `json:"serialNumber,omitempty"`
+	// Source - The source of the device entity
+	Source *string `json:"source,omitempty"`
+	// SourceRef - URL reference to the source item where the device is managed
+	SourceRef *string `json:"sourceRef,omitempty"`
+	// IotSecurityAgentID - The ID of the security agent running on the device
+	IotSecurityAgentID *string `json:"iotSecurityAgentId,omitempty"`
+	// DeviceType - The type of the device
+	DeviceType *string `json:"deviceType,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IoTDeviceEntity.
+func (itde IoTDeviceEntity) MarshalJSON() ([]byte, error) {
+	itde.Type = TypeIotdevice
+	objectMap := make(map[string]interface{})
+	if itde.AzureResource != nil {
+		objectMap["azureResource"] = itde.AzureResource
+	}
+	if itde.DeviceID != nil {
+		objectMap["deviceId"] = itde.DeviceID
+	}
+	if itde.DeviceName != nil {
+		objectMap["deviceName"] = itde.DeviceName
+	}
+	if itde.Manufacturer != nil {
+		objectMap["manufacturer"] = itde.Manufacturer
+	}
+	if itde.Model != nil {
+		objectMap["model"] = itde.Model
+	}
+	if itde.FirmwareVersion != nil {
+		objectMap["firmwareVersion"] = itde.FirmwareVersion
+	}
+	if itde.OperatingSystem != nil {
+		objectMap["operatingSystem"] = itde.OperatingSystem
+	}
+	if itde.IPAddress != nil {
+		objectMap["ipAddress"] = itde.IPAddress
+	}
+	if itde.MacAddress != nil {
+		objectMap["macAddress"] = itde.MacAddress
+	}
+	if itde.Protocols != nil {
+		objectMap["protocols"] = itde.Protocols
+	}
+	if itde.SerialNumber != nil {
+		objectMap["serialNumber"] = itde.SerialNumber
+	}
+	if itde.Source != nil {
+		objectMap["source"] = itde.Source
+	}
+	if itde.SourceRef != nil {
+		objectMap["sourceRef"] = itde.SourceRef
+	}
+	if itde.IotSecurityAgentID != nil {
+		objectMap["iotSecurityAgentId"] = itde.IotSecurityAgentID
+	}
+	if itde.DeviceType != nil {
+		objectMap["deviceType"] = itde.DeviceType
+	}
+	if itde.Type != "" {
+		objectMap["type"] = itde.Type
+	}
+	for k, v := range itde.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return &itde, true
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for IoTDeviceEntity.
+func (itde IoTDeviceEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &itde, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for IoTDeviceEntity struct.
+func (itde *IoTDeviceEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "azureResource":
+			if v != nil {
+				var azureResource IoTDeviceEntityAzureResource
+				err = json.Unmarshal(*v, &azureResource)
+				if err != nil {
+					return err
+				}
+				itde.AzureResource = &azureResource
+			}
+		case "deviceId":
+			if v != nil {
+				var deviceID string
+				err = json.Unmarshal(*v, &deviceID)
+				if err != nil {
+					return err
+				}
+				itde.DeviceID = &deviceID
+			}
+		case "deviceName":
+			if v != nil {
+				var deviceName string
+				err = json.Unmarshal(*v, &deviceName)
+				if err != nil {
+					return err
+				}
+				itde.DeviceName = &deviceName
+			}
+		case "manufacturer":
+			if v != nil {
+				var manufacturer string
+				err = json.Unmarshal(*v, &manufacturer)
+				if err != nil {
+					return err
+				}
+				itde.Manufacturer = &manufacturer
+			}
+		case "model":
+			if v != nil {
+				var model string
+				err = json.Unmarshal(*v, &model)
+				if err != nil {
+					return err
+				}
+				itde.Model = &model
+			}
+		case "firmwareVersion":
+			if v != nil {
+				var firmwareVersion string
+				err = json.Unmarshal(*v, &firmwareVersion)
+				if err != nil {
+					return err
+				}
+				itde.FirmwareVersion = &firmwareVersion
+			}
+		case "operatingSystem":
+			if v != nil {
+				var operatingSystem string
+				err = json.Unmarshal(*v, &operatingSystem)
+				if err != nil {
+					return err
+				}
+				itde.OperatingSystem = &operatingSystem
+			}
+		case "ipAddress":
+			if v != nil {
+				var IPAddress IPEntity
+				err = json.Unmarshal(*v, &IPAddress)
+				if err != nil {
+					return err
+				}
+				itde.IPAddress = &IPAddress
+			}
+		case "macAddress":
+			if v != nil {
+				var macAddress string
+				err = json.Unmarshal(*v, &macAddress)
+				if err != nil {
+					return err
+				}
+				itde.MacAddress = &macAddress
+			}
+		case "protocols":
+			if v != nil {
+				var protocols []string
+				err = json.Unmarshal(*v, &protocols)
+				if err != nil {
+					return err
+				}
+				itde.Protocols = &protocols
+			}
+		case "serialNumber":
+			if v != nil {
+				var serialNumber string
+				err = json.Unmarshal(*v, &serialNumber)
+				if err != nil {
+					return err
+				}
+				itde.SerialNumber = &serialNumber
+			}
+		case "source":
+			if v != nil {
+				var source string
+				err = json.Unmarshal(*v, &source)
+				if err != nil {
+					return err
+				}
+				itde.Source = &source
+			}
+		case "sourceRef":
+			if v != nil {
+				var sourceRef string
+				err = json.Unmarshal(*v, &sourceRef)
+				if err != nil {
+					return err
+				}
+				itde.SourceRef = &sourceRef
+			}
+		case "iotSecurityAgentId":
+			if v != nil {
+				var iotSecurityAgentID string
+				err = json.Unmarshal(*v, &iotSecurityAgentID)
+				if err != nil {
+					return err
+				}
+				itde.IotSecurityAgentID = &iotSecurityAgentID
+			}
+		case "deviceType":
+			if v != nil {
+				var deviceType string
+				err = json.Unmarshal(*v, &deviceType)
+				if err != nil {
+					return err
+				}
+				itde.DeviceType = &deviceType
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if itde.AdditionalProperties == nil {
+					itde.AdditionalProperties = make(map[string]interface{})
+				}
+				itde.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				itde.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// IoTDeviceEntityAzureResource ARM ID of for connected IoT Hub
+type IoTDeviceEntityAzureResource struct {
+	ResourceID *string `json:"ResourceId,omitempty"`
 }
 
 // IotRecommendation ioT recommendation
@@ -11572,6 +14195,172 @@ type IoTSeverityMetrics struct {
 	Low *int32 `json:"low,omitempty"`
 }
 
+// IPEntity represents an IP endpoint entity
+type IPEntity struct {
+	// Address - The IP address as string
+	Address *string `json:"address,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IPEntity.
+func (ie IPEntity) MarshalJSON() ([]byte, error) {
+	ie.Type = TypeIP
+	objectMap := make(map[string]interface{})
+	if ie.Address != nil {
+		objectMap["address"] = ie.Address
+	}
+	if ie.Type != "" {
+		objectMap["type"] = ie.Type
+	}
+	for k, v := range ie.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsIPEntity() (*IPEntity, bool) {
+	return &ie, true
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for IPEntity.
+func (ie IPEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &ie, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for IPEntity struct.
+func (ie *IPEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "address":
+			if v != nil {
+				var address string
+				err = json.Unmarshal(*v, &address)
+				if err != nil {
+					return err
+				}
+				ie.Address = &address
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if ie.AdditionalProperties == nil {
+					ie.AdditionalProperties = make(map[string]interface{})
+				}
+				ie.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				ie.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // JitNetworkAccessPoliciesList ...
 type JitNetworkAccessPoliciesList struct {
 	autorest.Response `json:"-"`
@@ -12376,13 +15165,13 @@ type Location struct {
 
 // LogAnalyticsIdentifier represents a Log Analytics workspace scope identifier.
 type LogAnalyticsIdentifier struct {
-	// WorkspaceID - READ-ONLY; The LogAnalytics workspace id that stores this alert.
+	// WorkspaceID - READ-ONLY; The Log Analytics workspace ID that stores this alert.
 	WorkspaceID *string `json:"workspaceId,omitempty"`
-	// WorkspaceSubscriptionID - READ-ONLY; The azure subscription id for the LogAnalytics workspace storing this alert.
+	// WorkspaceSubscriptionID - READ-ONLY; The Azure subscription ID for the Log Analytics workspace storing this alert.
 	WorkspaceSubscriptionID *string `json:"workspaceSubscriptionId,omitempty"`
-	// WorkspaceResourceGroup - READ-ONLY; The azure resource group for the LogAnalytics workspace storing this alert
+	// WorkspaceResourceGroup - READ-ONLY; The Azure resource group for the Log Analytics workspace storing this alert
 	WorkspaceResourceGroup *string `json:"workspaceResourceGroup,omitempty"`
-	// AgentID - READ-ONLY; (optional) The LogAnalytics agent id reporting the event that this alert is based on.
+	// AgentID - READ-ONLY; (optional) The Log Analytics agent ID reporting the event that this alert is based on.
 	AgentID *string `json:"agentId,omitempty"`
 	// Type - Possible values include: 'TypeResourceIdentifier', 'TypeAzureResource', 'TypeLogAnalytics'
 	Type TypeBasicResourceIdentifier `json:"type,omitempty"`
@@ -12416,6 +15205,436 @@ func (lai LogAnalyticsIdentifier) AsResourceIdentifier() (*ResourceIdentifier, b
 // AsBasicResourceIdentifier is the BasicResourceIdentifier implementation for LogAnalyticsIdentifier.
 func (lai LogAnalyticsIdentifier) AsBasicResourceIdentifier() (BasicResourceIdentifier, bool) {
 	return &lai, true
+}
+
+// MailboxEntity represents an impacted mailbox
+type MailboxEntity struct {
+	// MailboxPrimaryAddress - Primary email of the mailbox
+	MailboxPrimaryAddress *string `json:"mailboxPrimaryAddress,omitempty"`
+	// DisplayName - Display name of the mailbox
+	DisplayName *string `json:"displayName,omitempty"`
+	// Upn - UPN of the mailbox
+	Upn *string `json:"upn,omitempty"`
+	// ExternalDirectoryObjectID - External directory object identifier of the mailbox
+	ExternalDirectoryObjectID *string `json:"externalDirectoryObjectId,omitempty"`
+	// RiskLevel - The risk level of this mailbox like Low, Medium, High
+	RiskLevel *string `json:"riskLevel,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for MailboxEntity.
+func (me MailboxEntity) MarshalJSON() ([]byte, error) {
+	me.Type = TypeMailbox
+	objectMap := make(map[string]interface{})
+	if me.MailboxPrimaryAddress != nil {
+		objectMap["mailboxPrimaryAddress"] = me.MailboxPrimaryAddress
+	}
+	if me.DisplayName != nil {
+		objectMap["displayName"] = me.DisplayName
+	}
+	if me.Upn != nil {
+		objectMap["upn"] = me.Upn
+	}
+	if me.ExternalDirectoryObjectID != nil {
+		objectMap["externalDirectoryObjectId"] = me.ExternalDirectoryObjectID
+	}
+	if me.RiskLevel != nil {
+		objectMap["riskLevel"] = me.RiskLevel
+	}
+	if me.Type != "" {
+		objectMap["type"] = me.Type
+	}
+	for k, v := range me.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return &me, true
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for MailboxEntity.
+func (me MailboxEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &me, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for MailboxEntity struct.
+func (me *MailboxEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "mailboxPrimaryAddress":
+			if v != nil {
+				var mailboxPrimaryAddress string
+				err = json.Unmarshal(*v, &mailboxPrimaryAddress)
+				if err != nil {
+					return err
+				}
+				me.MailboxPrimaryAddress = &mailboxPrimaryAddress
+			}
+		case "displayName":
+			if v != nil {
+				var displayName string
+				err = json.Unmarshal(*v, &displayName)
+				if err != nil {
+					return err
+				}
+				me.DisplayName = &displayName
+			}
+		case "upn":
+			if v != nil {
+				var upn string
+				err = json.Unmarshal(*v, &upn)
+				if err != nil {
+					return err
+				}
+				me.Upn = &upn
+			}
+		case "externalDirectoryObjectId":
+			if v != nil {
+				var externalDirectoryObjectID string
+				err = json.Unmarshal(*v, &externalDirectoryObjectID)
+				if err != nil {
+					return err
+				}
+				me.ExternalDirectoryObjectID = &externalDirectoryObjectID
+			}
+		case "riskLevel":
+			if v != nil {
+				var riskLevel string
+				err = json.Unmarshal(*v, &riskLevel)
+				if err != nil {
+					return err
+				}
+				me.RiskLevel = &riskLevel
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if me.AdditionalProperties == nil {
+					me.AdditionalProperties = make(map[string]interface{})
+				}
+				me.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				me.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// MalwareEntity represents a malware that is reported as part of the security alert
+type MalwareEntity struct {
+	// Name - The malware name by the vendor, e.g. Win32/Toga!rfn
+	Name *string `json:"name,omitempty"`
+	// Category - The malware category by the vendor, e.g. Trojan
+	Category *string `json:"category,omitempty"`
+	// Files - Holds list of File entities which relate to this Malware entity instance
+	Files *[]FileEntity `json:"files,omitempty"`
+	// Processes - Holds list of Process entities which relate to this Malware entity instance
+	Processes *[]ProcessEntity `json:"processes,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for MalwareEntity.
+func (me MalwareEntity) MarshalJSON() ([]byte, error) {
+	me.Type = TypeMalware
+	objectMap := make(map[string]interface{})
+	if me.Name != nil {
+		objectMap["name"] = me.Name
+	}
+	if me.Category != nil {
+		objectMap["category"] = me.Category
+	}
+	if me.Files != nil {
+		objectMap["files"] = me.Files
+	}
+	if me.Processes != nil {
+		objectMap["processes"] = me.Processes
+	}
+	if me.Type != "" {
+		objectMap["type"] = me.Type
+	}
+	for k, v := range me.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return &me, true
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for MalwareEntity.
+func (me MalwareEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &me, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for MalwareEntity struct.
+func (me *MalwareEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				me.Name = &name
+			}
+		case "category":
+			if v != nil {
+				var category string
+				err = json.Unmarshal(*v, &category)
+				if err != nil {
+					return err
+				}
+				me.Category = &category
+			}
+		case "files":
+			if v != nil {
+				var files []FileEntity
+				err = json.Unmarshal(*v, &files)
+				if err != nil {
+					return err
+				}
+				me.Files = &files
+			}
+		case "processes":
+			if v != nil {
+				var processes []ProcessEntity
+				err = json.Unmarshal(*v, &processes)
+				if err != nil {
+					return err
+				}
+				me.Processes = &processes
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if me.AdditionalProperties == nil {
+					me.AdditionalProperties = make(map[string]interface{})
+				}
+				me.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				me.Type = typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // MqttC2DMessagesNotInAllowedRange number of cloud to device messages (MQTT protocol) is not in allowed range.
@@ -12987,6 +16206,226 @@ func (mdmniar MqttD2CMessagesNotInAllowedRange) AsCustomAlertRule() (*CustomAler
 // AsBasicCustomAlertRule is the BasicCustomAlertRule implementation for MqttD2CMessagesNotInAllowedRange.
 func (mdmniar MqttD2CMessagesNotInAllowedRange) AsBasicCustomAlertRule() (BasicCustomAlertRule, bool) {
 	return &mdmniar, true
+}
+
+// NetworkConnectionEntity ...
+type NetworkConnectionEntity struct {
+	SourceAddress *IPEntity `json:"sourceAddress,omitempty"`
+	// SourcePort - The source port number
+	SourcePort         *int32    `json:"sourcePort,omitempty"`
+	DestinationAddress *IPEntity `json:"destinationAddress,omitempty"`
+	// DestinationPort - The destination port number
+	DestinationPort *int32 `json:"destinationPort,omitempty"`
+	// Protocol - The protocol type of the network connection (i.e. TCP, UDP)
+	Protocol *string `json:"protocol,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) MarshalJSON() ([]byte, error) {
+	nce.Type = TypeNetworkConnection
+	objectMap := make(map[string]interface{})
+	if nce.SourceAddress != nil {
+		objectMap["sourceAddress"] = nce.SourceAddress
+	}
+	if nce.SourcePort != nil {
+		objectMap["sourcePort"] = nce.SourcePort
+	}
+	if nce.DestinationAddress != nil {
+		objectMap["destinationAddress"] = nce.DestinationAddress
+	}
+	if nce.DestinationPort != nil {
+		objectMap["destinationPort"] = nce.DestinationPort
+	}
+	if nce.Protocol != nil {
+		objectMap["protocol"] = nce.Protocol
+	}
+	if nce.Type != "" {
+		objectMap["type"] = nce.Type
+	}
+	for k, v := range nce.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return &nce, true
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for NetworkConnectionEntity.
+func (nce NetworkConnectionEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &nce, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for NetworkConnectionEntity struct.
+func (nce *NetworkConnectionEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "sourceAddress":
+			if v != nil {
+				var sourceAddress IPEntity
+				err = json.Unmarshal(*v, &sourceAddress)
+				if err != nil {
+					return err
+				}
+				nce.SourceAddress = &sourceAddress
+			}
+		case "sourcePort":
+			if v != nil {
+				var sourcePort int32
+				err = json.Unmarshal(*v, &sourcePort)
+				if err != nil {
+					return err
+				}
+				nce.SourcePort = &sourcePort
+			}
+		case "destinationAddress":
+			if v != nil {
+				var destinationAddress IPEntity
+				err = json.Unmarshal(*v, &destinationAddress)
+				if err != nil {
+					return err
+				}
+				nce.DestinationAddress = &destinationAddress
+			}
+		case "destinationPort":
+			if v != nil {
+				var destinationPort int32
+				err = json.Unmarshal(*v, &destinationPort)
+				if err != nil {
+					return err
+				}
+				nce.DestinationPort = &destinationPort
+			}
+		case "protocol":
+			if v != nil {
+				var protocol string
+				err = json.Unmarshal(*v, &protocol)
+				if err != nil {
+					return err
+				}
+				nce.Protocol = &protocol
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if nce.AdditionalProperties == nil {
+					nce.AdditionalProperties = make(map[string]interface{})
+				}
+				nce.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				nce.Type = typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // OnPremiseIotSensor on-premise IoT sensor
@@ -13625,6 +17064,279 @@ func (pp PricingProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// ProcessEntity represents a process running on a host
+type ProcessEntity struct {
+	// ProcessID - The process ID
+	ProcessID *string `json:"processId,omitempty"`
+	// CommandLine - The command line used to create the process
+	CommandLine *string `json:"commandLine,omitempty"`
+	// ElevationToken - The elevation token associated with the process
+	ElevationToken *string `json:"elevationToken,omitempty"`
+	// CreationTimeUtc - The time when the process started to run
+	CreationTimeUtc *string                 `json:"creationTimeUtc,omitempty"`
+	ImageFile       *FileEntity             `json:"imageFile,omitempty"`
+	Account         *AccountEntity          `json:"account,omitempty"`
+	LogonSession    *HostLogonSessionEntity `json:"logonSession,omitempty"`
+	ParentProcess   *ProcessEntity          `json:"parentProcess,omitempty"`
+	Host            *HostEntity             `json:"host,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ProcessEntity.
+func (peVar ProcessEntity) MarshalJSON() ([]byte, error) {
+	peVar.Type = TypeProcess
+	objectMap := make(map[string]interface{})
+	if peVar.ProcessID != nil {
+		objectMap["processId"] = peVar.ProcessID
+	}
+	if peVar.CommandLine != nil {
+		objectMap["commandLine"] = peVar.CommandLine
+	}
+	if peVar.ElevationToken != nil {
+		objectMap["elevationToken"] = peVar.ElevationToken
+	}
+	if peVar.CreationTimeUtc != nil {
+		objectMap["creationTimeUtc"] = peVar.CreationTimeUtc
+	}
+	if peVar.ImageFile != nil {
+		objectMap["imageFile"] = peVar.ImageFile
+	}
+	if peVar.Account != nil {
+		objectMap["account"] = peVar.Account
+	}
+	if peVar.LogonSession != nil {
+		objectMap["logonSession"] = peVar.LogonSession
+	}
+	if peVar.ParentProcess != nil {
+		objectMap["parentProcess"] = peVar.ParentProcess
+	}
+	if peVar.Host != nil {
+		objectMap["host"] = peVar.Host
+	}
+	if peVar.Type != "" {
+		objectMap["type"] = peVar.Type
+	}
+	for k, v := range peVar.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return &peVar, true
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for ProcessEntity.
+func (peVar ProcessEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &peVar, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for ProcessEntity struct.
+func (peVar *ProcessEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "processId":
+			if v != nil {
+				var processID string
+				err = json.Unmarshal(*v, &processID)
+				if err != nil {
+					return err
+				}
+				peVar.ProcessID = &processID
+			}
+		case "commandLine":
+			if v != nil {
+				var commandLine string
+				err = json.Unmarshal(*v, &commandLine)
+				if err != nil {
+					return err
+				}
+				peVar.CommandLine = &commandLine
+			}
+		case "elevationToken":
+			if v != nil {
+				var elevationToken string
+				err = json.Unmarshal(*v, &elevationToken)
+				if err != nil {
+					return err
+				}
+				peVar.ElevationToken = &elevationToken
+			}
+		case "creationTimeUtc":
+			if v != nil {
+				var creationTimeUtc string
+				err = json.Unmarshal(*v, &creationTimeUtc)
+				if err != nil {
+					return err
+				}
+				peVar.CreationTimeUtc = &creationTimeUtc
+			}
+		case "imageFile":
+			if v != nil {
+				var imageFile FileEntity
+				err = json.Unmarshal(*v, &imageFile)
+				if err != nil {
+					return err
+				}
+				peVar.ImageFile = &imageFile
+			}
+		case "account":
+			if v != nil {
+				var account AccountEntity
+				err = json.Unmarshal(*v, &account)
+				if err != nil {
+					return err
+				}
+				peVar.Account = &account
+			}
+		case "logonSession":
+			if v != nil {
+				var logonSession HostLogonSessionEntity
+				err = json.Unmarshal(*v, &logonSession)
+				if err != nil {
+					return err
+				}
+				peVar.LogonSession = &logonSession
+			}
+		case "parentProcess":
+			if v != nil {
+				var parentProcess ProcessEntity
+				err = json.Unmarshal(*v, &parentProcess)
+				if err != nil {
+					return err
+				}
+				peVar.ParentProcess = &parentProcess
+			}
+		case "host":
+			if v != nil {
+				var host HostEntity
+				err = json.Unmarshal(*v, &host)
+				if err != nil {
+					return err
+				}
+				peVar.Host = &host
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if peVar.AdditionalProperties == nil {
+					peVar.AdditionalProperties = make(map[string]interface{})
+				}
+				peVar.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				peVar.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
 // ProcessNotAllowed execution of a process that isn't allowed. Allow list consists of process names to allow.
 type ProcessNotAllowed struct {
 	// AllowlistValues - The values to allow. The format of the values depends on the rule type.
@@ -14057,6 +17769,379 @@ func (rcp RecommendationConfigurationProperties) MarshalJSON() ([]byte, error) {
 		objectMap["status"] = rcp.Status
 	}
 	return json.Marshal(objectMap)
+}
+
+// RegistryKeyEntity represents a registry key entity
+type RegistryKeyEntity struct {
+	// Hive - The hive that holds the registry key
+	Hive *string `json:"hive,omitempty"`
+	// Key - The registry key path
+	Key *string `json:"key,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for RegistryKeyEntity.
+func (rke RegistryKeyEntity) MarshalJSON() ([]byte, error) {
+	rke.Type = TypeRegistryKey
+	objectMap := make(map[string]interface{})
+	if rke.Hive != nil {
+		objectMap["hive"] = rke.Hive
+	}
+	if rke.Key != nil {
+		objectMap["key"] = rke.Key
+	}
+	if rke.Type != "" {
+		objectMap["type"] = rke.Type
+	}
+	for k, v := range rke.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return &rke, true
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return nil, false
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for RegistryKeyEntity.
+func (rke RegistryKeyEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &rke, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for RegistryKeyEntity struct.
+func (rke *RegistryKeyEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "hive":
+			if v != nil {
+				var hive string
+				err = json.Unmarshal(*v, &hive)
+				if err != nil {
+					return err
+				}
+				rke.Hive = &hive
+			}
+		case "key":
+			if v != nil {
+				var key string
+				err = json.Unmarshal(*v, &key)
+				if err != nil {
+					return err
+				}
+				rke.Key = &key
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if rke.AdditionalProperties == nil {
+					rke.AdditionalProperties = make(map[string]interface{})
+				}
+				rke.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				rke.Type = typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// RegistryValueEntity represents a registry value entity
+type RegistryValueEntity struct {
+	Key *RegistryKeyEntity `json:"key,omitempty"`
+	// Name - The registry key entity
+	Name *string `json:"name,omitempty"`
+	// Value - The registry value name
+	Value *string `json:"value,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Type - Possible values include: 'TypeAlertEntity', 'TypeIP', 'TypeIotdevice', 'TypeHost', 'TypeAccount', 'TypeAlerts', 'TypeCloudApplication', 'TypeDNS', 'TypeFilehash', 'TypeFile', 'TypeHostLogonSession', 'TypeMailbox', 'TypeProcess', 'TypeMalware', 'TypeNetworkConnection', 'TypeRegistryKey', 'TypeRegistryValue', 'TypeSecurityGroup'
+	Type TypeBasicAlertEntity `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for RegistryValueEntity.
+func (rve RegistryValueEntity) MarshalJSON() ([]byte, error) {
+	rve.Type = TypeRegistryValue
+	objectMap := make(map[string]interface{})
+	if rve.Key != nil {
+		objectMap["key"] = rve.Key
+	}
+	if rve.Name != nil {
+		objectMap["name"] = rve.Name
+	}
+	if rve.Value != nil {
+		objectMap["value"] = rve.Value
+	}
+	if rve.Type != "" {
+		objectMap["type"] = rve.Type
+	}
+	for k, v := range rve.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsIPEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsIPEntity() (*IPEntity, bool) {
+	return nil, false
+}
+
+// AsIoTDeviceEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsIoTDeviceEntity() (*IoTDeviceEntity, bool) {
+	return nil, false
+}
+
+// AsHostEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsHostEntity() (*HostEntity, bool) {
+	return nil, false
+}
+
+// AsAccountEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsAccountEntity() (*AccountEntity, bool) {
+	return nil, false
+}
+
+// AsAlertsEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsAlertsEntity() (*AlertsEntity, bool) {
+	return nil, false
+}
+
+// AsCloudApplicationEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsCloudApplicationEntity() (*CloudApplicationEntity, bool) {
+	return nil, false
+}
+
+// AsDNSEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsDNSEntity() (*DNSEntity, bool) {
+	return nil, false
+}
+
+// AsFileHashEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsFileHashEntity() (*FileHashEntity, bool) {
+	return nil, false
+}
+
+// AsFileEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsFileEntity() (*FileEntity, bool) {
+	return nil, false
+}
+
+// AsHostLogonSessionEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsHostLogonSessionEntity() (*HostLogonSessionEntity, bool) {
+	return nil, false
+}
+
+// AsMailboxEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsMailboxEntity() (*MailboxEntity, bool) {
+	return nil, false
+}
+
+// AsProcessEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsProcessEntity() (*ProcessEntity, bool) {
+	return nil, false
+}
+
+// AsMalwareEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsMalwareEntity() (*MalwareEntity, bool) {
+	return nil, false
+}
+
+// AsNetworkConnectionEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsNetworkConnectionEntity() (*NetworkConnectionEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryKeyEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsRegistryKeyEntity() (*RegistryKeyEntity, bool) {
+	return nil, false
+}
+
+// AsRegistryValueEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsRegistryValueEntity() (*RegistryValueEntity, bool) {
+	return &rve, true
+}
+
+// AsGroupEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsGroupEntity() (*GroupEntity, bool) {
+	return nil, false
+}
+
+// AsAlertEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsAlertEntity() (*AlertEntity, bool) {
+	return nil, false
+}
+
+// AsBasicAlertEntity is the BasicAlertEntity implementation for RegistryValueEntity.
+func (rve RegistryValueEntity) AsBasicAlertEntity() (BasicAlertEntity, bool) {
+	return &rve, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for RegistryValueEntity struct.
+func (rve *RegistryValueEntity) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "key":
+			if v != nil {
+				var key RegistryKeyEntity
+				err = json.Unmarshal(*v, &key)
+				if err != nil {
+					return err
+				}
+				rve.Key = &key
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				rve.Name = &name
+			}
+		case "value":
+			if v != nil {
+				var value string
+				err = json.Unmarshal(*v, &value)
+				if err != nil {
+					return err
+				}
+				rve.Value = &value
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if rve.AdditionalProperties == nil {
+					rve.AdditionalProperties = make(map[string]interface{})
+				}
+				rve.AdditionalProperties[k] = additionalProperties
+			}
+		case "type":
+			if v != nil {
+				var typeVar TypeBasicAlertEntity
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				rve.Type = typeVar
+			}
+		}
+	}
+
+	return nil
 }
 
 // RegulatoryComplianceAssessment regulatory compliance assessment details and state

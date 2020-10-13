@@ -695,7 +695,7 @@ const (
 	// IntentPreAttack PreAttack could be either an attempt to access a certain resource regardless of a
 	// malicious intent, or a failed attempt to gain access to a target system to gather information prior to
 	// exploitation. This step is usually detected as an attempt, originating from outside the network, to scan
-	// the target system and find a way in.  Further details on the PreAttack stage can be read in [MITRE
+	// the target system and find a way in. Further details on the PreAttack stage can be read in [MITRE
 	// Pre-Att&ck matrix](https://attack.mitre.org/matrices/pre/).
 	IntentPreAttack Intent = "PreAttack"
 	// IntentPrivilegeEscalation Privilege escalation is the result of actions that allow an adversary to
@@ -1434,6 +1434,53 @@ const (
 // PossibleTypeValues returns an array of possible values for the Type const type.
 func PossibleTypeValues() []Type {
 	return []Type{BinarySignature, File, FileHash, ProductSignature, PublisherSignature, VersionAndAboveSignature}
+}
+
+// TypeBasicAlertEntity enumerates the values for type basic alert entity.
+type TypeBasicAlertEntity string
+
+const (
+	// TypeAccount ...
+	TypeAccount TypeBasicAlertEntity = "account"
+	// TypeAlertEntity ...
+	TypeAlertEntity TypeBasicAlertEntity = "AlertEntity"
+	// TypeAlerts ...
+	TypeAlerts TypeBasicAlertEntity = "alerts"
+	// TypeCloudApplication ...
+	TypeCloudApplication TypeBasicAlertEntity = "cloud-application"
+	// TypeDNS ...
+	TypeDNS TypeBasicAlertEntity = "dns"
+	// TypeFile ...
+	TypeFile TypeBasicAlertEntity = "file"
+	// TypeFilehash ...
+	TypeFilehash TypeBasicAlertEntity = "filehash"
+	// TypeHost ...
+	TypeHost TypeBasicAlertEntity = "host"
+	// TypeHostLogonSession ...
+	TypeHostLogonSession TypeBasicAlertEntity = "host-logon-session"
+	// TypeIotdevice ...
+	TypeIotdevice TypeBasicAlertEntity = "iotdevice"
+	// TypeIP ...
+	TypeIP TypeBasicAlertEntity = "ip"
+	// TypeMailbox ...
+	TypeMailbox TypeBasicAlertEntity = "mailbox"
+	// TypeMalware ...
+	TypeMalware TypeBasicAlertEntity = "malware"
+	// TypeNetworkConnection ...
+	TypeNetworkConnection TypeBasicAlertEntity = "network-connection"
+	// TypeProcess ...
+	TypeProcess TypeBasicAlertEntity = "process"
+	// TypeRegistryKey ...
+	TypeRegistryKey TypeBasicAlertEntity = "registry-key"
+	// TypeRegistryValue ...
+	TypeRegistryValue TypeBasicAlertEntity = "registry-value"
+	// TypeSecurityGroup ...
+	TypeSecurityGroup TypeBasicAlertEntity = "security-group"
+)
+
+// PossibleTypeBasicAlertEntityValues returns an array of possible values for the TypeBasicAlertEntity const type.
+func PossibleTypeBasicAlertEntityValues() []TypeBasicAlertEntity {
+	return []TypeBasicAlertEntity{TypeAccount, TypeAlertEntity, TypeAlerts, TypeCloudApplication, TypeDNS, TypeFile, TypeFilehash, TypeHost, TypeHostLogonSession, TypeIotdevice, TypeIP, TypeMailbox, TypeMalware, TypeNetworkConnection, TypeProcess, TypeRegistryKey, TypeRegistryValue, TypeSecurityGroup}
 }
 
 // TypeBasicResourceIdentifier enumerates the values for type basic resource identifier.
