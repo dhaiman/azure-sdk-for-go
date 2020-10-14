@@ -257,6 +257,18 @@ type IntegrationAccountSessionsClientAPI interface {
 
 var _ IntegrationAccountSessionsClientAPI = (*logic.IntegrationAccountSessionsClient)(nil)
 
+// IntegrationAccountUsageConfigurationsClientAPI contains the set of methods on the IntegrationAccountUsageConfigurationsClient type.
+type IntegrationAccountUsageConfigurationsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, integrationAccountName string, usageConfigurationName string, usageConfiguration logic.IntegrationAccountUsageConfiguration) (result logic.IntegrationAccountUsageConfiguration, err error)
+	Delete(ctx context.Context, resourceGroupName string, integrationAccountName string, usageConfigurationName string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, integrationAccountName string, usageConfigurationName string) (result logic.IntegrationAccountUsageConfiguration, err error)
+	List(ctx context.Context, resourceGroupName string, integrationAccountName string, top *int32) (result logic.IntegrationAccountUsageConfigurationListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string, integrationAccountName string, top *int32) (result logic.IntegrationAccountUsageConfigurationListResultIterator, err error)
+	ListCallbackURL(ctx context.Context, resourceGroupName string, integrationAccountName string, usageConfigurationName string, listCallbackURL logic.GetCallbackURLParameters) (result logic.WorkflowTriggerCallbackURL, err error)
+}
+
+var _ IntegrationAccountUsageConfigurationsClientAPI = (*logic.IntegrationAccountUsageConfigurationsClient)(nil)
+
 // IntegrationServiceEnvironmentsClientAPI contains the set of methods on the IntegrationServiceEnvironmentsClient type.
 type IntegrationServiceEnvironmentsClientAPI interface {
 	CreateOrUpdate(ctx context.Context, resourceGroup string, integrationServiceEnvironmentName string, integrationServiceEnvironment logic.IntegrationServiceEnvironment) (result logic.IntegrationServiceEnvironmentsCreateOrUpdateFuture, err error)

@@ -3440,6 +3440,294 @@ type IntegrationAccountSku struct {
 	Name IntegrationAccountSkuName `json:"name,omitempty"`
 }
 
+// IntegrationAccountUsageConfiguration the integration account usage configuration.
+type IntegrationAccountUsageConfiguration struct {
+	autorest.Response `json:"-"`
+	// IntegrationAccountUsageConfigurationProperties - The integration account usage configuration properties.
+	*IntegrationAccountUsageConfigurationProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; The resource id.
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Gets the resource name.
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Gets the resource type.
+	Type *string `json:"type,omitempty"`
+	// Location - The resource location.
+	Location *string `json:"location,omitempty"`
+	// Tags - The resource tags.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for IntegrationAccountUsageConfiguration.
+func (iauc IntegrationAccountUsageConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if iauc.IntegrationAccountUsageConfigurationProperties != nil {
+		objectMap["properties"] = iauc.IntegrationAccountUsageConfigurationProperties
+	}
+	if iauc.Location != nil {
+		objectMap["location"] = iauc.Location
+	}
+	if iauc.Tags != nil {
+		objectMap["tags"] = iauc.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for IntegrationAccountUsageConfiguration struct.
+func (iauc *IntegrationAccountUsageConfiguration) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var integrationAccountUsageConfigurationProperties IntegrationAccountUsageConfigurationProperties
+				err = json.Unmarshal(*v, &integrationAccountUsageConfigurationProperties)
+				if err != nil {
+					return err
+				}
+				iauc.IntegrationAccountUsageConfigurationProperties = &integrationAccountUsageConfigurationProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				iauc.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				iauc.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				iauc.Type = &typeVar
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				iauc.Location = &location
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				iauc.Tags = tags
+			}
+		}
+	}
+
+	return nil
+}
+
+// IntegrationAccountUsageConfigurationListResult the list of integration account usage configurations.
+type IntegrationAccountUsageConfigurationListResult struct {
+	autorest.Response `json:"-"`
+	// Value - The list of integration account usage configurations.
+	Value *[]IntegrationAccountUsageConfiguration `json:"value,omitempty"`
+	// NextLink - The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// IntegrationAccountUsageConfigurationListResultIterator provides access to a complete listing of
+// IntegrationAccountUsageConfiguration values.
+type IntegrationAccountUsageConfigurationListResultIterator struct {
+	i    int
+	page IntegrationAccountUsageConfigurationListResultPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *IntegrationAccountUsageConfigurationListResultIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/IntegrationAccountUsageConfigurationListResultIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *IntegrationAccountUsageConfigurationListResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter IntegrationAccountUsageConfigurationListResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter IntegrationAccountUsageConfigurationListResultIterator) Response() IntegrationAccountUsageConfigurationListResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter IntegrationAccountUsageConfigurationListResultIterator) Value() IntegrationAccountUsageConfiguration {
+	if !iter.page.NotDone() {
+		return IntegrationAccountUsageConfiguration{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the IntegrationAccountUsageConfigurationListResultIterator type.
+func NewIntegrationAccountUsageConfigurationListResultIterator(page IntegrationAccountUsageConfigurationListResultPage) IntegrationAccountUsageConfigurationListResultIterator {
+	return IntegrationAccountUsageConfigurationListResultIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (iauclr IntegrationAccountUsageConfigurationListResult) IsEmpty() bool {
+	return iauclr.Value == nil || len(*iauclr.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (iauclr IntegrationAccountUsageConfigurationListResult) hasNextLink() bool {
+	return iauclr.NextLink != nil && len(*iauclr.NextLink) != 0
+}
+
+// integrationAccountUsageConfigurationListResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (iauclr IntegrationAccountUsageConfigurationListResult) integrationAccountUsageConfigurationListResultPreparer(ctx context.Context) (*http.Request, error) {
+	if !iauclr.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(iauclr.NextLink)))
+}
+
+// IntegrationAccountUsageConfigurationListResultPage contains a page of IntegrationAccountUsageConfiguration
+// values.
+type IntegrationAccountUsageConfigurationListResultPage struct {
+	fn     func(context.Context, IntegrationAccountUsageConfigurationListResult) (IntegrationAccountUsageConfigurationListResult, error)
+	iauclr IntegrationAccountUsageConfigurationListResult
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *IntegrationAccountUsageConfigurationListResultPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/IntegrationAccountUsageConfigurationListResultPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.iauclr)
+		if err != nil {
+			return err
+		}
+		page.iauclr = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *IntegrationAccountUsageConfigurationListResultPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page IntegrationAccountUsageConfigurationListResultPage) NotDone() bool {
+	return !page.iauclr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page IntegrationAccountUsageConfigurationListResultPage) Response() IntegrationAccountUsageConfigurationListResult {
+	return page.iauclr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page IntegrationAccountUsageConfigurationListResultPage) Values() []IntegrationAccountUsageConfiguration {
+	if page.iauclr.IsEmpty() {
+		return nil
+	}
+	return *page.iauclr.Value
+}
+
+// Creates a new instance of the IntegrationAccountUsageConfigurationListResultPage type.
+func NewIntegrationAccountUsageConfigurationListResultPage(getNextPage func(context.Context, IntegrationAccountUsageConfigurationListResult) (IntegrationAccountUsageConfigurationListResult, error)) IntegrationAccountUsageConfigurationListResultPage {
+	return IntegrationAccountUsageConfigurationListResultPage{fn: getNextPage}
+}
+
+// IntegrationAccountUsageConfigurationProperties the integration account usage configuration properties.
+type IntegrationAccountUsageConfigurationProperties struct {
+	// DisableOverride - Whether to disable runtime override of the usage configuration.
+	DisableOverride *bool `json:"disableOverride,omitempty"`
+	// Throttles - The usage configuration throttles.
+	Throttles map[string]*UsageConfigurationThrottle `json:"throttles"`
+	// CreatedTime - READ-ONLY; The created time.
+	CreatedTime *date.Time `json:"createdTime,omitempty"`
+	// ChangedTime - READ-ONLY; The changed time.
+	ChangedTime *date.Time `json:"changedTime,omitempty"`
+	// Metadata - The metadata.
+	Metadata interface{} `json:"metadata,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IntegrationAccountUsageConfigurationProperties.
+func (iaucp IntegrationAccountUsageConfigurationProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if iaucp.DisableOverride != nil {
+		objectMap["disableOverride"] = iaucp.DisableOverride
+	}
+	if iaucp.Throttles != nil {
+		objectMap["throttles"] = iaucp.Throttles
+	}
+	if iaucp.Metadata != nil {
+		objectMap["metadata"] = iaucp.Metadata
+	}
+	return json.Marshal(objectMap)
+}
+
 // IntegrationServiceEnvironment the integration service environment.
 type IntegrationServiceEnvironment struct {
 	autorest.Response `json:"-"`
@@ -5352,6 +5640,26 @@ type TrackingEventsDefinition struct {
 	TrackEventsOptions TrackEventsOperationOptions `json:"trackEventsOptions,omitempty"`
 	// Events - The events.
 	Events *[]TrackingEvent `json:"events,omitempty"`
+}
+
+// UsageConfigurationThrottle the usage configuration throttle.
+type UsageConfigurationThrottle struct {
+	// Threshold - The number of operations to throttle at.
+	Threshold *float64 `json:"threshold,omitempty"`
+	// Period - The usage configuration throttle period
+	Period *UsageConfigurationThrottlePeriod `json:"period,omitempty"`
+	// TriggerStatuses - The trigger statuses to throttle
+	TriggerStatuses *[]WorkflowStatus `json:"triggerStatuses,omitempty"`
+	// ActionStatuses - The action statuses to throttle
+	ActionStatuses *[]WorkflowStatus `json:"actionStatuses,omitempty"`
+}
+
+// UsageConfigurationThrottlePeriod the usage configuration throttle period.
+type UsageConfigurationThrottlePeriod struct {
+	// Interval - The throttle period interval.
+	Interval *float64 `json:"interval,omitempty"`
+	// Frequency - The throttle frequency. Possible values include: 'RecurrenceFrequencyNotSpecified', 'RecurrenceFrequencySecond', 'RecurrenceFrequencyMinute', 'RecurrenceFrequencyHour', 'RecurrenceFrequencyDay', 'RecurrenceFrequencyWeek', 'RecurrenceFrequencyMonth', 'RecurrenceFrequencyYear'
+	Frequency RecurrenceFrequency `json:"frequency,omitempty"`
 }
 
 // Workflow the workflow type.
