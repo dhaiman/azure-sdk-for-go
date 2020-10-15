@@ -1693,37 +1693,6 @@ type Gen1EnvironmentResourceProperties struct {
 	StorageLimitExceededBehavior StorageLimitExceededBehavior `json:"storageLimitExceededBehavior,omitempty"`
 	// PartitionKeyProperties - The list of event properties which will be used to partition data in the environment. Currently, only a single partition key property is supported.
 	PartitionKeyProperties *[]TimeSeriesIDProperty `json:"partitionKeyProperties,omitempty"`
-	// DataAccessID - READ-ONLY; An id used to access the environment data, e.g. to query the environment's events or upload reference data for the environment.
-	DataAccessID *uuid.UUID `json:"dataAccessId,omitempty"`
-	// DataAccessFqdn - READ-ONLY; The fully qualified domain name used to access the environment data, e.g. to query the environment's events or upload reference data for the environment.
-	DataAccessFqdn *string `json:"dataAccessFqdn,omitempty"`
-	// Status - An object that represents the status of the environment, and its internal state in the Time Series Insights service.
-	Status *EnvironmentStatus `json:"status,omitempty"`
-	// ProvisioningState - Provisioning state of the resource. Possible values include: 'Accepted', 'Creating', 'Updating', 'Succeeded', 'Failed', 'Deleting'
-	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
-	// CreationTime - READ-ONLY; The time the resource was created.
-	CreationTime *date.Time `json:"creationTime,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Gen1EnvironmentResourceProperties.
-func (g1erp Gen1EnvironmentResourceProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if g1erp.DataRetentionTime != nil {
-		objectMap["dataRetentionTime"] = g1erp.DataRetentionTime
-	}
-	if g1erp.StorageLimitExceededBehavior != "" {
-		objectMap["storageLimitExceededBehavior"] = g1erp.StorageLimitExceededBehavior
-	}
-	if g1erp.PartitionKeyProperties != nil {
-		objectMap["partitionKeyProperties"] = g1erp.PartitionKeyProperties
-	}
-	if g1erp.Status != nil {
-		objectMap["status"] = g1erp.Status
-	}
-	if g1erp.ProvisioningState != "" {
-		objectMap["provisioningState"] = g1erp.ProvisioningState
-	}
-	return json.Marshal(objectMap)
 }
 
 // Gen1EnvironmentUpdateParameters parameters supplied to the Update Environment operation to update a Gen1
@@ -2080,43 +2049,12 @@ func (g2er *Gen2EnvironmentResource) UnmarshalJSON(body []byte) error {
 
 // Gen2EnvironmentResourceProperties properties of the Gen2 environment.
 type Gen2EnvironmentResourceProperties struct {
-	// DataAccessID - READ-ONLY; An id used to access the environment data, e.g. to query the environment's events or upload reference data for the environment.
-	DataAccessID *uuid.UUID `json:"dataAccessId,omitempty"`
-	// DataAccessFqdn - READ-ONLY; The fully qualified domain name used to access the environment data, e.g. to query the environment's events or upload reference data for the environment.
-	DataAccessFqdn *string `json:"dataAccessFqdn,omitempty"`
-	// Status - An object that represents the status of the environment, and its internal state in the Time Series Insights service.
-	Status *EnvironmentStatus `json:"status,omitempty"`
-	// ProvisioningState - Provisioning state of the resource. Possible values include: 'Accepted', 'Creating', 'Updating', 'Succeeded', 'Failed', 'Deleting'
-	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
-	// CreationTime - READ-ONLY; The time the resource was created.
-	CreationTime *date.Time `json:"creationTime,omitempty"`
 	// TimeSeriesIDProperties - The list of event properties which will be used to define the environment's time series id.
 	TimeSeriesIDProperties *[]TimeSeriesIDProperty `json:"timeSeriesIdProperties,omitempty"`
 	// StorageConfiguration - The storage configuration provides the connection details that allows the Time Series Insights service to connect to the customer storage account that is used to store the environment's data.
 	StorageConfiguration *Gen2StorageConfigurationOutput `json:"storageConfiguration,omitempty"`
 	// WarmStoreConfiguration - The warm store configuration provides the details to create a warm store cache that will retain a copy of the environment's data available for faster query.
 	WarmStoreConfiguration *WarmStoreConfigurationProperties `json:"warmStoreConfiguration,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Gen2EnvironmentResourceProperties.
-func (g2erp Gen2EnvironmentResourceProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if g2erp.Status != nil {
-		objectMap["status"] = g2erp.Status
-	}
-	if g2erp.ProvisioningState != "" {
-		objectMap["provisioningState"] = g2erp.ProvisioningState
-	}
-	if g2erp.TimeSeriesIDProperties != nil {
-		objectMap["timeSeriesIdProperties"] = g2erp.TimeSeriesIDProperties
-	}
-	if g2erp.StorageConfiguration != nil {
-		objectMap["storageConfiguration"] = g2erp.StorageConfiguration
-	}
-	if g2erp.WarmStoreConfiguration != nil {
-		objectMap["warmStoreConfiguration"] = g2erp.WarmStoreConfiguration
-	}
-	return json.Marshal(objectMap)
 }
 
 // Gen2EnvironmentUpdateParameters parameters supplied to the Update Environment operation to update a Gen2
