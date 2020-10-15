@@ -41,3 +41,35 @@ const (
 func PossibleDriveStateValues() []DriveState {
 	return []DriveState{Completed, CompletedMoreInfo, NeverReceived, Received, ShippedBack, Specified, Transferring}
 }
+
+// KekType enumerates the values for kek type.
+type KekType string
+
+const (
+	// CustomerManaged ...
+	CustomerManaged KekType = "CustomerManaged"
+	// MicrosoftManaged ...
+	MicrosoftManaged KekType = "MicrosoftManaged"
+)
+
+// PossibleKekTypeValues returns an array of possible values for the KekType const type.
+func PossibleKekTypeValues() []KekType {
+	return []KekType{CustomerManaged, MicrosoftManaged}
+}
+
+// Type enumerates the values for type.
+type Type string
+
+const (
+	// None ...
+	None Type = "None"
+	// SystemAssigned ...
+	SystemAssigned Type = "SystemAssigned"
+	// UserAssigned ...
+	UserAssigned Type = "UserAssigned"
+)
+
+// PossibleTypeValues returns an array of possible values for the Type const type.
+func PossibleTypeValues() []Type {
+	return []Type{None, SystemAssigned, UserAssigned}
+}

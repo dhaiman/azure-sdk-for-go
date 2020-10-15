@@ -87,14 +87,10 @@ func (client JobsClient) Create(ctx context.Context, jobName string, resourceGro
 					{Target: "body.Properties.DeliveryPackage", Name: validation.Null, Rule: false,
 						Chain: []validation.Constraint{{Target: "body.Properties.DeliveryPackage.CarrierName", Name: validation.Null, Rule: true, Chain: nil},
 							{Target: "body.Properties.DeliveryPackage.TrackingNumber", Name: validation.Null, Rule: true, Chain: nil},
-							{Target: "body.Properties.DeliveryPackage.DriveCount", Name: validation.Null, Rule: true, Chain: nil},
-							{Target: "body.Properties.DeliveryPackage.ShipDate", Name: validation.Null, Rule: true, Chain: nil},
 						}},
 					{Target: "body.Properties.ReturnPackage", Name: validation.Null, Rule: false,
 						Chain: []validation.Constraint{{Target: "body.Properties.ReturnPackage.CarrierName", Name: validation.Null, Rule: true, Chain: nil},
 							{Target: "body.Properties.ReturnPackage.TrackingNumber", Name: validation.Null, Rule: true, Chain: nil},
-							{Target: "body.Properties.ReturnPackage.DriveCount", Name: validation.Null, Rule: true, Chain: nil},
-							{Target: "body.Properties.ReturnPackage.ShipDate", Name: validation.Null, Rule: true, Chain: nil},
 						}},
 				}}}}}); err != nil {
 		return result, validation.NewError("storageimportexport.JobsClient", "Create", err.Error())
@@ -243,7 +239,7 @@ func (client JobsClient) DeleteSender(req *http.Request) (*http.Response, error)
 func (client JobsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
 	return
@@ -335,7 +331,7 @@ func (client JobsClient) GetResponder(resp *http.Response) (result JobResponse, 
 // subscription.
 // top - an integer value that specifies how many jobs at most should be returned. The value cannot exceed 100.
 // filter - can be used to restrict the results to certain conditions.
-func (client JobsClient) ListByResourceGroup(ctx context.Context, resourceGroupName string, top *int32, filter string) (result ListJobsResponsePage, err error) {
+func (client JobsClient) ListByResourceGroup(ctx context.Context, resourceGroupName string, top *int64, filter string) (result ListJobsResponsePage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/JobsClient.ListByResourceGroup")
 		defer func() {
@@ -372,7 +368,7 @@ func (client JobsClient) ListByResourceGroup(ctx context.Context, resourceGroupN
 }
 
 // ListByResourceGroupPreparer prepares the ListByResourceGroup request.
-func (client JobsClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string, top *int32, filter string) (*http.Request, error) {
+func (client JobsClient) ListByResourceGroupPreparer(ctx context.Context, resourceGroupName string, top *int64, filter string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
@@ -441,7 +437,7 @@ func (client JobsClient) listByResourceGroupNextResults(ctx context.Context, las
 }
 
 // ListByResourceGroupComplete enumerates all values, automatically crossing page boundaries as required.
-func (client JobsClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string, top *int32, filter string) (result ListJobsResponseIterator, err error) {
+func (client JobsClient) ListByResourceGroupComplete(ctx context.Context, resourceGroupName string, top *int64, filter string) (result ListJobsResponseIterator, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/JobsClient.ListByResourceGroup")
 		defer func() {
@@ -460,7 +456,7 @@ func (client JobsClient) ListByResourceGroupComplete(ctx context.Context, resour
 // Parameters:
 // top - an integer value that specifies how many jobs at most should be returned. The value cannot exceed 100.
 // filter - can be used to restrict the results to certain conditions.
-func (client JobsClient) ListBySubscription(ctx context.Context, top *int32, filter string) (result ListJobsResponsePage, err error) {
+func (client JobsClient) ListBySubscription(ctx context.Context, top *int64, filter string) (result ListJobsResponsePage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/JobsClient.ListBySubscription")
 		defer func() {
@@ -497,7 +493,7 @@ func (client JobsClient) ListBySubscription(ctx context.Context, top *int32, fil
 }
 
 // ListBySubscriptionPreparer prepares the ListBySubscription request.
-func (client JobsClient) ListBySubscriptionPreparer(ctx context.Context, top *int32, filter string) (*http.Request, error) {
+func (client JobsClient) ListBySubscriptionPreparer(ctx context.Context, top *int64, filter string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
@@ -565,7 +561,7 @@ func (client JobsClient) listBySubscriptionNextResults(ctx context.Context, last
 }
 
 // ListBySubscriptionComplete enumerates all values, automatically crossing page boundaries as required.
-func (client JobsClient) ListBySubscriptionComplete(ctx context.Context, top *int32, filter string) (result ListJobsResponseIterator, err error) {
+func (client JobsClient) ListBySubscriptionComplete(ctx context.Context, top *int64, filter string) (result ListJobsResponseIterator, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/JobsClient.ListBySubscription")
 		defer func() {

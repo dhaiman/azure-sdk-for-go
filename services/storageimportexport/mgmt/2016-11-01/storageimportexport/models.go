@@ -54,7 +54,7 @@ type DriveStatus struct {
 	// CopyStatus - Detailed status about the data transfer process. This field is not returned in the response until the drive is in the Transferring state.
 	CopyStatus *string `json:"copyStatus,omitempty"`
 	// PercentComplete - Percentage completed for the drive.
-	PercentComplete *int32 `json:"percentComplete,omitempty"`
+	PercentComplete *int64 `json:"percentComplete,omitempty"`
 	// VerboseLogURI - A URI that points to the blob containing the verbose log for the data transfer operation.
 	VerboseLogURI *string `json:"verboseLogUri,omitempty"`
 	// ErrorLogURI - A URI that points to the blob containing the error log for the data transfer operation.
@@ -63,6 +63,16 @@ type DriveStatus struct {
 	ManifestURI *string `json:"manifestUri,omitempty"`
 	// BytesSucceeded - Bytes successfully transferred for the drive.
 	BytesSucceeded *int64 `json:"bytesSucceeded,omitempty"`
+}
+
+// EncryptionKeyDetails specifies the encryption key properties
+type EncryptionKeyDetails struct {
+	// KekType - The type of kek encryption key. Possible values include: 'MicrosoftManaged', 'CustomerManaged'
+	KekType KekType `json:"kekType,omitempty"`
+	// KekURL - Specifies the url for kek encryption key.
+	KekURL *string `json:"kekUrl,omitempty"`
+	// KekVaultResourceID - Specifies the keyvault resource id for kek encryption key.
+	KekVaultResourceID *string `json:"kekVaultResourceID,omitempty"`
 }
 
 // ErrorResponse response when errors occurred
@@ -197,6 +207,25 @@ type GetBitLockerKeysResponse struct {
 	Value *[]DriveBitLockerKey `json:"value,omitempty"`
 }
 
+// IdentityDetails specifies the identity properties.
+type IdentityDetails struct {
+	// Type - The type of identity. Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
+	Type Type `json:"type,omitempty"`
+	// PrincipalID - READ-ONLY; Specifies the principal id for the identity for the job.
+	PrincipalID *string `json:"principalId,omitempty"`
+	// TenantID - READ-ONLY; Specifies the tenant id for the identity for the job.
+	TenantID *string `json:"tenantId,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for IdentityDetails.
+func (ID IdentityDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ID.Type != "" {
+		objectMap["type"] = ID.Type
+	}
+	return json.Marshal(objectMap)
+}
+
 // JobDetails specifies the job properties
 type JobDetails struct {
 	// StorageAccountID - The resource identifier of the storage account where data will be imported to or exported from.
@@ -224,7 +253,7 @@ type JobDetails struct {
 	// CancelRequested - Indicates whether a request has been submitted to cancel the job.
 	CancelRequested *bool `json:"cancelRequested,omitempty"`
 	// PercentComplete - Overall percentage completed for the job.
-	PercentComplete *int32 `json:"percentComplete,omitempty"`
+	PercentComplete *int64 `json:"percentComplete,omitempty"`
 	// IncompleteBlobListURI - A blob path that points to a block blob containing a list of blob names that were not exported due to insufficient drive space. If all blobs were exported successfully, then this element is not included in the response.
 	IncompleteBlobListURI *string `json:"incompleteBlobListUri,omitempty"`
 	// DriveList - List of up to ten drives that comprise the job. The drive list is a required element for an import job; it is not specified for export jobs.
@@ -233,6 +262,10 @@ type JobDetails struct {
 	Export *Export `json:"export,omitempty"`
 	// ProvisioningState - Specifies the provisioning state of the job.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
+	// EncryptionKey - Contains information about the encryption key.
+	EncryptionKey *EncryptionKeyDetails `json:"encryptionKey,omitempty"`
+	// AffinityID - Specifies the provisioning state of the job.
+	AffinityID *string `json:"affinityId,omitempty"`
 }
 
 // JobResponse contains the job information.
@@ -250,6 +283,8 @@ type JobResponse struct {
 	Tags interface{} `json:"tags,omitempty"`
 	// Properties - Specifies the job properties
 	Properties *JobDetails `json:"properties,omitempty"`
+	// Identity - Specifies the job identity details
+	Identity *IdentityDetails `json:"identity,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for JobResponse.
@@ -263,6 +298,9 @@ func (jr JobResponse) MarshalJSON() ([]byte, error) {
 	}
 	if jr.Properties != nil {
 		objectMap["properties"] = jr.Properties
+	}
+	if jr.Identity != nil {
+		objectMap["identity"] = jr.Identity
 	}
 	return json.Marshal(objectMap)
 }
@@ -530,6 +568,8 @@ type LocationProperties struct {
 	CountryOrRegion *string `json:"countryOrRegion,omitempty"`
 	// Phone - The phone number for the Azure data center.
 	Phone *string `json:"phone,omitempty"`
+	// AdditionalShippingInformation - Additional shipping information for customer, specific to datacenter to which customer should send their disks.
+	AdditionalShippingInformation *string `json:"additionalShippingInformation,omitempty"`
 	// SupportedCarriers - A list of carriers that are supported at this location.
 	SupportedCarriers *[]string `json:"supportedCarriers,omitempty"`
 	// AlternateLocations - A list of location IDs that should be used to ship shipping drives to for jobs created against the current location. If the current location is active, it will be part of the list. If it is temporarily closed due to maintenance, this list may contain other locations.
@@ -616,7 +656,7 @@ type PackageInfomation struct {
 	// TrackingNumber - The tracking number of the package.
 	TrackingNumber *string `json:"trackingNumber,omitempty"`
 	// DriveCount - The number of drives included in the package.
-	DriveCount *int32 `json:"driveCount,omitempty"`
+	DriveCount *int64 `json:"driveCount,omitempty"`
 	// ShipDate - The date when the package is shipped.
 	ShipDate *string `json:"shipDate,omitempty"`
 }
@@ -680,6 +720,38 @@ type ShippingInformation struct {
 	CountryOrRegion *string `json:"countryOrRegion,omitempty"`
 	// Phone - Phone number of the recipient of the returned drives.
 	Phone *string `json:"phone,omitempty"`
+	// AdditionalInformation - READ-ONLY; Additional shipping information for customer, specific to datacenter to which customer should send their disks.
+	AdditionalInformation *string `json:"additionalInformation,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ShippingInformation.
+func (si ShippingInformation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if si.RecipientName != nil {
+		objectMap["recipientName"] = si.RecipientName
+	}
+	if si.StreetAddress1 != nil {
+		objectMap["streetAddress1"] = si.StreetAddress1
+	}
+	if si.StreetAddress2 != nil {
+		objectMap["streetAddress2"] = si.StreetAddress2
+	}
+	if si.City != nil {
+		objectMap["city"] = si.City
+	}
+	if si.StateOrProvince != nil {
+		objectMap["stateOrProvince"] = si.StateOrProvince
+	}
+	if si.PostalCode != nil {
+		objectMap["postalCode"] = si.PostalCode
+	}
+	if si.CountryOrRegion != nil {
+		objectMap["countryOrRegion"] = si.CountryOrRegion
+	}
+	if si.Phone != nil {
+		objectMap["phone"] = si.Phone
+	}
+	return json.Marshal(objectMap)
 }
 
 // UpdateJobParameters update Job parameters
