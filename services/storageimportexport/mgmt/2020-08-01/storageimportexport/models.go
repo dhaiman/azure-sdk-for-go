@@ -54,7 +54,7 @@ type DriveStatus struct {
 	// CopyStatus - Detailed status about the data transfer process. This field is not returned in the response until the drive is in the Transferring state.
 	CopyStatus *string `json:"copyStatus,omitempty"`
 	// PercentComplete - Percentage completed for the drive.
-	PercentComplete *int32 `json:"percentComplete,omitempty"`
+	PercentComplete *int64 `json:"percentComplete,omitempty"`
 	// VerboseLogURI - A URI that points to the blob containing the verbose log for the data transfer operation.
 	VerboseLogURI *string `json:"verboseLogUri,omitempty"`
 	// ErrorLogURI - A URI that points to the blob containing the error log for the data transfer operation.
@@ -253,7 +253,7 @@ type JobDetails struct {
 	// CancelRequested - Indicates whether a request has been submitted to cancel the job.
 	CancelRequested *bool `json:"cancelRequested,omitempty"`
 	// PercentComplete - Overall percentage completed for the job.
-	PercentComplete *int32 `json:"percentComplete,omitempty"`
+	PercentComplete *int64 `json:"percentComplete,omitempty"`
 	// IncompleteBlobListURI - A blob path that points to a block blob containing a list of blob names that were not exported due to insufficient drive space. If all blobs were exported successfully, then this element is not included in the response.
 	IncompleteBlobListURI *string `json:"incompleteBlobListUri,omitempty"`
 	// DriveList - List of up to ten drives that comprise the job. The drive list is a required element for an import job; it is not specified for export jobs.
@@ -264,6 +264,8 @@ type JobDetails struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// EncryptionKey - Contains information about the encryption key.
 	EncryptionKey *EncryptionKeyDetails `json:"encryptionKey,omitempty"`
+	// AffinityID - Specifies the provisioning state of the job.
+	AffinityID *string `json:"affinityId,omitempty"`
 }
 
 // JobResponse contains the job information.
@@ -566,6 +568,8 @@ type LocationProperties struct {
 	CountryOrRegion *string `json:"countryOrRegion,omitempty"`
 	// Phone - The phone number for the Azure data center.
 	Phone *string `json:"phone,omitempty"`
+	// AdditionalShippingInformation - Additional shipping information for customer, specific to datacenter to which customer should send their disks.
+	AdditionalShippingInformation *string `json:"additionalShippingInformation,omitempty"`
 	// SupportedCarriers - A list of carriers that are supported at this location.
 	SupportedCarriers *[]string `json:"supportedCarriers,omitempty"`
 	// AlternateLocations - A list of location IDs that should be used to ship shipping drives to for jobs created against the current location. If the current location is active, it will be part of the list. If it is temporarily closed due to maintenance, this list may contain other locations.
