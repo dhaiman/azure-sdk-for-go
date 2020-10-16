@@ -377,6 +377,8 @@ type ExceptionResponse struct {
 type Operation struct {
 	// Name - READ-ONLY; Operation name: {provider}/{resource}/{operation}.
 	Name *string `json:"name,omitempty"`
+	// IsDataAction - Indicates whether the operation applies to data-plane.
+	IsDataAction *bool `json:"isDataAction,omitempty"`
 	// Display - The object that describes the operation.
 	Display *OperationDisplay `json:"display,omitempty"`
 }
@@ -384,6 +386,9 @@ type Operation struct {
 // MarshalJSON is the custom marshaler for Operation.
 func (o Operation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if o.IsDataAction != nil {
+		objectMap["isDataAction"] = o.IsDataAction
+	}
 	if o.Display != nil {
 		objectMap["display"] = o.Display
 	}
