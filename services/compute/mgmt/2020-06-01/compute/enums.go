@@ -392,6 +392,44 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 	return []EncryptionType{EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}
 }
 
+// ExecutionState enumerates the values for execution state.
+type ExecutionState string
+
+const (
+	// ExecutionStateCanceled ...
+	ExecutionStateCanceled ExecutionState = "Canceled"
+	// ExecutionStateFailed ...
+	ExecutionStateFailed ExecutionState = "Failed"
+	// ExecutionStatePending ...
+	ExecutionStatePending ExecutionState = "Pending"
+	// ExecutionStateRunning ...
+	ExecutionStateRunning ExecutionState = "Running"
+	// ExecutionStateSucceeded ...
+	ExecutionStateSucceeded ExecutionState = "Succeeded"
+	// ExecutionStateTimedOut ...
+	ExecutionStateTimedOut ExecutionState = "TimedOut"
+	// ExecutionStateUnknown ...
+	ExecutionStateUnknown ExecutionState = "Unknown"
+)
+
+// PossibleExecutionStateValues returns an array of possible values for the ExecutionState const type.
+func PossibleExecutionStateValues() []ExecutionState {
+	return []ExecutionState{ExecutionStateCanceled, ExecutionStateFailed, ExecutionStatePending, ExecutionStateRunning, ExecutionStateSucceeded, ExecutionStateTimedOut, ExecutionStateUnknown}
+}
+
+// ExtendedLocationTypes enumerates the values for extended location types.
+type ExtendedLocationTypes string
+
+const (
+	// EdgeZone ...
+	EdgeZone ExtendedLocationTypes = "EdgeZone"
+)
+
+// PossibleExtendedLocationTypesValues returns an array of possible values for the ExtendedLocationTypes const type.
+func PossibleExtendedLocationTypesValues() []ExtendedLocationTypes {
+	return []ExtendedLocationTypes{EdgeZone}
+}
+
 // HostCaching enumerates the values for host caching.
 type HostCaching string
 
