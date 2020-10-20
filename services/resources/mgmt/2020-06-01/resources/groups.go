@@ -217,7 +217,9 @@ func (client GroupsClient) CreateOrUpdateResponder(resp *http.Response) (result 
 // all of its template deployments and currently stored operations.
 // Parameters:
 // resourceGroupName - the name of the resource group to delete. The name is case insensitive.
-func (client GroupsClient) Delete(ctx context.Context, resourceGroupName string) (result GroupsDeleteFuture, err error) {
+// forceDeletionResourceTypes - the resource types you want to force delete. Currently, only the following is
+// supported: forceDeletionResourceTypes=Microsoft.Compute/virtualMachines
+func (client GroupsClient) Delete(ctx context.Context, resourceGroupName string, forceDeletionResourceTypes string) (result GroupsDeleteFuture, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/GroupsClient.Delete")
 		defer func() {
@@ -236,7 +238,7 @@ func (client GroupsClient) Delete(ctx context.Context, resourceGroupName string)
 		return result, validation.NewError("resources.GroupsClient", "Delete", err.Error())
 	}
 
-	req, err := client.DeletePreparer(ctx, resourceGroupName)
+	req, err := client.DeletePreparer(ctx, resourceGroupName, forceDeletionResourceTypes)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "resources.GroupsClient", "Delete", nil, "Failure preparing request")
 		return
@@ -252,7 +254,7 @@ func (client GroupsClient) Delete(ctx context.Context, resourceGroupName string)
 }
 
 // DeletePreparer prepares the Delete request.
-func (client GroupsClient) DeletePreparer(ctx context.Context, resourceGroupName string) (*http.Request, error) {
+func (client GroupsClient) DeletePreparer(ctx context.Context, resourceGroupName string, forceDeletionResourceTypes string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
 		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
@@ -261,6 +263,9 @@ func (client GroupsClient) DeletePreparer(ctx context.Context, resourceGroupName
 	const APIVersion = "2020-06-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
+	}
+	if len(forceDeletionResourceTypes) > 0 {
+		queryParameters["forceDeletionResourceTypes"] = autorest.Encode("query", forceDeletionResourceTypes)
 	}
 
 	preparer := autorest.CreatePreparer(
