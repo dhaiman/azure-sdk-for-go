@@ -697,6 +697,86 @@ func (client AlertsClient) ListSubscriptionLevelByRegionComplete(ctx context.Con
 	return
 }
 
+// SimulateAlerts simulate security alerts
+// Parameters:
+// alertSimulatorRequestBody - alert Simulator Request Properties
+func (client AlertsClient) SimulateAlerts(ctx context.Context, alertSimulatorRequestBody AlertSimulatorRequestBody) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/AlertsClient.SimulateAlerts")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("security.AlertsClient", "SimulateAlerts", err.Error())
+	}
+
+	req, err := client.SimulateAlertsPreparer(ctx, alertSimulatorRequestBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.AlertsClient", "SimulateAlerts", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.SimulateAlertsSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "security.AlertsClient", "SimulateAlerts", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.SimulateAlertsResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "security.AlertsClient", "SimulateAlerts", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// SimulateAlertsPreparer prepares the SimulateAlerts request.
+func (client AlertsClient) SimulateAlertsPreparer(ctx context.Context, alertSimulatorRequestBody AlertSimulatorRequestBody) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"ascLocation":    autorest.Encode("path", client.AscLocation),
+		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-01-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate", pathParameters),
+		autorest.WithJSON(alertSimulatorRequestBody),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// SimulateAlertsSender sends the SimulateAlerts request. The method will close the
+// http.Response Body if it receives an error.
+func (client AlertsClient) SimulateAlertsSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// SimulateAlertsResponder handles the response to the SimulateAlerts request. The method always
+// closes the http.Response Body.
+func (client AlertsClient) SimulateAlertsResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
 // UpdateResourceGroupLevelStateToActivate update the alert's state
 // Parameters:
 // alertName - name of the alert object

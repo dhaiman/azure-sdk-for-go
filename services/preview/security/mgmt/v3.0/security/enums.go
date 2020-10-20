@@ -274,6 +274,21 @@ func PossibleAuthenticationTypeValues() []AuthenticationType {
 	return []AuthenticationType{AuthenticationTypeAuthenticationDetailsProperties, AuthenticationTypeAwsAssumeRole, AuthenticationTypeAwsCreds, AuthenticationTypeGcpCredentials}
 }
 
+// AuthorizationState enumerates the values for authorization state.
+type AuthorizationState string
+
+const (
+	// Authorized ...
+	Authorized AuthorizationState = "Authorized"
+	// Unauthorized ...
+	Unauthorized AuthorizationState = "Unauthorized"
+)
+
+// PossibleAuthorizationStateValues returns an array of possible values for the AuthorizationState const type.
+func PossibleAuthorizationStateValues() []AuthorizationState {
+	return []AuthorizationState{Authorized, Unauthorized}
+}
+
 // AutoProvision enumerates the values for auto provision.
 type AutoProvision string
 
@@ -287,6 +302,29 @@ const (
 // PossibleAutoProvisionValues returns an array of possible values for the AutoProvision const type.
 func PossibleAutoProvisionValues() []AutoProvision {
 	return []AutoProvision{AutoProvisionOff, AutoProvisionOn}
+}
+
+// BundleType enumerates the values for bundle type.
+type BundleType string
+
+const (
+	// AppServices ...
+	AppServices BundleType = "AppServices"
+	// KeyVaults ...
+	KeyVaults BundleType = "KeyVaults"
+	// KubernetesService ...
+	KubernetesService BundleType = "KubernetesService"
+	// SQLServers ...
+	SQLServers BundleType = "SqlServers"
+	// StorageAccounts ...
+	StorageAccounts BundleType = "StorageAccounts"
+	// VirtualMachines ...
+	VirtualMachines BundleType = "VirtualMachines"
+)
+
+// PossibleBundleTypeValues returns an array of possible values for the BundleType const type.
+func PossibleBundleTypeValues() []BundleType {
+	return []BundleType{AppServices, KeyVaults, KubernetesService, SQLServers, StorageAccounts, VirtualMachines}
 }
 
 // Category enumerates the values for category.
@@ -414,6 +452,36 @@ const (
 // PossibleDataSourceValues returns an array of possible values for the DataSource const type.
 func PossibleDataSourceValues() []DataSource {
 	return []DataSource{TwinData}
+}
+
+// DeviceCriticality enumerates the values for device criticality.
+type DeviceCriticality string
+
+const (
+	// Important ...
+	Important DeviceCriticality = "Important"
+	// Standard ...
+	Standard DeviceCriticality = "Standard"
+)
+
+// PossibleDeviceCriticalityValues returns an array of possible values for the DeviceCriticality const type.
+func PossibleDeviceCriticalityValues() []DeviceCriticality {
+	return []DeviceCriticality{Important, Standard}
+}
+
+// DeviceStatus enumerates the values for device status.
+type DeviceStatus string
+
+const (
+	// DeviceStatusActive ...
+	DeviceStatusActive DeviceStatus = "Active"
+	// DeviceStatusRemoved ...
+	DeviceStatusRemoved DeviceStatus = "Removed"
+)
+
+// PossibleDeviceStatusValues returns an array of possible values for the DeviceStatus const type.
+func PossibleDeviceStatusValues() []DeviceStatus {
+	return []DeviceStatus{DeviceStatusActive, DeviceStatusRemoved}
 }
 
 // Direction enumerates the values for direction.
@@ -758,19 +826,64 @@ func PossibleKindEnumValues() []KindEnum {
 type KindEnum1 string
 
 const (
-	// KindAAD ...
-	KindAAD KindEnum1 = "AAD"
-	// KindATA ...
-	KindATA KindEnum1 = "ATA"
-	// KindCEF ...
-	KindCEF KindEnum1 = "CEF"
-	// KindExternalSecuritySolution ...
-	KindExternalSecuritySolution KindEnum1 = "ExternalSecuritySolution"
+	// KindAlertSimulatorRequestProperties ...
+	KindAlertSimulatorRequestProperties KindEnum1 = "AlertSimulatorRequestProperties"
+	// KindBundles ...
+	KindBundles KindEnum1 = "Bundles"
 )
 
 // PossibleKindEnum1Values returns an array of possible values for the KindEnum1 const type.
 func PossibleKindEnum1Values() []KindEnum1 {
-	return []KindEnum1{KindAAD, KindATA, KindCEF, KindExternalSecuritySolution}
+	return []KindEnum1{KindAlertSimulatorRequestProperties, KindBundles}
+}
+
+// KindEnum2 enumerates the values for kind enum 2.
+type KindEnum2 string
+
+const (
+	// KindAAD ...
+	KindAAD KindEnum2 = "AAD"
+	// KindATA ...
+	KindATA KindEnum2 = "ATA"
+	// KindCEF ...
+	KindCEF KindEnum2 = "CEF"
+	// KindExternalSecuritySolution ...
+	KindExternalSecuritySolution KindEnum2 = "ExternalSecuritySolution"
+)
+
+// PossibleKindEnum2Values returns an array of possible values for the KindEnum2 const type.
+func PossibleKindEnum2Values() []KindEnum2 {
+	return []KindEnum2{KindAAD, KindATA, KindCEF, KindExternalSecuritySolution}
+}
+
+// MacSignificance enumerates the values for mac significance.
+type MacSignificance string
+
+const (
+	// Primary ...
+	Primary MacSignificance = "Primary"
+	// Secondary ...
+	Secondary MacSignificance = "Secondary"
+)
+
+// PossibleMacSignificanceValues returns an array of possible values for the MacSignificance const type.
+func PossibleMacSignificanceValues() []MacSignificance {
+	return []MacSignificance{Primary, Secondary}
+}
+
+// ManagementState enumerates the values for management state.
+type ManagementState string
+
+const (
+	// Managed ...
+	Managed ManagementState = "Managed"
+	// Unmanaged ...
+	Unmanaged ManagementState = "Unmanaged"
+)
+
+// PossibleManagementStateValues returns an array of possible values for the ManagementState const type.
+func PossibleManagementStateValues() []ManagementState {
+	return []ManagementState{Managed, Unmanaged}
 }
 
 // Msi enumerates the values for msi.
@@ -843,15 +956,30 @@ func PossiblePermissionPropertyValues() []PermissionProperty {
 type PricingTier string
 
 const (
-	// Free Get free Azure security center experience with basic security features
-	Free PricingTier = "Free"
-	// Standard Get the standard Azure security center experience with advanced security features
-	Standard PricingTier = "Standard"
+	// PricingTierFree Get free Azure security center experience with basic security features
+	PricingTierFree PricingTier = "Free"
+	// PricingTierStandard Get the standard Azure security center experience with advanced security features
+	PricingTierStandard PricingTier = "Standard"
 )
 
 // PossiblePricingTierValues returns an array of possible values for the PricingTier const type.
 func PossiblePricingTierValues() []PricingTier {
-	return []PricingTier{Free, Standard}
+	return []PricingTier{PricingTierFree, PricingTierStandard}
+}
+
+// ProgrammingState enumerates the values for programming state.
+type ProgrammingState string
+
+const (
+	// NotProgrammingDevice ...
+	NotProgrammingDevice ProgrammingState = "NotProgrammingDevice"
+	// ProgrammingDevice ...
+	ProgrammingDevice ProgrammingState = "ProgrammingDevice"
+)
+
+// PossibleProgrammingStateValues returns an array of possible values for the ProgrammingState const type.
+func PossibleProgrammingStateValues() []ProgrammingState {
+	return []ProgrammingState{NotProgrammingDevice, ProgrammingDevice}
 }
 
 // PropertyType enumerates the values for property type.
@@ -926,6 +1054,23 @@ const (
 // PossibleProvisioningState1Values returns an array of possible values for the ProvisioningState1 const type.
 func PossibleProvisioningState1Values() []ProvisioningState1 {
 	return []ProvisioningState1{ProvisioningState1Canceled, ProvisioningState1Deprovisioning, ProvisioningState1Failed, ProvisioningState1Provisioning, ProvisioningState1Succeeded}
+}
+
+// PurdueLevel enumerates the values for purdue level.
+type PurdueLevel string
+
+const (
+	// Enterprise ...
+	Enterprise PurdueLevel = "Enterprise"
+	// ProcessControl ...
+	ProcessControl PurdueLevel = "ProcessControl"
+	// Supervisory ...
+	Supervisory PurdueLevel = "Supervisory"
+)
+
+// PossiblePurdueLevelValues returns an array of possible values for the PurdueLevel const type.
+func PossiblePurdueLevelValues() []PurdueLevel {
+	return []PurdueLevel{Enterprise, ProcessControl, Supervisory}
 }
 
 // Rank enumerates the values for rank.
@@ -1097,6 +1242,21 @@ func PossibleRecommendationTypeValues() []RecommendationType {
 	return []RecommendationType{IoTACRAuthentication, IoTAgentSendsUnutilizedMessages, IoTBaseline, IoTEdgeHubMemOptimize, IoTEdgeLoggingOptions, IoTInconsistentModuleSettings, IoTInstallAgent, IoTIPFilterDenyAll, IoTIPFilterPermissiveRule, IoTOpenPorts, IoTPermissiveFirewallPolicy, IoTPermissiveInputFirewallRules, IoTPermissiveOutputFirewallRules, IoTPrivilegedDockerOptions, IoTSharedCredentials, IoTVulnerableTLSCipherSuite}
 }
 
+// RelationToIPStatus enumerates the values for relation to ip status.
+type RelationToIPStatus string
+
+const (
+	// Certain ...
+	Certain RelationToIPStatus = "Certain"
+	// Guess ...
+	Guess RelationToIPStatus = "Guess"
+)
+
+// PossibleRelationToIPStatusValues returns an array of possible values for the RelationToIPStatus const type.
+func PossibleRelationToIPStatusValues() []RelationToIPStatus {
+	return []RelationToIPStatus{Certain, Guess}
+}
+
 // ReportedSeverity enumerates the values for reported severity.
 type ReportedSeverity string
 
@@ -1211,6 +1371,21 @@ const (
 // PossibleRuleTypeValues returns an array of possible values for the RuleType const type.
 func PossibleRuleTypeValues() []RuleType {
 	return []RuleType{RuleTypeActiveConnectionsNotInAllowedRange, RuleTypeAllowlistCustomAlertRule, RuleTypeAmqpC2DMessagesNotInAllowedRange, RuleTypeAmqpC2DRejectedMessagesNotInAllowedRange, RuleTypeAmqpD2CMessagesNotInAllowedRange, RuleTypeConnectionToIPNotAllowed, RuleTypeCustomAlertRule, RuleTypeDenylistCustomAlertRule, RuleTypeDirectMethodInvokesNotInAllowedRange, RuleTypeFailedLocalLoginsNotInAllowedRange, RuleTypeFileUploadsNotInAllowedRange, RuleTypeHTTPC2DMessagesNotInAllowedRange, RuleTypeHTTPC2DRejectedMessagesNotInAllowedRange, RuleTypeHTTPD2CMessagesNotInAllowedRange, RuleTypeListCustomAlertRule, RuleTypeLocalUserNotAllowed, RuleTypeMqttC2DMessagesNotInAllowedRange, RuleTypeMqttC2DRejectedMessagesNotInAllowedRange, RuleTypeMqttD2CMessagesNotInAllowedRange, RuleTypeProcessNotAllowed, RuleTypeQueuePurgesNotInAllowedRange, RuleTypeThresholdCustomAlertRule, RuleTypeTimeWindowCustomAlertRule, RuleTypeTwinUpdatesNotInAllowedRange, RuleTypeUnauthorizedOperationsNotInAllowedRange}
+}
+
+// ScanningFunctionality enumerates the values for scanning functionality.
+type ScanningFunctionality string
+
+const (
+	// NotScannerDevice ...
+	NotScannerDevice ScanningFunctionality = "NotScannerDevice"
+	// ScannerDevice ...
+	ScannerDevice ScanningFunctionality = "ScannerDevice"
+)
+
+// PossibleScanningFunctionalityValues returns an array of possible values for the ScanningFunctionality const type.
+func PossibleScanningFunctionalityValues() []ScanningFunctionality {
+	return []ScanningFunctionality{NotScannerDevice, ScannerDevice}
 }
 
 // Script enumerates the values for script.
