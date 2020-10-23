@@ -295,11 +295,6 @@ func (client VolumesClient) CreateOrUpdate(ctx context.Context, body Volume, res
 							Chain: []validation.Constraint{{Target: "body.VolumeProperties.DataProtection.Replication", Name: validation.Null, Rule: false,
 								Chain: []validation.Constraint{{Target: "body.VolumeProperties.DataProtection.Replication.RemoteVolumeResourceID", Name: validation.Null, Rule: true, Chain: nil}}},
 							}},
-						{Target: "body.VolumeProperties.ThroughputMibps", Name: validation.Null, Rule: false,
-							Chain: []validation.Constraint{{Target: "body.VolumeProperties.ThroughputMibps", Name: validation.InclusiveMaximum, Rule: int64(4500), Chain: nil},
-								{Target: "body.VolumeProperties.ThroughputMibps", Name: validation.InclusiveMinimum, Rule: int64(1), Chain: nil},
-								{Target: "body.VolumeProperties.ThroughputMibps", Name: validation.MultipleOf, Rule: 0.001, Chain: nil},
-							}},
 					}}}},
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
@@ -1045,7 +1040,7 @@ func (client VolumesClient) ReplicationStatusMethodResponder(resp *http.Response
 }
 
 // ResyncReplication resync the connection on the destination volume. If the operation is ran on the source volume it
-// will reverse-resync the connection and sync from source to destination.
+// will reverse-resync the connection and sync from destination to source.
 // Parameters:
 // resourceGroupName - the name of the resource group.
 // accountName - the name of the NetApp account
