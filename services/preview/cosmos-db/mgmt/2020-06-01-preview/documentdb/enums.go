@@ -301,7 +301,7 @@ const (
 	// ResourceIdentityTypeSystemAssigned ...
 	ResourceIdentityTypeSystemAssigned ResourceIdentityType = "SystemAssigned"
 	// ResourceIdentityTypeSystemAssignedUserAssigned ...
-	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned,UserAssigned"
 	// ResourceIdentityTypeUserAssigned ...
 	ResourceIdentityTypeUserAssigned ResourceIdentityType = "UserAssigned"
 )
@@ -324,6 +324,21 @@ func PossibleRestoreModeValues() []RestoreMode {
 	return []RestoreMode{PointInTime}
 }
 
+// RoleDefinitionType enumerates the values for role definition type.
+type RoleDefinitionType string
+
+const (
+	// BuiltInRole ...
+	BuiltInRole RoleDefinitionType = "BuiltInRole"
+	// CustomRole ...
+	CustomRole RoleDefinitionType = "CustomRole"
+)
+
+// PossibleRoleDefinitionTypeValues returns an array of possible values for the RoleDefinitionType const type.
+func PossibleRoleDefinitionTypeValues() []RoleDefinitionType {
+	return []RoleDefinitionType{BuiltInRole, CustomRole}
+}
+
 // ServerVersion enumerates the values for server version.
 type ServerVersion string
 
@@ -337,6 +352,19 @@ const (
 // PossibleServerVersionValues returns an array of possible values for the ServerVersion const type.
 func PossibleServerVersionValues() []ServerVersion {
 	return []ServerVersion{ThreeFullStopSix, ThreeFullStopTwo}
+}
+
+// ServiceType enumerates the values for service type.
+type ServiceType string
+
+const (
+	// Sqlx ...
+	Sqlx ServiceType = "Sqlx"
+)
+
+// PossibleServiceTypeValues returns an array of possible values for the ServiceType const type.
+func PossibleServiceTypeValues() []ServiceType {
+	return []ServiceType{Sqlx}
 }
 
 // SpatialType enumerates the values for spatial type.
