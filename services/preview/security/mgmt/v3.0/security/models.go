@@ -3022,6 +3022,156 @@ func (a *Assessment) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// AssessmentAwsResourceDetails details of the Aws resource that was assessed
+type AssessmentAwsResourceDetails struct {
+	// AccountID - READ-ONLY; AWS account Id of the assessed resource
+	AccountID *string `json:"accountId,omitempty"`
+	// AwsResourceID - READ-ONLY; AWS resource Id. can be ARN or other
+	AwsResourceID *string `json:"awsResourceId,omitempty"`
+	// Region - READ-ONLY; The region of the resource in AWS
+	Region *string `json:"region,omitempty"`
+	// Source - Possible values include: 'SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails', 'SourceBasicAssessmentResourceDetailsSourceAzure', 'SourceBasicAssessmentResourceDetailsSourceAws', 'SourceBasicAssessmentResourceDetailsSourceGcp', 'SourceBasicAssessmentResourceDetailsSourceOnPremise'
+	Source SourceBasicAssessmentResourceDetails `json:"Source,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) MarshalJSON() ([]byte, error) {
+	aard.Source = SourceBasicAssessmentResourceDetailsSourceAws
+	objectMap := make(map[string]interface{})
+	if aard.Source != "" {
+		objectMap["Source"] = aard.Source
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAssessmentAzureResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentAwsResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool) {
+	return &aard, true
+}
+
+// AsAssessmentGcpResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentOnPremiseResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool) {
+	return nil, false
+}
+
+// AsBasicAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAwsResourceDetails.
+func (aard AssessmentAwsResourceDetails) AsBasicAssessmentResourceDetails() (BasicAssessmentResourceDetails, bool) {
+	return &aard, true
+}
+
+// AssessmentAzureResourceDetails details of the Azure resource that was assessed
+type AssessmentAzureResourceDetails struct {
+	// ID - READ-ONLY; Azure resource Id of the assessed resource
+	ID *string `json:"Id,omitempty"`
+	// Source - Possible values include: 'SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails', 'SourceBasicAssessmentResourceDetailsSourceAzure', 'SourceBasicAssessmentResourceDetailsSourceAws', 'SourceBasicAssessmentResourceDetailsSourceGcp', 'SourceBasicAssessmentResourceDetailsSourceOnPremise'
+	Source SourceBasicAssessmentResourceDetails `json:"Source,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) MarshalJSON() ([]byte, error) {
+	aard.Source = SourceBasicAssessmentResourceDetailsSourceAzure
+	objectMap := make(map[string]interface{})
+	if aard.Source != "" {
+		objectMap["Source"] = aard.Source
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAssessmentAzureResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool) {
+	return &aard, true
+}
+
+// AsAssessmentAwsResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentGcpResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentOnPremiseResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool) {
+	return nil, false
+}
+
+// AsBasicAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentAzureResourceDetails.
+func (aard AssessmentAzureResourceDetails) AsBasicAssessmentResourceDetails() (BasicAssessmentResourceDetails, bool) {
+	return &aard, true
+}
+
+// AssessmentGcpResourceDetails details of the Gcp resource that was assessed
+type AssessmentGcpResourceDetails struct {
+	// ProjectID - READ-ONLY; Gcp project Id
+	ProjectID *string `json:"projectId,omitempty"`
+	// GcpResourceID - READ-ONLY; Gcp resource Id
+	GcpResourceID *string `json:"gcpResourceId,omitempty"`
+	// Source - Possible values include: 'SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails', 'SourceBasicAssessmentResourceDetailsSourceAzure', 'SourceBasicAssessmentResourceDetailsSourceAws', 'SourceBasicAssessmentResourceDetailsSourceGcp', 'SourceBasicAssessmentResourceDetailsSourceOnPremise'
+	Source SourceBasicAssessmentResourceDetails `json:"Source,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) MarshalJSON() ([]byte, error) {
+	agrd.Source = SourceBasicAssessmentResourceDetailsSourceGcp
+	objectMap := make(map[string]interface{})
+	if agrd.Source != "" {
+		objectMap["Source"] = agrd.Source
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAssessmentAzureResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentAwsResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentGcpResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool) {
+	return &agrd, true
+}
+
+// AsAssessmentOnPremiseResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool) {
+	return nil, false
+}
+
+// AsBasicAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentGcpResourceDetails.
+func (agrd AssessmentGcpResourceDetails) AsBasicAssessmentResourceDetails() (BasicAssessmentResourceDetails, bool) {
+	return &agrd, true
+}
+
 // AssessmentLinks links relevant to the assessment
 type AssessmentLinks struct {
 	// AzurePortalURI - READ-ONLY; Link to assessment in Azure Portal
@@ -3486,6 +3636,72 @@ func (amp AssessmentMetadataProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// AssessmentOnPremiseResourceDetails details of the On Premise resource that was assessed
+type AssessmentOnPremiseResourceDetails struct {
+	// WorkspaceID - Azure resource Id of the workspace the machine is attached to
+	WorkspaceID *string `json:"workspaceId,omitempty"`
+	// Vmuuid - The unique Id of the machine
+	Vmuuid *string `json:"vmuuid,omitempty"`
+	// SourceComputerID - The oms agent Id installed on the machine
+	SourceComputerID *string `json:"sourceComputerId,omitempty"`
+	// MachineName - The name of the machine
+	MachineName *string `json:"machineName,omitempty"`
+	// Source - Possible values include: 'SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails', 'SourceBasicAssessmentResourceDetailsSourceAzure', 'SourceBasicAssessmentResourceDetailsSourceAws', 'SourceBasicAssessmentResourceDetailsSourceGcp', 'SourceBasicAssessmentResourceDetailsSourceOnPremise'
+	Source SourceBasicAssessmentResourceDetails `json:"Source,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) MarshalJSON() ([]byte, error) {
+	aoprd.Source = SourceBasicAssessmentResourceDetailsSourceOnPremise
+	objectMap := make(map[string]interface{})
+	if aoprd.WorkspaceID != nil {
+		objectMap["workspaceId"] = aoprd.WorkspaceID
+	}
+	if aoprd.Vmuuid != nil {
+		objectMap["vmuuid"] = aoprd.Vmuuid
+	}
+	if aoprd.SourceComputerID != nil {
+		objectMap["sourceComputerId"] = aoprd.SourceComputerID
+	}
+	if aoprd.MachineName != nil {
+		objectMap["machineName"] = aoprd.MachineName
+	}
+	if aoprd.Source != "" {
+		objectMap["Source"] = aoprd.Source
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAssessmentAzureResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentAwsResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentGcpResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentOnPremiseResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool) {
+	return &aoprd, true
+}
+
+// AsAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool) {
+	return nil, false
+}
+
+// AsBasicAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentOnPremiseResourceDetails.
+func (aoprd AssessmentOnPremiseResourceDetails) AsBasicAssessmentResourceDetails() (BasicAssessmentResourceDetails, bool) {
+	return &aoprd, true
+}
+
 // AssessmentPartnerData data regarding 3rd party partner integration
 type AssessmentPartnerData struct {
 	// PartnerName - Name of the company of the partner
@@ -3496,7 +3712,7 @@ type AssessmentPartnerData struct {
 
 // AssessmentProperties describes properties of an assessment.
 type AssessmentProperties struct {
-	ResourceDetails BasicResourceDetails `json:"resourceDetails,omitempty"`
+	ResourceDetails BasicAssessmentResourceDetails `json:"resourceDetails,omitempty"`
 	// DisplayName - READ-ONLY; User friendly display name of the assessment
 	DisplayName *string           `json:"displayName,omitempty"`
 	Status      *AssessmentStatus `json:"status,omitempty"`
@@ -3540,7 +3756,7 @@ func (ap *AssessmentProperties) UnmarshalJSON(body []byte) error {
 		switch k {
 		case "resourceDetails":
 			if v != nil {
-				resourceDetails, err := unmarshalBasicResourceDetails(*v)
+				resourceDetails, err := unmarshalBasicAssessmentResourceDetails(*v)
 				if err != nil {
 					return err
 				}
@@ -3604,6 +3820,110 @@ func (ap *AssessmentProperties) UnmarshalJSON(body []byte) error {
 	}
 
 	return nil
+}
+
+// BasicAssessmentResourceDetails details of the resource that was assessed
+type BasicAssessmentResourceDetails interface {
+	AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool)
+	AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool)
+	AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool)
+	AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool)
+	AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool)
+}
+
+// AssessmentResourceDetails details of the resource that was assessed
+type AssessmentResourceDetails struct {
+	// Source - Possible values include: 'SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails', 'SourceBasicAssessmentResourceDetailsSourceAzure', 'SourceBasicAssessmentResourceDetailsSourceAws', 'SourceBasicAssessmentResourceDetailsSourceGcp', 'SourceBasicAssessmentResourceDetailsSourceOnPremise'
+	Source SourceBasicAssessmentResourceDetails `json:"Source,omitempty"`
+}
+
+func unmarshalBasicAssessmentResourceDetails(body []byte) (BasicAssessmentResourceDetails, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["Source"] {
+	case string(SourceBasicAssessmentResourceDetailsSourceAzure):
+		var aard AssessmentAzureResourceDetails
+		err := json.Unmarshal(body, &aard)
+		return aard, err
+	case string(SourceBasicAssessmentResourceDetailsSourceAws):
+		var aard AssessmentAwsResourceDetails
+		err := json.Unmarshal(body, &aard)
+		return aard, err
+	case string(SourceBasicAssessmentResourceDetailsSourceGcp):
+		var agrd AssessmentGcpResourceDetails
+		err := json.Unmarshal(body, &agrd)
+		return agrd, err
+	case string(SourceBasicAssessmentResourceDetailsSourceOnPremise):
+		var aoprd AssessmentOnPremiseResourceDetails
+		err := json.Unmarshal(body, &aoprd)
+		return aoprd, err
+	default:
+		var ard AssessmentResourceDetails
+		err := json.Unmarshal(body, &ard)
+		return ard, err
+	}
+}
+func unmarshalBasicAssessmentResourceDetailsArray(body []byte) ([]BasicAssessmentResourceDetails, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	ardArray := make([]BasicAssessmentResourceDetails, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		ard, err := unmarshalBasicAssessmentResourceDetails(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		ardArray[index] = ard
+	}
+	return ardArray, nil
+}
+
+// MarshalJSON is the custom marshaler for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) MarshalJSON() ([]byte, error) {
+	ard.Source = SourceBasicAssessmentResourceDetailsSourceAssessmentResourceDetails
+	objectMap := make(map[string]interface{})
+	if ard.Source != "" {
+		objectMap["Source"] = ard.Source
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsAssessmentAzureResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsAssessmentAzureResourceDetails() (*AssessmentAzureResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentAwsResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsAssessmentAwsResourceDetails() (*AssessmentAwsResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentGcpResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsAssessmentGcpResourceDetails() (*AssessmentGcpResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentOnPremiseResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsAssessmentOnPremiseResourceDetails() (*AssessmentOnPremiseResourceDetails, bool) {
+	return nil, false
+}
+
+// AsAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsAssessmentResourceDetails() (*AssessmentResourceDetails, bool) {
+	return &ard, true
+}
+
+// AsBasicAssessmentResourceDetails is the BasicAssessmentResourceDetails implementation for AssessmentResourceDetails.
+func (ard AssessmentResourceDetails) AsBasicAssessmentResourceDetails() (BasicAssessmentResourceDetails, bool) {
+	return &ard, true
 }
 
 // AssessmentStatus the result of the assessment
@@ -4773,9 +5093,10 @@ type AutoProvisioningSettingProperties struct {
 }
 
 // AwAssumeRoleAuthenticationDetailsProperties AWS cloud account connector based assume role, the role enables
-// delegating access to your AWS resources. The role is composed of role arn and external id, for more details,
-// refer to <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html">Creating a
-// Role to Delegate Permissions to an IAM User (write only)</a>
+// delegating access to your AWS resources. The role is composed of role Amazon Resource Name (ARN) and
+// external ID. For more details, refer to <a
+// href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html">Creating a Role to
+// Delegate Permissions to an IAM User (write only)</a>
 type AwAssumeRoleAuthenticationDetailsProperties struct {
 	// AccountID - READ-ONLY; The ID of the cloud account
 	AccountID *string `json:"accountId,omitempty"`
@@ -4833,7 +5154,7 @@ func (aaradp AwAssumeRoleAuthenticationDetailsProperties) AsBasicAuthenticationD
 }
 
 // AwsCredsAuthenticationDetailsProperties AWS cloud account connector based credentials, the credentials is
-// composed of access key id and secret key, for more details, refer to <a
+// composed of access key ID and secret key, for more details, refer to <a
 // href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html">Creating an IAM User in Your
 // AWS Account (write only)</a>
 type AwsCredsAuthenticationDetailsProperties struct {
@@ -6159,9 +6480,9 @@ func NewConnectorSettingListPage(getNextPage func(context.Context, ConnectorSett
 	return ConnectorSettingListPage{fn: getNextPage}
 }
 
-// ConnectorSettingProperties describes properties of an connector setting
+// ConnectorSettingProperties describes properties of a connector setting
 type ConnectorSettingProperties struct {
-	// HybridComputeSettings - Settings for hybrid compute management, these settings are relevant only Arc autoProvision (Hybrid Compute).
+	// HybridComputeSettings - Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute).
 	HybridComputeSettings *HybridComputeSettingsProperties `json:"hybridComputeSettings,omitempty"`
 	// AuthenticationDetails - Settings for authentication management, these settings are relevant only for the cloud connector.
 	AuthenticationDetails BasicAuthenticationDetailsProperties `json:"authenticationDetails,omitempty"`
@@ -7148,6 +7469,325 @@ func (dcar DenylistCustomAlertRule) AsCustomAlertRule() (*CustomAlertRule, bool)
 // AsBasicCustomAlertRule is the BasicCustomAlertRule implementation for DenylistCustomAlertRule.
 func (dcar DenylistCustomAlertRule) AsBasicCustomAlertRule() (BasicCustomAlertRule, bool) {
 	return &dcar, true
+}
+
+// Device device model
+type Device struct {
+	autorest.Response `json:"-"`
+	// DeviceProperties - Device data
+	*DeviceProperties `json:"properties,omitempty"`
+	// ID - READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; Resource name
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; Resource type
+	Type *string `json:"type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Device.
+func (d Device) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if d.DeviceProperties != nil {
+		objectMap["properties"] = d.DeviceProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Device struct.
+func (d *Device) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var deviceProperties DeviceProperties
+				err = json.Unmarshal(*v, &deviceProperties)
+				if err != nil {
+					return err
+				}
+				d.DeviceProperties = &deviceProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				d.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				d.Name = &name
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				d.Type = &typeVar
+			}
+		}
+	}
+
+	return nil
+}
+
+// DeviceList list of Devices
+type DeviceList struct {
+	autorest.Response `json:"-"`
+	// Value - List of devices
+	Value *[]Device `json:"value,omitempty"`
+	// NextLink - READ-ONLY; When there are too many devices for one page, use this URI to fetch the next page.
+	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DeviceList.
+func (dl DeviceList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if dl.Value != nil {
+		objectMap["value"] = dl.Value
+	}
+	return json.Marshal(objectMap)
+}
+
+// DeviceListIterator provides access to a complete listing of Device values.
+type DeviceListIterator struct {
+	i    int
+	page DeviceListPage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *DeviceListIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeviceListIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *DeviceListIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter DeviceListIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter DeviceListIterator) Response() DeviceList {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter DeviceListIterator) Value() Device {
+	if !iter.page.NotDone() {
+		return Device{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the DeviceListIterator type.
+func NewDeviceListIterator(page DeviceListPage) DeviceListIterator {
+	return DeviceListIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (dl DeviceList) IsEmpty() bool {
+	return dl.Value == nil || len(*dl.Value) == 0
+}
+
+// hasNextLink returns true if the NextLink is not empty.
+func (dl DeviceList) hasNextLink() bool {
+	return dl.NextLink != nil && len(*dl.NextLink) != 0
+}
+
+// deviceListPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (dl DeviceList) deviceListPreparer(ctx context.Context) (*http.Request, error) {
+	if !dl.hasNextLink() {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(dl.NextLink)))
+}
+
+// DeviceListPage contains a page of Device values.
+type DeviceListPage struct {
+	fn func(context.Context, DeviceList) (DeviceList, error)
+	dl DeviceList
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *DeviceListPage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeviceListPage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	for {
+		next, err := page.fn(ctx, page.dl)
+		if err != nil {
+			return err
+		}
+		page.dl = next
+		if !next.hasNextLink() || !next.IsEmpty() {
+			break
+		}
+	}
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *DeviceListPage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page DeviceListPage) NotDone() bool {
+	return !page.dl.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page DeviceListPage) Response() DeviceList {
+	return page.dl
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page DeviceListPage) Values() []Device {
+	if page.dl.IsEmpty() {
+		return nil
+	}
+	return *page.dl.Value
+}
+
+// Creates a new instance of the DeviceListPage type.
+func NewDeviceListPage(getNextPage func(context.Context, DeviceList) (DeviceList, error)) DeviceListPage {
+	return DeviceListPage{fn: getNextPage}
+}
+
+// DeviceProperties device Information
+type DeviceProperties struct {
+	// DisplayName - Device display name given by the collector
+	DisplayName *string `json:"displayName,omitempty"`
+	// DeviceType - Device type.
+	DeviceType *string `json:"deviceType,omitempty"`
+	// SourceName - READ-ONLY; The source that created the device
+	SourceName *string `json:"sourceName,omitempty"`
+	// NetworkInterfaces - READ-ONLY; List of network interfaces.
+	NetworkInterfaces *[]NetworkInterface `json:"networkInterfaces,omitempty"`
+	// Vendor - READ-ONLY; Device vendor
+	Vendor *string `json:"vendor,omitempty"`
+	// OsName - Device operating system name.
+	OsName *string `json:"osName,omitempty"`
+	// Protocols - READ-ONLY; List of protocols.
+	Protocols *[]Protocol1 `json:"protocols,omitempty"`
+	// LastActiveTime - READ-ONLY; last time the device was active in the network
+	LastActiveTime *date.Time `json:"lastActiveTime,omitempty"`
+	// LastUpdateTime - READ-ONLY; last time the device was updated
+	LastUpdateTime *date.Time `json:"lastUpdateTime,omitempty"`
+	// ManagementState - READ-ONLY; Managed state of the device. Possible values include: 'Managed', 'Unmanaged'
+	ManagementState ManagementState `json:"managementState,omitempty"`
+	// AuthorizationState - Authorized state of the device. Possible values include: 'Authorized', 'Unauthorized'
+	AuthorizationState AuthorizationState `json:"authorizationState,omitempty"`
+	// DeviceCriticality - Device criticality. Possible values include: 'Important', 'Standard'
+	DeviceCriticality DeviceCriticality `json:"deviceCriticality,omitempty"`
+	// PurdueLevel - Purdue level of the device. Possible values include: 'ProcessControl', 'Supervisory', 'Enterprise'
+	PurdueLevel PurdueLevel `json:"purdueLevel,omitempty"`
+	// Notes - user notes for the device, up to 300 characters.
+	Notes *string `json:"notes,omitempty"`
+	// Firmwares - READ-ONLY; List of device firmwares.
+	Firmwares *[]Firmware `json:"firmwares,omitempty"`
+	// DiscoveryTime - READ-ONLY; Discovered time of the device.
+	DiscoveryTime *date.Time `json:"discoveryTime,omitempty"`
+	// ProgrammingState - READ-ONLY; Indicates whether this device is programming. Possible values include: 'ProgrammingDevice', 'NotProgrammingDevice'
+	ProgrammingState ProgrammingState `json:"programmingState,omitempty"`
+	// LastProgrammingTime - READ-ONLY; last time the device was programming or programed.
+	LastProgrammingTime *date.Time `json:"lastProgrammingTime,omitempty"`
+	// ScanningFunctionality - READ-ONLY; Indicates whether the device is a scanner. Possible values include: 'ScannerDevice', 'NotScannerDevice'
+	ScanningFunctionality ScanningFunctionality `json:"scanningFunctionality,omitempty"`
+	// LastScanTime - READ-ONLY; last time the device was scanning.
+	LastScanTime *date.Time `json:"lastScanTime,omitempty"`
+	// RiskScore - READ-ONLY; risk score of the device.
+	RiskScore *int32 `json:"riskScore,omitempty"`
+	// SensorName - READ-ONLY; When the device is unmanaged, the sensor that scanned this device.
+	SensorName *string `json:"sensorName,omitempty"`
+	// SiteName - READ-ONLY; The sensor site name.
+	SiteName *string `json:"siteName,omitempty"`
+	// ZoneName - READ-ONLY; The sensor zone name.
+	ZoneName *string `json:"zoneName,omitempty"`
+	// DeviceStatus - READ-ONLY; Device status. Possible values include: 'DeviceStatusActive', 'DeviceStatusRemoved'
+	DeviceStatus DeviceStatus `json:"deviceStatus,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DeviceProperties.
+func (dp DeviceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if dp.DisplayName != nil {
+		objectMap["displayName"] = dp.DisplayName
+	}
+	if dp.DeviceType != nil {
+		objectMap["deviceType"] = dp.DeviceType
+	}
+	if dp.OsName != nil {
+		objectMap["osName"] = dp.OsName
+	}
+	if dp.AuthorizationState != "" {
+		objectMap["authorizationState"] = dp.AuthorizationState
+	}
+	if dp.DeviceCriticality != "" {
+		objectMap["deviceCriticality"] = dp.DeviceCriticality
+	}
+	if dp.PurdueLevel != "" {
+		objectMap["purdueLevel"] = dp.PurdueLevel
+	}
+	if dp.Notes != nil {
+		objectMap["notes"] = dp.Notes
+	}
+	return json.Marshal(objectMap)
 }
 
 // DeviceSecurityGroup the device security group resource
@@ -8698,30 +9338,48 @@ func (funiar FileUploadsNotInAllowedRange) AsBasicCustomAlertRule() (BasicCustom
 	return &funiar, true
 }
 
+// Firmware firmware information
+type Firmware struct {
+	// ModuleAddress - READ-ONLY; Address of the specific module a firmware is related to
+	ModuleAddress *string `json:"moduleAddress,omitempty"`
+	// Rack - READ-ONLY; Rack number of the module a firmware is related to.
+	Rack *string `json:"rack,omitempty"`
+	// Slot - READ-ONLY; Slot number in the rack of the module a firmware is related to
+	Slot *string `json:"slot,omitempty"`
+	// Serial - READ-ONLY; Serial of the firmware
+	Serial *string `json:"serial,omitempty"`
+	// Model - READ-ONLY; Firmware model
+	Model *string `json:"model,omitempty"`
+	// Version - READ-ONLY; Firmware version
+	Version *string `json:"version,omitempty"`
+	// AdditionalData - READ-ONLY;  A bag of fields which extends the firmware information.
+	AdditionalData interface{} `json:"additionalData,omitempty"`
+}
+
 // GcpCredentialsDetailsProperties GCP cloud account connector based service to service credentials, the
-// credentials is composed of organization id and json api key (write only)</a>
+// credentials are composed of the organization ID and a JSON API key (write only)
 type GcpCredentialsDetailsProperties struct {
-	// OrganizationID - The Organization ID of the GCP cloud account
+	// OrganizationID - The organization ID of the GCP cloud account
 	OrganizationID *string `json:"organizationId,omitempty"`
 	// Type - Type field of the API key (write only)
 	Type *string `json:"type,omitempty"`
-	// ProjectID - Project Id field of the API key (write only)
+	// ProjectID - Project ID field of the API key (write only)
 	ProjectID *string `json:"projectId,omitempty"`
-	// PrivateKeyID - Private key Id field of the API key (write only)
+	// PrivateKeyID - Private key ID field of the API key (write only)
 	PrivateKeyID *string `json:"privateKeyId,omitempty"`
 	// PrivateKey - Private key field of the API key (write only)
 	PrivateKey *string `json:"privateKey,omitempty"`
 	// ClientEmail - Client email field of the API key (write only)
 	ClientEmail *string `json:"clientEmail,omitempty"`
-	// ClientID - Client Id field of the API key (write only)
+	// ClientID - Client ID field of the API key (write only)
 	ClientID *string `json:"clientId,omitempty"`
-	// AuthURI - Auth Uri field of the API key (write only)
+	// AuthURI - Auth URI field of the API key (write only)
 	AuthURI *string `json:"authUri,omitempty"`
-	// TokenURI - Token Uri field of the API key (write only)
+	// TokenURI - Token URI field of the API key (write only)
 	TokenURI *string `json:"tokenUri,omitempty"`
-	// AuthProviderX509CertURL - Auth provider x509 certificate url field of the API key (write only)
+	// AuthProviderX509CertURL - Auth provider x509 certificate URL field of the API key (write only)
 	AuthProviderX509CertURL *string `json:"authProviderX509CertUrl,omitempty"`
-	// ClientX509CertURL - Client x509 certificate url field of the API key (write only)
+	// ClientX509CertURL - Client x509 certificate URL field of the API key (write only)
 	ClientX509CertURL *string `json:"clientX509CertUrl,omitempty"`
 	// AuthenticationProvisioningState - READ-ONLY; State of the multi-cloud connector. Possible values include: 'Valid', 'Invalid', 'Expired', 'IncorrectPolicy'
 	AuthenticationProvisioningState AuthenticationProvisioningState `json:"authenticationProvisioningState,omitempty"`
@@ -9378,7 +10036,7 @@ type HybridComputeSettingsProperties struct {
 	AutoProvision AutoProvision `json:"autoProvision,omitempty"`
 	// ResourceGroupName - The name of the resource group where Arc (Hybrid Compute) connectors are connected.
 	ResourceGroupName *string `json:"resourceGroupName,omitempty"`
-	// Region - The location where the meta data of machines will be stored
+	// Region - The location where the metadata of machines will be stored
 	Region *string `json:"region,omitempty"`
 	// ProxyServer - For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use.
 	ProxyServer *ProxyServerProperties `json:"proxyServer,omitempty"`
@@ -11572,6 +12230,20 @@ type IoTSeverityMetrics struct {
 	Low *int32 `json:"low,omitempty"`
 }
 
+// IPAddress IP Address information
+type IPAddress struct {
+	// V4Address - READ-ONLY; IPV4 address
+	V4Address *string `json:"v4Address,omitempty"`
+	// DetectionTime - READ-ONLY; Detection time of the ip address.
+	DetectionTime *date.Time `json:"detectionTime,omitempty"`
+	// SubnetCidr - READ-ONLY; Subnet Classless Inter-Domain Routing
+	SubnetCidr *string `json:"subnetCidr,omitempty"`
+	// Fqdn - READ-ONLY; Fully qualified domain name
+	Fqdn *string `json:"fqdn,omitempty"`
+	// FqdnLastLookupTime - READ-ONLY; FQDN last lookup time.
+	FqdnLastLookupTime *date.Time `json:"fqdnLastLookupTime,omitempty"`
+}
+
 // JitNetworkAccessPoliciesList ...
 type JitNetworkAccessPoliciesList struct {
 	autorest.Response `json:"-"`
@@ -12418,6 +13090,18 @@ func (lai LogAnalyticsIdentifier) AsBasicResourceIdentifier() (BasicResourceIden
 	return &lai, true
 }
 
+// MacAddress MAC Address information
+type MacAddress struct {
+	// Address - READ-ONLY; MAC address
+	Address *string `json:"address,omitempty"`
+	// DetectionTime - READ-ONLY; Detection time of the mac address.
+	DetectionTime *date.Time `json:"detectionTime,omitempty"`
+	// Significance - READ-ONLY; Indicates whether this is the primary secondary MAC address of the device. Possible values include: 'Primary', 'Secondary'
+	Significance MacSignificance `json:"significance,omitempty"`
+	// RelationToIPStatus - READ-ONLY; Indicates whether the relation of the mac to the ip address is certain or a guess. Possible values include: 'Guess', 'Certain'
+	RelationToIPStatus RelationToIPStatus `json:"relationToIpStatus,omitempty"`
+}
+
 // MqttC2DMessagesNotInAllowedRange number of cloud to device messages (MQTT protocol) is not in allowed range.
 type MqttC2DMessagesNotInAllowedRange struct {
 	// TimeWindowSize - The time window size in iso8601 format.
@@ -12987,6 +13671,26 @@ func (mdmniar MqttD2CMessagesNotInAllowedRange) AsCustomAlertRule() (*CustomAler
 // AsBasicCustomAlertRule is the BasicCustomAlertRule implementation for MqttD2CMessagesNotInAllowedRange.
 func (mdmniar MqttD2CMessagesNotInAllowedRange) AsBasicCustomAlertRule() (BasicCustomAlertRule, bool) {
 	return &mdmniar, true
+}
+
+// NetworkInterface network interface
+type NetworkInterface struct {
+	IPAddress  *IPAddress  `json:"ipAddress,omitempty"`
+	MacAddress *MacAddress `json:"macAddress,omitempty"`
+	// Vlans - READ-ONLY; List of device vlans.
+	Vlans *[]string `json:"vlans,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for NetworkInterface.
+func (ni NetworkInterface) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ni.IPAddress != nil {
+		objectMap["ipAddress"] = ni.IPAddress
+	}
+	if ni.MacAddress != nil {
+		objectMap["macAddress"] = ni.MacAddress
+	}
+	return json.Marshal(objectMap)
 }
 
 // OnPremiseIotSensor on-premise IoT sensor
@@ -13610,7 +14314,7 @@ type PricingList struct {
 
 // PricingProperties pricing properties for the relevant scope
 type PricingProperties struct {
-	// PricingTier - The pricing tier value. Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features. Possible values include: 'Free', 'Standard'
+	// PricingTier - The pricing tier value. Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features. Possible values include: 'PricingTierFree', 'PricingTierStandard'
 	PricingTier PricingTier `json:"pricingTier,omitempty"`
 	// FreeTrialRemainingTime - READ-ONLY; The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S).
 	FreeTrialRemainingTime *string `json:"freeTrialRemainingTime,omitempty"`
@@ -13818,6 +14522,23 @@ type ProtectionMode struct {
 	Script Script `json:"script,omitempty"`
 	// Executable - Possible values include: 'ExecutableAudit', 'ExecutableEnforce', 'ExecutableNone'
 	Executable Executable `json:"executable,omitempty"`
+}
+
+// Protocol1 protocol data
+type Protocol1 struct {
+	// Name - READ-ONLY; Protocol name
+	Name *string `json:"name,omitempty"`
+	// Identifiers - list of protocol identifiers.
+	Identifiers *string `json:"identifiers,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Protocol1.
+func (p1 Protocol1) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p1.Identifiers != nil {
+		objectMap["identifiers"] = p1.Identifiers
+	}
+	return json.Marshal(objectMap)
 }
 
 // ProxyServerProperties for a non-Azure machine that is not connected directly to the internet, specify a
@@ -16158,7 +16879,7 @@ func (svp ServerVulnerabilityProperties) AsBasicAdditionalData() (BasicAdditiona
 
 // ServicePrincipalProperties details of the service principal.
 type ServicePrincipalProperties struct {
-	// ApplicationID - Application id of service principal.
+	// ApplicationID - Application ID of service principal.
 	ApplicationID *string `json:"applicationId,omitempty"`
 	// Secret - A secret string that the application uses to prove its identity, also can be referred to as application password (write only).
 	Secret *string `json:"secret,omitempty"`
