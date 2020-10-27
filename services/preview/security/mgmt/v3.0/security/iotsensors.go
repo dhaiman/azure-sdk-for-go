@@ -45,7 +45,8 @@ func NewIotSensorsClientWithBaseURI(baseURI string, subscriptionID string, ascLo
 // Parameters:
 // scope - scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
 // iotSensorName - name of the IoT sensor
-func (client IotSensorsClient) CreateOrUpdate(ctx context.Context, scope string, iotSensorName string) (result IotSensor, err error) {
+// iotSensorsModel - the IoT sensor model
+func (client IotSensorsClient) CreateOrUpdate(ctx context.Context, scope string, iotSensorName string, iotSensorsModel IotSensorsModel) (result IotSensorsModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/IotSensorsClient.CreateOrUpdate")
 		defer func() {
@@ -56,7 +57,7 @@ func (client IotSensorsClient) CreateOrUpdate(ctx context.Context, scope string,
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.CreateOrUpdatePreparer(ctx, scope, iotSensorName)
+	req, err := client.CreateOrUpdatePreparer(ctx, scope, iotSensorName, iotSensorsModel)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "security.IotSensorsClient", "CreateOrUpdate", nil, "Failure preparing request")
 		return
@@ -78,7 +79,7 @@ func (client IotSensorsClient) CreateOrUpdate(ctx context.Context, scope string,
 }
 
 // CreateOrUpdatePreparer prepares the CreateOrUpdate request.
-func (client IotSensorsClient) CreateOrUpdatePreparer(ctx context.Context, scope string, iotSensorName string) (*http.Request, error) {
+func (client IotSensorsClient) CreateOrUpdatePreparer(ctx context.Context, scope string, iotSensorName string, iotSensorsModel IotSensorsModel) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"iotSensorName": autorest.Encode("path", iotSensorName),
 		"scope":         scope,
@@ -90,9 +91,11 @@ func (client IotSensorsClient) CreateOrUpdatePreparer(ctx context.Context, scope
 	}
 
 	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/{scope}/providers/Microsoft.Security/iotSensors/{iotSensorName}", pathParameters),
+		autorest.WithJSON(iotSensorsModel),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
@@ -105,7 +108,7 @@ func (client IotSensorsClient) CreateOrUpdateSender(req *http.Request) (*http.Re
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client IotSensorsClient) CreateOrUpdateResponder(resp *http.Response) (result IotSensor, err error) {
+func (client IotSensorsClient) CreateOrUpdateResponder(resp *http.Response) (result IotSensorsModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
@@ -265,7 +268,7 @@ func (client IotSensorsClient) DownloadActivationResponder(resp *http.Response) 
 // Parameters:
 // scope - scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
 // iotSensorName - name of the IoT sensor
-func (client IotSensorsClient) Get(ctx context.Context, scope string, iotSensorName string) (result IotSensor, err error) {
+func (client IotSensorsClient) Get(ctx context.Context, scope string, iotSensorName string) (result IotSensorsModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/IotSensorsClient.Get")
 		defer func() {
@@ -325,7 +328,7 @@ func (client IotSensorsClient) GetSender(req *http.Request) (*http.Response, err
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client IotSensorsClient) GetResponder(resp *http.Response) (result IotSensor, err error) {
+func (client IotSensorsClient) GetResponder(resp *http.Response) (result IotSensorsModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
