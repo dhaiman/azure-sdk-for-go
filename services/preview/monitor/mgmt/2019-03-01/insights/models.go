@@ -1623,6 +1623,8 @@ type DynamicMetricCriteria struct {
 	TimeAggregation interface{} `json:"timeAggregation,omitempty"`
 	// Dimensions - List of dimension conditions.
 	Dimensions *[]MetricDimension `json:"dimensions,omitempty"`
+	// SkipMetricValidation - Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped.
+	SkipMetricValidation *bool `json:"skipMetricValidation,omitempty"`
 	// CriterionType - Possible values include: 'CriterionTypeMultiMetricCriteria', 'CriterionTypeStaticThresholdCriterion', 'CriterionTypeDynamicThresholdCriterion'
 	CriterionType CriterionType `json:"criterionType,omitempty"`
 }
@@ -1657,6 +1659,9 @@ func (dmc DynamicMetricCriteria) MarshalJSON() ([]byte, error) {
 	}
 	if dmc.Dimensions != nil {
 		objectMap["dimensions"] = dmc.Dimensions
+	}
+	if dmc.SkipMetricValidation != nil {
+		objectMap["skipMetricValidation"] = dmc.SkipMetricValidation
 	}
 	if dmc.CriterionType != "" {
 		objectMap["criterionType"] = dmc.CriterionType
@@ -1788,6 +1793,15 @@ func (dmc *DynamicMetricCriteria) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				dmc.Dimensions = &dimensions
+			}
+		case "skipMetricValidation":
+			if v != nil {
+				var skipMetricValidation bool
+				err = json.Unmarshal(*v, &skipMetricValidation)
+				if err != nil {
+					return err
+				}
+				dmc.SkipMetricValidation = &skipMetricValidation
 			}
 		case "criterionType":
 			if v != nil {
@@ -3693,6 +3707,8 @@ type MetricCriteria struct {
 	TimeAggregation interface{} `json:"timeAggregation,omitempty"`
 	// Dimensions - List of dimension conditions.
 	Dimensions *[]MetricDimension `json:"dimensions,omitempty"`
+	// SkipMetricValidation - Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped.
+	SkipMetricValidation *bool `json:"skipMetricValidation,omitempty"`
 	// CriterionType - Possible values include: 'CriterionTypeMultiMetricCriteria', 'CriterionTypeStaticThresholdCriterion', 'CriterionTypeDynamicThresholdCriterion'
 	CriterionType CriterionType `json:"criterionType,omitempty"`
 }
@@ -3721,6 +3737,9 @@ func (mc MetricCriteria) MarshalJSON() ([]byte, error) {
 	}
 	if mc.Dimensions != nil {
 		objectMap["dimensions"] = mc.Dimensions
+	}
+	if mc.SkipMetricValidation != nil {
+		objectMap["skipMetricValidation"] = mc.SkipMetricValidation
 	}
 	if mc.CriterionType != "" {
 		objectMap["criterionType"] = mc.CriterionType
@@ -3834,6 +3853,15 @@ func (mc *MetricCriteria) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				mc.Dimensions = &dimensions
+			}
+		case "skipMetricValidation":
+			if v != nil {
+				var skipMetricValidation bool
+				err = json.Unmarshal(*v, &skipMetricValidation)
+				if err != nil {
+					return err
+				}
+				mc.SkipMetricValidation = &skipMetricValidation
 			}
 		case "criterionType":
 			if v != nil {
@@ -3997,6 +4025,8 @@ type MultiMetricCriteria struct {
 	TimeAggregation interface{} `json:"timeAggregation,omitempty"`
 	// Dimensions - List of dimension conditions.
 	Dimensions *[]MetricDimension `json:"dimensions,omitempty"`
+	// SkipMetricValidation - Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped.
+	SkipMetricValidation *bool `json:"skipMetricValidation,omitempty"`
 	// CriterionType - Possible values include: 'CriterionTypeMultiMetricCriteria', 'CriterionTypeStaticThresholdCriterion', 'CriterionTypeDynamicThresholdCriterion'
 	CriterionType CriterionType `json:"criterionType,omitempty"`
 }
@@ -4060,6 +4090,9 @@ func (mmc MultiMetricCriteria) MarshalJSON() ([]byte, error) {
 	}
 	if mmc.Dimensions != nil {
 		objectMap["dimensions"] = mmc.Dimensions
+	}
+	if mmc.SkipMetricValidation != nil {
+		objectMap["skipMetricValidation"] = mmc.SkipMetricValidation
 	}
 	if mmc.CriterionType != "" {
 		objectMap["criterionType"] = mmc.CriterionType
@@ -4155,6 +4188,15 @@ func (mmc *MultiMetricCriteria) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				mmc.Dimensions = &dimensions
+			}
+		case "skipMetricValidation":
+			if v != nil {
+				var skipMetricValidation bool
+				err = json.Unmarshal(*v, &skipMetricValidation)
+				if err != nil {
+					return err
+				}
+				mmc.SkipMetricValidation = &skipMetricValidation
 			}
 		case "criterionType":
 			if v != nil {
