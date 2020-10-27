@@ -42,7 +42,7 @@ func NewUsageAggregatesClientWithBaseURI(baseURI string, subscriptionID string) 
 	return UsageAggregatesClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
-// List query aggregated Azure subscription consumption data for a date range.
+// List query aggregated Azure subscription consumption data for a date range. Nit.
 // Parameters:
 // reportedStartTime - the start of the time range to retrieve data for.
 // reportedEndTime - the end of the time range to retrieve data for.
