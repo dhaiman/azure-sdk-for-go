@@ -89,6 +89,34 @@ type ErrorResponse struct {
 	Error *ErrorInfo `json:"error,omitempty"`
 }
 
+// Identity identity for the resource.
+type Identity struct {
+	// Type - The type of identity for workspace. The type 'None' will remove any identities assigned to workspace. Possible values include: 'UserAssigned', 'None'
+	Type ResourceIdentityType `json:"type,omitempty"`
+	// UserAssignedIdentities - The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+	UserAssignedIdentities map[string]*IdentityUserAssignedIdentitiesValue `json:"userAssignedIdentities"`
+}
+
+// MarshalJSON is the custom marshaler for Identity.
+func (i Identity) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.Type != "" {
+		objectMap["type"] = i.Type
+	}
+	if i.UserAssignedIdentities != nil {
+		objectMap["userAssignedIdentities"] = i.UserAssignedIdentities
+	}
+	return json.Marshal(objectMap)
+}
+
+// IdentityUserAssignedIdentitiesValue ...
+type IdentityUserAssignedIdentitiesValue struct {
+	// PrincipalID - READ-ONLY; The principal id of user assigned identity.
+	PrincipalID *string `json:"principalId,omitempty"`
+	// ClientID - READ-ONLY; The client id of user assigned identity.
+	ClientID *string `json:"clientId,omitempty"`
+}
+
 // ManagedIdentityConfiguration the Managed Identity details for storage account.
 type ManagedIdentityConfiguration struct {
 	// PrincipalID - READ-ONLY; The objectId of the Managed Identity that is linked to the Managed Storage account.
@@ -676,6 +704,8 @@ type Workspace struct {
 	*WorkspaceProperties `json:"properties,omitempty"`
 	// Sku - The SKU of the resource.
 	Sku *Sku `json:"sku,omitempty"`
+	// Identity - The identity of the resource.
+	Identity *Identity `json:"identity,omitempty"`
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
@@ -696,6 +726,9 @@ func (w Workspace) MarshalJSON() ([]byte, error) {
 	}
 	if w.Sku != nil {
 		objectMap["sku"] = w.Sku
+	}
+	if w.Identity != nil {
+		objectMap["identity"] = w.Identity
 	}
 	if w.Tags != nil {
 		objectMap["tags"] = w.Tags
@@ -732,6 +765,15 @@ func (w *Workspace) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				w.Sku = &sku
+			}
+		case "identity":
+			if v != nil {
+				var identity Identity
+				err = json.Unmarshal(*v, &identity)
+				if err != nil {
+					return err
+				}
+				w.Identity = &identity
 			}
 		case "tags":
 			if v != nil {
@@ -1139,6 +1181,8 @@ func (future *WorkspacesUpdateFuture) Result(client WorkspacesClient) (w Workspa
 type WorkspaceUpdate struct {
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
+	// Identity - The identity of the resource.
+	Identity *Identity `json:"identity,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for WorkspaceUpdate.
@@ -1146,6 +1190,9 @@ func (wu WorkspaceUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if wu.Tags != nil {
 		objectMap["tags"] = wu.Tags
+	}
+	if wu.Identity != nil {
+		objectMap["identity"] = wu.Identity
 	}
 	return json.Marshal(objectMap)
 }
