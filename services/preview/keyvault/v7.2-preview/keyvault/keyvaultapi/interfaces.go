@@ -41,10 +41,10 @@ type BaseClientAPI interface {
 	DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string) (result keyvault.DeletedSecretBundle, err error)
 	DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string) (result keyvault.DeletedStorageBundle, err error)
 	Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters keyvault.KeyOperationsParameters) (result keyvault.KeyOperationResult, err error)
-	FullBackup(ctx context.Context, vaultBaseURL string, azureStorageBlobContainerURI *keyvault.SASTokenParameter) (result keyvault.FullBackupOperation, err error)
+	ExportKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters keyvault.KeyExportParameters) (result keyvault.KeyBundle, err error)
+	FullBackup(ctx context.Context, vaultBaseURL string, azureStorageBlobContainerURI *keyvault.SASTokenParameter) (result keyvault.FullBackupFuture, err error)
 	FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string) (result keyvault.FullBackupOperation, err error)
-	FullRestoreOperationMethod(ctx context.Context, vaultBaseURL string, restoreBlobDetails *keyvault.RestoreOperationParameters) (result keyvault.FullRestoreOperation, err error)
-	FullRestoreStatus(ctx context.Context, vaultBaseURL string, jobID string) (result keyvault.FullRestoreOperation, err error)
+	FullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails *keyvault.RestoreOperationParameters) (result keyvault.FullRestoreOperationFuture, err error)
 	GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string) (result keyvault.CertificateBundle, err error)
 	GetCertificateContacts(ctx context.Context, vaultBaseURL string) (result keyvault.Contacts, err error)
 	GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string) (result keyvault.IssuerBundle, err error)
@@ -103,7 +103,9 @@ type BaseClientAPI interface {
 	RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters keyvault.CertificateRestoreParameters) (result keyvault.CertificateBundle, err error)
 	RestoreKey(ctx context.Context, vaultBaseURL string, parameters keyvault.KeyRestoreParameters) (result keyvault.KeyBundle, err error)
 	RestoreSecret(ctx context.Context, vaultBaseURL string, parameters keyvault.SecretRestoreParameters) (result keyvault.SecretBundle, err error)
+	RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string) (result keyvault.RestoreOperation, err error)
 	RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters keyvault.StorageRestoreParameters) (result keyvault.StorageBundle, err error)
+	SelectiveKeyRestoreOperationMethod(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails *keyvault.SelectiveKeyRestoreOperationParameters) (result keyvault.SelectiveKeyRestoreOperationMethodFuture, err error)
 	SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts keyvault.Contacts) (result keyvault.Contacts, err error)
 	SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter keyvault.CertificateIssuerSetParameters) (result keyvault.IssuerBundle, err error)
 	SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters keyvault.SasDefinitionCreateParameters) (result keyvault.SasDefinitionBundle, err error)
@@ -127,6 +129,9 @@ var _ BaseClientAPI = (*keyvault.BaseClient)(nil)
 
 // RoleDefinitionsClientAPI contains the set of methods on the RoleDefinitionsClient type.
 type RoleDefinitionsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters keyvault.RoleDefinitionCreateParameters) (result keyvault.RoleAssignment, err error)
+	Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string) (result keyvault.RoleDefinition, err error)
+	Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string) (result keyvault.RoleDefinition, err error)
 	List(ctx context.Context, vaultBaseURL string, scope string, filter string) (result keyvault.RoleDefinitionListResultPage, err error)
 	ListComplete(ctx context.Context, vaultBaseURL string, scope string, filter string) (result keyvault.RoleDefinitionListResultIterator, err error)
 }
@@ -135,11 +140,18 @@ var _ RoleDefinitionsClientAPI = (*keyvault.RoleDefinitionsClient)(nil)
 
 // RoleAssignmentsClientAPI contains the set of methods on the RoleAssignmentsClient type.
 type RoleAssignmentsClientAPI interface {
-	Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters keyvault.RoleAssignmentCreateParameters) (result keyvault.RoleAssignment, err error)
-	Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string) (result keyvault.RoleAssignment, err error)
-	Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string) (result keyvault.RoleAssignment, err error)
 	ListForScope(ctx context.Context, vaultBaseURL string, scope string, filter string) (result keyvault.RoleAssignmentListResultPage, err error)
 	ListForScopeComplete(ctx context.Context, vaultBaseURL string, scope string, filter string) (result keyvault.RoleAssignmentListResultIterator, err error)
 }
 
 var _ RoleAssignmentsClientAPI = (*keyvault.RoleAssignmentsClient)(nil)
+
+// HSMSecurityDomainClientAPI contains the set of methods on the HSMSecurityDomainClient type.
+type HSMSecurityDomainClientAPI interface {
+	Download(ctx context.Context, vaultBaseURL string, certificateInfoObject keyvault.CertificateInfoObject) (result keyvault.SecurityDomainObject, err error)
+	TransferKeyMethod(ctx context.Context, vaultBaseURL string) (result keyvault.TransferKey, err error)
+	Upload(ctx context.Context, vaultBaseURL string, securityDomain keyvault.SecurityDomainUploadObject) (result keyvault.HSMSecurityDomainUploadFuture, err error)
+	UploadPending(ctx context.Context, vaultBaseURL string) (result keyvault.SecurityDomainOperationStatus, err error)
+}
+
+var _ HSMSecurityDomainClientAPI = (*keyvault.HSMSecurityDomainClient)(nil)
