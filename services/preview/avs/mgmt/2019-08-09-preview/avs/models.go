@@ -254,8 +254,11 @@ func (page ClusterListPage) Values() []Cluster {
 }
 
 // Creates a new instance of the ClusterListPage type.
-func NewClusterListPage(getNextPage func(context.Context, ClusterList) (ClusterList, error)) ClusterListPage {
-	return ClusterListPage{fn: getNextPage}
+func NewClusterListPage(cur ClusterList, getNextPage func(context.Context, ClusterList) (ClusterList, error)) ClusterListPage {
+	return ClusterListPage{
+		fn: getNextPage,
+		cl: cur,
+	}
 }
 
 // ClusterProperties the properties of a cluster
@@ -308,7 +311,8 @@ func (future *ClustersCreateOrUpdateFuture) Result(client ClustersClient) (c Clu
 	return
 }
 
-// ClustersDeleteFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// ClustersDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type ClustersDeleteFuture struct {
 	azure.Future
 }
@@ -330,7 +334,8 @@ func (future *ClustersDeleteFuture) Result(client ClustersClient) (ar autorest.R
 	return
 }
 
-// ClustersUpdateFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// ClustersUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type ClustersUpdateFuture struct {
 	azure.Future
 }
@@ -600,8 +605,11 @@ func (page OperationListPage) Values() []Operation {
 }
 
 // Creates a new instance of the OperationListPage type.
-func NewOperationListPage(getNextPage func(context.Context, OperationList) (OperationList, error)) OperationListPage {
-	return OperationListPage{fn: getNextPage}
+func NewOperationListPage(cur OperationList, getNextPage func(context.Context, OperationList) (OperationList, error)) OperationListPage {
+	return OperationListPage{
+		fn: getNextPage,
+		ol: cur,
+	}
 }
 
 // PrivateCloud a private cloud resource
@@ -793,8 +801,11 @@ func (page PrivateCloudListPage) Values() []PrivateCloud {
 }
 
 // Creates a new instance of the PrivateCloudListPage type.
-func NewPrivateCloudListPage(getNextPage func(context.Context, PrivateCloudList) (PrivateCloudList, error)) PrivateCloudListPage {
-	return PrivateCloudListPage{fn: getNextPage}
+func NewPrivateCloudListPage(cur PrivateCloudList, getNextPage func(context.Context, PrivateCloudList) (PrivateCloudList, error)) PrivateCloudListPage {
+	return PrivateCloudListPage{
+		fn:  getNextPage,
+		pcl: cur,
+	}
 }
 
 // PrivateCloudProperties the properties of a private cloud resource
@@ -858,8 +869,8 @@ func (pcp PrivateCloudProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PrivateCloudsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// PrivateCloudsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type PrivateCloudsCreateOrUpdateFuture struct {
 	azure.Future
 }
