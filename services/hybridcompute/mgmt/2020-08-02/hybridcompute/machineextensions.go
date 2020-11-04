@@ -192,7 +192,7 @@ func (client MachineExtensionsClient) DeleteSender(req *http.Request) (future Ma
 func (client MachineExtensionsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent, http.StatusNotFound),
 		autorest.ByClosing())
 	result.Response = resp
 	return
@@ -268,7 +268,7 @@ func (client MachineExtensionsClient) GetSender(req *http.Request) (*http.Respon
 func (client MachineExtensionsClient) GetResponder(resp *http.Response) (result MachineExtension, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -351,7 +351,7 @@ func (client MachineExtensionsClient) ListSender(req *http.Request) (*http.Respo
 func (client MachineExtensionsClient) ListResponder(resp *http.Response) (result MachineExtensionsListResult, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -395,7 +395,7 @@ func (client MachineExtensionsClient) ListComplete(ctx context.Context, resource
 	return
 }
 
-// Update the operation to create or update the extension.
+// Update the operation to update the extension.
 // Parameters:
 // resourceGroupName - the name of the resource group.
 // name - the name of the machine where the extension should be created or updated.
@@ -468,7 +468,7 @@ func (client MachineExtensionsClient) UpdateSender(req *http.Request) (future Ma
 func (client MachineExtensionsClient) UpdateResponder(resp *http.Response) (result MachineExtension, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}

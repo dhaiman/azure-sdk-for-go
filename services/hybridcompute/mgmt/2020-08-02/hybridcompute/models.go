@@ -31,15 +31,15 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/hybridcompute/mgmt/2020-08-02/hybridcompute"
 
-// AzureEntityResource the resource model definition for a Azure Resource Manager resource with an etag.
+// AzureEntityResource the resource model definition for an Azure Resource Manager resource with an etag.
 type AzureEntityResource struct {
 	// Etag - READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -102,11 +102,11 @@ type Machine struct {
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -215,11 +215,11 @@ type MachineExtension struct {
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -671,8 +671,11 @@ func (page MachineExtensionsListResultPage) Values() []MachineExtension {
 }
 
 // Creates a new instance of the MachineExtensionsListResultPage type.
-func NewMachineExtensionsListResultPage(getNextPage func(context.Context, MachineExtensionsListResult) (MachineExtensionsListResult, error)) MachineExtensionsListResultPage {
-	return MachineExtensionsListResultPage{fn: getNextPage}
+func NewMachineExtensionsListResultPage(cur MachineExtensionsListResult, getNextPage func(context.Context, MachineExtensionsListResult) (MachineExtensionsListResult, error)) MachineExtensionsListResultPage {
+	return MachineExtensionsListResultPage{
+		fn:   getNextPage,
+		melr: cur,
+	}
 }
 
 // MachineExtensionsUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
@@ -964,8 +967,11 @@ func (page MachineListResultPage) Values() []Machine {
 }
 
 // Creates a new instance of the MachineListResultPage type.
-func NewMachineListResultPage(getNextPage func(context.Context, MachineListResult) (MachineListResult, error)) MachineListResultPage {
-	return MachineListResultPage{fn: getNextPage}
+func NewMachineListResultPage(cur MachineListResult, getNextPage func(context.Context, MachineListResult) (MachineListResult, error)) MachineListResultPage {
+	return MachineListResultPage{
+		fn:  getNextPage,
+		mlr: cur,
+	}
 }
 
 // MachineProperties describes the properties of a hybrid machine.
@@ -978,7 +984,7 @@ type MachineProperties struct {
 	// Status - READ-ONLY; The status of the hybrid machine agent. Possible values include: 'StatusTypesConnected', 'StatusTypesDisconnected', 'StatusTypesError'
 	Status StatusTypes `json:"status,omitempty"`
 	// LastStatusChange - READ-ONLY; The time of the last status change.
-	LastStatusChange *date.Time `json:"lastStatusChange,omitempty"`
+	LastStatusChange *string `json:"lastStatusChange,omitempty"`
 	// ErrorDetails - READ-ONLY; Details about the error state.
 	ErrorDetails *[]ErrorDetail `json:"errorDetails,omitempty"`
 	// AgentVersion - READ-ONLY; The hybrid machine agent full version.
@@ -1037,7 +1043,7 @@ type MachinePropertiesModel struct {
 	// Status - READ-ONLY; The status of the hybrid machine agent. Possible values include: 'StatusTypesConnected', 'StatusTypesDisconnected', 'StatusTypesError'
 	Status StatusTypes `json:"status,omitempty"`
 	// LastStatusChange - READ-ONLY; The time of the last status change.
-	LastStatusChange *date.Time `json:"lastStatusChange,omitempty"`
+	LastStatusChange *string `json:"lastStatusChange,omitempty"`
 	// ErrorDetails - READ-ONLY; Details about the error state.
 	ErrorDetails *[]ErrorDetail `json:"errorDetails,omitempty"`
 	// AgentVersion - READ-ONLY; The hybrid machine agent full version.
@@ -1203,6 +1209,8 @@ type OperationValue struct {
 	Name *string `json:"name,omitempty"`
 	// OperationValueDisplay - Display properties
 	*OperationValueDisplay `json:"display,omitempty"`
+	// IsDataAction - READ-ONLY; Indicates whether the operation applies to data-plane
+	IsDataAction *string `json:"isDataAction,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for OperationValue.
@@ -1250,6 +1258,15 @@ func (ov *OperationValue) UnmarshalJSON(body []byte) error {
 				}
 				ov.OperationValueDisplay = &operationValueDisplay
 			}
+		case "isDataAction":
+			if v != nil {
+				var isDataAction string
+				err = json.Unmarshal(*v, &isDataAction)
+				if err != nil {
+					return err
+				}
+				ov.IsDataAction = &isDataAction
+			}
 		}
 	}
 
@@ -1286,38 +1303,39 @@ type OSProfile struct {
 	ComputerName *string `json:"computerName,omitempty"`
 }
 
-// ProxyResource the resource model definition for a ARM proxy resource. It will have everything other than
-// required location and tags
+// ProxyResource the resource model definition for a Azure Resource Manager proxy resource. It will not
+// have tags and a location
 type ProxyResource struct {
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
-// Resource ...
+// Resource common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
-// TrackedResource the resource model definition for a ARM tracked top level resource
+// TrackedResource the resource model definition for an Azure Resource Manager tracked top level resource
+// which has 'tags' and a 'location'
 type TrackedResource struct {
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
