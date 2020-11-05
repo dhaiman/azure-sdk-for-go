@@ -110,6 +110,8 @@ const (
 	KeyPermissionsDelete KeyPermissions = "delete"
 	// KeyPermissionsEncrypt ...
 	KeyPermissionsEncrypt KeyPermissions = "encrypt"
+	// KeyPermissionsExport ...
+	KeyPermissionsExport KeyPermissions = "export"
 	// KeyPermissionsGet ...
 	KeyPermissionsGet KeyPermissions = "get"
 	// KeyPermissionsImport ...
@@ -136,7 +138,7 @@ const (
 
 // PossibleKeyPermissionsValues returns an array of possible values for the KeyPermissions const type.
 func PossibleKeyPermissionsValues() []KeyPermissions {
-	return []KeyPermissions{KeyPermissionsAll, KeyPermissionsBackup, KeyPermissionsCreate, KeyPermissionsDecrypt, KeyPermissionsDelete, KeyPermissionsEncrypt, KeyPermissionsGet, KeyPermissionsImport, KeyPermissionsList, KeyPermissionsPurge, KeyPermissionsRecover, KeyPermissionsRestore, KeyPermissionsSign, KeyPermissionsUnwrapKey, KeyPermissionsUpdate, KeyPermissionsVerify, KeyPermissionsWrapKey}
+	return []KeyPermissions{KeyPermissionsAll, KeyPermissionsBackup, KeyPermissionsCreate, KeyPermissionsDecrypt, KeyPermissionsDelete, KeyPermissionsEncrypt, KeyPermissionsExport, KeyPermissionsGet, KeyPermissionsImport, KeyPermissionsList, KeyPermissionsPurge, KeyPermissionsRecover, KeyPermissionsRestore, KeyPermissionsSign, KeyPermissionsUnwrapKey, KeyPermissionsUpdate, KeyPermissionsVerify, KeyPermissionsWrapKey}
 }
 
 // ManagedHsmSkuName enumerates the values for managed hsm sku name.
