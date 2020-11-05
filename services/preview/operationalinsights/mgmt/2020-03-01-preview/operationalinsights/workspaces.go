@@ -141,7 +141,7 @@ func (client WorkspacesClient) CreateOrUpdateResponder(resp *http.Response) (res
 	return
 }
 
-// Delete deletes a workspace resource. To recover the workspace, create it again with the same name, in the same
+// Delete deletes a workspace resource. To recover the workspace, create once more with the same name, in the same
 // subscription, resource group and location. The name is kept for 14 days and cannot be used for another workspace. To
 // remove the workspace completely and release the name, use the force flag.
 // Parameters:
