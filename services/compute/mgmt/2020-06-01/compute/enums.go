@@ -313,6 +313,19 @@ func PossibleDiskCreateOptionTypesValues() []DiskCreateOptionTypes {
 	return []DiskCreateOptionTypes{DiskCreateOptionTypesAttach, DiskCreateOptionTypesEmpty, DiskCreateOptionTypesFromImage}
 }
 
+// DiskDetachOptionTypes enumerates the values for disk detach option types.
+type DiskDetachOptionTypes string
+
+const (
+	// ForceDetach ...
+	ForceDetach DiskDetachOptionTypes = "ForceDetach"
+)
+
+// PossibleDiskDetachOptionTypesValues returns an array of possible values for the DiskDetachOptionTypes const type.
+func PossibleDiskDetachOptionTypesValues() []DiskDetachOptionTypes {
+	return []DiskDetachOptionTypes{ForceDetach}
+}
+
 // DiskEncryptionSetIdentityType enumerates the values for disk encryption set identity type.
 type DiskEncryptionSetIdentityType string
 
@@ -390,6 +403,31 @@ const (
 // PossibleEncryptionTypeValues returns an array of possible values for the EncryptionType const type.
 func PossibleEncryptionTypeValues() []EncryptionType {
 	return []EncryptionType{EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}
+}
+
+// ExecutionState enumerates the values for execution state.
+type ExecutionState string
+
+const (
+	// ExecutionStateCanceled ...
+	ExecutionStateCanceled ExecutionState = "Canceled"
+	// ExecutionStateFailed ...
+	ExecutionStateFailed ExecutionState = "Failed"
+	// ExecutionStatePending ...
+	ExecutionStatePending ExecutionState = "Pending"
+	// ExecutionStateRunning ...
+	ExecutionStateRunning ExecutionState = "Running"
+	// ExecutionStateSucceeded ...
+	ExecutionStateSucceeded ExecutionState = "Succeeded"
+	// ExecutionStateTimedOut ...
+	ExecutionStateTimedOut ExecutionState = "TimedOut"
+	// ExecutionStateUnknown ...
+	ExecutionStateUnknown ExecutionState = "Unknown"
+)
+
+// PossibleExecutionStateValues returns an array of possible values for the ExecutionState const type.
+func PossibleExecutionStateValues() []ExecutionState {
+	return []ExecutionState{ExecutionStateCanceled, ExecutionStateFailed, ExecutionStatePending, ExecutionStateRunning, ExecutionStateSucceeded, ExecutionStateTimedOut, ExecutionStateUnknown}
 }
 
 // HostCaching enumerates the values for host caching.
