@@ -313,6 +313,19 @@ func PossibleDiskCreateOptionTypesValues() []DiskCreateOptionTypes {
 	return []DiskCreateOptionTypes{DiskCreateOptionTypesAttach, DiskCreateOptionTypesEmpty, DiskCreateOptionTypesFromImage}
 }
 
+// DiskDetachOptionTypes enumerates the values for disk detach option types.
+type DiskDetachOptionTypes string
+
+const (
+	// ForceDetach ...
+	ForceDetach DiskDetachOptionTypes = "ForceDetach"
+)
+
+// PossibleDiskDetachOptionTypesValues returns an array of possible values for the DiskDetachOptionTypes const type.
+func PossibleDiskDetachOptionTypesValues() []DiskDetachOptionTypes {
+	return []DiskDetachOptionTypes{ForceDetach}
+}
+
 // DiskEncryptionSetIdentityType enumerates the values for disk encryption set identity type.
 type DiskEncryptionSetIdentityType string
 
