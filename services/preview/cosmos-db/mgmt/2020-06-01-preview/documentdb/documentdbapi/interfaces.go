@@ -141,11 +141,15 @@ var _ PartitionKeyRangeIDRegionClientAPI = (*documentdb.PartitionKeyRangeIDRegio
 type SQLResourcesClientAPI interface {
 	CreateUpdateSQLContainer(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, createUpdateSQLContainerParameters documentdb.SQLContainerCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLContainerFuture, err error)
 	CreateUpdateSQLDatabase(ctx context.Context, resourceGroupName string, accountName string, databaseName string, createUpdateSQLDatabaseParameters documentdb.SQLDatabaseCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLDatabaseFuture, err error)
+	CreateUpdateSQLRoleAssignment(ctx context.Context, roleAssignmentID string, resourceGroupName string, accountName string, createUpdateSQLRoleAssignmentParameters documentdb.SQLRoleAssignmentCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLRoleAssignmentFuture, err error)
+	CreateUpdateSQLRoleDefinition(ctx context.Context, roleDefinitionID string, resourceGroupName string, accountName string, createUpdateSQLRoleDefinitionParameters documentdb.SQLRoleDefinitionCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLRoleDefinitionFuture, err error)
 	CreateUpdateSQLStoredProcedure(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, storedProcedureName string, createUpdateSQLStoredProcedureParameters documentdb.SQLStoredProcedureCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLStoredProcedureFuture, err error)
 	CreateUpdateSQLTrigger(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, triggerName string, createUpdateSQLTriggerParameters documentdb.SQLTriggerCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLTriggerFuture, err error)
 	CreateUpdateSQLUserDefinedFunction(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, userDefinedFunctionName string, createUpdateSQLUserDefinedFunctionParameters documentdb.SQLUserDefinedFunctionCreateUpdateParameters) (result documentdb.SQLResourcesCreateUpdateSQLUserDefinedFunctionFuture, err error)
 	DeleteSQLContainer(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLResourcesDeleteSQLContainerFuture, err error)
 	DeleteSQLDatabase(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.SQLResourcesDeleteSQLDatabaseFuture, err error)
+	DeleteSQLRoleAssignment(ctx context.Context, roleAssignmentID string, resourceGroupName string, accountName string) (result documentdb.SQLResourcesDeleteSQLRoleAssignmentFuture, err error)
+	DeleteSQLRoleDefinition(ctx context.Context, roleDefinitionID string, resourceGroupName string, accountName string) (result documentdb.SQLResourcesDeleteSQLRoleDefinitionFuture, err error)
 	DeleteSQLStoredProcedure(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, storedProcedureName string) (result documentdb.SQLResourcesDeleteSQLStoredProcedureFuture, err error)
 	DeleteSQLTrigger(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, triggerName string) (result documentdb.SQLResourcesDeleteSQLTriggerFuture, err error)
 	DeleteSQLUserDefinedFunction(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, userDefinedFunctionName string) (result documentdb.SQLResourcesDeleteSQLUserDefinedFunctionFuture, err error)
@@ -153,11 +157,15 @@ type SQLResourcesClientAPI interface {
 	GetSQLContainerThroughput(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.ThroughputSettingsGetResults, err error)
 	GetSQLDatabase(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.SQLDatabaseGetResults, err error)
 	GetSQLDatabaseThroughput(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.ThroughputSettingsGetResults, err error)
+	GetSQLRoleAssignment(ctx context.Context, roleAssignmentID string, resourceGroupName string, accountName string) (result documentdb.SQLRoleAssignmentGetResults, err error)
+	GetSQLRoleDefinition(ctx context.Context, roleDefinitionID string, resourceGroupName string, accountName string) (result documentdb.SQLRoleDefinitionGetResults, err error)
 	GetSQLStoredProcedure(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, storedProcedureName string) (result documentdb.SQLStoredProcedureGetResults, err error)
 	GetSQLTrigger(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, triggerName string) (result documentdb.SQLTriggerGetResults, err error)
 	GetSQLUserDefinedFunction(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string, userDefinedFunctionName string) (result documentdb.SQLUserDefinedFunctionGetResults, err error)
 	ListSQLContainers(ctx context.Context, resourceGroupName string, accountName string, databaseName string) (result documentdb.SQLContainerListResult, err error)
 	ListSQLDatabases(ctx context.Context, resourceGroupName string, accountName string) (result documentdb.SQLDatabaseListResult, err error)
+	ListSQLRoleAssignments(ctx context.Context, resourceGroupName string, accountName string) (result documentdb.SQLRoleAssignmentListResult, err error)
+	ListSQLRoleDefinitions(ctx context.Context, resourceGroupName string, accountName string) (result documentdb.SQLRoleDefinitionListResult, err error)
 	ListSQLStoredProcedures(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLStoredProcedureListResult, err error)
 	ListSQLTriggers(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLTriggerListResult, err error)
 	ListSQLUserDefinedFunctions(ctx context.Context, resourceGroupName string, accountName string, databaseName string, containerName string) (result documentdb.SQLUserDefinedFunctionListResult, err error)
@@ -241,6 +249,52 @@ type RestorableDatabaseAccountsClientAPI interface {
 }
 
 var _ RestorableDatabaseAccountsClientAPI = (*documentdb.RestorableDatabaseAccountsClient)(nil)
+
+// RestorableSQLDatabasesClientAPI contains the set of methods on the RestorableSQLDatabasesClient type.
+type RestorableSQLDatabasesClientAPI interface {
+	Get(ctx context.Context, location string, instanceID string, restorableSQLDatabaseID string) (result documentdb.RestorableSQLDatabaseGetResult, err error)
+	List(ctx context.Context, location string, instanceID string) (result documentdb.RestorableSQLDatabasesListResult, err error)
+}
+
+var _ RestorableSQLDatabasesClientAPI = (*documentdb.RestorableSQLDatabasesClient)(nil)
+
+// RestorableSQLContainersClientAPI contains the set of methods on the RestorableSQLContainersClient type.
+type RestorableSQLContainersClientAPI interface {
+	Get(ctx context.Context, location string, instanceID string, restorableSQLContainerID string) (result documentdb.RestorableSQLContainerGetResult, err error)
+	List(ctx context.Context, location string, instanceID string, restorableSQLDatabaseRid string) (result documentdb.RestorableSQLContainersListResult, err error)
+}
+
+var _ RestorableSQLContainersClientAPI = (*documentdb.RestorableSQLContainersClient)(nil)
+
+// RestorableSQLResourcesClientAPI contains the set of methods on the RestorableSQLResourcesClient type.
+type RestorableSQLResourcesClientAPI interface {
+	List(ctx context.Context, location string, instanceID string, restoreLocation string, restoreTimestampInUtc string) (result documentdb.RestorableSQLResourcesListResult, err error)
+}
+
+var _ RestorableSQLResourcesClientAPI = (*documentdb.RestorableSQLResourcesClient)(nil)
+
+// RestorableMongodbDatabasesClientAPI contains the set of methods on the RestorableMongodbDatabasesClient type.
+type RestorableMongodbDatabasesClientAPI interface {
+	Get(ctx context.Context, location string, instanceID string, restorableMongodbDatabaseID string) (result documentdb.RestorableMongodbDatabaseGetResult, err error)
+	List(ctx context.Context, location string, instanceID string) (result documentdb.RestorableMongodbDatabasesListResult, err error)
+}
+
+var _ RestorableMongodbDatabasesClientAPI = (*documentdb.RestorableMongodbDatabasesClient)(nil)
+
+// RestorableMongodbCollectionsClientAPI contains the set of methods on the RestorableMongodbCollectionsClient type.
+type RestorableMongodbCollectionsClientAPI interface {
+	Get(ctx context.Context, location string, instanceID string, restorableMongodbCollectionID string) (result documentdb.RestorableMongodbCollectionGetResult, err error)
+	List(ctx context.Context, location string, instanceID string, restorableMongodbDatabaseRid string) (result documentdb.RestorableMongodbCollectionsListResult, err error)
+}
+
+var _ RestorableMongodbCollectionsClientAPI = (*documentdb.RestorableMongodbCollectionsClient)(nil)
+
+// RestorableMongodbResourcesClientAPI contains the set of methods on the RestorableMongodbResourcesClient type.
+type RestorableMongodbResourcesClientAPI interface {
+	List(ctx context.Context, location string, instanceID string, restoreLocation string, restoreTimestampInUtc string) (result documentdb.RestorableMongodbResourcesListResult, err error)
+}
+
+var _ RestorableMongodbResourcesClientAPI = (*documentdb.RestorableMongodbResourcesClient)(nil)
 
 // NotebookWorkspacesClientAPI contains the set of methods on the NotebookWorkspacesClient type.
 type NotebookWorkspacesClientAPI interface {
