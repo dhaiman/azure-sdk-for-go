@@ -22,6 +22,7 @@ import (
 	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/date"
 	"net/http"
 )
 
@@ -35,13 +36,13 @@ type Account struct {
 	Identity *AccountIdentity `json:"identity,omitempty"`
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
-	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
-	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
+	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -53,6 +54,9 @@ func (a Account) MarshalJSON() ([]byte, error) {
 	}
 	if a.Tags != nil {
 		objectMap["tags"] = a.Tags
+	}
+	if a.Location != nil {
+		objectMap["location"] = a.Location
 	}
 	return json.Marshal(objectMap)
 }
@@ -83,19 +87,49 @@ type AccountList struct {
 	Value *[]Account `json:"value,omitempty"`
 }
 
+// AccountUpdate definition of the Automanage account.
+type AccountUpdate struct {
+	// Identity - The identity of the Automanage account.
+	Identity *AccountIdentity `json:"identity,omitempty"`
+	// Tags - The tags of the resource.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for AccountUpdate.
+func (au AccountUpdate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if au.Identity != nil {
+		objectMap["identity"] = au.Identity
+	}
+	if au.Tags != nil {
+		objectMap["tags"] = au.Tags
+	}
+	return json.Marshal(objectMap)
+}
+
+// AzureEntityResource the resource model definition for an Azure Resource Manager resource with an etag.
+type AzureEntityResource struct {
+	// Etag - READ-ONLY; Resource Etag.
+	Etag *string `json:"etag,omitempty"`
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string `json:"type,omitempty"`
+}
+
 // ConfigurationProfileAssignment configuration profile assignment is an association between a VM and
 // automanage profile configuration.
 type ConfigurationProfileAssignment struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the configuration profile assignment.
 	Properties *ConfigurationProfileAssignmentProperties `json:"properties,omitempty"`
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
+	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
-	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -108,10 +142,60 @@ func (cpa ConfigurationProfileAssignment) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ConfigurationProfileAssignmentCompliance the compliance status for the configuration profile assignment.
+// ConfigurationProfileAssignmentCompliance data related to assignment profile compliance.
 type ConfigurationProfileAssignmentCompliance struct {
-	// UpdateStatus - READ-ONLY; The state of compliance, which only appears in the response. Possible values include: 'UpdateStatusSucceeded', 'UpdateStatusFailed', 'UpdateStatusCreated'
-	UpdateStatus UpdateStatus `json:"updateStatus,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	// Status - The status of the assignment profile compliance. Possible values include: 'Succeeded', 'Failed', 'Created'
+	Status ComplianceStatus `json:"status,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for ConfigurationProfileAssignmentCompliance.
+func (cpac ConfigurationProfileAssignmentCompliance) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cpac.Status != "" {
+		objectMap["status"] = cpac.Status
+	}
+	for k, v := range cpac.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for ConfigurationProfileAssignmentCompliance struct.
+func (cpac *ConfigurationProfileAssignmentCompliance) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if cpac.AdditionalProperties == nil {
+					cpac.AdditionalProperties = make(map[string]interface{})
+				}
+				cpac.AdditionalProperties[k] = additionalProperties
+			}
+		case "status":
+			if v != nil {
+				var status ComplianceStatus
+				err = json.Unmarshal(*v, &status)
+				if err != nil {
+					return err
+				}
+				cpac.Status = status
+			}
+		}
+	}
+
+	return nil
 }
 
 // ConfigurationProfileAssignmentList the response of the list configuration profile assignment operation.
@@ -123,7 +207,7 @@ type ConfigurationProfileAssignmentList struct {
 
 // ConfigurationProfileAssignmentProperties automanage configuration profile assignment properties.
 type ConfigurationProfileAssignmentProperties struct {
-	// ConfigurationProfile - A value indicating configuration profile. Possible values include: 'AzureBestPracticesTestDev', 'AzureBestPracticesProd'
+	// ConfigurationProfile - A value indicating configuration profile. Possible values include: 'AzurevirtualmachinebestpracticesDevTest', 'AzurevirtualmachinebestpracticesProduction'
 	ConfigurationProfile ConfigurationProfile `json:"configurationProfile,omitempty"`
 	// TargetID - The target VM resource URI
 	TargetID *string `json:"targetId,omitempty"`
@@ -131,8 +215,8 @@ type ConfigurationProfileAssignmentProperties struct {
 	AccountID *string `json:"accountId,omitempty"`
 	// ConfigurationProfilePreferenceID - The configuration profile custom preferences ARM resource URI
 	ConfigurationProfilePreferenceID *string `json:"configurationProfilePreferenceId,omitempty"`
-	// ProvisioningStatus - READ-ONLY; The state of onboarding, which only appears in the response. Possible values include: 'Succeeded', 'Failed', 'Created'
-	ProvisioningStatus ProvisioningStatus `json:"provisioningStatus,omitempty"`
+	// ProvisioningState - READ-ONLY; The state of onboarding, which only appears in the response. Possible values include: 'ProvisioningStateSucceeded', 'ProvisioningStateFailed', 'ProvisioningStateCreated'
+	ProvisioningState ProvisioningState `json:"provisioningState,omitempty"`
 	// Compliance - The configuration setting for the configuration profile.
 	Compliance *ConfigurationProfileAssignmentCompliance `json:"compliance,omitempty"`
 }
@@ -158,8 +242,8 @@ func (cpap ConfigurationProfileAssignmentProperties) MarshalJSON() ([]byte, erro
 	return json.Marshal(objectMap)
 }
 
-// ConfigurationProfileAssignmentsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// ConfigurationProfileAssignmentsCreateOrUpdateFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type ConfigurationProfileAssignmentsCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -192,15 +276,17 @@ type ConfigurationProfilePreference struct {
 	autorest.Response `json:"-"`
 	// Properties - Properties of the configuration profile preference.
 	Properties *ConfigurationProfilePreferenceProperties `json:"properties,omitempty"`
+	// SystemData - Metadata pertaining to creation and last modification of the resource.
+	SystemData *SystemData `json:"systemData,omitempty"`
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
-	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
-	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
+	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -210,14 +296,20 @@ func (cpp ConfigurationProfilePreference) MarshalJSON() ([]byte, error) {
 	if cpp.Properties != nil {
 		objectMap["properties"] = cpp.Properties
 	}
+	if cpp.SystemData != nil {
+		objectMap["systemData"] = cpp.SystemData
+	}
 	if cpp.Tags != nil {
 		objectMap["tags"] = cpp.Tags
+	}
+	if cpp.Location != nil {
+		objectMap["location"] = cpp.Location
 	}
 	return json.Marshal(objectMap)
 }
 
-// ConfigurationProfilePreferenceAntiMalware automanage configuration profile Antimalware preferences.
-type ConfigurationProfilePreferenceAntiMalware struct {
+// ConfigurationProfilePreferenceAntimalware automanage configuration profile Antimalware preferences.
+type ConfigurationProfilePreferenceAntimalware struct {
 	// EnableRealTimeProtection - Enables or disables Real Time Protection. Possible values include: 'True', 'False'
 	EnableRealTimeProtection EnableRealTimeProtection `json:"enableRealTimeProtection,omitempty"`
 	// Exclusions - Extensions, Paths and Processes that must be excluded from scan
@@ -243,8 +335,28 @@ type ConfigurationProfilePreferenceList struct {
 type ConfigurationProfilePreferenceProperties struct {
 	// VMBackup - The custom preferences for Azure VM Backup.
 	VMBackup *ConfigurationProfilePreferenceVMBackup `json:"vmBackup,omitempty"`
-	// AntiMalware - The custom preferences for Azure Antimalware.
-	AntiMalware *ConfigurationProfilePreferenceAntiMalware `json:"antiMalware,omitempty"`
+	// Antimalware - The custom preferences for Azure Antimalware.
+	Antimalware *ConfigurationProfilePreferenceAntimalware `json:"antimalware,omitempty"`
+}
+
+// ConfigurationProfilePreferenceUpdate definition of the configuration profile preference.
+type ConfigurationProfilePreferenceUpdate struct {
+	// Properties - Properties of the configuration profile preference.
+	Properties *ConfigurationProfilePreferenceProperties `json:"properties,omitempty"`
+	// Tags - The tags of the resource.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for ConfigurationProfilePreferenceUpdate.
+func (cppu ConfigurationProfilePreferenceUpdate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cppu.Properties != nil {
+		objectMap["properties"] = cppu.Properties
+	}
+	if cppu.Tags != nil {
+		objectMap["tags"] = cppu.Tags
+	}
+	return json.Marshal(objectMap)
 }
 
 // ConfigurationProfilePreferenceVMBackup automanage configuration profile VM Backup preferences.
@@ -259,163 +371,128 @@ type ConfigurationProfilePreferenceVMBackup struct {
 	SchedulePolicy *string `json:"schedulePolicy,omitempty"`
 }
 
-// ErrorResponse ARM error response body.
-type ErrorResponse struct {
-	// Error - Details about the error.
-	Error *ErrorResponseBody `json:"error,omitempty"`
+// ErrorAdditionalInfo the resource management error additional info.
+type ErrorAdditionalInfo struct {
+	// Type - READ-ONLY; The additional info type.
+	Type *string `json:"type,omitempty"`
+	// Info - READ-ONLY; The additional info.
+	Info interface{} `json:"info,omitempty"`
 }
 
-// ErrorResponseBody an error response from the Automanage service.
-type ErrorResponseBody struct {
-	// Code - An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+// ErrorDetail the error detail.
+type ErrorDetail struct {
+	// Code - READ-ONLY; The error code.
 	Code *string `json:"code,omitempty"`
-	// Message - A message describing the error, intended to be suitable for display in a user interface.
+	// Message - READ-ONLY; The error message.
 	Message *string `json:"message,omitempty"`
-	// Target - The target of the particular error. For example, the name of the property in error.
+	// Target - READ-ONLY; The error target.
 	Target *string `json:"target,omitempty"`
+	// Details - READ-ONLY; The error details.
+	Details *[]ErrorDetail `json:"details,omitempty"`
+	// AdditionalInfo - READ-ONLY; The error additional info.
+	AdditionalInfo *[]ErrorAdditionalInfo `json:"additionalInfo,omitempty"`
 }
 
-// Operation automanage REST API operation
+// ErrorResponse common error response for all Azure Resource Manager APIs to return error details for
+// failed operations. (This also follows the OData error response format.).
+type ErrorResponse struct {
+	// Error - The error object.
+	Error *ErrorDetail `json:"error,omitempty"`
+}
+
+// Operation details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
-	// Name - Operation name: For ex. providers/Microsoft.Automanage/configurationProfileAssignments/write or read
+	// Name - READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string `json:"name,omitempty"`
-	// IsDataAction - Indicates whether the operation is a data action
-	IsDataAction *string `json:"isDataAction,omitempty"`
-	// Display - Provider, Resource, Operation and description values.
+	// IsDataAction - READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for ARM/control-plane operations.
+	IsDataAction *bool `json:"isDataAction,omitempty"`
+	// Display - Localized display information for this particular operation.
 	Display *OperationDisplay `json:"display,omitempty"`
-	// OperationProperties - Provider, Resource, Operation and description values.
-	*OperationProperties `json:"properties,omitempty"`
+	// Origin - READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". Possible values include: 'OriginUser', 'OriginSystem', 'OriginUsersystem'
+	Origin Origin `json:"origin,omitempty"`
+	// ActionType - READ-ONLY; Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. Possible values include: 'Internal'
+	ActionType ActionType `json:"actionType,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Operation.
 func (o Operation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if o.Name != nil {
-		objectMap["name"] = o.Name
-	}
-	if o.IsDataAction != nil {
-		objectMap["isDataAction"] = o.IsDataAction
-	}
 	if o.Display != nil {
 		objectMap["display"] = o.Display
-	}
-	if o.OperationProperties != nil {
-		objectMap["properties"] = o.OperationProperties
 	}
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON is the custom unmarshaler for Operation struct.
-func (o *Operation) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "name":
-			if v != nil {
-				var name string
-				err = json.Unmarshal(*v, &name)
-				if err != nil {
-					return err
-				}
-				o.Name = &name
-			}
-		case "isDataAction":
-			if v != nil {
-				var isDataAction string
-				err = json.Unmarshal(*v, &isDataAction)
-				if err != nil {
-					return err
-				}
-				o.IsDataAction = &isDataAction
-			}
-		case "display":
-			if v != nil {
-				var display OperationDisplay
-				err = json.Unmarshal(*v, &display)
-				if err != nil {
-					return err
-				}
-				o.Display = &display
-			}
-		case "properties":
-			if v != nil {
-				var operationProperties OperationProperties
-				err = json.Unmarshal(*v, &operationProperties)
-				if err != nil {
-					return err
-				}
-				o.OperationProperties = &operationProperties
-			}
-		}
-	}
-
-	return nil
-}
-
-// OperationDisplay provider, Resource, Operation and description values.
+// OperationDisplay localized display information for this particular operation.
 type OperationDisplay struct {
-	// Provider - Service provider: Microsoft.Automanage
+	// Provider - READ-ONLY; The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
 	Provider *string `json:"provider,omitempty"`
-	// Resource - Resource on which the operation is performed:  For ex.
+	// Resource - READ-ONLY; The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
 	Resource *string `json:"resource,omitempty"`
-	// Operation - Operation type: Read, write, delete, etc.
+	// Operation - READ-ONLY; The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
 	Operation *string `json:"operation,omitempty"`
-	// Description - Description about operation.
+	// Description - READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string `json:"description,omitempty"`
 }
 
-// OperationList the response model for the list of Automanage operations
-type OperationList struct {
+// OperationListResult a list of REST API operations supported by an Azure Resource Provider. It contains
+// an URL link to get the next set of results.
+type OperationListResult struct {
 	autorest.Response `json:"-"`
-	// Value - List of Automanage operations supported by the Automanage resource provider.
+	// Value - READ-ONLY; List of operations supported by the resource provider
 	Value *[]Operation `json:"value,omitempty"`
+	// NextLink - READ-ONLY; URL to get the next set of operation list results (if there are any).
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// OperationProperties provider, Resource, Operation and description values.
-type OperationProperties struct {
-	// StatusCode - Service provider: Microsoft.Automanage
-	StatusCode *string `json:"statusCode,omitempty"`
-}
-
-// ProxyResource ARM proxy resource.
+// ProxyResource the resource model definition for an Azure Resource Manager proxy resource. It will have
+// everything other than required location and tags
 type ProxyResource struct {
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
+	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
-	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
-// Resource the core properties of ARM resources
+// Resource common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
+	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
-	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
-// TrackedResource the resource model definition for a ARM tracked top level resource
+// SystemData metadata pertaining to creation and last modification of the resource.
+type SystemData struct {
+	// CreatedBy - The identity that created the resource.
+	CreatedBy *string `json:"createdBy,omitempty"`
+	// CreatedByType - The type of identity that created the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	CreatedByType CreatedByType `json:"createdByType,omitempty"`
+	// CreatedAt - The timestamp of resource creation (UTC).
+	CreatedAt *date.Time `json:"createdAt,omitempty"`
+	// LastModifiedBy - The identity that last modified the resource.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
+	// LastModifiedByType - The type of identity that last modified the resource. Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+	LastModifiedByType CreatedByType `json:"lastModifiedByType,omitempty"`
+	// LastModifiedAt - The type of identity that last modified the resource.
+	LastModifiedAt *date.Time `json:"lastModifiedAt,omitempty"`
+}
+
+// TrackedResource the resource model definition for an Azure Resource Manager tracked top level resource
 type TrackedResource struct {
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
-	// ID - READ-ONLY; ARM resource id of the Automanage assignment.
-	ID *string `json:"id,omitempty"`
-	// Name - READ-ONLY; Name of the Automanage assignment.
-	Name *string `json:"name,omitempty"`
-	// Location - READ-ONLY; Region where the VM is located.
+	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// Type - READ-ONLY; The type of the resource.
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty"`
+	// Name - READ-ONLY; The name of the resource
+	Name *string `json:"name,omitempty"`
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -424,6 +501,24 @@ func (tr TrackedResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if tr.Tags != nil {
 		objectMap["tags"] = tr.Tags
+	}
+	if tr.Location != nil {
+		objectMap["location"] = tr.Location
+	}
+	return json.Marshal(objectMap)
+}
+
+// UpdateResource represents an update resource
+type UpdateResource struct {
+	// Tags - The tags of the resource.
+	Tags map[string]*string `json:"tags"`
+}
+
+// MarshalJSON is the custom marshaler for UpdateResource.
+func (ur UpdateResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if ur.Tags != nil {
+		objectMap["tags"] = ur.Tags
 	}
 	return json.Marshal(objectMap)
 }
