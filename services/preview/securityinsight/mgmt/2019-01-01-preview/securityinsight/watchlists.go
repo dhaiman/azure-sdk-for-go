@@ -26,225 +26,36 @@ import (
 	"net/http"
 )
 
-// EntitiesClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
-type EntitiesClient struct {
+// WatchlistsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
+type WatchlistsClient struct {
 	BaseClient
 }
 
-// NewEntitiesClient creates an instance of the EntitiesClient client.
-func NewEntitiesClient(subscriptionID string) EntitiesClient {
-	return NewEntitiesClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewWatchlistsClient creates an instance of the WatchlistsClient client.
+func NewWatchlistsClient(subscriptionID string) WatchlistsClient {
+	return NewWatchlistsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewEntitiesClientWithBaseURI creates an instance of the EntitiesClient client using a custom endpoint.  Use this
+// NewWatchlistsClientWithBaseURI creates an instance of the WatchlistsClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewEntitiesClientWithBaseURI(baseURI string, subscriptionID string) EntitiesClient {
-	return EntitiesClient{NewWithBaseURI(baseURI, subscriptionID)}
+func NewWatchlistsClientWithBaseURI(baseURI string, subscriptionID string) WatchlistsClient {
+	return WatchlistsClient{NewWithBaseURI(baseURI, subscriptionID)}
 }
 
-// Expand expands an entity.
+// Create creates a watchlist and its watchlist items (bulk creation, e.g. through text/csv content type). To create a
+// Watchlist and its Items, we should call this endpoint twice : the first call will create am empty Watchlist, and the
+// second one will create its Items.
 // Parameters:
 // resourceGroupName - the name of the resource group within the user's subscription. The name is case
 // insensitive.
 // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
 // Microsoft.OperationalInsights.
 // workspaceName - the name of the workspace.
-// entityID - entity ID
-// parameters - the parameters required to execute an expand operation on the given entity.
-func (client EntitiesClient) Expand(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityExpandParameters) (result EntityExpandResponse, err error) {
+// watchlistAlias - watchlist Alias
+// watchlist - the watchlist
+func (client WatchlistsClient) Create(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string, watchlist Watchlist) (result Watchlist, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EntitiesClient.Expand")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: client.SubscriptionID,
-			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}},
-		{TargetValue: resourceGroupName,
-			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
-				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil}}},
-		{TargetValue: workspaceName,
-			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
-				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("securityinsight.EntitiesClient", "Expand", err.Error())
-	}
-
-	req, err := client.ExpandPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityID, parameters)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Expand", nil, "Failure preparing request")
-		return
-	}
-
-	resp, err := client.ExpandSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Expand", resp, "Failure sending request")
-		return
-	}
-
-	result, err = client.ExpandResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Expand", resp, "Failure responding to request")
-	}
-
-	return
-}
-
-// ExpandPreparer prepares the Expand request.
-func (client EntitiesClient) ExpandPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityExpandParameters) (*http.Request, error) {
-	pathParameters := map[string]interface{}{
-		"entityId":                            autorest.Encode("path", entityID),
-		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
-		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
-		"subscriptionId":                      autorest.Encode("path", client.SubscriptionID),
-		"workspaceName":                       autorest.Encode("path", workspaceName),
-	}
-
-	const APIVersion = "2019-01-01-preview"
-	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
-	}
-
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPost(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/expand", pathParameters),
-		autorest.WithJSON(parameters),
-		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
-
-// ExpandSender sends the Expand request. The method will close the
-// http.Response Body if it receives an error.
-func (client EntitiesClient) ExpandSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
-}
-
-// ExpandResponder handles the response to the Expand request. The method always
-// closes the http.Response Body.
-func (client EntitiesClient) ExpandResponder(resp *http.Response) (result EntityExpandResponse, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
-
-// Get gets an entity.
-// Parameters:
-// resourceGroupName - the name of the resource group within the user's subscription. The name is case
-// insensitive.
-// operationalInsightsResourceProvider - the namespace of workspaces resource provider-
-// Microsoft.OperationalInsights.
-// workspaceName - the name of the workspace.
-// entityID - entity ID
-func (client EntitiesClient) Get(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string) (result EntityModel, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EntitiesClient.Get")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: client.SubscriptionID,
-			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}},
-		{TargetValue: resourceGroupName,
-			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
-				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
-				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil}}},
-		{TargetValue: workspaceName,
-			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
-				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("securityinsight.EntitiesClient", "Get", err.Error())
-	}
-
-	req, err := client.GetPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityID)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Get", nil, "Failure preparing request")
-		return
-	}
-
-	resp, err := client.GetSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Get", resp, "Failure sending request")
-		return
-	}
-
-	result, err = client.GetResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "Get", resp, "Failure responding to request")
-	}
-
-	return
-}
-
-// GetPreparer prepares the Get request.
-func (client EntitiesClient) GetPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string) (*http.Request, error) {
-	pathParameters := map[string]interface{}{
-		"entityId":                            autorest.Encode("path", entityID),
-		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
-		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
-		"subscriptionId":                      autorest.Encode("path", client.SubscriptionID),
-		"workspaceName":                       autorest.Encode("path", workspaceName),
-	}
-
-	const APIVersion = "2019-01-01-preview"
-	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
-	}
-
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}", pathParameters),
-		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
-
-// GetSender sends the Get request. The method will close the
-// http.Response Body if it receives an error.
-func (client EntitiesClient) GetSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
-}
-
-// GetResponder handles the response to the Get request. The method always
-// closes the http.Response Body.
-func (client EntitiesClient) GetResponder(resp *http.Response) (result EntityModel, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
-
-// GetTimeline timeline for an entity.
-// Parameters:
-// resourceGroupName - the name of the resource group within the user's subscription. The name is case
-// insensitive.
-// operationalInsightsResourceProvider - the namespace of workspaces resource provider-
-// Microsoft.OperationalInsights.
-// workspaceName - the name of the workspace.
-// entityID - entity ID
-// parameters - the parameters required to execute an timeline operation on the given entity.
-func (client EntitiesClient) GetTimeline(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityTimelineParameters) (result EntityTimelineResponse, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EntitiesClient.GetTimeline")
+		ctx = tracing.StartSpan(ctx, fqdn+"/WatchlistsClient.Create")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -263,40 +74,42 @@ func (client EntitiesClient) GetTimeline(ctx context.Context, resourceGroupName 
 		{TargetValue: workspaceName,
 			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}},
-		{TargetValue: parameters,
-			Constraints: []validation.Constraint{{Target: "parameters.StartTime", Name: validation.Null, Rule: true, Chain: nil},
-				{Target: "parameters.EndTime", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("securityinsight.EntitiesClient", "GetTimeline", err.Error())
+		{TargetValue: watchlist,
+			Constraints: []validation.Constraint{{Target: "watchlist.WatchlistProperties", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "watchlist.WatchlistProperties.DisplayName", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "watchlist.WatchlistProperties.Provider", Name: validation.Null, Rule: true, Chain: nil},
+				}}}}}); err != nil {
+		return result, validation.NewError("securityinsight.WatchlistsClient", "Create", err.Error())
 	}
 
-	req, err := client.GetTimelinePreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityID, parameters)
+	req, err := client.CreatePreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, watchlistAlias, watchlist)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "GetTimeline", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Create", nil, "Failure preparing request")
 		return
 	}
 
-	resp, err := client.GetTimelineSender(req)
+	resp, err := client.CreateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "GetTimeline", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Create", resp, "Failure sending request")
 		return
 	}
 
-	result, err = client.GetTimelineResponder(resp)
+	result, err = client.CreateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "GetTimeline", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Create", resp, "Failure responding to request")
 	}
 
 	return
 }
 
-// GetTimelinePreparer prepares the GetTimeline request.
-func (client EntitiesClient) GetTimelinePreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityTimelineParameters) (*http.Request, error) {
+// CreatePreparer prepares the Create request.
+func (client WatchlistsClient) CreatePreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string, watchlist Watchlist) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"entityId":                            autorest.Encode("path", entityID),
 		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
 		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
 		"subscriptionId":                      autorest.Encode("path", client.SubscriptionID),
+		"watchlistAlias":                      autorest.Encode("path", watchlistAlias),
 		"workspaceName":                       autorest.Encode("path", workspaceName),
 	}
 
@@ -307,46 +120,47 @@ func (client EntitiesClient) GetTimelinePreparer(ctx context.Context, resourceGr
 
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPost(),
+		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/getTimeline", pathParameters),
-		autorest.WithJSON(parameters),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}", pathParameters),
+		autorest.WithJSON(watchlist),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
-// GetTimelineSender sends the GetTimeline request. The method will close the
+// CreateSender sends the Create request. The method will close the
 // http.Response Body if it receives an error.
-func (client EntitiesClient) GetTimelineSender(req *http.Request) (*http.Response, error) {
+func (client WatchlistsClient) CreateSender(req *http.Request) (*http.Response, error) {
 	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
-// GetTimelineResponder handles the response to the GetTimeline request. The method always
+// CreateResponder handles the response to the Create request. The method always
 // closes the http.Response Body.
-func (client EntitiesClient) GetTimelineResponder(resp *http.Response) (result EntityTimelineResponse, err error) {
+func (client WatchlistsClient) CreateResponder(resp *http.Response) (result Watchlist, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
 }
 
-// List gets all entities.
+// Delete delete a watchlist.
 // Parameters:
 // resourceGroupName - the name of the resource group within the user's subscription. The name is case
 // insensitive.
 // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
 // Microsoft.OperationalInsights.
 // workspaceName - the name of the workspace.
-func (client EntitiesClient) List(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (result EntityListPage, err error) {
+// watchlistAlias - watchlist Alias
+func (client WatchlistsClient) Delete(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EntitiesClient.List")
+		ctx = tracing.StartSpan(ctx, fqdn+"/WatchlistsClient.Delete")
 		defer func() {
 			sc := -1
-			if result.el.Response.Response != nil {
-				sc = result.el.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -361,28 +175,214 @@ func (client EntitiesClient) List(ctx context.Context, resourceGroupName string,
 		{TargetValue: workspaceName,
 			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
 				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("securityinsight.EntitiesClient", "List", err.Error())
+		return result, validation.NewError("securityinsight.WatchlistsClient", "Delete", err.Error())
+	}
+
+	req, err := client.DeletePreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, watchlistAlias)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Delete", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.DeleteSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Delete", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.DeleteResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Delete", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// DeletePreparer prepares the Delete request.
+func (client WatchlistsClient) DeletePreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
+		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
+		"subscriptionId":                      autorest.Encode("path", client.SubscriptionID),
+		"watchlistAlias":                      autorest.Encode("path", watchlistAlias),
+		"workspaceName":                       autorest.Encode("path", workspaceName),
+	}
+
+	const APIVersion = "2019-01-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsDelete(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// DeleteSender sends the Delete request. The method will close the
+// http.Response Body if it receives an error.
+func (client WatchlistsClient) DeleteSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// DeleteResponder handles the response to the Delete request. The method always
+// closes the http.Response Body.
+func (client WatchlistsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// Get gets a watchlist, without its watchlist items.
+// Parameters:
+// resourceGroupName - the name of the resource group within the user's subscription. The name is case
+// insensitive.
+// operationalInsightsResourceProvider - the namespace of workspaces resource provider-
+// Microsoft.OperationalInsights.
+// workspaceName - the name of the workspace.
+// watchlistAlias - watchlist Alias
+func (client WatchlistsClient) Get(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string) (result Watchlist, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WatchlistsClient.Get")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}},
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil}}},
+		{TargetValue: workspaceName,
+			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("securityinsight.WatchlistsClient", "Get", err.Error())
+	}
+
+	req, err := client.GetPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, watchlistAlias)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Get", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Get", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "Get", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetPreparer prepares the Get request.
+func (client WatchlistsClient) GetPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, watchlistAlias string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
+		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
+		"subscriptionId":                      autorest.Encode("path", client.SubscriptionID),
+		"watchlistAlias":                      autorest.Encode("path", watchlistAlias),
+		"workspaceName":                       autorest.Encode("path", workspaceName),
+	}
+
+	const APIVersion = "2019-01-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetSender sends the Get request. The method will close the
+// http.Response Body if it receives an error.
+func (client WatchlistsClient) GetSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetResponder handles the response to the Get request. The method always
+// closes the http.Response Body.
+func (client WatchlistsClient) GetResponder(resp *http.Response) (result Watchlist, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// List gets all watchlists, without watchlist items.
+// Parameters:
+// resourceGroupName - the name of the resource group within the user's subscription. The name is case
+// insensitive.
+// operationalInsightsResourceProvider - the namespace of workspaces resource provider-
+// Microsoft.OperationalInsights.
+// workspaceName - the name of the workspace.
+func (client WatchlistsClient) List(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (result WatchlistListPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/WatchlistsClient.List")
+		defer func() {
+			sc := -1
+			if result.wl.Response.Response != nil {
+				sc = result.wl.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil}}},
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil}}},
+		{TargetValue: workspaceName,
+			Constraints: []validation.Constraint{{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil},
+				{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("securityinsight.WatchlistsClient", "List", err.Error())
 	}
 
 	result.fn = client.listNextResults
 	req, err := client.ListPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "List", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "List", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.ListSender(req)
 	if err != nil {
-		result.el.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "List", resp, "Failure sending request")
+		result.wl.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "List", resp, "Failure sending request")
 		return
 	}
 
-	result.el, err = client.ListResponder(resp)
+	result.wl, err = client.ListResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "List", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "List", resp, "Failure responding to request")
 	}
-	if result.el.hasNextLink() && result.el.IsEmpty() {
+	if result.wl.hasNextLink() && result.wl.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -390,7 +390,7 @@ func (client EntitiesClient) List(ctx context.Context, resourceGroupName string,
 }
 
 // ListPreparer prepares the List request.
-func (client EntitiesClient) ListPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (*http.Request, error) {
+func (client WatchlistsClient) ListPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"operationalInsightsResourceProvider": autorest.Encode("path", operationalInsightsResourceProvider),
 		"resourceGroupName":                   autorest.Encode("path", resourceGroupName),
@@ -406,20 +406,20 @@ func (client EntitiesClient) ListPreparer(ctx context.Context, resourceGroupName
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities", pathParameters),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ListSender sends the List request. The method will close the
 // http.Response Body if it receives an error.
-func (client EntitiesClient) ListSender(req *http.Request) (*http.Response, error) {
+func (client WatchlistsClient) ListSender(req *http.Request) (*http.Response, error) {
 	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
-func (client EntitiesClient) ListResponder(resp *http.Response) (result EntityList, err error) {
+func (client WatchlistsClient) ListResponder(resp *http.Response) (result WatchlistList, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -430,10 +430,10 @@ func (client EntitiesClient) ListResponder(resp *http.Response) (result EntityLi
 }
 
 // listNextResults retrieves the next set of results, if any.
-func (client EntitiesClient) listNextResults(ctx context.Context, lastResults EntityList) (result EntityList, err error) {
-	req, err := lastResults.entityListPreparer(ctx)
+func (client WatchlistsClient) listNextResults(ctx context.Context, lastResults WatchlistList) (result WatchlistList, err error) {
+	req, err := lastResults.watchlistListPreparer(ctx)
 	if err != nil {
-		return result, autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "listNextResults", nil, "Failure preparing next results request")
+		return result, autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "listNextResults", nil, "Failure preparing next results request")
 	}
 	if req == nil {
 		return
@@ -441,19 +441,19 @@ func (client EntitiesClient) listNextResults(ctx context.Context, lastResults En
 	resp, err := client.ListSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		return result, autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "listNextResults", resp, "Failure sending next results request")
+		return result, autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "listNextResults", resp, "Failure sending next results request")
 	}
 	result, err = client.ListResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "securityinsight.EntitiesClient", "listNextResults", resp, "Failure responding to next results request")
+		err = autorest.NewErrorWithError(err, "securityinsight.WatchlistsClient", "listNextResults", resp, "Failure responding to next results request")
 	}
 	return
 }
 
 // ListComplete enumerates all values, automatically crossing page boundaries as required.
-func (client EntitiesClient) ListComplete(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (result EntityListIterator, err error) {
+func (client WatchlistsClient) ListComplete(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string) (result WatchlistListIterator, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/EntitiesClient.List")
+		ctx = tracing.StartSpan(ctx, fqdn+"/WatchlistsClient.List")
 		defer func() {
 			sc := -1
 			if result.Response().Response.Response != nil {
