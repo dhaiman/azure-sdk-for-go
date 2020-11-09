@@ -115,6 +115,7 @@ func (client CachesClient) CreateOrUpdatePreparer(ctx context.Context, resourceG
 	cache.ID = nil
 	cache.Name = nil
 	cache.Type = nil
+	cache.SystemData = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -145,7 +146,7 @@ func (client CachesClient) CreateOrUpdateSender(req *http.Request) (future Cache
 func (client CachesClient) CreateOrUpdateResponder(resp *http.Response) (result Cache, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -224,13 +225,12 @@ func (client CachesClient) DeleteSender(req *http.Request) (future CachesDeleteF
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
-func (client CachesClient) DeleteResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -307,13 +307,12 @@ func (client CachesClient) FlushSender(req *http.Request) (future CachesFlushFut
 
 // FlushResponder handles the response to the Flush request. The method always
 // closes the http.Response Body.
-func (client CachesClient) FlushResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) FlushResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -696,13 +695,12 @@ func (client CachesClient) StartSender(req *http.Request) (future CachesStartFut
 
 // StartResponder handles the response to the Start request. The method always
 // closes the http.Response Body.
-func (client CachesClient) StartResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) StartResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -778,13 +776,12 @@ func (client CachesClient) StopSender(req *http.Request) (future CachesStopFutur
 
 // StopResponder handles the response to the Stop request. The method always
 // closes the http.Response Body.
-func (client CachesClient) StopResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) StopResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
@@ -849,6 +846,7 @@ func (client CachesClient) UpdatePreparer(ctx context.Context, resourceGroupName
 	cache.ID = nil
 	cache.Name = nil
 	cache.Type = nil
+	cache.SystemData = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
@@ -952,12 +950,11 @@ func (client CachesClient) UpgradeFirmwareSender(req *http.Request) (future Cach
 
 // UpgradeFirmwareResponder handles the response to the UpgradeFirmware request. The method always
 // closes the http.Response Body.
-func (client CachesClient) UpgradeFirmwareResponder(resp *http.Response) (result SetObject, err error) {
+func (client CachesClient) UpgradeFirmwareResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
