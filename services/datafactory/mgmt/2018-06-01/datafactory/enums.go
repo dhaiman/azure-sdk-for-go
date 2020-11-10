@@ -775,23 +775,6 @@ func PossibleMongoDbAuthenticationTypeValues() []MongoDbAuthenticationType {
 	return []MongoDbAuthenticationType{MongoDbAuthenticationTypeAnonymous, MongoDbAuthenticationTypeBasic}
 }
 
-// NetezzaPartitionOption enumerates the values for netezza partition option.
-type NetezzaPartitionOption string
-
-const (
-	// NetezzaPartitionOptionDataSlice ...
-	NetezzaPartitionOptionDataSlice NetezzaPartitionOption = "DataSlice"
-	// NetezzaPartitionOptionDynamicRange ...
-	NetezzaPartitionOptionDynamicRange NetezzaPartitionOption = "DynamicRange"
-	// NetezzaPartitionOptionNone ...
-	NetezzaPartitionOptionNone NetezzaPartitionOption = "None"
-)
-
-// PossibleNetezzaPartitionOptionValues returns an array of possible values for the NetezzaPartitionOption const type.
-func PossibleNetezzaPartitionOptionValues() []NetezzaPartitionOption {
-	return []NetezzaPartitionOption{NetezzaPartitionOptionDataSlice, NetezzaPartitionOptionDynamicRange, NetezzaPartitionOptionNone}
-}
-
 // ODataAadServicePrincipalCredentialType enumerates the values for o data aad service principal credential
 // type.
 type ODataAadServicePrincipalCredentialType string
@@ -827,23 +810,6 @@ const (
 // PossibleODataAuthenticationTypeValues returns an array of possible values for the ODataAuthenticationType const type.
 func PossibleODataAuthenticationTypeValues() []ODataAuthenticationType {
 	return []ODataAuthenticationType{ODataAuthenticationTypeAadServicePrincipal, ODataAuthenticationTypeAnonymous, ODataAuthenticationTypeBasic, ODataAuthenticationTypeManagedServiceIdentity, ODataAuthenticationTypeWindows}
-}
-
-// OraclePartitionOption enumerates the values for oracle partition option.
-type OraclePartitionOption string
-
-const (
-	// OraclePartitionOptionDynamicRange ...
-	OraclePartitionOptionDynamicRange OraclePartitionOption = "DynamicRange"
-	// OraclePartitionOptionNone ...
-	OraclePartitionOptionNone OraclePartitionOption = "None"
-	// OraclePartitionOptionPhysicalPartitionsOfTable ...
-	OraclePartitionOptionPhysicalPartitionsOfTable OraclePartitionOption = "PhysicalPartitionsOfTable"
-)
-
-// PossibleOraclePartitionOptionValues returns an array of possible values for the OraclePartitionOption const type.
-func PossibleOraclePartitionOptionValues() []OraclePartitionOption {
-	return []OraclePartitionOption{OraclePartitionOptionDynamicRange, OraclePartitionOptionNone, OraclePartitionOptionPhysicalPartitionsOfTable}
 }
 
 // OrcCompressionCodec enumerates the values for orc compression codec.
@@ -1154,46 +1120,6 @@ func PossibleSapHanaAuthenticationTypeValues() []SapHanaAuthenticationType {
 	return []SapHanaAuthenticationType{SapHanaAuthenticationTypeBasic, SapHanaAuthenticationTypeWindows}
 }
 
-// SapHanaPartitionOption enumerates the values for sap hana partition option.
-type SapHanaPartitionOption string
-
-const (
-	// SapHanaPartitionOptionNone ...
-	SapHanaPartitionOptionNone SapHanaPartitionOption = "None"
-	// SapHanaPartitionOptionPhysicalPartitionsOfTable ...
-	SapHanaPartitionOptionPhysicalPartitionsOfTable SapHanaPartitionOption = "PhysicalPartitionsOfTable"
-	// SapHanaPartitionOptionSapHanaDynamicRange ...
-	SapHanaPartitionOptionSapHanaDynamicRange SapHanaPartitionOption = "SapHanaDynamicRange"
-)
-
-// PossibleSapHanaPartitionOptionValues returns an array of possible values for the SapHanaPartitionOption const type.
-func PossibleSapHanaPartitionOptionValues() []SapHanaPartitionOption {
-	return []SapHanaPartitionOption{SapHanaPartitionOptionNone, SapHanaPartitionOptionPhysicalPartitionsOfTable, SapHanaPartitionOptionSapHanaDynamicRange}
-}
-
-// SapTablePartitionOption enumerates the values for sap table partition option.
-type SapTablePartitionOption string
-
-const (
-	// SapTablePartitionOptionNone ...
-	SapTablePartitionOptionNone SapTablePartitionOption = "None"
-	// SapTablePartitionOptionPartitionOnCalendarDate ...
-	SapTablePartitionOptionPartitionOnCalendarDate SapTablePartitionOption = "PartitionOnCalendarDate"
-	// SapTablePartitionOptionPartitionOnCalendarMonth ...
-	SapTablePartitionOptionPartitionOnCalendarMonth SapTablePartitionOption = "PartitionOnCalendarMonth"
-	// SapTablePartitionOptionPartitionOnCalendarYear ...
-	SapTablePartitionOptionPartitionOnCalendarYear SapTablePartitionOption = "PartitionOnCalendarYear"
-	// SapTablePartitionOptionPartitionOnInt ...
-	SapTablePartitionOptionPartitionOnInt SapTablePartitionOption = "PartitionOnInt"
-	// SapTablePartitionOptionPartitionOnTime ...
-	SapTablePartitionOptionPartitionOnTime SapTablePartitionOption = "PartitionOnTime"
-)
-
-// PossibleSapTablePartitionOptionValues returns an array of possible values for the SapTablePartitionOption const type.
-func PossibleSapTablePartitionOptionValues() []SapTablePartitionOption {
-	return []SapTablePartitionOption{SapTablePartitionOptionNone, SapTablePartitionOptionPartitionOnCalendarDate, SapTablePartitionOptionPartitionOnCalendarMonth, SapTablePartitionOptionPartitionOnCalendarYear, SapTablePartitionOptionPartitionOnInt, SapTablePartitionOptionPartitionOnTime}
-}
-
 // SelfHostedIntegrationRuntimeNodeStatus enumerates the values for self hosted integration runtime node
 // status.
 type SelfHostedIntegrationRuntimeNodeStatus string
@@ -1303,23 +1229,6 @@ func PossibleSparkThriftTransportProtocolValues() []SparkThriftTransportProtocol
 	return []SparkThriftTransportProtocol{SparkThriftTransportProtocolBinary, SparkThriftTransportProtocolHTTP, SparkThriftTransportProtocolSASL}
 }
 
-// SQLPartitionOption enumerates the values for sql partition option.
-type SQLPartitionOption string
-
-const (
-	// SQLPartitionOptionDynamicRange ...
-	SQLPartitionOptionDynamicRange SQLPartitionOption = "DynamicRange"
-	// SQLPartitionOptionNone ...
-	SQLPartitionOptionNone SQLPartitionOption = "None"
-	// SQLPartitionOptionPhysicalPartitionsOfTable ...
-	SQLPartitionOptionPhysicalPartitionsOfTable SQLPartitionOption = "PhysicalPartitionsOfTable"
-)
-
-// PossibleSQLPartitionOptionValues returns an array of possible values for the SQLPartitionOption const type.
-func PossibleSQLPartitionOptionValues() []SQLPartitionOption {
-	return []SQLPartitionOption{SQLPartitionOptionDynamicRange, SQLPartitionOptionNone, SQLPartitionOptionPhysicalPartitionsOfTable}
-}
-
 // SsisObjectMetadataType enumerates the values for ssis object metadata type.
 type SsisObjectMetadataType string
 
@@ -1413,23 +1322,6 @@ func PossibleTeradataAuthenticationTypeValues() []TeradataAuthenticationType {
 	return []TeradataAuthenticationType{TeradataAuthenticationTypeBasic, TeradataAuthenticationTypeWindows}
 }
 
-// TeradataPartitionOption enumerates the values for teradata partition option.
-type TeradataPartitionOption string
-
-const (
-	// TeradataPartitionOptionDynamicRange ...
-	TeradataPartitionOptionDynamicRange TeradataPartitionOption = "DynamicRange"
-	// TeradataPartitionOptionHash ...
-	TeradataPartitionOptionHash TeradataPartitionOption = "Hash"
-	// TeradataPartitionOptionNone ...
-	TeradataPartitionOptionNone TeradataPartitionOption = "None"
-)
-
-// PossibleTeradataPartitionOptionValues returns an array of possible values for the TeradataPartitionOption const type.
-func PossibleTeradataPartitionOptionValues() []TeradataPartitionOption {
-	return []TeradataPartitionOption{TeradataPartitionOptionDynamicRange, TeradataPartitionOptionHash, TeradataPartitionOptionNone}
-}
-
 // TriggerRunStatus enumerates the values for trigger run status.
 type TriggerRunStatus string
 
@@ -1472,11 +1364,13 @@ const (
 	TumblingWindowFrequencyHour TumblingWindowFrequency = "Hour"
 	// TumblingWindowFrequencyMinute ...
 	TumblingWindowFrequencyMinute TumblingWindowFrequency = "Minute"
+	// TumblingWindowFrequencyMonth ...
+	TumblingWindowFrequencyMonth TumblingWindowFrequency = "Month"
 )
 
 // PossibleTumblingWindowFrequencyValues returns an array of possible values for the TumblingWindowFrequency const type.
 func PossibleTumblingWindowFrequencyValues() []TumblingWindowFrequency {
-	return []TumblingWindowFrequency{TumblingWindowFrequencyHour, TumblingWindowFrequencyMinute}
+	return []TumblingWindowFrequency{TumblingWindowFrequencyHour, TumblingWindowFrequencyMinute, TumblingWindowFrequencyMonth}
 }
 
 // Type enumerates the values for type.
