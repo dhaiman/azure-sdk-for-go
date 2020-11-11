@@ -29,15 +29,15 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/mixedreality/mgmt/2019-02-28/mixedreality"
 
-// AzureEntityResource the resource model definition for a Azure Resource Manager resource with an etag.
+// AzureEntityResource the resource model definition for an Azure Resource Manager resource with an etag.
 type AzureEntityResource struct {
 	// Etag - READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -78,6 +78,8 @@ type Operation struct {
 	Name *string `json:"name,omitempty"`
 	// Display - The object that represents the operation.
 	Display *OperationDisplay `json:"display,omitempty"`
+	// IsDataAction - Whether or not this is a data plane operation
+	IsDataAction interface{} `json:"isDataAction,omitempty"`
 }
 
 // OperationDisplay the object that represents the operation.
@@ -92,8 +94,8 @@ type OperationDisplay struct {
 	Description *string `json:"description,omitempty"`
 }
 
-// OperationList result of the request to list Resource Provider operations. It contains a list of operations
-// and a URL link to get the next set of results.
+// OperationList result of the request to list Resource Provider operations. It contains a list of
+// operations and a URL link to get the next set of results.
 type OperationList struct {
 	autorest.Response `json:"-"`
 	// Value - List of operations supported by the Resource Provider.
@@ -245,28 +247,31 @@ func (page OperationListPage) Values() []Operation {
 }
 
 // Creates a new instance of the OperationListPage type.
-func NewOperationListPage(getNextPage func(context.Context, OperationList) (OperationList, error)) OperationListPage {
-	return OperationListPage{fn: getNextPage}
+func NewOperationListPage(cur OperationList, getNextPage func(context.Context, OperationList) (OperationList, error)) OperationListPage {
+	return OperationListPage{
+		fn: getNextPage,
+		ol: cur,
+	}
 }
 
-// ProxyResource the resource model definition for a ARM proxy resource. It will have everything other than
-// required location and tags
+// ProxyResource the resource model definition for a Azure Resource Manager proxy resource. It will not
+// have tags and a location
 type ProxyResource struct {
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
-// Resource ...
+// Resource common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -275,15 +280,19 @@ type SpatialAnchorsAccount struct {
 	autorest.Response `json:"-"`
 	// SpatialAnchorsAccountProperties - Property bag.
 	*SpatialAnchorsAccountProperties `json:"properties,omitempty"`
+	// Identity - The identity associated with this account
+	Identity *string `json:"identity,omitempty"`
+	// Kind - The account kind
+	Kind interface{} `json:"kind,omitempty"`
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
@@ -292,6 +301,12 @@ func (saa SpatialAnchorsAccount) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if saa.SpatialAnchorsAccountProperties != nil {
 		objectMap["properties"] = saa.SpatialAnchorsAccountProperties
+	}
+	if saa.Identity != nil {
+		objectMap["identity"] = saa.Identity
+	}
+	if saa.Kind != nil {
+		objectMap["kind"] = saa.Kind
 	}
 	if saa.Tags != nil {
 		objectMap["tags"] = saa.Tags
@@ -319,6 +334,24 @@ func (saa *SpatialAnchorsAccount) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				saa.SpatialAnchorsAccountProperties = &spatialAnchorsAccountProperties
+			}
+		case "identity":
+			if v != nil {
+				var identity string
+				err = json.Unmarshal(*v, &identity)
+				if err != nil {
+					return err
+				}
+				saa.Identity = &identity
+			}
+		case "kind":
+			if v != nil {
+				var kind interface{}
+				err = json.Unmarshal(*v, &kind)
+				if err != nil {
+					return err
+				}
+				saa.Kind = kind
 			}
 		case "tags":
 			if v != nil {
@@ -386,8 +419,8 @@ type SpatialAnchorsAccountKeys struct {
 	SecondaryKey *string `json:"secondaryKey,omitempty"`
 }
 
-// SpatialAnchorsAccountList result of the request to get resource collection. It contains a list of resources
-// and a URL link to get the next set of results.
+// SpatialAnchorsAccountList result of the request to get resource collection. It contains a list of
+// resources and a URL link to get the next set of results.
 type SpatialAnchorsAccountList struct {
 	autorest.Response `json:"-"`
 	// Value - List of resources supported by the Resource Provider.
@@ -539,8 +572,11 @@ func (page SpatialAnchorsAccountListPage) Values() []SpatialAnchorsAccount {
 }
 
 // Creates a new instance of the SpatialAnchorsAccountListPage type.
-func NewSpatialAnchorsAccountListPage(getNextPage func(context.Context, SpatialAnchorsAccountList) (SpatialAnchorsAccountList, error)) SpatialAnchorsAccountListPage {
-	return SpatialAnchorsAccountListPage{fn: getNextPage}
+func NewSpatialAnchorsAccountListPage(cur SpatialAnchorsAccountList, getNextPage func(context.Context, SpatialAnchorsAccountList) (SpatialAnchorsAccountList, error)) SpatialAnchorsAccountListPage {
+	return SpatialAnchorsAccountListPage{
+		fn:   getNextPage,
+		saal: cur,
+	}
 }
 
 // SpatialAnchorsAccountProperties spatial Anchors Account Customize Properties
@@ -551,17 +587,18 @@ type SpatialAnchorsAccountProperties struct {
 	AccountDomain *string `json:"accountDomain,omitempty"`
 }
 
-// TrackedResource the resource model definition for a ARM tracked top level resource
+// TrackedResource the resource model definition for an Azure Resource Manager tracked top level resource
+// which has 'tags' and a 'location'
 type TrackedResource struct {
 	// Tags - Resource tags.
 	Tags map[string]*string `json:"tags"`
 	// Location - The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
-	// ID - READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// ID - READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty"`
-	// Type - READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// Type - READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty"`
 }
 
