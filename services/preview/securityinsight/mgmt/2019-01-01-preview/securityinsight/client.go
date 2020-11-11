@@ -21,32 +21,132 @@ package securityinsight
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+    "context"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "github.com/Azure/go-autorest/autorest/validation"
+    "github.com/Azure/go-autorest/tracing"
+    "net/http"
 )
 
 const (
-	// DefaultBaseURI is the default URI used for the service Securityinsight
-	DefaultBaseURI = "https://management.azure.com"
-)
+// DefaultBaseURI is the default URI used for the service Securityinsight
+DefaultBaseURI = "https://management.azure.com")
 
 // BaseClient is the base client for Securityinsight.
 type BaseClient struct {
-	autorest.Client
-	BaseURI        string
-	SubscriptionID string
+    autorest.Client
+    BaseURI string
+            SubscriptionID string
 }
 
 // New creates an instance of the BaseClient client.
-func New(subscriptionID string) BaseClient {
-	return NewWithBaseURI(DefaultBaseURI, subscriptionID)
+func New(subscriptionID string)BaseClient {
+    return NewWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
 // NewWithBaseURI creates an instance of the BaseClient client using a custom endpoint.  Use this when interacting with
 // an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
-	return BaseClient{
-		Client:         autorest.NewClientWithUserAgent(UserAgent()),
-		BaseURI:        baseURI,
-		SubscriptionID: subscriptionID,
-	}
+    return BaseClient{
+        Client: autorest.NewClientWithUserAgent(UserAgent()),
+        BaseURI: baseURI,
+                SubscriptionID: subscriptionID,
+    }
 }
+
+    // CreateThreatIntelligence create a threat intelligence.
+        // Parameters:
+            // resourceGroupName - the name of the resource group within the user's subscription. The name is case
+            // insensitive.
+            // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
+            // Microsoft.OperationalInsights.
+            // workspaceName - the name of the workspace.
+            // threatIntelligenceIndicatorObjectToUpsert - the threat intelligence entity properties for upsert
+    func (client BaseClient) CreateThreatIntelligence(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, threatIntelligenceIndicatorObjectToUpsert ThreatIntelligenceIndicatorWithoutReadOnlyFields) (result ThreatIntelligenceResourceModel, err error) {
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fqdn + "/BaseClient.CreateThreatIntelligence")
+            defer func() {
+                sc := -1
+            if result.Response.Response != nil {
+            sc = result.Response.Response.StatusCode
+            }
+                tracing.EndSpan(ctx, sc, err)
+            }()
+        }
+            if err := validation.Validate([]validation.Validation{
+            { TargetValue: client.SubscriptionID,
+             Constraints: []validation.Constraint{	{Target: "client.SubscriptionID", Name: validation.Pattern, Rule: `^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$`, Chain: nil }}},
+            { TargetValue: resourceGroupName,
+             Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 1, Chain: nil },
+            	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
+            { TargetValue: workspaceName,
+             Constraints: []validation.Constraint{	{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil },
+            	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
+            return result, validation.NewError("securityinsight.BaseClient", "CreateThreatIntelligence", err.Error())
+            }
+
+            req, err := client.CreateThreatIntelligencePreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, threatIntelligenceIndicatorObjectToUpsert)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "securityinsight.BaseClient", "CreateThreatIntelligence", nil , "Failure preparing request")
+        return
+        }
+
+            resp, err := client.CreateThreatIntelligenceSender(req)
+            if err != nil {
+            result.Response = autorest.Response{Response: resp}
+            err = autorest.NewErrorWithError(err, "securityinsight.BaseClient", "CreateThreatIntelligence", resp, "Failure sending request")
+            return
+            }
+
+            result, err = client.CreateThreatIntelligenceResponder(resp)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "securityinsight.BaseClient", "CreateThreatIntelligence", resp, "Failure responding to request")
+            }
+
+        return
+    }
+
+        // CreateThreatIntelligencePreparer prepares the CreateThreatIntelligence request.
+        func (client BaseClient) CreateThreatIntelligencePreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, threatIntelligenceIndicatorObjectToUpsert ThreatIntelligenceIndicatorWithoutReadOnlyFields) (*http.Request, error) {
+            pathParameters := map[string]interface{} {
+            "operationalInsightsResourceProvider": autorest.Encode("path",operationalInsightsResourceProvider),
+            "resourceGroupName": autorest.Encode("path",resourceGroupName),
+            "subscriptionId": autorest.Encode("path",client.SubscriptionID),
+            "workspaceName": autorest.Encode("path",workspaceName),
+            }
+
+                const APIVersion = "2019-01-01-preview"
+        queryParameters := map[string]interface{} {
+        "api-version": APIVersion,
+        }
+
+        preparer := autorest.CreatePreparer(
+    autorest.AsContentType("application/json; charset=utf-8"),
+    autorest.AsPost(),
+    autorest.WithBaseURL(client.BaseURI),
+    autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/createIndicator",pathParameters),
+    autorest.WithJSON(threatIntelligenceIndicatorObjectToUpsert),
+    autorest.WithQueryParameters(queryParameters))
+        return preparer.Prepare((&http.Request{}).WithContext(ctx))
+        }
+
+        // CreateThreatIntelligenceSender sends the CreateThreatIntelligence request. The method will close the
+        // http.Response Body if it receives an error.
+        func (client BaseClient) CreateThreatIntelligenceSender(req *http.Request) (*http.Response, error) {
+                return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+                }
+
+        // CreateThreatIntelligenceResponder handles the response to the CreateThreatIntelligence request. The method always
+        // closes the http.Response Body.
+        func (client BaseClient) CreateThreatIntelligenceResponder(resp *http.Response) (result ThreatIntelligenceResourceModel, err error) {
+                err = autorest.Respond(
+                resp,
+                azure.WithErrorUnlessStatusCode(http.StatusOK,http.StatusCreated),
+                autorest.ByUnmarshallingJSON(&result),
+                autorest.ByClosing())
+                result.Response = autorest.Response{Response: resp}
+                return
+        }
+

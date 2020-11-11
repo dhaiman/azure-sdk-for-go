@@ -26,33 +26,35 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// BookmarkClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
-type BookmarkClient struct {
+// ThreatIntelligenceIndicatorMetricsClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights)
+// resource provider
+type ThreatIntelligenceIndicatorMetricsClient struct {
     BaseClient
 }
-// NewBookmarkClient creates an instance of the BookmarkClient client.
-func NewBookmarkClient(subscriptionID string) BookmarkClient {
-    return NewBookmarkClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewThreatIntelligenceIndicatorMetricsClient creates an instance of the ThreatIntelligenceIndicatorMetricsClient
+// client.
+func NewThreatIntelligenceIndicatorMetricsClient(subscriptionID string) ThreatIntelligenceIndicatorMetricsClient {
+    return NewThreatIntelligenceIndicatorMetricsClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewBookmarkClientWithBaseURI creates an instance of the BookmarkClient client using a custom endpoint.  Use this
-// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-    func NewBookmarkClientWithBaseURI(baseURI string, subscriptionID string) BookmarkClient {
-        return BookmarkClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewThreatIntelligenceIndicatorMetricsClientWithBaseURI creates an instance of the
+// ThreatIntelligenceIndicatorMetricsClient client using a custom endpoint.  Use this when interacting with an Azure
+// cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
+    func NewThreatIntelligenceIndicatorMetricsClientWithBaseURI(baseURI string, subscriptionID string) ThreatIntelligenceIndicatorMetricsClient {
+        return ThreatIntelligenceIndicatorMetricsClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// Expand expand an bookmark
+// Get get the threat intelligence metrics.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
         // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
         // Microsoft.OperationalInsights.
         // workspaceName - the name of the workspace.
-        // bookmarkID - bookmark ID
-        // parameters - the parameters required to execute an expand operation on the given bookmark.
-func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, bookmarkID string, parameters BookmarkExpandParameters) (result BookmarkExpandResponse, err error) {
+        // ctiEntityKind - the threat intelligence entity kind
+func (client ThreatIntelligenceIndicatorMetricsClient) Get(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, ctiEntityKind string) (result ThreatIntelligenceMetricResourceList, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/BookmarkClient.Expand")
+        ctx = tracing.StartSpan(ctx, fqdn + "/ThreatIntelligenceIndicatorMetricsClient.Get")
         defer func() {
             sc := -1
         if result.Response.Response != nil {
@@ -71,34 +73,33 @@ func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName strin
         { TargetValue: workspaceName,
          Constraints: []validation.Constraint{	{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil },
         	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-        return result, validation.NewError("securityinsight.BookmarkClient", "Expand", err.Error())
+        return result, validation.NewError("securityinsight.ThreatIntelligenceIndicatorMetricsClient", "Get", err.Error())
         }
 
-        req, err := client.ExpandPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkID, parameters)
+        req, err := client.GetPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, ctiEntityKind)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "securityinsight.ThreatIntelligenceIndicatorMetricsClient", "Get", nil , "Failure preparing request")
     return
     }
 
-        resp, err := client.ExpandSender(req)
+        resp, err := client.GetSender(req)
         if err != nil {
         result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", resp, "Failure sending request")
+        err = autorest.NewErrorWithError(err, "securityinsight.ThreatIntelligenceIndicatorMetricsClient", "Get", resp, "Failure sending request")
         return
         }
 
-        result, err = client.ExpandResponder(resp)
+        result, err = client.GetResponder(resp)
         if err != nil {
-        err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", resp, "Failure responding to request")
+        err = autorest.NewErrorWithError(err, "securityinsight.ThreatIntelligenceIndicatorMetricsClient", "Get", resp, "Failure responding to request")
         }
 
     return
 }
 
-    // ExpandPreparer prepares the Expand request.
-    func (client BookmarkClient) ExpandPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, bookmarkID string, parameters BookmarkExpandParameters) (*http.Request, error) {
+    // GetPreparer prepares the Get request.
+    func (client ThreatIntelligenceIndicatorMetricsClient) GetPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, ctiEntityKind string) (*http.Request, error) {
         pathParameters := map[string]interface{} {
-        "bookmarkId": autorest.Encode("path",bookmarkID),
         "operationalInsightsResourceProvider": autorest.Encode("path",operationalInsightsResourceProvider),
         "resourceGroupName": autorest.Encode("path",resourceGroupName),
         "subscriptionId": autorest.Encode("path",client.SubscriptionID),
@@ -109,26 +110,27 @@ func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName strin
     queryParameters := map[string]interface{} {
     "api-version": APIVersion,
     }
+        if len(ctiEntityKind) > 0 {
+        queryParameters["ctiEntityKind"] = autorest.Encode("query",ctiEntityKind)
+        }
 
     preparer := autorest.CreatePreparer(
-autorest.AsContentType("application/json; charset=utf-8"),
-autorest.AsPost(),
+autorest.AsGet(),
 autorest.WithBaseURL(client.BaseURI),
-autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand",pathParameters),
-autorest.WithJSON(parameters),
+autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics",pathParameters),
 autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // ExpandSender sends the Expand request. The method will close the
+    // GetSender sends the Get request. The method will close the
     // http.Response Body if it receives an error.
-    func (client BookmarkClient) ExpandSender(req *http.Request) (*http.Response, error) {
+    func (client ThreatIntelligenceIndicatorMetricsClient) GetSender(req *http.Request) (*http.Response, error) {
             return client.Send(req, azure.DoRetryWithRegistration(client.Client))
             }
 
-    // ExpandResponder handles the response to the Expand request. The method always
+    // GetResponder handles the response to the Get request. The method always
     // closes the http.Response Body.
-    func (client BookmarkClient) ExpandResponder(resp *http.Response) (result BookmarkExpandResponse, err error) {
+    func (client ThreatIntelligenceIndicatorMetricsClient) GetResponder(resp *http.Response) (result ThreatIntelligenceMetricResourceList, err error) {
             err = autorest.Respond(
             resp,
             azure.WithErrorUnlessStatusCode(http.StatusOK),

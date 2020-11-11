@@ -26,33 +26,34 @@ import (
     "github.com/Azure/go-autorest/autorest/validation"
 )
 
-// BookmarkClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
-type BookmarkClient struct {
+// EntitiesGetTimelineClient is the API spec for Microsoft.SecurityInsights (Azure Security Insights) resource provider
+type EntitiesGetTimelineClient struct {
     BaseClient
 }
-// NewBookmarkClient creates an instance of the BookmarkClient client.
-func NewBookmarkClient(subscriptionID string) BookmarkClient {
-    return NewBookmarkClientWithBaseURI(DefaultBaseURI, subscriptionID)
+// NewEntitiesGetTimelineClient creates an instance of the EntitiesGetTimelineClient client.
+func NewEntitiesGetTimelineClient(subscriptionID string) EntitiesGetTimelineClient {
+    return NewEntitiesGetTimelineClientWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-// NewBookmarkClientWithBaseURI creates an instance of the BookmarkClient client using a custom endpoint.  Use this
-// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-    func NewBookmarkClientWithBaseURI(baseURI string, subscriptionID string) BookmarkClient {
-        return BookmarkClient{ NewWithBaseURI(baseURI, subscriptionID)}
+// NewEntitiesGetTimelineClientWithBaseURI creates an instance of the EntitiesGetTimelineClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
+    func NewEntitiesGetTimelineClientWithBaseURI(baseURI string, subscriptionID string) EntitiesGetTimelineClient {
+        return EntitiesGetTimelineClient{ NewWithBaseURI(baseURI, subscriptionID)}
     }
 
-// Expand expand an bookmark
+// List timeline for an entity.
     // Parameters:
         // resourceGroupName - the name of the resource group within the user's subscription. The name is case
         // insensitive.
         // operationalInsightsResourceProvider - the namespace of workspaces resource provider-
         // Microsoft.OperationalInsights.
         // workspaceName - the name of the workspace.
-        // bookmarkID - bookmark ID
-        // parameters - the parameters required to execute an expand operation on the given bookmark.
-func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, bookmarkID string, parameters BookmarkExpandParameters) (result BookmarkExpandResponse, err error) {
+        // entityID - entity ID
+        // parameters - the parameters required to execute an timeline operation on the given entity.
+func (client EntitiesGetTimelineClient) List(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityTimelineParameters) (result EntityTimelineResponse, err error) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fqdn + "/BookmarkClient.Expand")
+        ctx = tracing.StartSpan(ctx, fqdn + "/EntitiesGetTimelineClient.List")
         defer func() {
             sc := -1
         if result.Response.Response != nil {
@@ -70,35 +71,38 @@ func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName strin
         	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `^[-\w\._\(\)]+$`, Chain: nil }}},
         { TargetValue: workspaceName,
          Constraints: []validation.Constraint{	{Target: "workspaceName", Name: validation.MaxLength, Rule: 90, Chain: nil },
-        	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}}}); err != nil {
-        return result, validation.NewError("securityinsight.BookmarkClient", "Expand", err.Error())
+        	{Target: "workspaceName", Name: validation.MinLength, Rule: 1, Chain: nil }}},
+        { TargetValue: parameters,
+         Constraints: []validation.Constraint{	{Target: "parameters.StartTime", Name: validation.Null, Rule: true, Chain: nil },
+        	{Target: "parameters.EndTime", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("securityinsight.EntitiesGetTimelineClient", "List", err.Error())
         }
 
-        req, err := client.ExpandPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, bookmarkID, parameters)
+        req, err := client.ListPreparer(ctx, resourceGroupName, operationalInsightsResourceProvider, workspaceName, entityID, parameters)
     if err != nil {
-    err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", nil , "Failure preparing request")
+    err = autorest.NewErrorWithError(err, "securityinsight.EntitiesGetTimelineClient", "List", nil , "Failure preparing request")
     return
     }
 
-        resp, err := client.ExpandSender(req)
+        resp, err := client.ListSender(req)
         if err != nil {
         result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", resp, "Failure sending request")
+        err = autorest.NewErrorWithError(err, "securityinsight.EntitiesGetTimelineClient", "List", resp, "Failure sending request")
         return
         }
 
-        result, err = client.ExpandResponder(resp)
+        result, err = client.ListResponder(resp)
         if err != nil {
-        err = autorest.NewErrorWithError(err, "securityinsight.BookmarkClient", "Expand", resp, "Failure responding to request")
+        err = autorest.NewErrorWithError(err, "securityinsight.EntitiesGetTimelineClient", "List", resp, "Failure responding to request")
         }
 
     return
 }
 
-    // ExpandPreparer prepares the Expand request.
-    func (client BookmarkClient) ExpandPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, bookmarkID string, parameters BookmarkExpandParameters) (*http.Request, error) {
+    // ListPreparer prepares the List request.
+    func (client EntitiesGetTimelineClient) ListPreparer(ctx context.Context, resourceGroupName string, operationalInsightsResourceProvider string, workspaceName string, entityID string, parameters EntityTimelineParameters) (*http.Request, error) {
         pathParameters := map[string]interface{} {
-        "bookmarkId": autorest.Encode("path",bookmarkID),
+        "entityId": autorest.Encode("path",entityID),
         "operationalInsightsResourceProvider": autorest.Encode("path",operationalInsightsResourceProvider),
         "resourceGroupName": autorest.Encode("path",resourceGroupName),
         "subscriptionId": autorest.Encode("path",client.SubscriptionID),
@@ -114,21 +118,21 @@ func (client BookmarkClient) Expand(ctx context.Context, resourceGroupName strin
 autorest.AsContentType("application/json; charset=utf-8"),
 autorest.AsPost(),
 autorest.WithBaseURL(client.BaseURI),
-autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand",pathParameters),
+autorest.WithPathParameters("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{operationalInsightsResourceProvider}/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/getTimeline",pathParameters),
 autorest.WithJSON(parameters),
 autorest.WithQueryParameters(queryParameters))
     return preparer.Prepare((&http.Request{}).WithContext(ctx))
     }
 
-    // ExpandSender sends the Expand request. The method will close the
+    // ListSender sends the List request. The method will close the
     // http.Response Body if it receives an error.
-    func (client BookmarkClient) ExpandSender(req *http.Request) (*http.Response, error) {
+    func (client EntitiesGetTimelineClient) ListSender(req *http.Request) (*http.Response, error) {
             return client.Send(req, azure.DoRetryWithRegistration(client.Client))
             }
 
-    // ExpandResponder handles the response to the Expand request. The method always
+    // ListResponder handles the response to the List request. The method always
     // closes the http.Response Body.
-    func (client BookmarkClient) ExpandResponder(resp *http.Response) (result BookmarkExpandResponse, err error) {
+    func (client EntitiesGetTimelineClient) ListResponder(resp *http.Response) (result EntityTimelineResponse, err error) {
             err = autorest.Respond(
             resp,
             azure.WithErrorUnlessStatusCode(http.StatusOK),
