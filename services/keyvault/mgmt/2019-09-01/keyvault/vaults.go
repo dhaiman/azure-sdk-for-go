@@ -205,10 +205,10 @@ func (client VaultsClient) CreateOrUpdateSender(req *http.Request) (future Vault
 
 // CreateOrUpdateResponder handles the response to the CreateOrUpdate request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) CreateOrUpdateResponder(resp *http.Response) (result Vault, err error) {
+func (client VaultsClient) CreateOrUpdateResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusBadRequest, http.StatusConflict),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -219,13 +219,13 @@ func (client VaultsClient) CreateOrUpdateResponder(resp *http.Response) (result 
 // Parameters:
 // resourceGroupName - the name of the Resource Group to which the vault belongs.
 // vaultName - the name of the vault to delete
-func (client VaultsClient) Delete(ctx context.Context, resourceGroupName string, vaultName string) (result autorest.Response, err error) {
+func (client VaultsClient) Delete(ctx context.Context, resourceGroupName string, vaultName string) (result CloudError, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VaultsClient.Delete")
 		defer func() {
 			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -238,7 +238,7 @@ func (client VaultsClient) Delete(ctx context.Context, resourceGroupName string,
 
 	resp, err := client.DeleteSender(req)
 	if err != nil {
-		result.Response = resp
+		result.Response = autorest.Response{Response: resp}
 		err = autorest.NewErrorWithError(err, "keyvault.VaultsClient", "Delete", resp, "Failure sending request")
 		return
 	}
@@ -280,12 +280,13 @@ func (client VaultsClient) DeleteSender(req *http.Request) (*http.Response, erro
 
 // DeleteResponder handles the response to the Delete request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) DeleteResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client VaultsClient) DeleteResponder(resp *http.Response) (result CloudError, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusBadRequest),
+		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = resp
+	result.Response = autorest.Response{Response: resp}
 	return
 }
 
@@ -293,7 +294,7 @@ func (client VaultsClient) DeleteResponder(resp *http.Response) (result autorest
 // Parameters:
 // resourceGroupName - the name of the Resource Group to which the vault belongs.
 // vaultName - the name of the vault.
-func (client VaultsClient) Get(ctx context.Context, resourceGroupName string, vaultName string) (result Vault, err error) {
+func (client VaultsClient) Get(ctx context.Context, resourceGroupName string, vaultName string) (result SetObject, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VaultsClient.Get")
 		defer func() {
@@ -354,11 +355,11 @@ func (client VaultsClient) GetSender(req *http.Request) (*http.Response, error) 
 
 // GetResponder handles the response to the Get request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) GetResponder(resp *http.Response) (result Vault, err error) {
+func (client VaultsClient) GetResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNotFound),
+		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -368,7 +369,7 @@ func (client VaultsClient) GetResponder(resp *http.Response) (result Vault, err 
 // Parameters:
 // vaultName - the name of the vault.
 // location - the location of the deleted vault.
-func (client VaultsClient) GetDeleted(ctx context.Context, vaultName string, location string) (result DeletedVault, err error) {
+func (client VaultsClient) GetDeleted(ctx context.Context, vaultName string, location string) (result SetObject, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VaultsClient.GetDeleted")
 		defer func() {
@@ -429,11 +430,11 @@ func (client VaultsClient) GetDeletedSender(req *http.Request) (*http.Response, 
 
 // GetDeletedResponder handles the response to the GetDeleted request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) GetDeletedResponder(resp *http.Response) (result DeletedVault, err error) {
+func (client VaultsClient) GetDeletedResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNotFound),
+		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -470,6 +471,9 @@ func (client VaultsClient) List(ctx context.Context, top *int32) (result Resourc
 	result.rlr, err = client.ListResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "keyvault.VaultsClient", "List", resp, "Failure responding to request")
+	}
+	if result.rlr.hasNextLink() && result.rlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -587,6 +591,9 @@ func (client VaultsClient) ListByResourceGroup(ctx context.Context, resourceGrou
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "keyvault.VaultsClient", "ListByResourceGroup", resp, "Failure responding to request")
 	}
+	if result.vlr.hasNextLink() && result.vlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -701,6 +708,9 @@ func (client VaultsClient) ListBySubscription(ctx context.Context, top *int32) (
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "keyvault.VaultsClient", "ListBySubscription", resp, "Failure responding to request")
 	}
+	if result.vlr.hasNextLink() && result.vlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -811,6 +821,9 @@ func (client VaultsClient) ListDeleted(ctx context.Context) (result DeletedVault
 	result.dvlr, err = client.ListDeletedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "keyvault.VaultsClient", "ListDeleted", resp, "Failure responding to request")
+	}
+	if result.dvlr.hasNextLink() && result.dvlr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -955,12 +968,13 @@ func (client VaultsClient) PurgeDeletedSender(req *http.Request) (future VaultsP
 
 // PurgeDeletedResponder handles the response to the PurgeDeleted request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) PurgeDeletedResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client VaultsClient) PurgeDeletedResponder(resp *http.Response) (result CloudError, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusBadRequest, http.StatusNotFound),
+		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = resp
+	result.Response = autorest.Response{Response: resp}
 	return
 }
 
@@ -969,7 +983,7 @@ func (client VaultsClient) PurgeDeletedResponder(resp *http.Response) (result au
 // resourceGroupName - the name of the Resource Group to which the server belongs.
 // vaultName - name of the vault
 // parameters - parameters to patch the vault
-func (client VaultsClient) Update(ctx context.Context, resourceGroupName string, vaultName string, parameters VaultPatchParameters) (result Vault, err error) {
+func (client VaultsClient) Update(ctx context.Context, resourceGroupName string, vaultName string, parameters VaultPatchParameters) (result SetObject, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VaultsClient.Update")
 		defer func() {
@@ -1038,11 +1052,11 @@ func (client VaultsClient) UpdateSender(req *http.Request) (*http.Response, erro
 
 // UpdateResponder handles the response to the Update request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) UpdateResponder(resp *http.Response) (result Vault, err error) {
+func (client VaultsClient) UpdateResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
-		autorest.ByUnmarshallingJSON(&result),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusBadRequest, http.StatusConflict),
+		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -1054,7 +1068,7 @@ func (client VaultsClient) UpdateResponder(resp *http.Response) (result Vault, e
 // vaultName - name of the vault
 // operationKind - name of the operation
 // parameters - access policy to merge into the vault
-func (client VaultsClient) UpdateAccessPolicy(ctx context.Context, resourceGroupName string, vaultName string, operationKind AccessPolicyUpdateKind, parameters VaultAccessPolicyParameters) (result VaultAccessPolicyParameters, err error) {
+func (client VaultsClient) UpdateAccessPolicy(ctx context.Context, resourceGroupName string, vaultName string, operationKind AccessPolicyUpdateKind, parameters VaultAccessPolicyParameters) (result SetObject, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/VaultsClient.UpdateAccessPolicy")
 		defer func() {
@@ -1131,11 +1145,11 @@ func (client VaultsClient) UpdateAccessPolicySender(req *http.Request) (*http.Re
 
 // UpdateAccessPolicyResponder handles the response to the UpdateAccessPolicy request. The method always
 // closes the http.Response Body.
-func (client VaultsClient) UpdateAccessPolicyResponder(resp *http.Response) (result VaultAccessPolicyParameters, err error) {
+func (client VaultsClient) UpdateAccessPolicyResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
-		autorest.ByUnmarshallingJSON(&result),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusBadRequest, http.StatusNotFound, http.StatusConflict),
+		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
