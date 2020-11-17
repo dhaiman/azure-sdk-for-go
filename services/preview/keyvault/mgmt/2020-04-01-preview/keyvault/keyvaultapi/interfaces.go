@@ -20,16 +20,15 @@ package keyvaultapi
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/services/preview/keyvault/mgmt/2020-04-01-preview/keyvault"
-	"github.com/Azure/go-autorest/autorest"
 )
 
 // VaultsClientAPI contains the set of methods on the VaultsClient type.
 type VaultsClientAPI interface {
 	CheckNameAvailability(ctx context.Context, vaultName keyvault.VaultCheckNameAvailabilityParameters) (result keyvault.CheckNameAvailabilityResult, err error)
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, vaultName string, parameters keyvault.VaultCreateOrUpdateParameters) (result keyvault.VaultsCreateOrUpdateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, vaultName string) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, vaultName string) (result keyvault.Vault, err error)
-	GetDeleted(ctx context.Context, vaultName string, location string) (result keyvault.DeletedVault, err error)
+	Delete(ctx context.Context, resourceGroupName string, vaultName string) (result keyvault.CloudError, err error)
+	Get(ctx context.Context, resourceGroupName string, vaultName string) (result keyvault.SetObject, err error)
+	GetDeleted(ctx context.Context, vaultName string, location string) (result keyvault.SetObject, err error)
 	List(ctx context.Context, top *int32) (result keyvault.ResourceListResultPage, err error)
 	ListComplete(ctx context.Context, top *int32) (result keyvault.ResourceListResultIterator, err error)
 	ListByResourceGroup(ctx context.Context, resourceGroupName string, top *int32) (result keyvault.VaultListResultPage, err error)
@@ -39,8 +38,8 @@ type VaultsClientAPI interface {
 	ListDeleted(ctx context.Context) (result keyvault.DeletedVaultListResultPage, err error)
 	ListDeletedComplete(ctx context.Context) (result keyvault.DeletedVaultListResultIterator, err error)
 	PurgeDeleted(ctx context.Context, vaultName string, location string) (result keyvault.VaultsPurgeDeletedFuture, err error)
-	Update(ctx context.Context, resourceGroupName string, vaultName string, parameters keyvault.VaultPatchParameters) (result keyvault.Vault, err error)
-	UpdateAccessPolicy(ctx context.Context, resourceGroupName string, vaultName string, operationKind keyvault.AccessPolicyUpdateKind, parameters keyvault.VaultAccessPolicyParameters) (result keyvault.VaultAccessPolicyParameters, err error)
+	Update(ctx context.Context, resourceGroupName string, vaultName string, parameters keyvault.VaultPatchParameters) (result keyvault.SetObject, err error)
+	UpdateAccessPolicy(ctx context.Context, resourceGroupName string, vaultName string, operationKind keyvault.AccessPolicyUpdateKind, parameters keyvault.VaultAccessPolicyParameters) (result keyvault.SetObject, err error)
 }
 
 var _ VaultsClientAPI = (*keyvault.VaultsClient)(nil)

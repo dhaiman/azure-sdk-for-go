@@ -32,8 +32,8 @@ import (
 // The package's fully qualified name.
 const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/keyvault/mgmt/2020-04-01-preview/keyvault"
 
-// AccessPolicyEntry an identity that have access to the key vault. All identities in the array must use the
-// same tenant ID as the key vault's tenant ID.
+// AccessPolicyEntry an identity that have access to the key vault. All identities in the array must use
+// the same tenant ID as the key vault's tenant ID.
 type AccessPolicyEntry struct {
 	// TenantID - The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault.
 	TenantID *uuid.UUID `json:"tenantId,omitempty"`
@@ -58,7 +58,8 @@ type CheckNameAvailabilityResult struct {
 
 // CloudError an error response from Key Vault resource provider
 type CloudError struct {
-	Error *CloudErrorBody `json:"error,omitempty"`
+	autorest.Response `json:"-"`
+	Error             *CloudErrorBody `json:"error,omitempty"`
 }
 
 // CloudErrorBody an error response from Key Vault resource provider
@@ -71,7 +72,6 @@ type CloudErrorBody struct {
 
 // DeletedVault deleted vault information with extended details.
 type DeletedVault struct {
-	autorest.Response `json:"-"`
 	// ID - READ-ONLY; The resource ID for the deleted key vault.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The name of the key vault.
@@ -243,8 +243,11 @@ func (page DeletedVaultListResultPage) Values() []DeletedVault {
 }
 
 // Creates a new instance of the DeletedVaultListResultPage type.
-func NewDeletedVaultListResultPage(getNextPage func(context.Context, DeletedVaultListResult) (DeletedVaultListResult, error)) DeletedVaultListResultPage {
-	return DeletedVaultListResultPage{fn: getNextPage}
+func NewDeletedVaultListResultPage(cur DeletedVaultListResult, getNextPage func(context.Context, DeletedVaultListResult) (DeletedVaultListResult, error)) DeletedVaultListResultPage {
+	return DeletedVaultListResultPage{
+		fn:   getNextPage,
+		dvlr: cur,
+	}
 }
 
 // DeletedVaultProperties properties of the deleted vault.
@@ -259,6 +262,8 @@ type DeletedVaultProperties struct {
 	ScheduledPurgeDate *date.Time `json:"scheduledPurgeDate,omitempty"`
 	// Tags - READ-ONLY; Tags of the original vault.
 	Tags map[string]*string `json:"tags"`
+	// PurgeProtectionEnabled - READ-ONLY; Purge protection status of the original vault.
+	PurgeProtectionEnabled *bool `json:"purgeProtectionEnabled,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for DeletedVaultProperties.
@@ -488,8 +493,11 @@ func (page ManagedHsmListResultPage) Values() []ManagedHsm {
 }
 
 // Creates a new instance of the ManagedHsmListResultPage type.
-func NewManagedHsmListResultPage(getNextPage func(context.Context, ManagedHsmListResult) (ManagedHsmListResult, error)) ManagedHsmListResultPage {
-	return ManagedHsmListResultPage{fn: getNextPage}
+func NewManagedHsmListResultPage(cur ManagedHsmListResult, getNextPage func(context.Context, ManagedHsmListResult) (ManagedHsmListResult, error)) ManagedHsmListResultPage {
+	return ManagedHsmListResultPage{
+		fn:   getNextPage,
+		mhlr: cur,
+	}
 }
 
 // ManagedHsmProperties properties of the managed HSM Pool
@@ -572,8 +580,8 @@ func (mhr ManagedHsmResource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ManagedHsmsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ManagedHsmsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ManagedHsmsCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -683,6 +691,8 @@ type Operation struct {
 	Origin *string `json:"origin,omitempty"`
 	// OperationProperties - Properties of operation, include metric specifications.
 	*OperationProperties `json:"properties,omitempty"`
+	// IsDataAction - Property to specify whether the action is a data action.
+	IsDataAction *bool `json:"isDataAction,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Operation.
@@ -699,6 +709,9 @@ func (o Operation) MarshalJSON() ([]byte, error) {
 	}
 	if o.OperationProperties != nil {
 		objectMap["properties"] = o.OperationProperties
+	}
+	if o.IsDataAction != nil {
+		objectMap["isDataAction"] = o.IsDataAction
 	}
 	return json.Marshal(objectMap)
 }
@@ -748,6 +761,15 @@ func (o *Operation) UnmarshalJSON(body []byte) error {
 				}
 				o.OperationProperties = &operationProperties
 			}
+		case "isDataAction":
+			if v != nil {
+				var isDataAction bool
+				err = json.Unmarshal(*v, &isDataAction)
+				if err != nil {
+					return err
+				}
+				o.IsDataAction = &isDataAction
+			}
 		}
 	}
 
@@ -766,8 +788,8 @@ type OperationDisplay struct {
 	Description *string `json:"description,omitempty"`
 }
 
-// OperationListResult result of the request to list Storage operations. It contains a list of operations and a
-// URL link to get the next set of results.
+// OperationListResult result of the request to list Storage operations. It contains a list of operations
+// and a URL link to get the next set of results.
 type OperationListResult struct {
 	autorest.Response `json:"-"`
 	// Value - List of Storage operations supported by the Storage resource provider.
@@ -919,8 +941,11 @@ func (page OperationListResultPage) Values() []Operation {
 }
 
 // Creates a new instance of the OperationListResultPage type.
-func NewOperationListResultPage(getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
-	return OperationListResultPage{fn: getNextPage}
+func NewOperationListResultPage(cur OperationListResult, getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
+	return OperationListResultPage{
+		fn:  getNextPage,
+		olr: cur,
+	}
 }
 
 // OperationProperties properties of operation, include metric specifications.
@@ -952,6 +977,8 @@ type PrivateEndpointConnection struct {
 	autorest.Response `json:"-"`
 	// PrivateEndpointConnectionProperties - Resource properties.
 	*PrivateEndpointConnectionProperties `json:"properties,omitempty"`
+	// Etag - Modified whenever the user or NRP changes the state of PE connection.
+	Etag *string `json:"etag,omitempty"`
 	// ID - READ-ONLY; Fully qualified identifier of the key vault resource.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Name of the key vault resource.
@@ -969,6 +996,9 @@ func (pec PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if pec.PrivateEndpointConnectionProperties != nil {
 		objectMap["properties"] = pec.PrivateEndpointConnectionProperties
+	}
+	if pec.Etag != nil {
+		objectMap["etag"] = pec.Etag
 	}
 	return json.Marshal(objectMap)
 }
@@ -990,6 +1020,15 @@ func (pec *PrivateEndpointConnection) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				pec.PrivateEndpointConnectionProperties = &privateEndpointConnectionProperties
+			}
+		case "etag":
+			if v != nil {
+				var etag string
+				err = json.Unmarshal(*v, &etag)
+				if err != nil {
+					return err
+				}
+				pec.Etag = &etag
 			}
 		case "id":
 			if v != nil {
@@ -1247,8 +1286,8 @@ type PrivateLinkServiceConnectionState struct {
 	Status PrivateEndpointServiceConnectionStatus `json:"status,omitempty"`
 	// Description - The reason for approval or rejection.
 	Description *string `json:"description,omitempty"`
-	// ActionRequired - A message indicating if changes on the service provider require any updates on the consumer.
-	ActionRequired *string `json:"actionRequired,omitempty"`
+	// ActionsRequired - A message indicating if changes on the service provider require any updates on the consumer.
+	ActionsRequired *string `json:"actionsRequired,omitempty"`
 }
 
 // Resource key Vault resource
@@ -1423,14 +1462,23 @@ func (page ResourceListResultPage) Values() []Resource {
 }
 
 // Creates a new instance of the ResourceListResultPage type.
-func NewResourceListResultPage(getNextPage func(context.Context, ResourceListResult) (ResourceListResult, error)) ResourceListResultPage {
-	return ResourceListResultPage{fn: getNextPage}
+func NewResourceListResultPage(cur ResourceListResult, getNextPage func(context.Context, ResourceListResult) (ResourceListResult, error)) ResourceListResultPage {
+	return ResourceListResultPage{
+		fn:  getNextPage,
+		rlr: cur,
+	}
 }
 
 // ServiceSpecification one property of operation, include log specifications.
 type ServiceSpecification struct {
 	// LogSpecifications - Log specifications of operation.
 	LogSpecifications *[]LogSpecification `json:"logSpecifications,omitempty"`
+}
+
+// SetObject ...
+type SetObject struct {
+	autorest.Response `json:"-"`
+	Value             interface{} `json:"value,omitempty"`
 }
 
 // Sku SKU details
@@ -1443,7 +1491,6 @@ type Sku struct {
 
 // Vault resource information with extended details.
 type Vault struct {
-	autorest.Response `json:"-"`
 	// ID - READ-ONLY; Fully qualified identifier of the key vault resource.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; Name of the key vault resource.
@@ -1475,7 +1522,6 @@ func (vVar Vault) MarshalJSON() ([]byte, error) {
 
 // VaultAccessPolicyParameters parameters for updating the access policy in a vault
 type VaultAccessPolicyParameters struct {
-	autorest.Response `json:"-"`
 	// ID - READ-ONLY; The resource id of the access policy.
 	ID *string `json:"id,omitempty"`
 	// Name - READ-ONLY; The resource name of the access policy.
@@ -1688,8 +1734,11 @@ func (page VaultListResultPage) Values() []Vault {
 }
 
 // Creates a new instance of the VaultListResultPage type.
-func NewVaultListResultPage(getNextPage func(context.Context, VaultListResult) (VaultListResult, error)) VaultListResultPage {
-	return VaultListResultPage{fn: getNextPage}
+func NewVaultListResultPage(cur VaultListResult, getNextPage func(context.Context, VaultListResult) (VaultListResult, error)) VaultListResultPage {
+	return VaultListResultPage{
+		fn:  getNextPage,
+		vlr: cur,
+	}
 }
 
 // VaultPatchParameters parameters for creating or updating a vault
@@ -1768,6 +1817,8 @@ type VaultProperties struct {
 	EnablePurgeProtection *bool `json:"enablePurgeProtection,omitempty"`
 	// NetworkAcls - Rules governing the accessibility of the key vault from specific network locations.
 	NetworkAcls *NetworkRuleSet `json:"networkAcls,omitempty"`
+	// ProvisioningState - Provisioning state of the vault.
+	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// PrivateEndpointConnections - READ-ONLY; List of private endpoint connections associated with the key vault.
 	PrivateEndpointConnections *[]PrivateEndpointConnectionItem `json:"privateEndpointConnections,omitempty"`
 }
@@ -1814,6 +1865,9 @@ func (vp VaultProperties) MarshalJSON() ([]byte, error) {
 	if vp.NetworkAcls != nil {
 		objectMap["networkAcls"] = vp.NetworkAcls
 	}
+	if vp.ProvisioningState != nil {
+		objectMap["provisioningState"] = vp.ProvisioningState
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -1825,7 +1879,7 @@ type VaultsCreateOrUpdateFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *VaultsCreateOrUpdateFuture) Result(client VaultsClient) (vVar Vault, err error) {
+func (future *VaultsCreateOrUpdateFuture) Result(client VaultsClient) (so SetObject, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -1837,10 +1891,10 @@ func (future *VaultsCreateOrUpdateFuture) Result(client VaultsClient) (vVar Vaul
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if vVar.Response.Response, err = future.GetResult(sender); err == nil && vVar.Response.Response.StatusCode != http.StatusNoContent {
-		vVar, err = client.CreateOrUpdateResponder(vVar.Response.Response)
+	if so.Response.Response, err = future.GetResult(sender); err == nil && so.Response.Response.StatusCode != http.StatusNoContent {
+		so, err = client.CreateOrUpdateResponder(so.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "keyvault.VaultsCreateOrUpdateFuture", "Result", vVar.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "keyvault.VaultsCreateOrUpdateFuture", "Result", so.Response.Response, "Failure responding to request")
 		}
 	}
 	return
@@ -1854,7 +1908,7 @@ type VaultsPurgeDeletedFuture struct {
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *VaultsPurgeDeletedFuture) Result(client VaultsClient) (ar autorest.Response, err error) {
+func (future *VaultsPurgeDeletedFuture) Result(client VaultsClient) (ce CloudError, err error) {
 	var done bool
 	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
@@ -1865,7 +1919,13 @@ func (future *VaultsPurgeDeletedFuture) Result(client VaultsClient) (ar autorest
 		err = azure.NewAsyncOpIncompleteError("keyvault.VaultsPurgeDeletedFuture")
 		return
 	}
-	ar.Response = future.Response()
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if ce.Response.Response, err = future.GetResult(sender); err == nil && ce.Response.Response.StatusCode != http.StatusNoContent {
+		ce, err = client.PurgeDeletedResponder(ce.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "keyvault.VaultsPurgeDeletedFuture", "Result", ce.Response.Response, "Failure responding to request")
+		}
+	}
 	return
 }
 
