@@ -29,7 +29,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "github.com/Azure/azure-sdk-for-go/services/preview/appconfiguration/mgmt/2020-06-01/appconfiguration"
+const fqdn = "github.com/Azure/azure-sdk-for-go/services/appconfiguration/mgmt/2020-06-01/appconfiguration"
 
 // APIKey an API key used for authenticating with a configuration store endpoint.
 type APIKey struct {
@@ -200,8 +200,11 @@ func (page APIKeyListResultPage) Values() []APIKey {
 }
 
 // Creates a new instance of the APIKeyListResultPage type.
-func NewAPIKeyListResultPage(getNextPage func(context.Context, APIKeyListResult) (APIKeyListResult, error)) APIKeyListResultPage {
-	return APIKeyListResultPage{fn: getNextPage}
+func NewAPIKeyListResultPage(cur APIKeyListResult, getNextPage func(context.Context, APIKeyListResult) (APIKeyListResult, error)) APIKeyListResultPage {
+	return APIKeyListResultPage{
+		fn:   getNextPage,
+		aklr: cur,
+	}
 }
 
 // CheckNameAvailabilityParameters parameters used for checking whether a resource name is available.
@@ -212,8 +215,8 @@ type CheckNameAvailabilityParameters struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// ConfigurationStore the configuration store along with all resource properties. The Configuration Store will
-// have all information to begin utilizing it.
+// ConfigurationStore the configuration store along with all resource properties. The Configuration Store
+// will have all information to begin utilizing it.
 type ConfigurationStore struct {
 	autorest.Response `json:"-"`
 	// Identity - The managed identity information, if configured.
@@ -494,8 +497,11 @@ func (page ConfigurationStoreListResultPage) Values() []ConfigurationStore {
 }
 
 // Creates a new instance of the ConfigurationStoreListResultPage type.
-func NewConfigurationStoreListResultPage(getNextPage func(context.Context, ConfigurationStoreListResult) (ConfigurationStoreListResult, error)) ConfigurationStoreListResultPage {
-	return ConfigurationStoreListResultPage{fn: getNextPage}
+func NewConfigurationStoreListResultPage(cur ConfigurationStoreListResult, getNextPage func(context.Context, ConfigurationStoreListResult) (ConfigurationStoreListResult, error)) ConfigurationStoreListResultPage {
+	return ConfigurationStoreListResultPage{
+		fn:   getNextPage,
+		cslr: cur,
+	}
 }
 
 // ConfigurationStoreProperties the properties of a configuration store.
@@ -534,8 +540,8 @@ type ConfigurationStorePropertiesUpdateParameters struct {
 	PublicNetworkAccess PublicNetworkAccess `json:"publicNetworkAccess,omitempty"`
 }
 
-// ConfigurationStoresCreateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ConfigurationStoresCreateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ConfigurationStoresCreateFuture struct {
 	azure.Future
 }
@@ -563,8 +569,8 @@ func (future *ConfigurationStoresCreateFuture) Result(client ConfigurationStores
 	return
 }
 
-// ConfigurationStoresDeleteFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ConfigurationStoresDeleteFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ConfigurationStoresDeleteFuture struct {
 	azure.Future
 }
@@ -586,8 +592,8 @@ func (future *ConfigurationStoresDeleteFuture) Result(client ConfigurationStores
 	return
 }
 
-// ConfigurationStoresUpdateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// ConfigurationStoresUpdateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type ConfigurationStoresUpdateFuture struct {
 	azure.Future
 }
@@ -757,6 +763,34 @@ type ListKeyValueParameters struct {
 	Label *string `json:"label,omitempty"`
 }
 
+// MetricDimension specifications of the Dimension of metrics
+type MetricDimension struct {
+	// Name - Name of the dimension
+	Name *string `json:"name,omitempty"`
+	// DisplayName - Localized friendly display name of the dimension
+	DisplayName *string `json:"displayName,omitempty"`
+	// InternalName - Internal name of the dimension.
+	InternalName *string `json:"internalName,omitempty"`
+}
+
+// MetricSpecification specifications of the Metrics for Azure Monitoring
+type MetricSpecification struct {
+	// Name - Name of the metric
+	Name *string `json:"name,omitempty"`
+	// DisplayName - Localized friendly display name of the metric
+	DisplayName *string `json:"displayName,omitempty"`
+	// DisplayDescription - Localized friendly description of the metric
+	DisplayDescription *string `json:"displayDescription,omitempty"`
+	// Unit - Unit that makes sense for the metric
+	Unit *string `json:"unit,omitempty"`
+	// AggregationType - Only provide one value for this field. Valid values: Average, Minimum, Maximum, Total, Count.
+	AggregationType *string `json:"aggregationType,omitempty"`
+	// InternalMetricName - Internal metric name.
+	InternalMetricName *string `json:"internalMetricName,omitempty"`
+	// Dimensions - Dimensions of the metric
+	Dimensions *[]MetricDimension `json:"dimensions,omitempty"`
+}
+
 // NameAvailabilityStatus the result of a request to check the availability of a resource name.
 type NameAvailabilityStatus struct {
 	autorest.Response `json:"-"`
@@ -772,8 +806,14 @@ type NameAvailabilityStatus struct {
 type OperationDefinition struct {
 	// Name - Operation name: {provider}/{resource}/{operation}.
 	Name *string `json:"name,omitempty"`
+	// IsDataAction - Indicates whether the operation is a data action
+	IsDataAction *bool `json:"isDataAction,omitempty"`
 	// Display - The display information for the configuration store operation.
 	Display *OperationDefinitionDisplay `json:"display,omitempty"`
+	// Origin - Origin of the operation
+	Origin *string `json:"origin,omitempty"`
+	// Properties - Properties of the operation
+	Properties *OperationProperties `json:"properties,omitempty"`
 }
 
 // OperationDefinitionDisplay the display information for a configuration store operation.
@@ -812,7 +852,8 @@ type OperationDefinitionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// OperationDefinitionListResultIterator provides access to a complete listing of OperationDefinition values.
+// OperationDefinitionListResultIterator provides access to a complete listing of OperationDefinition
+// values.
 type OperationDefinitionListResultIterator struct {
 	i    int
 	page OperationDefinitionListResultPage
@@ -955,8 +996,17 @@ func (page OperationDefinitionListResultPage) Values() []OperationDefinition {
 }
 
 // Creates a new instance of the OperationDefinitionListResultPage type.
-func NewOperationDefinitionListResultPage(getNextPage func(context.Context, OperationDefinitionListResult) (OperationDefinitionListResult, error)) OperationDefinitionListResultPage {
-	return OperationDefinitionListResultPage{fn: getNextPage}
+func NewOperationDefinitionListResultPage(cur OperationDefinitionListResult, getNextPage func(context.Context, OperationDefinitionListResult) (OperationDefinitionListResult, error)) OperationDefinitionListResultPage {
+	return OperationDefinitionListResultPage{
+		fn:   getNextPage,
+		odlr: cur,
+	}
+}
+
+// OperationProperties extra Operation properties
+type OperationProperties struct {
+	// ServiceSpecification - Service specifications of the operation
+	ServiceSpecification *ServiceSpecification `json:"serviceSpecification,omitempty"`
 }
 
 // PrivateEndpoint private endpoint which a connection belongs to.
@@ -1191,8 +1241,11 @@ func (page PrivateEndpointConnectionListResultPage) Values() []PrivateEndpointCo
 }
 
 // Creates a new instance of the PrivateEndpointConnectionListResultPage type.
-func NewPrivateEndpointConnectionListResultPage(getNextPage func(context.Context, PrivateEndpointConnectionListResult) (PrivateEndpointConnectionListResult, error)) PrivateEndpointConnectionListResultPage {
-	return PrivateEndpointConnectionListResultPage{fn: getNextPage}
+func NewPrivateEndpointConnectionListResultPage(cur PrivateEndpointConnectionListResult, getNextPage func(context.Context, PrivateEndpointConnectionListResult) (PrivateEndpointConnectionListResult, error)) PrivateEndpointConnectionListResultPage {
+	return PrivateEndpointConnectionListResultPage{
+		fn:    getNextPage,
+		peclr: cur,
+	}
 }
 
 // PrivateEndpointConnectionProperties properties of a private endpoint connection.
@@ -1289,8 +1342,8 @@ func (pecr *PrivateEndpointConnectionReference) UnmarshalJSON(body []byte) error
 	return nil
 }
 
-// PrivateEndpointConnectionsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// PrivateEndpointConnectionsCreateOrUpdateFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type PrivateEndpointConnectionsCreateOrUpdateFuture struct {
 	azure.Future
 }
@@ -1423,7 +1476,8 @@ type PrivateLinkResourceListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 }
 
-// PrivateLinkResourceListResultIterator provides access to a complete listing of PrivateLinkResource values.
+// PrivateLinkResourceListResultIterator provides access to a complete listing of PrivateLinkResource
+// values.
 type PrivateLinkResourceListResultIterator struct {
 	i    int
 	page PrivateLinkResourceListResultPage
@@ -1566,8 +1620,11 @@ func (page PrivateLinkResourceListResultPage) Values() []PrivateLinkResource {
 }
 
 // Creates a new instance of the PrivateLinkResourceListResultPage type.
-func NewPrivateLinkResourceListResultPage(getNextPage func(context.Context, PrivateLinkResourceListResult) (PrivateLinkResourceListResult, error)) PrivateLinkResourceListResultPage {
-	return PrivateLinkResourceListResultPage{fn: getNextPage}
+func NewPrivateLinkResourceListResultPage(cur PrivateLinkResourceListResult, getNextPage func(context.Context, PrivateLinkResourceListResult) (PrivateLinkResourceListResult, error)) PrivateLinkResourceListResultPage {
+	return PrivateLinkResourceListResultPage{
+		fn:    getNextPage,
+		plrlr: cur,
+	}
 }
 
 // PrivateLinkResourceProperties properties of a private link resource.
@@ -1656,6 +1713,12 @@ func (ri ResourceIdentity) MarshalJSON() ([]byte, error) {
 		objectMap["userAssignedIdentities"] = ri.UserAssignedIdentities
 	}
 	return json.Marshal(objectMap)
+}
+
+// ServiceSpecification service specification payload
+type ServiceSpecification struct {
+	// MetricSpecifications - Specifications of the Metrics for Azure Monitoring
+	MetricSpecifications *[]MetricSpecification `json:"metricSpecifications,omitempty"`
 }
 
 // Sku describes a configuration store SKU.
