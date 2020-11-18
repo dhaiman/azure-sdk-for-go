@@ -38,8 +38,8 @@ type Column struct {
 	Type ColumnDataType `json:"type,omitempty"`
 }
 
-// DateTimeInterval an interval in time specifying the date and time for the inclusive start and exclusive end,
-// i.e. `[start, end)`.
+// DateTimeInterval an interval in time specifying the date and time for the inclusive start and exclusive
+// end, i.e. `[start, end)`.
 type DateTimeInterval struct {
 	// Start - A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error.
 	Start *date.Time `json:"start,omitempty"`
@@ -527,8 +527,11 @@ func (page GraphQueryListResultPage) Values() []GraphQueryResource {
 }
 
 // Creates a new instance of the GraphQueryListResultPage type.
-func NewGraphQueryListResultPage(getNextPage func(context.Context, GraphQueryListResult) (GraphQueryListResult, error)) GraphQueryListResultPage {
-	return GraphQueryListResultPage{fn: getNextPage}
+func NewGraphQueryListResultPage(cur GraphQueryListResult, getNextPage func(context.Context, GraphQueryListResult) (GraphQueryListResult, error)) GraphQueryListResultPage {
+	return GraphQueryListResultPage{
+		fn:   getNextPage,
+		gqlr: cur,
+	}
 }
 
 // GraphQueryProperties properties that contain a graph query.
@@ -576,8 +579,8 @@ type GraphQueryResource struct {
 	Location *string `json:"location,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// ETag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
-	ETag *string `json:"eTag,omitempty"`
+	// Etag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
+	Etag *string `json:"etag,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
 }
@@ -591,8 +594,8 @@ func (gqr GraphQueryResource) MarshalJSON() ([]byte, error) {
 	if gqr.Location != nil {
 		objectMap["location"] = gqr.Location
 	}
-	if gqr.ETag != nil {
-		objectMap["eTag"] = gqr.ETag
+	if gqr.Etag != nil {
+		objectMap["etag"] = gqr.Etag
 	}
 	if gqr.Tags != nil {
 		objectMap["tags"] = gqr.Tags
@@ -654,14 +657,14 @@ func (gqr *GraphQueryResource) UnmarshalJSON(body []byte) error {
 				}
 				gqr.Type = &typeVar
 			}
-		case "eTag":
+		case "etag":
 			if v != nil {
-				var eTag string
-				err = json.Unmarshal(*v, &eTag)
+				var etag string
+				err = json.Unmarshal(*v, &etag)
 				if err != nil {
 					return err
 				}
-				gqr.ETag = &eTag
+				gqr.Etag = &etag
 			}
 		case "tags":
 			if v != nil {
@@ -678,7 +681,8 @@ func (gqr *GraphQueryResource) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// GraphQueryUpdateParameters the parameters that can be provided when updating workbook properties properties.
+// GraphQueryUpdateParameters the parameters that can be provided when updating workbook properties
+// properties.
 type GraphQueryUpdateParameters struct {
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
@@ -920,8 +924,11 @@ func (page OperationListResultPage) Values() []Operation {
 }
 
 // Creates a new instance of the OperationListResultPage type.
-func NewOperationListResultPage(getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
-	return OperationListResultPage{fn: getNextPage}
+func NewOperationListResultPage(cur OperationListResult, getNextPage func(context.Context, OperationListResult) (OperationListResult, error)) OperationListResultPage {
+	return OperationListResultPage{
+		fn:  getNextPage,
+		olr: cur,
+	}
 }
 
 // QueryRequest describes a query to be executed.
@@ -1041,8 +1048,8 @@ type Resource struct {
 	Location *string `json:"location,omitempty"`
 	// Type - READ-ONLY; Azure resource type
 	Type *string `json:"type,omitempty"`
-	// ETag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
-	ETag *string `json:"eTag,omitempty"`
+	// Etag - This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict.
+	Etag *string `json:"etag,omitempty"`
 	// Tags - Resource tags
 	Tags map[string]*string `json:"tags"`
 }
@@ -1053,8 +1060,8 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	if r.Location != nil {
 		objectMap["location"] = r.Location
 	}
-	if r.ETag != nil {
-		objectMap["eTag"] = r.ETag
+	if r.Etag != nil {
+		objectMap["etag"] = r.Etag
 	}
 	if r.Tags != nil {
 		objectMap["tags"] = r.Tags
@@ -1062,7 +1069,8 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ResourceChangeData data on a specific change, represented by a pair of before and after resource snapshots.
+// ResourceChangeData data on a specific change, represented by a pair of before and after resource
+// snapshots.
 type ResourceChangeData struct {
 	autorest.Response `json:"-"`
 	// ChangeID - The change ID. Valid and unique within the specified resource only.
