@@ -45,14 +45,13 @@ func NewDeletedAccountsClientWithBaseURI(baseURI string, subscriptionID string) 
 // Get get properties of specified deleted account resource.
 // Parameters:
 // deletedAccountName - name of the deleted storage account.
-// location - the location of the deleted storage account.
-func (client DeletedAccountsClient) Get(ctx context.Context, deletedAccountName string, location string) (result DeletedAccount, err error) {
+func (client DeletedAccountsClient) Get(ctx context.Context, deletedAccountName string) (result DeletedAccountListResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.Get")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.dalr.Response.Response != nil {
+				sc = result.dalr.Response.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -66,7 +65,8 @@ func (client DeletedAccountsClient) Get(ctx context.Context, deletedAccountName 
 		return result, validation.NewError("storage.DeletedAccountsClient", "Get", err.Error())
 	}
 
-	req, err := client.GetPreparer(ctx, deletedAccountName, location)
+	result.fn = client.getNextResults
+	req, err := client.GetPreparer(ctx, deletedAccountName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "Get", nil, "Failure preparing request")
 		return
@@ -74,21 +74,148 @@ func (client DeletedAccountsClient) Get(ctx context.Context, deletedAccountName 
 
 	resp, err := client.GetSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.dalr.Response = autorest.Response{Response: resp}
 		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "Get", resp, "Failure sending request")
 		return
 	}
 
-	result, err = client.GetResponder(resp)
+	result.dalr, err = client.GetResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "Get", resp, "Failure responding to request")
+	}
+	if result.dalr.hasNextLink() && result.dalr.IsEmpty() {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
 }
 
 // GetPreparer prepares the Get request.
-func (client DeletedAccountsClient) GetPreparer(ctx context.Context, deletedAccountName string, location string) (*http.Request, error) {
+func (client DeletedAccountsClient) GetPreparer(ctx context.Context, deletedAccountName string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"deletedAccountName": autorest.Encode("path", deletedAccountName),
+		"subscriptionId":     autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-08-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts/{deletedAccountName}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetSender sends the Get request. The method will close the
+// http.Response Body if it receives an error.
+func (client DeletedAccountsClient) GetSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// GetResponder handles the response to the Get request. The method always
+// closes the http.Response Body.
+func (client DeletedAccountsClient) GetResponder(resp *http.Response) (result DeletedAccountListResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// getNextResults retrieves the next set of results, if any.
+func (client DeletedAccountsClient) getNextResults(ctx context.Context, lastResults DeletedAccountListResult) (result DeletedAccountListResult, err error) {
+	req, err := lastResults.deletedAccountListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.GetSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.GetResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// GetComplete enumerates all values, automatically crossing page boundaries as required.
+func (client DeletedAccountsClient) GetComplete(ctx context.Context, deletedAccountName string) (result DeletedAccountListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.Get")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.Get(ctx, deletedAccountName)
+	return
+}
+
+// GetWithLocation get properties of specified deleted account resource.
+// Parameters:
+// deletedAccountName - name of the deleted storage account.
+// location - the location of the deleted storage account.
+func (client DeletedAccountsClient) GetWithLocation(ctx context.Context, deletedAccountName string, location string) (result DeletedAccountListResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.GetWithLocation")
+		defer func() {
+			sc := -1
+			if result.dalr.Response.Response != nil {
+				sc = result.dalr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: deletedAccountName,
+			Constraints: []validation.Constraint{{Target: "deletedAccountName", Name: validation.MaxLength, Rule: 24, Chain: nil},
+				{Target: "deletedAccountName", Name: validation.MinLength, Rule: 3, Chain: nil}}},
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("storage.DeletedAccountsClient", "GetWithLocation", err.Error())
+	}
+
+	result.fn = client.getWithLocationNextResults
+	req, err := client.GetWithLocationPreparer(ctx, deletedAccountName, location)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "GetWithLocation", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetWithLocationSender(req)
+	if err != nil {
+		result.dalr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "GetWithLocation", resp, "Failure sending request")
+		return
+	}
+
+	result.dalr, err = client.GetWithLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "GetWithLocation", resp, "Failure responding to request")
+	}
+	if result.dalr.hasNextLink() && result.dalr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
+
+	return
+}
+
+// GetWithLocationPreparer prepares the GetWithLocation request.
+func (client DeletedAccountsClient) GetWithLocationPreparer(ctx context.Context, deletedAccountName string, location string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"deletedAccountName": autorest.Encode("path", deletedAccountName),
 		"location":           autorest.Encode("path", location),
@@ -108,21 +235,58 @@ func (client DeletedAccountsClient) GetPreparer(ctx context.Context, deletedAcco
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
-// GetSender sends the Get request. The method will close the
+// GetWithLocationSender sends the GetWithLocation request. The method will close the
 // http.Response Body if it receives an error.
-func (client DeletedAccountsClient) GetSender(req *http.Request) (*http.Response, error) {
+func (client DeletedAccountsClient) GetWithLocationSender(req *http.Request) (*http.Response, error) {
 	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
 }
 
-// GetResponder handles the response to the Get request. The method always
+// GetWithLocationResponder handles the response to the GetWithLocation request. The method always
 // closes the http.Response Body.
-func (client DeletedAccountsClient) GetResponder(resp *http.Response) (result DeletedAccount, err error) {
+func (client DeletedAccountsClient) GetWithLocationResponder(resp *http.Response) (result DeletedAccountListResult, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// getWithLocationNextResults retrieves the next set of results, if any.
+func (client DeletedAccountsClient) getWithLocationNextResults(ctx context.Context, lastResults DeletedAccountListResult) (result DeletedAccountListResult, err error) {
+	req, err := lastResults.deletedAccountListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getWithLocationNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.GetWithLocationSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getWithLocationNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.GetWithLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "getWithLocationNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// GetWithLocationComplete enumerates all values, automatically crossing page boundaries as required.
+func (client DeletedAccountsClient) GetWithLocationComplete(ctx context.Context, deletedAccountName string, location string) (result DeletedAccountListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.GetWithLocation")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.GetWithLocation(ctx, deletedAccountName, location)
 	return
 }
 
@@ -240,5 +404,125 @@ func (client DeletedAccountsClient) ListComplete(ctx context.Context) (result De
 		}()
 	}
 	result.page, err = client.List(ctx)
+	return
+}
+
+// ListWithLocation lists deleted accounts under the subscription within a given location.
+// Parameters:
+// location - the location of the deleted storage account.
+func (client DeletedAccountsClient) ListWithLocation(ctx context.Context, location string) (result DeletedAccountListResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.ListWithLocation")
+		defer func() {
+			sc := -1
+			if result.dalr.Response.Response != nil {
+				sc = result.dalr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: client.SubscriptionID,
+			Constraints: []validation.Constraint{{Target: "client.SubscriptionID", Name: validation.MinLength, Rule: 1, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("storage.DeletedAccountsClient", "ListWithLocation", err.Error())
+	}
+
+	result.fn = client.listWithLocationNextResults
+	req, err := client.ListWithLocationPreparer(ctx, location)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "ListWithLocation", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.ListWithLocationSender(req)
+	if err != nil {
+		result.dalr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "ListWithLocation", resp, "Failure sending request")
+		return
+	}
+
+	result.dalr, err = client.ListWithLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "ListWithLocation", resp, "Failure responding to request")
+	}
+	if result.dalr.hasNextLink() && result.dalr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
+
+	return
+}
+
+// ListWithLocationPreparer prepares the ListWithLocation request.
+func (client DeletedAccountsClient) ListWithLocationPreparer(ctx context.Context, location string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"location":       autorest.Encode("path", location),
+		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2020-08-01-preview"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ListWithLocationSender sends the ListWithLocation request. The method will close the
+// http.Response Body if it receives an error.
+func (client DeletedAccountsClient) ListWithLocationSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// ListWithLocationResponder handles the response to the ListWithLocation request. The method always
+// closes the http.Response Body.
+func (client DeletedAccountsClient) ListWithLocationResponder(resp *http.Response) (result DeletedAccountListResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// listWithLocationNextResults retrieves the next set of results, if any.
+func (client DeletedAccountsClient) listWithLocationNextResults(ctx context.Context, lastResults DeletedAccountListResult) (result DeletedAccountListResult, err error) {
+	req, err := lastResults.deletedAccountListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "listWithLocationNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListWithLocationSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "listWithLocationNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListWithLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "storage.DeletedAccountsClient", "listWithLocationNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// ListWithLocationComplete enumerates all values, automatically crossing page boundaries as required.
+func (client DeletedAccountsClient) ListWithLocationComplete(ctx context.Context, location string) (result DeletedAccountListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DeletedAccountsClient.ListWithLocation")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.ListWithLocation(ctx, location)
 	return
 }

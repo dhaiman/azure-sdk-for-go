@@ -60,9 +60,14 @@ var _ AccountsClientAPI = (*storage.AccountsClient)(nil)
 
 // DeletedAccountsClientAPI contains the set of methods on the DeletedAccountsClient type.
 type DeletedAccountsClientAPI interface {
-	Get(ctx context.Context, deletedAccountName string, location string) (result storage.DeletedAccount, err error)
+	Get(ctx context.Context, deletedAccountName string) (result storage.DeletedAccountListResultPage, err error)
+	GetComplete(ctx context.Context, deletedAccountName string) (result storage.DeletedAccountListResultIterator, err error)
+	GetWithLocation(ctx context.Context, deletedAccountName string, location string) (result storage.DeletedAccountListResultPage, err error)
+	GetWithLocationComplete(ctx context.Context, deletedAccountName string, location string) (result storage.DeletedAccountListResultIterator, err error)
 	List(ctx context.Context) (result storage.DeletedAccountListResultPage, err error)
 	ListComplete(ctx context.Context) (result storage.DeletedAccountListResultIterator, err error)
+	ListWithLocation(ctx context.Context, location string) (result storage.DeletedAccountListResultPage, err error)
+	ListWithLocationComplete(ctx context.Context, location string) (result storage.DeletedAccountListResultIterator, err error)
 }
 
 var _ DeletedAccountsClientAPI = (*storage.DeletedAccountsClient)(nil)
@@ -171,9 +176,9 @@ var _ FileServicesClientAPI = (*storage.FileServicesClient)(nil)
 
 // FileSharesClientAPI contains the set of methods on the FileSharesClient type.
 type FileSharesClientAPI interface {
-	Create(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare) (result storage.FileShare, err error)
-	Delete(ctx context.Context, resourceGroupName string, accountName string, shareName string) (result autorest.Response, err error)
-	Get(ctx context.Context, resourceGroupName string, accountName string, shareName string, expand storage.GetShareExpand) (result storage.FileShare, err error)
+	Create(ctx context.Context, resourceGroupName string, accountName string, shareName string, fileShare storage.FileShare, expand storage.PutSharesExpand) (result storage.FileShare, err error)
+	Delete(ctx context.Context, resourceGroupName string, accountName string, shareName string, xMsSnapshot string) (result autorest.Response, err error)
+	Get(ctx context.Context, resourceGroupName string, accountName string, shareName string, expand storage.GetShareExpand, xMsSnapshot string) (result storage.FileShare, err error)
 	List(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string, expand storage.ListSharesExpand) (result storage.FileShareItemsPage, err error)
 	ListComplete(ctx context.Context, resourceGroupName string, accountName string, maxpagesize string, filter string, expand storage.ListSharesExpand) (result storage.FileShareItemsIterator, err error)
 	Restore(ctx context.Context, resourceGroupName string, accountName string, shareName string, deletedShare storage.DeletedShare) (result autorest.Response, err error)
