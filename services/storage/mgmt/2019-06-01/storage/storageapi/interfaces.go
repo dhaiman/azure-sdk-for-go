@@ -58,6 +58,13 @@ type AccountsClientAPI interface {
 
 var _ AccountsClientAPI = (*storage.AccountsClient)(nil)
 
+// UsageClientAPI contains the set of methods on the UsageClient type.
+type UsageClientAPI interface {
+	List(ctx context.Context) (result storage.UsageListResult, err error)
+}
+
+var _ UsageClientAPI = (*storage.UsageClient)(nil)
+
 // UsagesClientAPI contains the set of methods on the UsagesClient type.
 type UsagesClientAPI interface {
 	ListByLocation(ctx context.Context, location string) (result storage.UsageListResult, err error)
