@@ -58,6 +58,15 @@ type AccountsClientAPI interface {
 
 var _ AccountsClientAPI = (*storage.AccountsClient)(nil)
 
+// DeletedAccountsClientAPI contains the set of methods on the DeletedAccountsClient type.
+type DeletedAccountsClientAPI interface {
+	Get(ctx context.Context, deletedAccountName string, location string) (result storage.DeletedAccount, err error)
+	List(ctx context.Context) (result storage.DeletedAccountListResultPage, err error)
+	ListComplete(ctx context.Context) (result storage.DeletedAccountListResultIterator, err error)
+}
+
+var _ DeletedAccountsClientAPI = (*storage.DeletedAccountsClient)(nil)
+
 // UsagesClientAPI contains the set of methods on the UsagesClient type.
 type UsagesClientAPI interface {
 	ListByLocation(ctx context.Context, location string) (result storage.UsageListResult, err error)
