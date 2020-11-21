@@ -100,13 +100,15 @@ const (
 	LateralMovement AttackTactic = "LateralMovement"
 	// Persistence ...
 	Persistence AttackTactic = "Persistence"
+	// PreAttack ...
+	PreAttack AttackTactic = "PreAttack"
 	// PrivilegeEscalation ...
 	PrivilegeEscalation AttackTactic = "PrivilegeEscalation"
 )
 
 // PossibleAttackTacticValues returns an array of possible values for the AttackTactic const type.
 func PossibleAttackTacticValues() []AttackTactic {
-	return []AttackTactic{Collection, CommandAndControl, CredentialAccess, DefenseEvasion, Discovery, Execution, Exfiltration, Impact, InitialAccess, LateralMovement, Persistence, PrivilegeEscalation}
+	return []AttackTactic{Collection, CommandAndControl, CredentialAccess, DefenseEvasion, Discovery, Execution, Exfiltration, Impact, InitialAccess, LateralMovement, Persistence, PreAttack, PrivilegeEscalation}
 }
 
 // CaseSeverity enumerates the values for case severity.
@@ -241,6 +243,8 @@ const (
 	DataConnectorKindMicrosoftDefenderAdvancedThreatProtection DataConnectorKind = "MicrosoftDefenderAdvancedThreatProtection"
 	// DataConnectorKindOffice365 ...
 	DataConnectorKindOffice365 DataConnectorKind = "Office365"
+	// DataConnectorKindOfficeATP ...
+	DataConnectorKindOfficeATP DataConnectorKind = "OfficeATP"
 	// DataConnectorKindThreatIntelligence ...
 	DataConnectorKindThreatIntelligence DataConnectorKind = "ThreatIntelligence"
 	// DataConnectorKindThreatIntelligenceTaxii ...
@@ -249,7 +253,7 @@ const (
 
 // PossibleDataConnectorKindValues returns an array of possible values for the DataConnectorKind const type.
 func PossibleDataConnectorKindValues() []DataConnectorKind {
-	return []DataConnectorKind{DataConnectorKindAmazonWebServicesCloudTrail, DataConnectorKindAzureActiveDirectory, DataConnectorKindAzureAdvancedThreatProtection, DataConnectorKindAzureSecurityCenter, DataConnectorKindMicrosoftCloudAppSecurity, DataConnectorKindMicrosoftDefenderAdvancedThreatProtection, DataConnectorKindOffice365, DataConnectorKindThreatIntelligence, DataConnectorKindThreatIntelligenceTaxii}
+	return []DataConnectorKind{DataConnectorKindAmazonWebServicesCloudTrail, DataConnectorKindAzureActiveDirectory, DataConnectorKindAzureAdvancedThreatProtection, DataConnectorKindAzureSecurityCenter, DataConnectorKindMicrosoftCloudAppSecurity, DataConnectorKindMicrosoftDefenderAdvancedThreatProtection, DataConnectorKindOffice365, DataConnectorKindOfficeATP, DataConnectorKindThreatIntelligence, DataConnectorKindThreatIntelligenceTaxii}
 }
 
 // DataConnectorLicenseState enumerates the values for data connector license state.
@@ -318,6 +322,21 @@ func PossibleEntitiesMatchingMethodValues() []EntitiesMatchingMethod {
 	return []EntitiesMatchingMethod{All, Custom, None}
 }
 
+// EntitiesQueriesKind enumerates the values for entities queries kind.
+type EntitiesQueriesKind string
+
+const (
+	// Activity activity
+	Activity EntitiesQueriesKind = "Activity"
+	// Insight insight
+	Insight EntitiesQueriesKind = "Insight"
+)
+
+// PossibleEntitiesQueriesKindValues returns an array of possible values for the EntitiesQueriesKind const type.
+func PossibleEntitiesQueriesKindValues() []EntitiesQueriesKind {
+	return []EntitiesQueriesKind{Activity, Insight}
+}
+
 // EntityKind enumerates the values for entity kind.
 type EntityKind string
 
@@ -363,6 +382,38 @@ func PossibleEntityKindValues() []EntityKind {
 	return []EntityKind{EntityKindAccount, EntityKindAzureResource, EntityKindBookmark, EntityKindCloudApplication, EntityKindDNSResolution, EntityKindFile, EntityKindFileHash, EntityKindHost, EntityKindIoTDevice, EntityKindIP, EntityKindMalware, EntityKindProcess, EntityKindRegistryKey, EntityKindRegistryValue, EntityKindSecurityAlert, EntityKindSecurityGroup, EntityKindURL}
 }
 
+// EntityQueryKind enumerates the values for entity query kind.
+type EntityQueryKind string
+
+const (
+	// EntityQueryKindActivity activity
+	EntityQueryKindActivity EntityQueryKind = "Activity"
+	// EntityQueryKindInsight nsight
+	EntityQueryKindInsight EntityQueryKind = "Insight"
+)
+
+// PossibleEntityQueryKindValues returns an array of possible values for the EntityQueryKind const type.
+func PossibleEntityQueryKindValues() []EntityQueryKind {
+	return []EntityQueryKind{EntityQueryKindActivity, EntityQueryKindInsight}
+}
+
+// EntityTimelineKind enumerates the values for entity timeline kind.
+type EntityTimelineKind string
+
+const (
+	// EntityTimelineKindActivity activity
+	EntityTimelineKindActivity EntityTimelineKind = "Activity"
+	// EntityTimelineKindBookmark bookmarks
+	EntityTimelineKindBookmark EntityTimelineKind = "Bookmark"
+	// EntityTimelineKindSecurityAlert security alerts
+	EntityTimelineKindSecurityAlert EntityTimelineKind = "SecurityAlert"
+)
+
+// PossibleEntityTimelineKindValues returns an array of possible values for the EntityTimelineKind const type.
+func PossibleEntityTimelineKindValues() []EntityTimelineKind {
+	return []EntityTimelineKind{EntityTimelineKindActivity, EntityTimelineKindBookmark, EntityTimelineKindSecurityAlert}
+}
+
 // EntityType enumerates the values for entity type.
 type EntityType string
 
@@ -406,6 +457,21 @@ const (
 // PossibleEntityTypeValues returns an array of possible values for the EntityType const type.
 func PossibleEntityTypeValues() []EntityType {
 	return []EntityType{EntityTypeAccount, EntityTypeAzureResource, EntityTypeCloudApplication, EntityTypeDNS, EntityTypeFile, EntityTypeFileHash, EntityTypeHost, EntityTypeHuntingBookmark, EntityTypeIoTDevice, EntityTypeIP, EntityTypeMalware, EntityTypeProcess, EntityTypeRegistryKey, EntityTypeRegistryValue, EntityTypeSecurityAlert, EntityTypeSecurityGroup, EntityTypeURL}
+}
+
+// EventGroupingAggregationKind enumerates the values for event grouping aggregation kind.
+type EventGroupingAggregationKind string
+
+const (
+	// AlertPerResult ...
+	AlertPerResult EventGroupingAggregationKind = "AlertPerResult"
+	// SingleAlert ...
+	SingleAlert EventGroupingAggregationKind = "SingleAlert"
+)
+
+// PossibleEventGroupingAggregationKindValues returns an array of possible values for the EventGroupingAggregationKind const type.
+func PossibleEventGroupingAggregationKindValues() []EventGroupingAggregationKind {
+	return []EventGroupingAggregationKind{AlertPerResult, SingleAlert}
 }
 
 // FileHashAlgorithm enumerates the values for file hash algorithm.
@@ -688,6 +754,8 @@ const (
 	KindMicrosoftDefenderAdvancedThreatProtection KindBasicDataConnector = "MicrosoftDefenderAdvancedThreatProtection"
 	// KindOffice365 ...
 	KindOffice365 KindBasicDataConnector = "Office365"
+	// KindOfficeATP ...
+	KindOfficeATP KindBasicDataConnector = "OfficeATP"
 	// KindThreatIntelligence ...
 	KindThreatIntelligence KindBasicDataConnector = "ThreatIntelligence"
 	// KindThreatIntelligenceTaxii ...
@@ -696,7 +764,7 @@ const (
 
 // PossibleKindBasicDataConnectorValues returns an array of possible values for the KindBasicDataConnector const type.
 func PossibleKindBasicDataConnectorValues() []KindBasicDataConnector {
-	return []KindBasicDataConnector{KindAmazonWebServicesCloudTrail, KindAzureActiveDirectory, KindAzureAdvancedThreatProtection, KindAzureSecurityCenter, KindDataConnector, KindMicrosoftCloudAppSecurity, KindMicrosoftDefenderAdvancedThreatProtection, KindOffice365, KindThreatIntelligence, KindThreatIntelligenceTaxii}
+	return []KindBasicDataConnector{KindAmazonWebServicesCloudTrail, KindAzureActiveDirectory, KindAzureAdvancedThreatProtection, KindAzureSecurityCenter, KindDataConnector, KindMicrosoftCloudAppSecurity, KindMicrosoftDefenderAdvancedThreatProtection, KindOffice365, KindOfficeATP, KindThreatIntelligence, KindThreatIntelligenceTaxii}
 }
 
 // KindBasicDataConnectorsCheckRequirements enumerates the values for kind basic data connectors check
@@ -718,6 +786,8 @@ const (
 	KindBasicDataConnectorsCheckRequirementsKindMicrosoftCloudAppSecurity KindBasicDataConnectorsCheckRequirements = "MicrosoftCloudAppSecurity"
 	// KindBasicDataConnectorsCheckRequirementsKindMicrosoftDefenderAdvancedThreatProtection ...
 	KindBasicDataConnectorsCheckRequirementsKindMicrosoftDefenderAdvancedThreatProtection KindBasicDataConnectorsCheckRequirements = "MicrosoftDefenderAdvancedThreatProtection"
+	// KindBasicDataConnectorsCheckRequirementsKindOfficeATP ...
+	KindBasicDataConnectorsCheckRequirementsKindOfficeATP KindBasicDataConnectorsCheckRequirements = "OfficeATP"
 	// KindBasicDataConnectorsCheckRequirementsKindThreatIntelligence ...
 	KindBasicDataConnectorsCheckRequirementsKindThreatIntelligence KindBasicDataConnectorsCheckRequirements = "ThreatIntelligence"
 	// KindBasicDataConnectorsCheckRequirementsKindThreatIntelligenceTaxii ...
@@ -726,7 +796,7 @@ const (
 
 // PossibleKindBasicDataConnectorsCheckRequirementsValues returns an array of possible values for the KindBasicDataConnectorsCheckRequirements const type.
 func PossibleKindBasicDataConnectorsCheckRequirementsValues() []KindBasicDataConnectorsCheckRequirements {
-	return []KindBasicDataConnectorsCheckRequirements{KindBasicDataConnectorsCheckRequirementsKindAmazonWebServicesCloudTrail, KindBasicDataConnectorsCheckRequirementsKindAzureActiveDirectory, KindBasicDataConnectorsCheckRequirementsKindAzureAdvancedThreatProtection, KindBasicDataConnectorsCheckRequirementsKindAzureSecurityCenter, KindBasicDataConnectorsCheckRequirementsKindDataConnectorsCheckRequirements, KindBasicDataConnectorsCheckRequirementsKindMicrosoftCloudAppSecurity, KindBasicDataConnectorsCheckRequirementsKindMicrosoftDefenderAdvancedThreatProtection, KindBasicDataConnectorsCheckRequirementsKindThreatIntelligence, KindBasicDataConnectorsCheckRequirementsKindThreatIntelligenceTaxii}
+	return []KindBasicDataConnectorsCheckRequirements{KindBasicDataConnectorsCheckRequirementsKindAmazonWebServicesCloudTrail, KindBasicDataConnectorsCheckRequirementsKindAzureActiveDirectory, KindBasicDataConnectorsCheckRequirementsKindAzureAdvancedThreatProtection, KindBasicDataConnectorsCheckRequirementsKindAzureSecurityCenter, KindBasicDataConnectorsCheckRequirementsKindDataConnectorsCheckRequirements, KindBasicDataConnectorsCheckRequirementsKindMicrosoftCloudAppSecurity, KindBasicDataConnectorsCheckRequirementsKindMicrosoftDefenderAdvancedThreatProtection, KindBasicDataConnectorsCheckRequirementsKindOfficeATP, KindBasicDataConnectorsCheckRequirementsKindThreatIntelligence, KindBasicDataConnectorsCheckRequirementsKindThreatIntelligenceTaxii}
 }
 
 // KindBasicEntity enumerates the values for kind basic entity.
@@ -737,6 +807,8 @@ const (
 	KindAccount KindBasicEntity = "Account"
 	// KindAzureResource ...
 	KindAzureResource KindBasicEntity = "AzureResource"
+	// KindBookmark ...
+	KindBookmark KindBasicEntity = "Bookmark"
 	// KindCloudApplication ...
 	KindCloudApplication KindBasicEntity = "CloudApplication"
 	// KindDNSResolution ...
@@ -771,22 +843,77 @@ const (
 
 // PossibleKindBasicEntityValues returns an array of possible values for the KindBasicEntity const type.
 func PossibleKindBasicEntityValues() []KindBasicEntity {
-	return []KindBasicEntity{KindAccount, KindAzureResource, KindCloudApplication, KindDNSResolution, KindEntity, KindFile, KindFileHash, KindHost, KindIoTDevice, KindIP, KindMalware, KindProcess, KindRegistryKey, KindRegistryValue, KindSecurityAlert, KindSecurityGroup, KindURL}
+	return []KindBasicEntity{KindAccount, KindAzureResource, KindBookmark, KindCloudApplication, KindDNSResolution, KindEntity, KindFile, KindFileHash, KindHost, KindIoTDevice, KindIP, KindMalware, KindProcess, KindRegistryKey, KindRegistryValue, KindSecurityAlert, KindSecurityGroup, KindURL}
+}
+
+// KindBasicEntityQueryItem enumerates the values for kind basic entity query item.
+type KindBasicEntityQueryItem string
+
+const (
+	// KindActivity ...
+	KindActivity KindBasicEntityQueryItem = "Activity"
+	// KindEntityQueryItem ...
+	KindEntityQueryItem KindBasicEntityQueryItem = "EntityQueryItem"
+	// KindInsight ...
+	KindInsight KindBasicEntityQueryItem = "Insight"
+)
+
+// PossibleKindBasicEntityQueryItemValues returns an array of possible values for the KindBasicEntityQueryItem const type.
+func PossibleKindBasicEntityQueryItemValues() []KindBasicEntityQueryItem {
+	return []KindBasicEntityQueryItem{KindActivity, KindEntityQueryItem, KindInsight}
+}
+
+// KindBasicEntityTimelineItem enumerates the values for kind basic entity timeline item.
+type KindBasicEntityTimelineItem string
+
+const (
+	// KindBasicEntityTimelineItemKindActivity ...
+	KindBasicEntityTimelineItemKindActivity KindBasicEntityTimelineItem = "Activity"
+	// KindBasicEntityTimelineItemKindBookmark ...
+	KindBasicEntityTimelineItemKindBookmark KindBasicEntityTimelineItem = "Bookmark"
+	// KindBasicEntityTimelineItemKindEntityTimelineItem ...
+	KindBasicEntityTimelineItemKindEntityTimelineItem KindBasicEntityTimelineItem = "EntityTimelineItem"
+	// KindBasicEntityTimelineItemKindSecurityAlert ...
+	KindBasicEntityTimelineItemKindSecurityAlert KindBasicEntityTimelineItem = "SecurityAlert"
+)
+
+// PossibleKindBasicEntityTimelineItemValues returns an array of possible values for the KindBasicEntityTimelineItem const type.
+func PossibleKindBasicEntityTimelineItemValues() []KindBasicEntityTimelineItem {
+	return []KindBasicEntityTimelineItem{KindBasicEntityTimelineItemKindActivity, KindBasicEntityTimelineItemKindBookmark, KindBasicEntityTimelineItemKindEntityTimelineItem, KindBasicEntityTimelineItemKindSecurityAlert}
 }
 
 // KindBasicSettings enumerates the values for kind basic settings.
 type KindBasicSettings string
 
 const (
+	// KindEntityAnalytics ...
+	KindEntityAnalytics KindBasicSettings = "EntityAnalytics"
 	// KindEyesOn ...
 	KindEyesOn KindBasicSettings = "EyesOn"
 	// KindSettings ...
 	KindSettings KindBasicSettings = "Settings"
+	// KindUeba ...
+	KindUeba KindBasicSettings = "Ueba"
 )
 
 // PossibleKindBasicSettingsValues returns an array of possible values for the KindBasicSettings const type.
 func PossibleKindBasicSettingsValues() []KindBasicSettings {
-	return []KindBasicSettings{KindEyesOn, KindSettings}
+	return []KindBasicSettings{KindEntityAnalytics, KindEyesOn, KindSettings, KindUeba}
+}
+
+// KindBasicThreatIntelligenceInformation enumerates the values for kind basic threat intelligence information.
+type KindBasicThreatIntelligenceInformation string
+
+const (
+	// KindIndicator ...
+	KindIndicator KindBasicThreatIntelligenceInformation = "indicator"
+	// KindThreatIntelligenceInformation ...
+	KindThreatIntelligenceInformation KindBasicThreatIntelligenceInformation = "ThreatIntelligenceInformation"
+)
+
+// PossibleKindBasicThreatIntelligenceInformationValues returns an array of possible values for the KindBasicThreatIntelligenceInformation const type.
+func PossibleKindBasicThreatIntelligenceInformationValues() []KindBasicThreatIntelligenceInformation {
+	return []KindBasicThreatIntelligenceInformation{KindIndicator, KindThreatIntelligenceInformation}
 }
 
 // MicrosoftSecurityProductName enumerates the values for microsoft security product name.
@@ -803,11 +930,15 @@ const (
 	AzureSecurityCenterforIoT MicrosoftSecurityProductName = "Azure Security Center for IoT"
 	// MicrosoftCloudAppSecurity ...
 	MicrosoftCloudAppSecurity MicrosoftSecurityProductName = "Microsoft Cloud App Security"
+	// MicrosoftDefenderAdvancedThreatProtection ...
+	MicrosoftDefenderAdvancedThreatProtection MicrosoftSecurityProductName = "Microsoft Defender Advanced Threat Protection"
+	// Office365AdvancedThreatProtection ...
+	Office365AdvancedThreatProtection MicrosoftSecurityProductName = "Office 365 Advanced Threat Protection"
 )
 
 // PossibleMicrosoftSecurityProductNameValues returns an array of possible values for the MicrosoftSecurityProductName const type.
 func PossibleMicrosoftSecurityProductNameValues() []MicrosoftSecurityProductName {
-	return []MicrosoftSecurityProductName{AzureActiveDirectoryIdentityProtection, AzureAdvancedThreatProtection, AzureSecurityCenter, AzureSecurityCenterforIoT, MicrosoftCloudAppSecurity}
+	return []MicrosoftSecurityProductName{AzureActiveDirectoryIdentityProtection, AzureAdvancedThreatProtection, AzureSecurityCenter, AzureSecurityCenterforIoT, MicrosoftCloudAppSecurity, MicrosoftDefenderAdvancedThreatProtection, Office365AdvancedThreatProtection}
 }
 
 // OSFamily enumerates the values for os family.
@@ -827,6 +958,25 @@ const (
 // PossibleOSFamilyValues returns an array of possible values for the OSFamily const type.
 func PossibleOSFamilyValues() []OSFamily {
 	return []OSFamily{Android, IOS, Linux, Windows}
+}
+
+// OutputType enumerates the values for output type.
+type OutputType string
+
+const (
+	// OutputTypeDate ...
+	OutputTypeDate OutputType = "Date"
+	// OutputTypeEntity ...
+	OutputTypeEntity OutputType = "Entity"
+	// OutputTypeNumber ...
+	OutputTypeNumber OutputType = "Number"
+	// OutputTypeString ...
+	OutputTypeString OutputType = "String"
+)
+
+// PossibleOutputTypeValues returns an array of possible values for the OutputType const type.
+func PossibleOutputTypeValues() []OutputType {
+	return []OutputType{OutputTypeDate, OutputTypeEntity, OutputTypeNumber, OutputTypeString}
 }
 
 // RegistryHive enumerates the values for registry hive.
@@ -915,6 +1065,38 @@ func PossibleRelationTypesValues() []RelationTypes {
 	return []RelationTypes{CasesToBookmarks}
 }
 
+// SettingKind enumerates the values for setting kind.
+type SettingKind string
+
+const (
+	// SettingKindEntityAnalytics ...
+	SettingKindEntityAnalytics SettingKind = "EntityAnalytics"
+	// SettingKindEyesOn ...
+	SettingKindEyesOn SettingKind = "EyesOn"
+	// SettingKindUeba ...
+	SettingKindUeba SettingKind = "Ueba"
+)
+
+// PossibleSettingKindValues returns an array of possible values for the SettingKind const type.
+func PossibleSettingKindValues() []SettingKind {
+	return []SettingKind{SettingKindEntityAnalytics, SettingKindEyesOn, SettingKindUeba}
+}
+
+// Source enumerates the values for source.
+type Source string
+
+const (
+	// Localfile ...
+	Localfile Source = "Local file"
+	// Remotestorage ...
+	Remotestorage Source = "Remote storage"
+)
+
+// PossibleSourceValues returns an array of possible values for the Source const type.
+func PossibleSourceValues() []Source {
+	return []Source{Localfile, Remotestorage}
+}
+
 // TemplateStatus enumerates the values for template status.
 type TemplateStatus string
 
@@ -930,6 +1112,36 @@ const (
 // PossibleTemplateStatusValues returns an array of possible values for the TemplateStatus const type.
 func PossibleTemplateStatusValues() []TemplateStatus {
 	return []TemplateStatus{Available, Installed, NotAvailable}
+}
+
+// ThreatIntelligenceResourceKind enumerates the values for threat intelligence resource kind.
+type ThreatIntelligenceResourceKind string
+
+const (
+	// Indicator Entity represents threat intelligence indicator in the system.
+	Indicator ThreatIntelligenceResourceKind = "indicator"
+)
+
+// PossibleThreatIntelligenceResourceKindValues returns an array of possible values for the ThreatIntelligenceResourceKind const type.
+func PossibleThreatIntelligenceResourceKindValues() []ThreatIntelligenceResourceKind {
+	return []ThreatIntelligenceResourceKind{Indicator}
+}
+
+// ThreatIntelligenceSortingCriteria enumerates the values for threat intelligence sorting criteria.
+type ThreatIntelligenceSortingCriteria string
+
+const (
+	// Ascending ...
+	Ascending ThreatIntelligenceSortingCriteria = "ascending"
+	// Descending ...
+	Descending ThreatIntelligenceSortingCriteria = "descending"
+	// Unsorted ...
+	Unsorted ThreatIntelligenceSortingCriteria = "unsorted"
+)
+
+// PossibleThreatIntelligenceSortingCriteriaValues returns an array of possible values for the ThreatIntelligenceSortingCriteria const type.
+func PossibleThreatIntelligenceSortingCriteriaValues() []ThreatIntelligenceSortingCriteria {
+	return []ThreatIntelligenceSortingCriteria{Ascending, Descending, Unsorted}
 }
 
 // TriggerOperator enumerates the values for trigger operator.
@@ -949,4 +1161,23 @@ const (
 // PossibleTriggerOperatorValues returns an array of possible values for the TriggerOperator const type.
 func PossibleTriggerOperatorValues() []TriggerOperator {
 	return []TriggerOperator{Equal, GreaterThan, LessThan, NotEqual}
+}
+
+// UebaDataSources enumerates the values for ueba data sources.
+type UebaDataSources string
+
+const (
+	// AuditLogs ...
+	AuditLogs UebaDataSources = "AuditLogs"
+	// AzureActivity ...
+	AzureActivity UebaDataSources = "AzureActivity"
+	// SecurityEvent ...
+	SecurityEvent UebaDataSources = "SecurityEvent"
+	// SigninLogs ...
+	SigninLogs UebaDataSources = "SigninLogs"
+)
+
+// PossibleUebaDataSourcesValues returns an array of possible values for the UebaDataSources const type.
+func PossibleUebaDataSourcesValues() []UebaDataSources {
+	return []UebaDataSources{AuditLogs, AzureActivity, SecurityEvent, SigninLogs}
 }
