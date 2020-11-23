@@ -193,15 +193,15 @@ func PossibleIncidentClassificationReasonValues() []IncidentClassificationReason
 type IncidentLabelType string
 
 const (
-	// System Label automatically created by the system
-	System IncidentLabelType = "System"
+	// AutoAssigned Label automatically created by the system
+	AutoAssigned IncidentLabelType = "AutoAssigned"
 	// User Label manually created by a user
 	User IncidentLabelType = "User"
 )
 
 // PossibleIncidentLabelTypeValues returns an array of possible values for the IncidentLabelType const type.
 func PossibleIncidentLabelTypeValues() []IncidentLabelType {
-	return []IncidentLabelType{System, User}
+	return []IncidentLabelType{AutoAssigned, User}
 }
 
 // IncidentSeverity enumerates the values for incident severity.
