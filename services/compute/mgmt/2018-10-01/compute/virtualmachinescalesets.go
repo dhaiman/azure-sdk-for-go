@@ -953,6 +953,126 @@ func (client VirtualMachineScaleSetsClient) ListAllComplete(ctx context.Context)
 	return
 }
 
+// ListByLocation gets all the VM scale sets under the specified subscription for the specified location.
+// Parameters:
+// location - the location for which VM scale sets under the subscription are queried.
+func (client VirtualMachineScaleSetsClient) ListByLocation(ctx context.Context, location string) (result VirtualMachineScaleSetListResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/VirtualMachineScaleSetsClient.ListByLocation")
+		defer func() {
+			sc := -1
+			if result.vmsslr.Response.Response != nil {
+				sc = result.vmsslr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: location,
+			Constraints: []validation.Constraint{{Target: "location", Name: validation.Pattern, Rule: `^[-\w\._]+$`, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("compute.VirtualMachineScaleSetsClient", "ListByLocation", err.Error())
+	}
+
+	result.fn = client.listByLocationNextResults
+	req, err := client.ListByLocationPreparer(ctx, location)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "ListByLocation", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.ListByLocationSender(req)
+	if err != nil {
+		result.vmsslr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "ListByLocation", resp, "Failure sending request")
+		return
+	}
+
+	result.vmsslr, err = client.ListByLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "ListByLocation", resp, "Failure responding to request")
+	}
+	if result.vmsslr.hasNextLink() && result.vmsslr.IsEmpty() {
+		err = result.NextWithContext(ctx)
+	}
+
+	return
+}
+
+// ListByLocationPreparer prepares the ListByLocation request.
+func (client VirtualMachineScaleSetsClient) ListByLocationPreparer(ctx context.Context, location string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"location":       autorest.Encode("path", location),
+		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
+	}
+
+	const APIVersion = "2018-10-01"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// ListByLocationSender sends the ListByLocation request. The method will close the
+// http.Response Body if it receives an error.
+func (client VirtualMachineScaleSetsClient) ListByLocationSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, azure.DoRetryWithRegistration(client.Client))
+}
+
+// ListByLocationResponder handles the response to the ListByLocation request. The method always
+// closes the http.Response Body.
+func (client VirtualMachineScaleSetsClient) ListByLocationResponder(resp *http.Response) (result VirtualMachineScaleSetListResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// listByLocationNextResults retrieves the next set of results, if any.
+func (client VirtualMachineScaleSetsClient) listByLocationNextResults(ctx context.Context, lastResults VirtualMachineScaleSetListResult) (result VirtualMachineScaleSetListResult, err error) {
+	req, err := lastResults.virtualMachineScaleSetListResultPreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "listByLocationNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.ListByLocationSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "listByLocationNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.ListByLocationResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetsClient", "listByLocationNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// ListByLocationComplete enumerates all values, automatically crossing page boundaries as required.
+func (client VirtualMachineScaleSetsClient) ListByLocationComplete(ctx context.Context, location string) (result VirtualMachineScaleSetListResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/VirtualMachineScaleSetsClient.ListByLocation")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.ListByLocation(ctx, location)
+	return
+}
+
 // ListSkus gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed
 // for each SKU.
 // Parameters:
