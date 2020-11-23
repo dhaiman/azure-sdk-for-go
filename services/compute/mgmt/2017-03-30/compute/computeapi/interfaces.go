@@ -102,6 +102,33 @@ type UsageClientAPI interface {
 
 var _ UsageClientAPI = (*compute.UsageClient)(nil)
 
+// VirtualMachineScaleSetsClientAPI contains the set of methods on the VirtualMachineScaleSetsClient type.
+type VirtualMachineScaleSetsClientAPI interface {
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, VMScaleSetName string, parameters compute.VirtualMachineScaleSet) (result compute.VirtualMachineScaleSetsCreateOrUpdateFuture, err error)
+	Deallocate(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsDeallocateFuture, err error)
+	Delete(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetsDeleteFuture, err error)
+	DeleteInstances(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs compute.VirtualMachineScaleSetVMInstanceRequiredIDs) (result compute.VirtualMachineScaleSetsDeleteInstancesFuture, err error)
+	Get(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSet, err error)
+	GetInstanceView(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetInstanceView, err error)
+	List(ctx context.Context, resourceGroupName string) (result compute.VirtualMachineScaleSetListResultPage, err error)
+	ListComplete(ctx context.Context, resourceGroupName string) (result compute.VirtualMachineScaleSetListResultIterator, err error)
+	ListAll(ctx context.Context) (result compute.VirtualMachineScaleSetListWithLinkResultPage, err error)
+	ListAllComplete(ctx context.Context) (result compute.VirtualMachineScaleSetListWithLinkResultIterator, err error)
+	ListByLocation(ctx context.Context, location string) (result compute.VirtualMachineScaleSetListResultPage, err error)
+	ListByLocationComplete(ctx context.Context, location string) (result compute.VirtualMachineScaleSetListResultIterator, err error)
+	ListSkus(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetListSkusResultPage, err error)
+	ListSkusComplete(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetListSkusResultIterator, err error)
+	PowerOff(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsPowerOffFuture, err error)
+	Reimage(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsReimageFuture, err error)
+	ReimageAll(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsReimageAllFuture, err error)
+	Restart(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsRestartFuture, err error)
+	Start(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsStartFuture, err error)
+	Update(ctx context.Context, resourceGroupName string, VMScaleSetName string, parameters compute.VirtualMachineScaleSetUpdate) (result compute.VirtualMachineScaleSetsUpdateFuture, err error)
+	UpdateInstances(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs compute.VirtualMachineScaleSetVMInstanceRequiredIDs) (result compute.VirtualMachineScaleSetsUpdateInstancesFuture, err error)
+}
+
+var _ VirtualMachineScaleSetsClientAPI = (*compute.VirtualMachineScaleSetsClient)(nil)
+
 // VirtualMachineSizesClientAPI contains the set of methods on the VirtualMachineSizesClient type.
 type VirtualMachineSizesClientAPI interface {
 	List(ctx context.Context, location string) (result compute.VirtualMachineSizeListResult, err error)
@@ -129,31 +156,6 @@ type ResourceSkusClientAPI interface {
 }
 
 var _ ResourceSkusClientAPI = (*compute.ResourceSkusClient)(nil)
-
-// VirtualMachineScaleSetsClientAPI contains the set of methods on the VirtualMachineScaleSetsClient type.
-type VirtualMachineScaleSetsClientAPI interface {
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, VMScaleSetName string, parameters compute.VirtualMachineScaleSet) (result compute.VirtualMachineScaleSetsCreateOrUpdateFuture, err error)
-	Deallocate(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsDeallocateFuture, err error)
-	Delete(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetsDeleteFuture, err error)
-	DeleteInstances(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs compute.VirtualMachineScaleSetVMInstanceRequiredIDs) (result compute.VirtualMachineScaleSetsDeleteInstancesFuture, err error)
-	Get(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSet, err error)
-	GetInstanceView(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetInstanceView, err error)
-	List(ctx context.Context, resourceGroupName string) (result compute.VirtualMachineScaleSetListResultPage, err error)
-	ListComplete(ctx context.Context, resourceGroupName string) (result compute.VirtualMachineScaleSetListResultIterator, err error)
-	ListAll(ctx context.Context) (result compute.VirtualMachineScaleSetListWithLinkResultPage, err error)
-	ListAllComplete(ctx context.Context) (result compute.VirtualMachineScaleSetListWithLinkResultIterator, err error)
-	ListSkus(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetListSkusResultPage, err error)
-	ListSkusComplete(ctx context.Context, resourceGroupName string, VMScaleSetName string) (result compute.VirtualMachineScaleSetListSkusResultIterator, err error)
-	PowerOff(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsPowerOffFuture, err error)
-	Reimage(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsReimageFuture, err error)
-	ReimageAll(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsReimageAllFuture, err error)
-	Restart(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsRestartFuture, err error)
-	Start(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs *compute.VirtualMachineScaleSetVMInstanceIDs) (result compute.VirtualMachineScaleSetsStartFuture, err error)
-	Update(ctx context.Context, resourceGroupName string, VMScaleSetName string, parameters compute.VirtualMachineScaleSetUpdate) (result compute.VirtualMachineScaleSetsUpdateFuture, err error)
-	UpdateInstances(ctx context.Context, resourceGroupName string, VMScaleSetName string, VMInstanceIDs compute.VirtualMachineScaleSetVMInstanceRequiredIDs) (result compute.VirtualMachineScaleSetsUpdateInstancesFuture, err error)
-}
-
-var _ VirtualMachineScaleSetsClientAPI = (*compute.VirtualMachineScaleSetsClient)(nil)
 
 // VirtualMachineScaleSetExtensionsClientAPI contains the set of methods on the VirtualMachineScaleSetExtensionsClient type.
 type VirtualMachineScaleSetExtensionsClientAPI interface {
