@@ -53,6 +53,25 @@ func PossibleGeoRedundantBackupValues() []GeoRedundantBackup {
 	return []GeoRedundantBackup{Disabled, Enabled}
 }
 
+// MinimalTLSVersionEnum enumerates the values for minimal tls version enum.
+type MinimalTLSVersionEnum string
+
+const (
+	// TLS10 ...
+	TLS10 MinimalTLSVersionEnum = "TLS1_0"
+	// TLS11 ...
+	TLS11 MinimalTLSVersionEnum = "TLS1_1"
+	// TLS12 ...
+	TLS12 MinimalTLSVersionEnum = "TLS1_2"
+	// TLSEnforcementDisabled ...
+	TLSEnforcementDisabled MinimalTLSVersionEnum = "TLSEnforcementDisabled"
+)
+
+// PossibleMinimalTLSVersionEnumValues returns an array of possible values for the MinimalTLSVersionEnum const type.
+func PossibleMinimalTLSVersionEnumValues() []MinimalTLSVersionEnum {
+	return []MinimalTLSVersionEnum{TLS10, TLS11, TLS12, TLSEnforcementDisabled}
+}
+
 // OperationOrigin enumerates the values for operation origin.
 type OperationOrigin string
 
